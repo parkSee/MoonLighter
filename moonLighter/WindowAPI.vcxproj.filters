@@ -30,6 +30,24 @@
     <Filter Include="GameFramework2D\Manager">
       <UniqueIdentifier>{5ce72af8-e27e-4d87-81a9-202553e2a4fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameFramework2D\txtData">
+      <UniqueIdentifier>{928363b8-7011-4bd9-bead-5670c1ac153e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\progressBar">
+      <UniqueIdentifier>{ab1d3308-7230-4abe-9be7-307bf1419859}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\gameObject">
+      <UniqueIdentifier>{78a2ad11-f534-4250-bb28-7e40dc02ccdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object">
+      <UniqueIdentifier>{bf34070f-eba3-4bfe-bd29-a5f54ae550fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Item">
+      <UniqueIdentifier>{252e6af5-1940-470a-a05b-e92696f3a8b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Enemy">
+      <UniqueIdentifier>{707b6e9e-f0fe-485c-a3c4-71eaeb8765e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -65,8 +83,29 @@
     <ClInclude Include="player.h">
       <Filter>MainGame\Player</Filter>
     </ClInclude>
+    <ClInclude Include="txtData.h">
+      <Filter>GameFramework2D\txtData</Filter>
+    </ClInclude>
+    <ClInclude Include="progressBar.h">
+      <Filter>GameFramework2D\progressBar</Filter>
+    </ClInclude>
     <ClInclude Include="cameraManager.h">
       <Filter>GameFramework2D\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="gameObject.h">
+      <Filter>GameFramework2D\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="objectManager.h">
+      <Filter>GameFramework2D\gameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="objectContainer.h">
+      <Filter>MainGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="mini.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="enemyController.h">
+      <Filter>MainGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -97,8 +136,29 @@
     <ClCompile Include="player.cpp">
       <Filter>MainGame\Player</Filter>
     </ClCompile>
+    <ClCompile Include="txtData.cpp">
+      <Filter>GameFramework2D\txtData</Filter>
+    </ClCompile>
+    <ClCompile Include="progressBar.cpp">
+      <Filter>GameFramework2D\progressBar</Filter>
+    </ClCompile>
     <ClCompile Include="cameraManager.cpp">
       <Filter>GameFramework2D\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="gameObject.cpp">
+      <Filter>GameFramework2D\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="objectManager.cpp">
+      <Filter>GameFramework2D\gameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="objectContainer.cpp">
+      <Filter>MainGame\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="mini.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="enemyController.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
