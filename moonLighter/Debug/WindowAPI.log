@@ -1,10 +1,1 @@
-﻿  cameraManager.cpp
-c:\users\admin\documents\moonlighter\moonlighter\cameramanager.cpp(9): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\admin\documents\moonlighter\moonlighter\cameramanager.cpp(88): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\admin\documents\moonlighter\moonlighter\cameramanager.cpp(103): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  dungeonScene.cpp
-  mainGame.cpp
-  townScene.cpp
-  winMain.cpp
-  코드를 생성하고 있습니다...
-  WindowAPI.vcxproj -> C:\Users\admin\Documents\MoonLighter\moonLighter\Debug\WindowAPI.exe
+﻿  WindowAPI.vcxproj -> C:\Users\5_KGA_12\Documents\MoonLighter\moonLighter\Debug\WindowAPI.exe
