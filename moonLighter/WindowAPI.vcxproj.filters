@@ -101,9 +101,6 @@
     <ClInclude Include="objectContainer.h">
       <Filter>MainGame\Object</Filter>
     </ClInclude>
-    <ClInclude Include="mini.h">
-      <Filter>MainGame\Enemy</Filter>
-    </ClInclude>
     <ClInclude Include="enemyController.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
@@ -153,9 +150,6 @@
     </ClCompile>
     <ClCompile Include="objectContainer.cpp">
       <Filter>MainGame\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="mini.cpp">
-      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="enemyController.cpp">
       <Filter>MainGame\Enemy</Filter>

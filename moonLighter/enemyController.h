@@ -1,13 +1,11 @@
 #pragma once
 #include "gameNode.h"
-#include "mini.h"
+
 
 class enemyController : public gameNode
 {
 private:
 
-	vector<mini*> _vMini;
-	
 
 public:
 

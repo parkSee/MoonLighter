@@ -1,25 +1,76 @@
 ﻿  stdafx.cpp
-c:\users\park\desktop\windowapi\cameramanager.h(42): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\cameramanager.h(43): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\cameramanager.h(44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\cameramanager.h(42): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\cameramanager.h(43): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\cameramanager.h(44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   cameraManager.cpp
-c:\users\park\desktop\windowapi\cameramanager.cpp(9): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\cameramanager.cpp(88): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\cameramanager.cpp(103): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\cameramanager.cpp(9): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\cameramanager.cpp(88): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\cameramanager.cpp(103): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  enemyController.cpp
+c:\users\admin\documents\moonlighter\moonlighter\enemycontroller.cpp(17): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   gameNode.cpp
+  gameObject.cpp
   image.cpp
-c:\users\park\desktop\windowapi\image.cpp(706): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\image.cpp(707): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\image.cpp(740): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\image.cpp(741): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\image.cpp(706): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\image.cpp(707): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\image.cpp(740): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\image.cpp(741): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
   imageManager.cpp
   keyManager.cpp
   mainGame.cpp
+  mini.cpp
+c:\users\admin\documents\moonlighter\moonlighter\mini.cpp(12): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\mini.cpp(29): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  objectContainer.cpp
+c:\users\admin\documents\moonlighter\moonlighter\objectcontainer.cpp(22): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  objectManager.cpp
+c:\users\admin\documents\moonlighter\moonlighter\objectmanager.cpp(24): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\admin\documents\moonlighter\moonlighter\objectmanager.cpp(43): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\admin\documents\moonlighter\moonlighter\objectmanager.cpp(79): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\admin\documents\moonlighter\moonlighter\objectmanager.cpp(112): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\admin\documents\moonlighter\moonlighter\objectmanager.cpp(126): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
   player.cpp
-c:\users\park\desktop\windowapi\player.cpp(12): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\player.cpp(51): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-c:\users\park\desktop\windowapi\player.cpp(58): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(15): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(40): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(44): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(51): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(61): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(65): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(72): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(82): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(84): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(86): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(93): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(103): warning C4244: '=': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(107): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(114): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(127): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\player.cpp(156): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  progressBar.cpp
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(10): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(11): warning C4244: '=': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(27): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(28): warning C4244: '인수': 'int'에서 'float'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(23): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(24): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\stdio.h(1774): note: 'sprintf' 선언을 참조하십시오.
+c:\users\admin\documents\moonlighter\moonlighter\progressbar.cpp(48): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  txtData.cpp
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(21): warning C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(133): note: 'strcpy' 선언을 참조하십시오.
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(37): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(42): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(39): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(44): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(90): note: 'strcat' 선언을 참조하십시오.
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(75): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(440): note: 'strtok' 선언을 참조하십시오.
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(78): warning C4996: 'strtok': This function or variable may be unsafe. Consider using strtok_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17134.0\ucrt\string.h(440): note: 'strtok' 선언을 참조하십시오.
   util.cpp
   winMain.cpp
   코드를 생성하고 있습니다...
-  WindowAPI.vcxproj -> C:\Users\park\Desktop\WindowAPI\Debug\WindowAPI.exe
+c:\users\admin\documents\moonlighter\moonlighter\txtdata.cpp(49): warning C4172: 지역 변수 또는 임시: str의 주소를 반환하고 있습니다.
+  WindowAPI.vcxproj -> C:\Users\admin\Documents\MoonLighter\moonLighter\Debug\WindowAPI.exe

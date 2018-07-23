@@ -156,7 +156,6 @@
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="mainGame.h" />
-    <ClInclude Include="mini.h" />
     <ClInclude Include="objectContainer.h" />
     <ClInclude Include="objectManager.h" />
     <ClInclude Include="player.h" />
@@ -176,7 +175,6 @@
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="mainGame.cpp" />
-    <ClCompile Include="mini.cpp" />
     <ClCompile Include="objectContainer.cpp" />
     <ClCompile Include="objectManager.cpp" />
     <ClCompile Include="player.cpp" />

@@ -11,14 +11,7 @@
 
 HRESULT enemyController::init()
 {
-	for (int i = 0; i < 2; ++i)
-	{
-		mini* Mini = new mini;
-		Mini->init("enemy", tagFloat(WINSIZEX / 2 + 100 * i, WINSIZEY / 2 + 100));
-		
-		_vMini.push_back(Mini);
-		OBJECTMANAGER->addObject(objectType::ENEMY, Mini);
-	}
+
 
 	return S_OK;
 }
