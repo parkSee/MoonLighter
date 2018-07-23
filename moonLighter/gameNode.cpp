@@ -21,7 +21,9 @@ HRESULT gameNode::init(bool managerInit)
 		RND->init();						//랜더펑션 초기화
 		IMAGEMANAGER->init();				//이미지매니져 초기화
 		CAMERAMANAGER->init();				//카메라 매니저 초기화
+		SCENEMANAGER->init();
 		TXTDATA->init();
+		INIDATA->init();
 		OBJECTMANAGER->init();
 	}
 
@@ -48,8 +50,12 @@ void gameNode::release(void)
 		IMAGEMANAGER->releaseSingleton();
 		CAMERAMANAGER->release();
 		CAMERAMANAGER->releaseSingleton();
+		SCENEMANAGER->release();
+		SCENEMANAGER->releaseSingleton();
 		TXTDATA->release();
 		TXTDATA->releaseSingleton();
+		INIDATA->release();
+		INIDATA->releaseSingleton();
 		OBJECTMANAGER->release();
 		OBJECTMANAGER->releaseSingleton();
 	}

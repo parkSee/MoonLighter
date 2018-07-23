@@ -48,6 +48,18 @@
     <Filter Include="MainGame\Enemy">
       <UniqueIdentifier>{707b6e9e-f0fe-485c-a3c4-71eaeb8765e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameFramework2D\InIData">
+      <UniqueIdentifier>{a21b459c-20ee-48ef-9706-4b7695730dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\Loading">
+      <UniqueIdentifier>{730b1bf7-bcc6-48f2-a0a7-925175179094}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\SaveData">
+      <UniqueIdentifier>{23ad871f-0900-41f2-9c2d-d8f0b10a1539}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene">
+      <UniqueIdentifier>{48c9a5f2-baa5-458a-998a-76388fbaa8d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -104,6 +116,27 @@
     <ClInclude Include="enemyController.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="iniData.h">
+      <Filter>GameFramework2D\InIData</Filter>
+    </ClInclude>
+    <ClInclude Include="loading.h">
+      <Filter>GameFramework2D\Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="saveData.h">
+      <Filter>GameFramework2D\SaveData</Filter>
+    </ClInclude>
+    <ClInclude Include="sceneManager.h">
+      <Filter>GameFramework2D\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="townScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="shopScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="dungeonScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -153,6 +186,27 @@
     </ClCompile>
     <ClCompile Include="enemyController.cpp">
       <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="iniData.cpp">
+      <Filter>GameFramework2D\InIData</Filter>
+    </ClCompile>
+    <ClCompile Include="loading.cpp">
+      <Filter>GameFramework2D\Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="saveData.cpp">
+      <Filter>GameFramework2D\SaveData</Filter>
+    </ClCompile>
+    <ClCompile Include="sceneManager.cpp">
+      <Filter>GameFramework2D\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="townScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="shopScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="dungeonScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
