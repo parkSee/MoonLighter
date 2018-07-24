@@ -12,7 +12,7 @@ private:
 	player * _player;	//플레이어 클래
 
 	
-
+	objectContainer* _container;
 public:
 
 	HRESULT init();

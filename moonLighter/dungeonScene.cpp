@@ -9,6 +9,7 @@ HRESULT dungeonScene::init()
 
 	_em = new enemyController;
 	_em->init();
+
 	IMAGEMANAGER->addImage("Dungeon","./image/Dungeon/´øÀü.bmp",WINSIZEX,WINSIZEY);
 	CAMERAMANAGER->setMapSize(WINSIZEX, WINSIZEY);
 

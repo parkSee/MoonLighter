@@ -6,12 +6,15 @@ HRESULT townScene::init()
 
 	IMAGEMANAGER->addImage("map", "./Image/map.bmp", 3000, 2460);
 	IMAGEMANAGER->addImage("radZone", "./Image/pixel.bmp", 3000, 2460);
-
+	
 
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
 	_player = new player;
 	_player->init("player", tagFloat(WINSIZEX / 2, WINSIZEY / 2));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
+
+	_container = new objectContainer;
+	_container->init();
 
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
