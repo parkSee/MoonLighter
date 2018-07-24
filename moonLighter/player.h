@@ -7,7 +7,7 @@
 class player : public gameObject
 {
 private:
-	
+
 	int _index;
 	int _count;
 	int _probeY;
