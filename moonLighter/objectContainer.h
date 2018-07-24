@@ -3,7 +3,7 @@
 class objectContainer : public gameObject
 {
 private:
-	image * _img;
+	image * _img[9];
 
 
 public:
