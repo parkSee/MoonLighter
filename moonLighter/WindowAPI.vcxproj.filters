@@ -18,6 +18,9 @@
     <Filter Include="GameFramework2D\WinMain">
       <UniqueIdentifier>{4a79707c-1728-49f2-ba7d-dc17dad14387}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Player">
+      <UniqueIdentifier>{8dedb022-032e-4e6d-955f-9603c8277adf}</UniqueIdentifier>
+    </Filter>
     <Filter Include="GameFramework2D\Image">
       <UniqueIdentifier>{1851a966-ba68-4f2f-8ebc-640729b7e225}</UniqueIdentifier>
     </Filter>
@@ -57,6 +60,7 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{48c9a5f2-baa5-458a-998a-76388fbaa8d4}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="MainGame\Object\houseObject">
       <UniqueIdentifier>{ea0145ab-f2af-4966-8c7d-69b9f8c31f5a}</UniqueIdentifier>
     </Filter>
@@ -65,6 +69,10 @@
     </Filter>
     <Filter Include="MainGame\Player">
       <UniqueIdentifier>{8dedb022-032e-4e6d-955f-9603c8277adf}</UniqueIdentifier>
+=======
+    <Filter Include="MainGame\Iventory">
+      <UniqueIdentifier>{ef446a79-a080-47f5-9fea-9d41b257d12f}</UniqueIdentifier>
+>>>>>>> 7f2b5f1f9575a3a8add79fb626675827cea4ecbf
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -146,14 +154,17 @@
     <ClInclude Include="golem.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="house.h">
-      <Filter>MainGame\Object\houseObject</Filter>
+    <ClInclude Include="itemManager.h">
+      <Filter>GameFramework2D\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="startScene.h">
-      <Filter>MainGame\Scene</Filter>
+    <ClInclude Include="item.h">
+      <Filter>MainGame\Item</Filter>
     </ClInclude>
-    <ClInclude Include="loadingScene.h">
-      <Filter>MainGame\Scene</Filter>
+    <ClInclude Include="inventory.h">
+      <Filter>MainGame\Iventory</Filter>
+    </ClInclude>
+    <ClInclude Include="potion.h">
+      <Filter>MainGame\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -229,26 +240,17 @@
     <ClCompile Include="golem.cpp">
       <Filter>MainGame\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="house.cpp">
-      <Filter>MainGame\Object\houseObject</Filter>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>GameFramework2D\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="startScene.cpp">
-      <Filter>MainGame\Scene</Filter>
+    <ClCompile Include="item.cpp">
+      <Filter>MainGame\Item</Filter>
     </ClCompile>
-    <ClCompile Include="loadingScene.cpp">
-      <Filter>MainGame\Scene</Filter>
+    <ClCompile Include="potion.cpp">
+      <Filter>MainGame\Item</Filter>
     </ClCompile>
-    <ClCompile Include="psyImage.cpp">
-      <Filter>MainGame\Scene\loadingImages</Filter>
-    </ClCompile>
-    <ClCompile Include="lejImage.cpp">
-      <Filter>MainGame\Scene\loadingImages</Filter>
-    </ClCompile>
-    <ClCompile Include="csyImage.cpp">
-      <Filter>MainGame\Scene\loadingImages</Filter>
-    </ClCompile>
-    <ClCompile Include="lysImage.cpp">
-      <Filter>MainGame\Scene\loadingImages</Filter>
+    <ClCompile Include="inventory.cpp">
+      <Filter>MainGame\Iventory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
