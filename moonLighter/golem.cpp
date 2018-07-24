@@ -3,7 +3,7 @@
 
 HRESULT golem::init(string _objName, tagFloat _pos)
 {
-	gameObject::init("golem",_pos);
+	gameObject::init(_objName,_pos);
 	_golem[0] = IMAGEMANAGER->addFrameImage("°ñ·½", "./image/enemy/°ñ·½Á¤¸é.bmp", 4800, 170, 60, 1);
 	_golem[1] = IMAGEMANAGER->addFrameImage("°ñ·½¿ÞÂÊ", "./image/enemy/°ñ·½¿ÞÂÊ.bmp", 7800, 125, 60, 1);
 	_golem[2] = IMAGEMANAGER->addFrameImage("°ñ·½¿À¸¥ÂÊ", "./image/enemy/°ñ·½¿À¸¥ÂÊ.bmp", 7800, 140, 60, 1);
@@ -61,7 +61,7 @@ void golem::render()
 	
 	
 	
-	if (_down)_golem[0]->frameRender(getMemDC(), rc.left-cam.left, rc.top-cam.top);//¾Æ·¡
+	_golem[0]->frameRender(getMemDC(), rc.left-cam.left, rc.top-cam.top);//¾Æ·¡
 	if (_left)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top);//¿ÞÂÊ
 	if (_right)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top);//¿À¸¥ÂÊ
 	if (_up)_golem[3]->frameRender(getMemDC(), rc.left + 1 - cam.left, rc.top - 9 - cam.top);//À§

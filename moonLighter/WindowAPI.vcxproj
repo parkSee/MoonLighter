@@ -148,6 +148,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="bigSlime.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="dungeonScene.h" />
@@ -172,13 +173,16 @@
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="shopScene.h" />
     <ClInclude Include="singletonBase.h" />
+    <ClInclude Include="smallSlime.h" />
     <ClInclude Include="startScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="townScene.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="weed.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bigSlime.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="csyImage.cpp" />
     <ClCompile Include="dungeonScene.cpp" />
@@ -204,6 +208,7 @@
     <ClCompile Include="saveData.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="shopScene.cpp" />
+    <ClCompile Include="smallSlime.cpp" />
     <ClCompile Include="startScene.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -214,6 +219,7 @@
     <ClCompile Include="townScene.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="weed.cpp" />
     <ClCompile Include="winMain.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

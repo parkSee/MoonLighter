@@ -12,7 +12,7 @@
 HRESULT enemyController::init()
 {
 	_golem = new golem;
-	_golem->init("golem", tagFloat(WINSIZEX/2, WINSIZEY/2));
+	_golem->init("golem", tagFloat(500, 400));
 	_weed = new weed;
 	_weed->init("weed", tagFloat(500, 300));
 	_smallSlime = new smallSlime;
