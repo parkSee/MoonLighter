@@ -4,9 +4,10 @@
 
 class gameObject;
 
+
 enum objectType
 {
-	PLAYER, ENEMY, ITEM, OBJECT, END
+	PLAYER, ENEMY, ITEM, HOUSE_OBJECT,DUNGEON_OBJECT, END
 };
 
 
@@ -29,7 +30,9 @@ public:
 	void addObject(objectType type, gameObject* obj)
 	{
 		//totalList[type].clear();
+		
 		totalList[type].push_back(obj);
+		
 	}
 
 	//해당 이름을 가진 오브젝트 하나를 찾아서 반환한다. 없으면 NULL을 반환

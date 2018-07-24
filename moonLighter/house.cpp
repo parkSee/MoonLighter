@@ -16,7 +16,7 @@ void house::release()
 
 void house::update()
 {
-	//rc = RectMakeCenter(pos.x, pos.y, _img->getWidth(), _img->getHeight());
+	
 }
 
 void house::render()

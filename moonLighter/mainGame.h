@@ -6,12 +6,14 @@
 #include "shopScene.h"
 #include "dungeonScene.h"
 
+#include "player.h"
+
 
 class mainGame : public gameNode
 {
 private:
 
-
+	player * _player;
 public:
 	HRESULT init();
 	void release();

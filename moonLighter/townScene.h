@@ -20,6 +20,7 @@ public:
 	void update();
 	void render();
 
+
 	townScene(){}
 	~townScene(){}
 };

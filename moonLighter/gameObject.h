@@ -25,6 +25,8 @@ public:
 	bool isLive() { return _isLive; }
 	void setIsLive(bool isLive) { _isLive = isLive; }
 
+	void setIsActive(bool isActive) { _isActive = isActive; }
+
 	gameObject(){}
 	virtual	~gameObject(){}
 };
