@@ -83,9 +83,6 @@
     <ClInclude Include="randomFunction.h">
       <Filter>GameFramework2D\Utill</Filter>
     </ClInclude>
-    <ClInclude Include="image.h">
-      <Filter>GameFramework2D\Image</Filter>
-    </ClInclude>
     <ClInclude Include="imageManager.h">
       <Filter>GameFramework2D\Manager</Filter>
     </ClInclude>
@@ -137,6 +134,12 @@
     <ClInclude Include="dungeonScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="image.h">
+      <Filter>GameFramework2D\Image</Filter>
+    </ClInclude>
+    <ClInclude Include="golem.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -153,9 +156,6 @@
     </ClCompile>
     <ClCompile Include="gameNode.cpp">
       <Filter>GameFramework2D\WinMain</Filter>
-    </ClCompile>
-    <ClCompile Include="image.cpp">
-      <Filter>GameFramework2D\Image</Filter>
     </ClCompile>
     <ClCompile Include="imageManager.cpp">
       <Filter>GameFramework2D\Manager</Filter>
@@ -207,6 +207,12 @@
     </ClCompile>
     <ClCompile Include="dungeonScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="image.cpp">
+      <Filter>GameFramework2D\Image</Filter>
+    </ClCompile>
+    <ClCompile Include="golem.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

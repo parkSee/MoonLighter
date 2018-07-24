@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
-#include "mini.h"
+
 
 
 HRESULT player::init(string _objName, tagFloat _pos)
@@ -231,7 +231,7 @@ void player::move()
 			_probeY = pos.y;
 			for (int i = _probeY +10; i < _probeY + 30; ++i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -261,7 +261,7 @@ void player::move()
 			_probeY = pos.y + will->getFrameHeight();
 			for (int i = _probeY - 10; i < _probeY - 30; --i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -291,7 +291,7 @@ void player::move()
 			_probeY = pos.y;
 			for (int i = _probeX - 10; i < _probeX - 30; --i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -321,7 +321,7 @@ void player::move()
 			_probeY = pos.y;
 			for (int i = _probeX - 30; i < _probeX + 30; ++i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);

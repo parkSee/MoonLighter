@@ -498,6 +498,48 @@ void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int
 {
 }
 
+void image::frameAlphaRender(HDC hdc, int destX, int destY, BYTE alpha)
+{
+	//알파블렌드를 처음사용하냐?
+	//알파블렌드를 사용할 수 있도록 초기화 해라
+	if (!_blendImage) this->initForAlphaBlend();
+
+	//알파값 초기화
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	if (_isTrans) //배경색 없앨꺼냐?
+	{
+
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			hdc, destX, destY, SRCCOPY);
+
+		//GdiTransparentBlt : 비트맵의 특정색상을 제외하고 고속복사 해주는 함수
+		GdiTransparentBlt(
+			_blendImage->hMemDC,						//복사할 장소의 DC
+			0,						//복사될 좌표 시작점 X
+			0,						//복사될 좌표 시작점 Y
+			_imageInfo->frameWidth,		//복사될 이미지 가로크기
+			_imageInfo->frameHeight,	//복사될 이미지 세로크기
+			_imageInfo->hMemDC,			//복사될 대상 DC
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,		//복사 시작지점
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,	//복사 시작지점
+			_imageInfo->frameWidth,		//복사 영역 가로크기
+			_imageInfo->frameHeight,	//복사 영역 세로크기
+			_transColor);				//복사할때 제외할 색상 (마젠타)
+
+		AlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+	else //원본 이미지 그래도 출력할꺼냐?
+	{
+		//BitBlt : DC간의 영역끼리 서로 고속복사를 해주는 함수
+		BitBlt(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight, SRCCOPY);
+	}
+}
+
 void image::frameRender(HDC hdc, int destX, int destY)
 {
 	if (_isTrans) //배경색 없앨꺼냐?

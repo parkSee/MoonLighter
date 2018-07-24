@@ -11,8 +11,11 @@
 
 HRESULT enemyController::init()
 {
-
-
+	_golem = new golem;
+	_golem->init("golem", tagFloat(WINSIZEX/2, WINSIZEY/2));
+	
+	
+	OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 	return S_OK;
 }
 
