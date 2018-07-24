@@ -2,7 +2,7 @@
 #include "gameNode.h"
 #include "gameObject.h"
 
-class mini;
+
 
 class player : public gameObject
 {

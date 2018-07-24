@@ -9,14 +9,16 @@ HRESULT mainGame::init(void)
 {
 	gameNode::init(TRUE);
 	
-
+	//ÀÎÆ®·Î ¾À
+	SCENEMANAGER->addScene("startScene", new startScene);
+	SCENEMANAGER->addScene("loadingScene", new loadingScene);
 	SCENEMANAGER->addScene("townScene", new townScene);
 	SCENEMANAGER->addScene("shopScene", new shopScene);
 	SCENEMANAGER->addScene("dungeonScene", new dungeonScene);
 
 
 	/*ÇöÀç¾À ¼³Á¤*/
-	SCENEMANAGER->loadScene("townScene");
+	SCENEMANAGER->loadScene("loadingScene");
 
 	return S_OK;
 }

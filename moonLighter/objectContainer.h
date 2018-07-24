@@ -1,14 +1,17 @@
 #pragma once
-#include "gameObject.h"
-class objectContainer : public gameObject
+#include "gameNode.h"
+#include "house.h"
+
+
+class objectContainer : public gameNode
 {
 private:
-	image * _img;
 
+	house * _house[9];
 
 public:
 
-	HRESULT init(string _objName, tagFloat _pos);
+	HRESULT init();
 	void release();
 	void update();
 	void render();

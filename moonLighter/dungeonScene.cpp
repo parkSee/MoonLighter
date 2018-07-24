@@ -4,12 +4,14 @@
 HRESULT dungeonScene::init()
 {
 
-	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
-	//에너미 매니저 할당
+	//lejADD 던전 맵 추가
+
+
 	_em = new enemyController;
 	_em->init();
 
-	CAMERAMANAGER->setMapSize(3000, 2460);
+	IMAGEMANAGER->addImage("Dungeon","./image/Dungeon/던전.bmp",WINSIZEX,WINSIZEY);
+	CAMERAMANAGER->setMapSize(WINSIZEX, WINSIZEY);
 
 	return S_OK;
 }
@@ -20,14 +22,14 @@ void dungeonScene::release()
 
 void dungeonScene::update()
 { 
-
+	CAMERAMANAGER->update();
 	OBJECTMANAGER->update();
 }
 
 void dungeonScene::render()
 {
-
-	CAMERAMANAGER->render(getMemDC());
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	IMAGEMANAGER->render("Dungeon", getMemDC(),0,0,cam.left,cam.top,WINSIZEX,WINSIZEY);
 
 	OBJECTMANAGER->render(getMemDC());
 
