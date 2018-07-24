@@ -83,7 +83,7 @@ void objectManager::render(HDC getMemDC)
 		}
 	}
 	
-	//for each
+	//foreach
 	// 배열이나 enum문과 같이 연속된 값들을 순차적으로 접근 할 수 있게 사용 하는 반복문 문법이다.
 	
 	/*	for문은 다양한 방법으로 배열의 값을 접근할 수 있지만 for~each문은 순차적으로만 접근 할 수 있다.

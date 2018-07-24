@@ -6,7 +6,7 @@ class gameObject;
 
 enum objectType
 {
-	PLAYER, ENEMY, ITEM, HOUSE_OBJECT,DUNGEON_OBJECT, END
+	PLAYER, ENEMY, ITEM, OBJECT, END
 };
 
 

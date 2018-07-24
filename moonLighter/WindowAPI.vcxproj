@@ -160,9 +160,6 @@
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="iniData.h" />
-    <ClInclude Include="inventory.h" />
-    <ClInclude Include="item.h" />
-    <ClInclude Include="itemManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
     <ClInclude Include="loadingScene.h" />
@@ -170,7 +167,6 @@
     <ClInclude Include="objectContainer.h" />
     <ClInclude Include="objectManager.h" />
     <ClInclude Include="player.h" />
-    <ClInclude Include="potion.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
     <ClInclude Include="saveData.h" />
@@ -198,9 +194,6 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="iniData.cpp" />
-    <ClCompile Include="inventory.cpp" />
-    <ClCompile Include="item.cpp" />
-    <ClCompile Include="itemManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="lejImage.cpp" />
     <ClCompile Include="loading.cpp" />
@@ -210,7 +203,6 @@
     <ClCompile Include="objectContainer.cpp" />
     <ClCompile Include="objectManager.cpp" />
     <ClCompile Include="player.cpp" />
-    <ClCompile Include="potion.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="psyImage.cpp" />
     <ClCompile Include="saveData.cpp" />

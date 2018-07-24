@@ -46,7 +46,6 @@ void loadingScene::loadingImage()
 	this->lejImageLoading();
 	this->csyImageLoading();
 	this->lysImageLoading();
-
 	//IMAGEMANAGER->addImage("build_Top1", "./Image/town_object/build_Top1.bmp", 459, 383, true, RGB(255, 0, 255));
 
 	//_loading->loadFrameImage();
