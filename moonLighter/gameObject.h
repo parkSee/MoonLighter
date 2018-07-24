@@ -10,6 +10,9 @@ private:
 public:
 	tagFloat pos;
 	string name;
+	int hp;
+	int attack;
+	
 	RECT rc;
 
 	virtual HRESULT init(string _objName, tagFloat _pos = tagFloat());

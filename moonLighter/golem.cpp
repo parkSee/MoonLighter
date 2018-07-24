@@ -8,14 +8,13 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_golem[1] = IMAGEMANAGER->addFrameImage("°ñ·½¿ÞÂÊ", "./image/enemy/°ñ·½¿ÞÂÊ.bmp", 7800, 125, 60, 1);
 	_golem[2] = IMAGEMANAGER->addFrameImage("°ñ·½¿À¸¥ÂÊ", "./image/enemy/°ñ·½¿À¸¥ÂÊ.bmp", 7800, 140, 60, 1);
 	_golem[3] = IMAGEMANAGER->addFrameImage("°ñ·½µÚÂÊ", "./image/enemy/°ñ·½µÚÂÊ.bmp", 4800, 140, 60, 1);
-	_weed = IMAGEMANAGER->addFrameImage("ÀâÃÊ", "./image/enemy/ÀâÃÊ.bmp", 4200, 90, 60, 1);
-	_bigSlime = IMAGEMANAGER->addFrameImage("Å«½½¶óÀÓ", "./image/enemy/Å«½½¶óÀÓ.bmp", 6000, 110, 60, 1);
-	_smallSlime = IMAGEMANAGER->addFrameImage("ÀÛÀº½½¶óÀÓ", "./image/enemy/ÀÛÀº½½¶óÀÓ.bmp", 3000, 55, 60, 1);
+	
+	
 
 	RECT rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
-	CAMERAMANAGER->connectTarget(pos.x, pos.y);
-	_count = _currentY = _slimeX = _weedX = _smallSlimeX = 0;
-	_alpha = 255;
+	
+	_count = _currentY  = 0;
+	
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -27,7 +26,7 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_right = false;
 	_up = false;
 	_down = false;
-	_slimeBool = false;
+	
 	
 	return S_OK;
 }
@@ -45,13 +44,12 @@ void golem::update()
 
 	rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 	
-	CAMERAMANAGER->connectTarget(pos.x, pos.y);
+	
 
 	golemFrame();
-	bigSlimeFrame();
-	smallSlimeFrame();
-	weedFrame();
-	key();
+	
+	
+	//key();
 
 	
 }
@@ -61,13 +59,13 @@ void golem::render()
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	
 	
-	_bigSlime->frameAlphaRender(getMemDC(), WINSIZEX / 2 - cam.left, WINSIZEY / 2 - cam.top, _alpha);
-	_smallSlime->frameRender(getMemDC(), 400 - cam.left, 100 - cam.top);
+	
+	
 	if (_down)_golem[0]->frameRender(getMemDC(), rc.left-cam.left, rc.top-cam.top);//¾Æ·¡
 	if (_left)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top);//¿ÞÂÊ
 	if (_right)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top);//¿À¸¥ÂÊ
 	if (_up)_golem[3]->frameRender(getMemDC(), rc.left + 1 - cam.left, rc.top - 9 - cam.top);//À§
-	_weed->frameRender(getMemDC(), 200 - cam.left, 400 - cam.top);
+	
 
 }
 
@@ -110,68 +108,6 @@ void golem::golemFrame()
 	}
 }
 
-void golem::bigSlimeFrame()
-{
-	if (_count % 7 == 0)
-	{
-
-		_bigSlime->setFrameX(_slimeX);
-
-		_slimeX++;
-
-		if (_slimeBool)
-		{
-			if (_slimeX >= 34)
-				_alpha = 200;
-			if (_slimeX > _bigSlime->getMaxFrameX())
-			{
-				_slimeX = 0;
-				_slimeBool = false;
-			}
-		}
-
-		if (!_slimeBool)
-		{
-			if (_slimeX > 23)
-			{
-				_slimeX = 0;
-			}
-		}
-
-	}
-}
-
-void golem::smallSlimeFrame()
-{
-	if (_count % 7 == 0)
-	{
-		IMAGEMANAGER->findImage("ÀÛÀº½½¶óÀÓ")->setFrameX(_smallSlimeX);
-		_smallSlimeX++;
-
-
-		if (_smallSlimeX > 23)
-		{
-			_smallSlimeX = 0;
-		}
-
-	}
-}
-
-void golem::weedFrame()
-{
-	if (_count % 7 == 0)
-	{
-		IMAGEMANAGER->findImage("ÀâÃÊ")->setFrameX(_weedX);
-		_weedX++;
-
-
-		if (_weedX > IMAGEMANAGER->findImage("ÀâÃÊ")->getMaxFrameX())
-		{
-			_weedX = 0;
-		}
-
-	}
-}
 
 void golem::key()
 {
@@ -245,9 +181,5 @@ void golem::key()
 		}
 	}
 
-	if (KEYMANAGER->isOnceKeyDown('B'))
-	{
-		_slimeBool = true;
-		_slimeX = 24;
-	}
+	
 }
