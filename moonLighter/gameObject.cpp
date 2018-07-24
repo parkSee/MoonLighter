@@ -15,6 +15,7 @@ HRESULT gameObject::init(string _objName, tagFloat _pos)
 	_isLive = true;
 	_isActive = true;
 
+	
 	return S_OK;
 }
 

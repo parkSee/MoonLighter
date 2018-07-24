@@ -54,9 +54,9 @@ void cameraManager::update()
 
 void cameraManager::render(HDC hdc)
 {
-	char str[125];
+	/*char str[125];
 	sprintf_s(str, "%f", _shakeTimer);
-	TextOut(hdc, WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
+	TextOut(hdc, WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));*/
 
 }
 

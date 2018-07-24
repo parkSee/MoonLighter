@@ -7,6 +7,7 @@ private:
 	bool _isActive;
 	bool _isLive;
 
+
 public:
 	tagFloat pos;
 	string name;
