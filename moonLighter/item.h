@@ -1,14 +1,18 @@
 #pragma once
-#include "gameObject.h"
-
+#include "gameNode.h"
 //csyADD [아이템 클래스 추가]
 
-class item : public gameObject
+class item : public gameNode
 {	
+protected:
+	tagFloat _pos;
+	image* _img;
+	
+
 
 public:
 
-	virtual HRESULT init(string _objName, tagFloat _pos);
+	virtual HRESULT init();
 	virtual void release();
 	virtual void update();
 	virtual void render();

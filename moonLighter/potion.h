@@ -6,7 +6,13 @@
 class potion :	public item
 {
 public:
-	potion();
-	~potion();
+
+	HRESULT init();
+	void release();
+	void update();
+	void render();
+
+	potion(){}
+	~potion(){}
 };
 

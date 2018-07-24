@@ -156,19 +156,27 @@
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="gameObject.h" />
     <ClInclude Include="golem.h" />
+    <ClInclude Include="golemCore.h" />
     <ClInclude Include="house.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="imageManager.h" />
     <ClInclude Include="iniData.h" />
+    <ClInclude Include="inventory.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="itemManager.h" />
     <ClInclude Include="keyManager.h" />
+    <ClInclude Include="liquidItem.h" />
     <ClInclude Include="loading.h" />
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="objectContainer.h" />
     <ClInclude Include="objectManager.h" />
     <ClInclude Include="player.h" />
+    <ClInclude Include="potion.h" />
     <ClInclude Include="progressBar.h" />
     <ClInclude Include="randomFunction.h" />
+    <ClInclude Include="rebar.h" />
+    <ClInclude Include="redCristal.h" />
     <ClInclude Include="saveData.h" />
     <ClInclude Include="sceneManager.h" />
     <ClInclude Include="shopScene.h" />
@@ -177,6 +185,7 @@
     <ClInclude Include="startScene.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="townScene.h" />
+    <ClInclude Include="twig.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="weed.h" />
@@ -190,12 +199,17 @@
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="gameObject.cpp" />
     <ClCompile Include="golem.cpp" />
+    <ClCompile Include="golemCore.cpp" />
     <ClCompile Include="house.cpp" />
     <ClCompile Include="image.cpp" />
     <ClCompile Include="imageManager.cpp" />
     <ClCompile Include="iniData.cpp" />
+    <ClCompile Include="inventory.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="itemManager.cpp" />
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="lejImage.cpp" />
+    <ClCompile Include="liquidItem.cpp" />
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="loadingScene.cpp" />
     <ClCompile Include="lysImage.cpp" />
@@ -203,8 +217,11 @@
     <ClCompile Include="objectContainer.cpp" />
     <ClCompile Include="objectManager.cpp" />
     <ClCompile Include="player.cpp" />
+    <ClCompile Include="potion.cpp" />
     <ClCompile Include="progressBar.cpp" />
     <ClCompile Include="psyImage.cpp" />
+    <ClCompile Include="rebar.cpp" />
+    <ClCompile Include="redCristal.cpp" />
     <ClCompile Include="saveData.cpp" />
     <ClCompile Include="sceneManager.cpp" />
     <ClCompile Include="shopScene.cpp" />
@@ -217,6 +234,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="townScene.cpp" />
+    <ClCompile Include="twig.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="weed.cpp" />
