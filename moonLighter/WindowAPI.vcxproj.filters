@@ -134,11 +134,16 @@
     <ClInclude Include="dungeonScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="itemManager.h">
+      <Filter>MainGame\Item</Filter>
+=======
     <ClInclude Include="image.h">
       <Filter>GameFramework2D\Image</Filter>
     </ClInclude>
     <ClInclude Include="golem.h">
       <Filter>MainGame\Enemy</Filter>
+>>>>>>> 76ee4fe629d9774199587ee946666c47adbeace4
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -208,11 +213,16 @@
     <ClCompile Include="dungeonScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="itemManager.cpp">
+      <Filter>MainGame\Item</Filter>
+=======
     <ClCompile Include="image.cpp">
       <Filter>GameFramework2D\Image</Filter>
     </ClCompile>
     <ClCompile Include="golem.cpp">
       <Filter>MainGame\Enemy</Filter>
+>>>>>>> 76ee4fe629d9774199587ee946666c47adbeace4
     </ClCompile>
   </ItemGroup>
 </Project>
