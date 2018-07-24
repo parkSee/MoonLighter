@@ -63,7 +63,7 @@
     <Filter Include="MainGame\Scene\loadingImages">
       <UniqueIdentifier>{d04181d3-44c1-4cbc-9176-e5d0b3f1b9a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Object\houseObject\Player">
+    <Filter Include="MainGame\Player">
       <UniqueIdentifier>{8dedb022-032e-4e6d-955f-9603c8277adf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -96,7 +96,7 @@
       <Filter>GameFramework2D\Utill</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>MainGame\Object\houseObject\Player</Filter>
+      <Filter>MainGame\Player</Filter>
     </ClInclude>
     <ClInclude Include="txtData.h">
       <Filter>GameFramework2D\txtData</Filter>
@@ -179,7 +179,7 @@
       <Filter>GameFramework2D\Utill</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>MainGame\Object\houseObject\Player</Filter>
+      <Filter>MainGame\Player</Filter>
     </ClCompile>
     <ClCompile Include="txtData.cpp">
       <Filter>GameFramework2D\txtData</Filter>
