@@ -60,6 +60,9 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{48c9a5f2-baa5-458a-998a-76388fbaa8d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Iventory">
+      <UniqueIdentifier>{ef446a79-a080-47f5-9fea-9d41b257d12f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -140,6 +143,18 @@
     <ClInclude Include="golem.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>GameFramework2D\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="inventory.h">
+      <Filter>MainGame\Iventory</Filter>
+    </ClInclude>
+    <ClInclude Include="potion.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -213,6 +228,18 @@
     </ClCompile>
     <ClCompile Include="golem.cpp">
       <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>GameFramework2D\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="potion.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="inventory.cpp">
+      <Filter>MainGame\Iventory</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
