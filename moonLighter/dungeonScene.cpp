@@ -31,6 +31,7 @@ void dungeonScene::render()
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	IMAGEMANAGER->render("Dungeon", getMemDC(),0,0,cam.left,cam.top,WINSIZEX,WINSIZEY);
 
+	
 	OBJECTMANAGER->render(getMemDC());
 
 }

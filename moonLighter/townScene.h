@@ -10,7 +10,8 @@ class townScene : public gameNode
 private:
 
 	player * _player;	//플레이어 클래
-
+	image* _background;
+	image* pixelground;
 	
 	objectContainer* _container;
 public:
