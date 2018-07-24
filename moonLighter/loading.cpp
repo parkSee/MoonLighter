@@ -90,7 +90,7 @@ HRESULT loadItem::init(string keyName, const char * fileName, float x, float y, 
 HRESULT loading::init(void)
 {
 	//로딩화면 백그라운드 이미지 초기화
-	_background = IMAGEMANAGER->addImage("bgLoadingScene", "bgLoadingScene.bmp", WINSIZEX, WINSIZEY);
+	//_background = IMAGEMANAGER->addImage("bgLoadingScene", "bgLoadingScene.bmp", WINSIZEX, WINSIZEY);
 	
 	//로딩바 클래스 초기화
 	_loadingBar = new progressBar;
@@ -118,25 +118,25 @@ void loading::update(void)
 void loading::render(void)
 {
 	//백그라운드 렌더
-	_background->render(getMemDC());
+	//_background->render(getMemDC());
 	//로딩바 클래스 렌더
 	_loadingBar->render();
 	
 	float gauge = (float)_currentGauge / _vLoadItem.size();
 	int g = gauge * 100;
 
-	IMAGEMANAGER->addFrameImage("number", "플레이어 뎀스.bmp", 400, 60, 10, 1);
+	//IMAGEMANAGER->addFrameImage("number", "플레이어 뎀스.bmp", 400, 60, 10, 1);
 
-	/*IMAGEMANAGER->findImage("number")->setFrameX(g / 100);
-	IMAGEMANAGER->findImage("number")->frameRender(getMemDC(), 20, 10);
+	///*IMAGEMANAGER->findImage("number")->setFrameX(g / 100);
+	//IMAGEMANAGER->findImage("number")->frameRender(getMemDC(), 20, 10);
 
-	g = g % 100;*/
+	//g = g % 100;*/
 
-	IMAGEMANAGER->findImage("number")->setFrameX(g / 10);
-	IMAGEMANAGER->findImage("number")->frameRender(getMemDC(), 50, 10); 
+	//IMAGEMANAGER->findImage("number")->setFrameX(g / 10);
+	//IMAGEMANAGER->findImage("number")->frameRender(getMemDC(), 50, 10); 
 
-	IMAGEMANAGER->findImage("number")->setFrameX(g % 10);
-	IMAGEMANAGER->findImage("number")->frameRender(getMemDC(), 80, 10);
+	//IMAGEMANAGER->findImage("number")->setFrameX(g % 10);
+	//IMAGEMANAGER->findImage("number")->frameRender(getMemDC(), 80, 10);
 
 	char str[256];
 	
