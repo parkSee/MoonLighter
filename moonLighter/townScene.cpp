@@ -23,18 +23,28 @@ HRESULT townScene::init()
 
 void townScene::release()
 {
-
+	
 }
 
 void townScene::update()
 {
 	
-
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
+	
+		//vector<gameObject*> houseObj = OBJECTMANAGER->findObjects(objectType::HOUSE_OBJECT, "house");
+		//
+		//for (int i = 0; i < houseObj.size(); ++i)
+		//{
+		//	((house*)houseObj[i])->setIsLive(false);
+		//}
+
+		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
 	}
+	
 	OBJECTMANAGER->update();
+
 	CAMERAMANAGER->update();
 }
 
@@ -49,6 +59,7 @@ void townScene::render()
 	{
 		IMAGEMANAGER->render("radZone", getMemDC(), 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
 	}
+
 	//_background->render(getMemDC(), 0, 0, renderRC.left, renderRC.top, WINSIZEX, WINSIZEY);
 
 	/*HPEN pen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));

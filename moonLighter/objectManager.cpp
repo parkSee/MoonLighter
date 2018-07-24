@@ -2,6 +2,8 @@
 #include "objectManager.h"
 #include "gameObject.h"
 
+
+
 HRESULT objectManager::init()
 {
 	//게임 오브젝트가 만들어질때 벡터에 넣어준다.
@@ -94,7 +96,7 @@ void objectManager::render(HDC getMemDC)
 	*/
 	for (pair<float, gameObject*> iter : zOderList)
 	{
-		//그리고 순서대로 랜더한다.
+		
 		iter.second->render();
 	}
 
@@ -103,6 +105,23 @@ void objectManager::render(HDC getMemDC)
 
 void objectManager::reset()
 {
+
+	mIter miter;
+
+	for (miter = totalList.begin(); miter != totalList.end(); ++miter)
+	{
+		for (int i = 0; i < miter->second.size(); ++i)
+		{
+			miter->second[i]->release();
+			//SAFE_RELEASE(miter->second[i]);
+			SAFE_DELETE(miter->second[i]);
+
+			miter->second.erase(miter->second.begin() + i);
+			--i;
+		}
+	}
+
+
 }
 
 gameObject * objectManager::findObject(objectType _type, string _name)

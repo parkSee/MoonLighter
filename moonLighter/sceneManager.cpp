@@ -75,3 +75,15 @@ HRESULT sceneManager::loadScene(string sceneName)
 	
 	return E_FAIL;
 }
+
+gameNode * sceneManager::findScene(string sceneName)
+{
+	miSceneList find = _mSceneList.find(sceneName);
+
+	//못찾았다면 E_FAIL
+	if (find == _mSceneList.end()) return NULL;
+	
+
+
+	return find->second;
+}

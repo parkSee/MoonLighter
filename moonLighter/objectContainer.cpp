@@ -18,7 +18,7 @@ HRESULT objectContainer::init()
 
 	for (int i = 0; i < 2; ++i)
 	{
-		OBJECTMANAGER->addObject(objectType::OBJECT, _house[i]);
+		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _house[i]);
 	}
 		//OBJECTMANAGER->addObject(objectType::OBJECT, _house[1]);
 	
