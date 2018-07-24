@@ -5,7 +5,7 @@ HRESULT townScene::init()
 {
 
 	IMAGEMANAGER->addImage("map", "./Image/map.bmp", 3000, 2460);
-	IMAGEMANAGER->addImage("radZone", "./Image/pixel.bmp", 3000, 2460);
+	IMAGEMANAGER->addImage("redZone", "./Image/pixel.bmp", 3000, 2460);
 	
 
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
