@@ -18,9 +18,6 @@
     <Filter Include="GameFramework2D\WinMain">
       <UniqueIdentifier>{4a79707c-1728-49f2-ba7d-dc17dad14387}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Player">
-      <UniqueIdentifier>{8dedb022-032e-4e6d-955f-9603c8277adf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameFramework2D\Image">
       <UniqueIdentifier>{1851a966-ba68-4f2f-8ebc-640729b7e225}</UniqueIdentifier>
     </Filter>
@@ -60,6 +57,15 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{48c9a5f2-baa5-458a-998a-76388fbaa8d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\houseObject">
+      <UniqueIdentifier>{ea0145ab-f2af-4966-8c7d-69b9f8c31f5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\loadingImages">
+      <UniqueIdentifier>{d04181d3-44c1-4cbc-9176-e5d0b3f1b9a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\houseObject\Player">
+      <UniqueIdentifier>{8dedb022-032e-4e6d-955f-9603c8277adf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -90,7 +96,7 @@
       <Filter>GameFramework2D\Utill</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>MainGame\Player</Filter>
+      <Filter>MainGame\Object\houseObject\Player</Filter>
     </ClInclude>
     <ClInclude Include="txtData.h">
       <Filter>GameFramework2D\txtData</Filter>
@@ -140,6 +146,15 @@
     <ClInclude Include="golem.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="house.h">
+      <Filter>MainGame\Object\houseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="startScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -164,7 +179,7 @@
       <Filter>GameFramework2D\Utill</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>MainGame\Player</Filter>
+      <Filter>MainGame\Object\houseObject\Player</Filter>
     </ClCompile>
     <ClCompile Include="txtData.cpp">
       <Filter>GameFramework2D\txtData</Filter>
@@ -213,6 +228,27 @@
     </ClCompile>
     <ClCompile Include="golem.cpp">
       <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="house.cpp">
+      <Filter>MainGame\Object\houseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="startScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingScene.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="psyImage.cpp">
+      <Filter>MainGame\Scene\loadingImages</Filter>
+    </ClCompile>
+    <ClCompile Include="lejImage.cpp">
+      <Filter>MainGame\Scene\loadingImages</Filter>
+    </ClCompile>
+    <ClCompile Include="csyImage.cpp">
+      <Filter>MainGame\Scene\loadingImages</Filter>
+    </ClCompile>
+    <ClCompile Include="lysImage.cpp">
+      <Filter>MainGame\Scene\loadingImages</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -17,7 +17,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isInvincible = false;
 
 	will = new image;
-	will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
+	will = IMAGEMANAGER->findImage("will");
+	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 	
 	_probeX = pos.x + (will->getFrameWidth() / 2);
@@ -152,6 +153,7 @@ void player::render(void)
 	//RectangleMake(getMemDC(),_probeX- cam.left, pos.y - cam.top, 10, 10);
 
 	will->frameRender(getMemDC(), pos.x - cam.left, pos.y - cam.top);
+	//IMAGEMANAGER->findImage("will")->frameRender(getMemDC(), pos.x - cam.left, pos.y - cam.top);
 
 	if (KEYMANAGER->isToggleKey(VK_DELETE))
 	{
