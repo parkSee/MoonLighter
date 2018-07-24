@@ -12,11 +12,14 @@ private:
 	int _count;
 	int _probeY;
 	int _probeX;
-
+	int _attCharge;
 	float _time;
 	float _speed;
 	float _acceleration;
+	bool _isIdle;
 	bool _isUp;
+	bool _isDown;
+	bool _isLeft;
 	bool _isRight;
 	bool _isRolling;
 	bool _isInvincible;

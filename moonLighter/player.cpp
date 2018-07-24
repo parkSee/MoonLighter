@@ -9,19 +9,22 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	
 	_index = _count = 0;
 	_time = 0.0f;
-	_speed = 3.3f;
-	_acceleration = 1.5f;
-	_isUp = false;
+	_speed = 5.0f;
+	_acceleration = 2.5f;
+	_attCharge = 0;
+	_isUp = true;
+	_isDown = false;
+	_isLeft = false;
 	_isRight = false;
 	_isRolling = false;
 	_isInvincible = false;
 
 	will = new image;
 	will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
-	_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 	
-	_probeX = pos.x + (will->getFrameWidth() / 2);
-	_probeY = pos.y + (will->getFrameHeight() / 2);
+	_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+	_probeX = pos.x;
+	_probeY = pos.y;
 	
 	CAMERAMANAGER->connectTarget(pos.x, pos.y);
 	
@@ -49,7 +52,7 @@ void player::update(void)
 
 		for (int i = _probeX + 5; i >= _probeX - 5; --i)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), i, pos.y);
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, pos.y);
 			int r = GetRValue(color);
 			int g = GetGValue(color);
 			int b = GetBValue(color);
@@ -70,7 +73,7 @@ void player::update(void)
 
 		for (int i = _probeX - 5; i < _probeX + 5; ++i)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), i, pos.y);
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, pos.y);
 			int r = GetRValue(color);
 			int g = GetGValue(color);
 			int b = GetBValue(color);
@@ -91,7 +94,7 @@ void player::update(void)
 
 		for (int i = pos.y + 35; i >= pos.y - 35; i--)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), pos.x, i);
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), pos.x, i);
 			int r = GetRValue(color);
 			int g = GetGValue(color);
 			int b = GetBValue(color);
@@ -112,7 +115,7 @@ void player::update(void)
 
 		for (int i = _probeY - 10; i < _probeY + 10; ++i)
 		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("radZone")->getMemDC(), pos.x, i);
+			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), pos.x, i);
 			int r = GetRValue(color);
 			int g = GetGValue(color);
 			int b = GetBValue(color);
@@ -133,7 +136,7 @@ void player::update(void)
 	}
 	*/
 
-	rc = RectMakeCenter(pos.x, pos.y, 70, 70);
+	//rc = RectMakeCenter(pos.x, pos.y, 70, 70);
 	
 	
 	//this->collision();
@@ -151,15 +154,15 @@ void player::render(void)
 	//RectangleMake(getMemDC(), pos.x - cam.left, _probeY - cam.top, 10, 10);
 	//RectangleMake(getMemDC(),_probeX- cam.left, pos.y - cam.top, 10, 10);
 
-	will->frameRender(getMemDC(), pos.x - cam.left, pos.y - cam.top);
+	will->frameRender(getMemDC(), _rc.left - cam.left, _rc.top - cam.top);
 
 	if (KEYMANAGER->isToggleKey(VK_DELETE))
 	{
-		Rectangle(getMemDC(), _rc);
+		Rectangle(getMemDC(), _rc.left - cam.left, _rc.top - cam.top, _rc.right - cam.left, _rc.bottom - cam.top);
 	}
 	if (KEYMANAGER->isToggleKey(VK_END))
 	{
-		Rectangle(getMemDC(), _rcProbe);
+		Rectangle(getMemDC(), _rcProbe.left - cam.left, _rcProbe.top - cam.top, _rcProbe.right - cam.left, _rcProbe.bottom - cam.top);
 	}
 	
 
@@ -215,7 +218,11 @@ void player::move()
 	{
 		if (KEYMANAGER->isStayKeyDown(VK_UP))
 		{
+			_isIdle = false;
 			_isUp = true;
+			_isDown = false;
+			_isRight = false;
+			_isLeft = false;
 			will->setFrameX(_index);
 			will->setFrameY(4);
 			if (_count % 10 == 0)
@@ -227,9 +234,14 @@ void player::move()
 				}
 			}
 			pos.y -= _speed;
+
+			
 			_probeX = pos.x;
-			_probeY = pos.y;
-			for (int i = _probeY +10; i < _probeY + 30; ++i)
+			_probeY = pos.y - (will->getFrameHeight() / 4);
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.top - _rc.top;
+			for (int i = _probeY; i > _probeY - 15; --i)
 			{
 				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
@@ -238,14 +250,22 @@ void player::move()
 
 				if (r == 255 && g == 0 && b == 0)
 				{
-					pos.y = i;
+					pos.y = i + will->getFrameHeight() * 0.5 - disTemp;
 					break;
 				}
 			}
 		}
+		if (KEYMANAGER->isOnceKeyUp(VK_UP))
+		{
+			_isIdle = true;
+		}
 		if (KEYMANAGER->isStayKeyDown(VK_DOWN))
 		{
+			_isIdle = false;
+			_isDown = true;
 			_isUp = false;
+			_isRight = false;
+			_isLeft = false;
 			will->setFrameX(_index);
 			will->setFrameY(5);
 			if (_count % 10 == 0)
@@ -258,8 +278,11 @@ void player::move()
 			}
 			pos.y += _speed;
 			_probeX = pos.x;
-			_probeY = pos.y + will->getFrameHeight();
-			for (int i = _probeY - 10; i < _probeY - 30; --i)
+			_probeY = pos.y + (will->getFrameHeight() / 4);
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.bottom - _rc.bottom;
+			for (int i = _probeY; i < _probeY + 15; ++i)
 			{
 				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
@@ -268,14 +291,22 @@ void player::move()
 
 				if (r == 255 && g == 0 && b == 0)
 				{
-					pos.y = _probeY;
+					pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
 					break;
 				}
 			}
 		}
+		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+		{
+			_isIdle = true;
+		}
 		if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
 		{
+			_isIdle = false;
+			_isDown = false;
+			_isUp = false;
 			_isRight = true;
+			_isLeft = false;
 			will->setFrameX(_index);
 			will->setFrameY(6);
 			if (_count % 10 == 0)
@@ -287,24 +318,35 @@ void player::move()
 				}
 			}
 			pos.x += _speed;
-			_probeX = pos.x + will->getFrameWidth();
-			_probeY = pos.y;
-			for (int i = _probeX - 10; i < _probeX - 30; --i)
+			_probeX = pos.x + 20;
+			_probeY = pos.y; 
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.right - _rcProbe.left;
+			for (int i = _probeX; i < _probeX + 15; ++i)
 			{
 				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
-
+			
 				if (r == 255 && g == 0 && b == 0)
 				{
-					pos.x = i;
+					pos.x = i - disTemp;
 					break;
 				}
 			}
 		}
+		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+		{
+			_isIdle = true;
+		}
 		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
 		{
+			_isDown = false;
+			_isUp = false;
+			_isIdle = false;
+			_isLeft = true;
 			_isRight = false;
 			will->setFrameX(_index);
 			will->setFrameY(7);
@@ -317,9 +359,12 @@ void player::move()
 				}
 			}
 			pos.x -= _speed;
-			_probeX = pos.x - will->getFrameWidth()/2;
+			_probeX = pos.x - 20;
 			_probeY = pos.y;
-			for (int i = _probeX - 30; i < _probeX + 30; ++i)
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.right - _rcProbe.left;
+			for (int i = _probeX; i > _probeX - 15 ; --i)
 			{
 				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
@@ -328,12 +373,16 @@ void player::move()
 
 				if (r == 255 && g == 0 && b == 0)
 				{
-					pos.x = i;
+					pos.x = i + disTemp;
 					break;
 				}
 			}
-
 		}
+		if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+		{
+			_isIdle = true;
+		
+		}		
 		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 		{
 			_index = 0;
@@ -341,6 +390,75 @@ void player::move()
 			_isInvincible = true;
 			_acceleration = 0.5f;
 		}
+		if(_isIdle == true)
+		{
+			if (_isUp)
+			{
+				will->setFrameX(_index);
+				will->setFrameY(0);
+				if (_count % 7 == 0)
+				{
+					++_index;
+					if (_index > 9)
+					{
+						_index = 0;
+					}
+				}
+			}
+			else if (_isDown)
+			{
+				will->setFrameX(_index);
+				will->setFrameY(1);
+				if (_count % 7 == 0)
+				{
+					++_index;
+					if (_index > 9)
+					{
+						_index = 0;
+					}
+				}
+			}
+			else if (_isRight)
+			{
+				will->setFrameX(_index);
+				will->setFrameY(2);
+				if (_count % 7 == 0)
+				{
+					++_index;
+					if (_index > 9)
+					{
+						_index = 0;
+					}
+				}
+			}
+			else if (_isLeft)
+			{
+				will->setFrameX(_index);
+				will->setFrameY(3);
+				if (_count % 7 == 0)
+				{
+					++_index;
+					if (_index > 9)
+					{
+						_index = 0;
+					}
+				}
+			}
+		}
+		//////////////////////////////////////////////////행동////////////////
+		if (KEYMANAGER->isOnceKeyDown('A'))
+		{
+			//대화
+		}
+		if (KEYMANAGER->isOnceKeyDown('S'))
+		{
+			
+		}
+		if (KEYMANAGER->isOnceKeyDown('D'))
+		{
+			
+		}
+		///////////////////////////////////////////////////////////////////////////////
 	}
 	else
 	{
@@ -348,7 +466,7 @@ void player::move()
 		{
 			will->setFrameX(_index);
 			will->setFrameY(8);
-			if (_count % 10 == 0)
+			if (_count % 6 == 0)
 			{
 				++_index;
 				if (_index > 7)
@@ -357,15 +475,32 @@ void player::move()
 					_isRolling = false;
 					_isInvincible = false;
 				}
-			}
-			
+			}	
 			pos.y -= (_speed + _acceleration);
+			_probeX = pos.x;
+			_probeY = pos.y - (will->getFrameHeight() / 4);
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.top - _rc.top;
+			for (int i = _probeY; i > _probeY - 15; --i)
+			{
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if (r == 255 && g == 0 && b == 0)
+				{
+					pos.y = i + will->getFrameHeight() * 0.5 - disTemp;
+					break;
+				}
+			}
 		}
-		if (_isUp == false)
+		else if (_isDown)
 		{
 			will->setFrameX(_index);
 			will->setFrameY(9);
-			if (_count % 10 == 0)
+			if (_count % 6 == 0)
 			{
 				++_index;
 				if (_index > 7)
@@ -376,12 +511,30 @@ void player::move()
 				}
 			}
 			pos.y += (_speed + _acceleration);
+			_probeX = pos.x;
+			_probeY = pos.y + (will->getFrameHeight() / 4);
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.bottom - _rc.bottom;
+			for (int i = _probeY; i < _probeY + 15; ++i)
+			{
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if (r == 255 && g == 0 && b == 0)
+				{
+					pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
+					break;
+				}
+			}
 		}
-		if (_isRight)
+		else if (_isRight)
 		{
 			will->setFrameX(_index);
 			will->setFrameY(10);
-			if (_count % 10 == 0)
+			if (_count % 6 == 0)
 			{
 				++_index;
 				if (_index > 7)
@@ -392,12 +545,30 @@ void player::move()
 				}
 			}
 			pos.x += (_speed + _acceleration);
+			_probeX = pos.x + 20;
+			_probeY = pos.y;
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.right - _rcProbe.left;
+			for (int i = _probeX; i < _probeX + 15; ++i)
+			{
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if (r == 255 && g == 0 && b == 0)
+				{
+					pos.x = i - disTemp;
+					break;
+				}
+			}
 		}
-		if(_isRight == false)
+		else if(_isLeft)
 		{
 			will->setFrameX(_index);
 			will->setFrameY(11);
-			if (_count % 10 == 0)
+			if (_count % 6 == 0)
 			{
 				++_index;
 				if (_index > 7)
@@ -408,10 +579,28 @@ void player::move()
 				}
 			}
 			pos.x -= (_speed + _acceleration);
+			_probeX = pos.x - 20;
+			_probeY = pos.y;
+			_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+			int disTemp = _rcProbe.right - _rcProbe.left;
+			for (int i = _probeX; i > _probeX - 15; --i)
+			{
+				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				int r = GetRValue(color);
+				int g = GetGValue(color);
+				int b = GetBValue(color);
+
+				if (r == 255 && g == 0 && b == 0)
+				{
+					pos.x = i + disTemp;
+					break;
+				}
+			}
 		}
 	}
-	_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
-	_rcProbe = RectMake(_probeX, _probeY, _probeX + 30, _probeY + 30);
+	_rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+	_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 	
 		
 	
