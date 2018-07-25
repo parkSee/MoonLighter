@@ -10,6 +10,7 @@ void loadingScene::psyImageLoading()
 
 	//¼¥
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
+	_loading->loadImage("shopPixel", "./Image/shop_object/shopPixel.bmp", 1122, 1440);
 
 	//¿ÀºêÁ§Æ®
 	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 679, true, RGB(255, 0, 255));
@@ -22,4 +23,7 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("build_Forge", "./Image/town_object/build_Forge.bmp", 640, 483, true, MAGENTA);
 	_loading->loadImage("build_Well", "./Image/town_object/build_Well.bmp", 132, 160, true, MAGENTA);
 	_loading->loadImage("build_Board", "./Image/town_object/build_Board.bmp", 204, 134, true, MAGENTA);
+
+
 }
+

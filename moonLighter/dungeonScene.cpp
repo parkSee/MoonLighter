@@ -8,6 +8,7 @@ HRESULT dungeonScene::init()
 
 	_player = new player;
 	_player->init("player", tagFloat(WINSIZEX / 2, WINSIZEY / 2));
+	_player->setPixelImage(IMAGEMANAGER->findImage("redZone"));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
 	_em = new enemyController;
