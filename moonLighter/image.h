@@ -118,7 +118,6 @@ public:
 	void stretchRender(HDC hdc, int destX, int destY, float scale = 1.0f);
 	void stretchFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, float scale = 1.0f);
 
-
 //=============================================================
 //	## ¾Ö´Ï·»´õ ## 
 //=============================================================

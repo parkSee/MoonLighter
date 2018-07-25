@@ -27,6 +27,7 @@ HRESULT gameNode::init(bool managerInit)
 		INIDATA->init();
 		OBJECTMANAGER->init();
 		EFFECTMANAGER->init();
+		TIMEMANAGER->init();
 	}
 
 	return S_OK;
@@ -64,6 +65,8 @@ void gameNode::release(void)
 		OBJECTMANAGER->releaseSingleton();
 		EFFECTMANAGER->release();
 		EFFECTMANAGER->releaseSingleton();
+		TIMEMANAGER->release();
+		TIMEMANAGER->releaseSingleton();
 	}
 
 	//DC «ÿ¡¶
