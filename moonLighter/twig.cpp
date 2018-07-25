@@ -6,7 +6,7 @@
 HRESULT twig::init()
 {
 	_pos = tagFloat(WINSIZEX / 4, WINSIZEY / 2);
-	_img = IMAGEMANAGER->findImage("potion");
+	_img = IMAGEMANAGER->findImage("twig");
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
 
 	return S_OK;

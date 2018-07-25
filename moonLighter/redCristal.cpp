@@ -6,7 +6,7 @@
 HRESULT redCristal::init()
 {
 	_pos = tagFloat(WINSIZEX / 3, WINSIZEY / 2);
-	_img = IMAGEMANAGER->findImage("potion");
+	_img = IMAGEMANAGER->findImage("redCristal");
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
 
 	return S_OK;

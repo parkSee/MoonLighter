@@ -6,7 +6,7 @@
 HRESULT golemCore::init()
 {
 	_pos = tagFloat(WINSIZEX / 2, WINSIZEY / 4);
-	_img = IMAGEMANAGER->findImage("potion");
+	_img = IMAGEMANAGER->findImage("golemCore");
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
 
 	return S_OK;
