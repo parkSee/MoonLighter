@@ -15,7 +15,7 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("townScene", new townScene);
 	SCENEMANAGER->addScene("shopScene", new shopScene);
 	SCENEMANAGER->addScene("dungeonScene", new dungeonScene);
-
+	SCENEMANAGER->addScene("dungeonLobby", new dungeonLobby);
 
 	/*ÇöÀç¾À ¼³Á¤*/
 	SCENEMANAGER->loadScene("loadingScene");
