@@ -148,11 +148,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="animation.h" />
     <ClInclude Include="bigSlime.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="dungeonLobby.h" />
     <ClInclude Include="dungeonScene.h" />
+    <ClInclude Include="effect.h" />
+    <ClInclude Include="effectManager.h" />
     <ClInclude Include="enemyController.h" />
     <ClInclude Include="gameNode.h" />
     <ClInclude Include="gameObject.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="soundManager.h" />
     <ClInclude Include="startScene.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="timeManager.h" />
     <ClInclude Include="townScene.h" />
     <ClInclude Include="twig.h" />
     <ClInclude Include="txtData.h" />
@@ -193,11 +197,14 @@
     <ClInclude Include="weed.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="animation.cpp" />
     <ClCompile Include="bigSlime.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="csyImage.cpp" />
     <ClCompile Include="dungeonLobby.cpp" />
     <ClCompile Include="dungeonScene.cpp" />
+    <ClCompile Include="effect.cpp" />
+    <ClCompile Include="effectManager.cpp" />
     <ClCompile Include="enemyController.cpp" />
     <ClCompile Include="gameNode.cpp" />
     <ClCompile Include="gameObject.cpp" />
@@ -237,6 +244,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="townScene.cpp" />
     <ClCompile Include="twig.cpp" />
     <ClCompile Include="txtData.cpp" />

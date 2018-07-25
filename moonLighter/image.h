@@ -1,4 +1,6 @@
 #pragma once
+#include "animation.h"
+
 //=============================================================
 //	## image ## (앞으로 계속 업데이트 된다)
 //=============================================================
@@ -115,6 +117,13 @@ public:
 //=============================================================
 	void stretchRender(HDC hdc, int destX, int destY, float scale = 1.0f);
 	void stretchFrameRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, float scale = 1.0f);
+
+
+//=============================================================
+//	## 애니렌더 ## 
+//=============================================================
+	void aniRender(HDC hdc, int destX, int destY, animation* ani);
+	void aniAlphaRender(HDC hdc, int destX, int destY, animation* ani, BYTE alpha);
 
 //=============================================================
 //	## inline ## (인라인 함수들 - 겟터, 셋터)

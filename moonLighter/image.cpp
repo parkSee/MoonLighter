@@ -495,7 +495,44 @@ void image::alphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 }
 
 void image::alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha)
-{
+{   //알파블렌드를 처음사용하니?
+	//알파블렌드를 사용할 수 있도록 초기화해
+	if (!_blendImage) this->initForAlphaBlend();
+
+	//알파값 초기화
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	if (_isTrans) //배경색 없앤후 알파블렌딩 하니?
+	{
+		//1. 출력해야 될 화면DC에 그려져 있는 내용을 블렌드이미지에 그린다
+		BitBlt(_blendImage->hMemDC, 0, 0, sourWidth, sourHeight,
+			hdc, destX, destY, SRCCOPY);
+
+		//2. 메모리DC 이미지의 배경을 없앤후 다시 블렌드이미지에 그린다
+		//GdiTransparentBlt : 비트맵의 특정색상을 제외하고 고속복사 해주는 함수
+		GdiTransparentBlt(
+			_blendImage->hMemDC,   //복사할 장소의 DC
+			0,               //복사될 좌표 시작점 X
+			0,               //복사될 좌표 시작점 Y
+			sourWidth,            //복사될 이미지 가로크기
+			sourHeight,            //복사될 이미지 세로크기
+			_imageInfo->hMemDC,      //복사될 대상 DC
+			sourX, sourY,         //복사 시작지점
+			sourWidth,            //복사 영역 가로크기
+			sourHeight,            //복사 영역 세로크기
+			_transColor);         //복사할때 제외할 색상 (마젠타)
+
+								  //3. 블렌드이미지를 화면에 그린다
+								  //알파블렌드
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
+			_blendImage->hMemDC, 0, 0, sourWidth, sourHeight, _blendFunc);
+	}
+	else //원본 이미지 그대로 알파블렌딩 할꺼냐?
+	{
+		//알파블렌드
+		AlphaBlend(hdc, destX, destY, sourWidth, sourHeight,
+			_imageInfo->hMemDC, sourX, sourY, sourWidth, sourHeight, _blendFunc);
+	}
 }
 
 void image::frameAlphaRender(HDC hdc, int destX, int destY, BYTE alpha)
@@ -818,4 +855,14 @@ void image::stretchFrameRender(HDC hdc, int destX, int destY, int currentFrameX,
 			_imageInfo->frameWidth,
 			_imageInfo->frameHeight, SRCCOPY);
 	}
+}
+
+void image::aniRender(HDC hdc, int destX, int destY, animation * ani)
+{
+	render(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight());
+}
+
+void image::aniAlphaRender(HDC hdc, int destX, int destY, animation * ani, BYTE alpha)
+{
+	alphaRender(hdc, destX, destY, ani->getFramePos().x, ani->getFramePos().y, ani->getFrameWidth(), ani->getFrameHeight(), alpha);
 }

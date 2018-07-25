@@ -10,6 +10,7 @@ void loadingScene::psyImageLoading()
 
 	//샵
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
+	_loading->loadImage("shopLayer", "./Image/shop_object/shopLayer.bmp", 1122, 248, true, MAGENTA);
 	_loading->loadImage("shopPixel", "./Image/shop_object/shopPixel.bmp", 1122, 1440);
 
 	//오브젝트

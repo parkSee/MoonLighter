@@ -72,6 +72,12 @@
     <Filter Include="MainGame\Item\ItemType">
       <UniqueIdentifier>{dde179f4-6246-47b4-8192-52b3e2f23b7e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameFramework2D\Effect">
+      <UniqueIdentifier>{5db141e6-ab45-495f-b08d-a38d7f0fb62b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameFramework2D\Animation">
+      <UniqueIdentifier>{63c8ca67-ce84-46f7-b0d4-add0104aaeeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -202,6 +208,18 @@
     </ClInclude>
     <ClInclude Include="dungeonLobby.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="effectManager.h">
+      <Filter>GameFramework2D\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="effect.h">
+      <Filter>GameFramework2D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="animation.h">
+      <Filter>GameFramework2D\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="timeManager.h">
+      <Filter>GameFramework2D\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -339,6 +357,18 @@
     </ClCompile>
     <ClCompile Include="dungeonLobby.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="effectManager.cpp">
+      <Filter>GameFramework2D\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="effect.cpp">
+      <Filter>GameFramework2D\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="animation.cpp">
+      <Filter>GameFramework2D\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="timeManager.cpp">
+      <Filter>GameFramework2D\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

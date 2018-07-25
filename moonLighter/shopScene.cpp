@@ -41,14 +41,13 @@ void shopScene::update()
 	}
 
 }
-
+ 
 void shopScene::render()
 {
 	RECT rc = CAMERAMANAGER->getRenderRc();
 
 
 	IMAGEMANAGER->findImage("shopMap")->render(getMemDC(),0- rc.left,0 - rc.top);//, 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
-	
 	if (KEYMANAGER->isStayKeyDown('V'))
 	{
 		IMAGEMANAGER->findImage("shopPixel")->render(getMemDC(), 0 - rc.left, 0 - rc.top);//, 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
@@ -56,6 +55,7 @@ void shopScene::render()
 
 	
 	OBJECTMANAGER->render(getMemDC());
+	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - rc.left, 555 - rc.top);
 	
 
 
