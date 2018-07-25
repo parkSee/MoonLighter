@@ -27,6 +27,8 @@ private:
 	image* backGround;
 	image* will;
 
+	image* _pixelImg;
+
 	RECT _rc;
 	RECT _rcProbe;
 public:
@@ -38,6 +40,7 @@ public:
 	void collision();
 	void move();
 	bool getInvincible() { return _isInvincible; }
+	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 
 
 	player() {}
