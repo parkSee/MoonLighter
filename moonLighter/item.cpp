@@ -4,7 +4,6 @@
 HRESULT item::init()
 {	
 	
-	
 	return S_OK;
 }
 

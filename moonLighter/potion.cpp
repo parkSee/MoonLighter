@@ -1,13 +1,13 @@
 #include "stdafx.h"
 #include "potion.h"
 
-
+// csyADD [충돌박스 선언 추가]
 HRESULT potion::init()
 {
-
-
 	_pos = tagFloat(WINSIZEX / 2, WINSIZEY / 2);
 	_img = IMAGEMANAGER->findImage("potion");
+
+	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
 
 	return S_OK;
 }
@@ -22,7 +22,9 @@ void potion::update()
 
 void potion::render()
 {
-	//_img->render(hdc, pos.x, pos.y);
+	RECT camRC;
+	camRC = CAMERAMANAGER->getRenderRc();
+	_img->render(getMemDC(), _pos.x - camRC.left, _pos.y - camRC.top);
 
-	IMAGEMANAGER->findImage("potion")->render(getMemDC(), _pos.x, _pos.y);
+	//IMAGEMANAGER->findImage("potion")->render(getMemDC(), _pos.x, _pos.y);
 }

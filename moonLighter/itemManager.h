@@ -2,9 +2,14 @@
 #include "gameNode.h"
 #include "item.h"
 #include "potion.h"
+#include "liquidItem.h"
+#include "redCristal.h"
+#include "twig.h"
+#include "rebar.h"
+#include "golemCore.h"
 
+//csyADD [아이템 매니저 헤더 - 아이템 _liquidItem, _twig, _redCristal, _rebar, _golemCore 추가]
 
-//csyADD [아이템 매니저 생성 및 '맵' 사용]
 namespace itemType
 {
 	enum Enum	//아이템 종류 이넘문
@@ -19,8 +24,12 @@ class itemManager : public gameNode
 	typedef unordered_map<itemType::Enum, item*>::iterator mItemIter;		// 맵을 이용한 아이템 반복자
 
 	item* _potion;
-	//item* _liquidItem;
-	
+	item* _liquidItem;
+	item* _twig;
+	item* _redCristal;
+	item* _rebar;
+	item* _golemCore;
+
 public:
 
 	HRESULT init();

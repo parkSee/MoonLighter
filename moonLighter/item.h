@@ -1,14 +1,14 @@
 #pragma once
 #include "gameNode.h"
-//csyADD [아이템 클래스 추가]
+
+//csyADD [충돌박스 용 렉트 추가]
 
 class item : public gameNode
 {	
 protected:
 	tagFloat _pos;
 	image* _img;
-	
-
+	RECT _collisionBox;
 
 public:
 
