@@ -46,6 +46,8 @@ void loadingScene::loadingImage()
 	this->lejImageLoading();
 	this->csyImageLoading();
 	this->lysImageLoading();
+
+	
 	//IMAGEMANAGER->addImage("build_Top1", "./Image/town_object/build_Top1.bmp", 459, 383, true, RGB(255, 0, 255));
 
 	//_loading->loadFrameImage();
@@ -64,5 +66,6 @@ void loadingScene::loadingImage()
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
 void loadingScene::loadingSound()
 {
+	_loading->loadSound("마을노래", "./gameSound/마을노래.mp3", true, true);
 }
 

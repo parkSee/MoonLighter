@@ -7,7 +7,7 @@ class objectContainer : public gameNode
 {
 private:
 
-	house * _house[9];
+	house * _house[10];
 
 public:
 

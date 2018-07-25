@@ -14,6 +14,8 @@ HRESULT townScene::init()
 
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
+	SOUNDMANAGER->play("마을노래");
+
 	return S_OK;
 }
 
@@ -29,6 +31,7 @@ void townScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
+		SOUNDMANAGER->stop("마을노래");
 	}
 	
 	OBJECTMANAGER->update();
