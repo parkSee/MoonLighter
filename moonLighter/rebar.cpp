@@ -6,7 +6,7 @@
 HRESULT rebar::init()
 {
 	_pos = tagFloat(WINSIZEX / 2, WINSIZEY / 3);
-	_img = IMAGEMANAGER->findImage("potion");
+	_img = IMAGEMANAGER->findImage("rebar");
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
 
 	return S_OK;
