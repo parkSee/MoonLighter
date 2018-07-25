@@ -10,7 +10,7 @@ class townScene : public gameNode
 private:
 
 	player * _player;	//플레이어 클래
-
+	RECT enterRc;
 	
 	objectContainer* _container;
 public:

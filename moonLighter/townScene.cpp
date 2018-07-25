@@ -12,9 +12,13 @@ HRESULT townScene::init()
 	_container = new objectContainer;
 	_container->init();
 
+	enterRc = RectMakeCenter(1944, 602, 100, 50);
+
+	//IMAGEMANAGER->addImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
+		//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
-	SOUNDMANAGER->play("마을노래");
+	SOUNDMANAGER->play("townBGM");
 
 	return S_OK;
 }
@@ -31,12 +35,22 @@ void townScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
-		SOUNDMANAGER->stop("마을노래");
+		SOUNDMANAGER->stop("townBGM");
 	}
 	
+	RECT temp;
+	if (IntersectRect(&temp, &_player->rc, &enterRc))
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("shopScene");
+		SOUNDMANAGER->stop("townBGM");
+	}
+
 	OBJECTMANAGER->update();
 
 	CAMERAMANAGER->update();
+
+	enterRc = RectMakeCenter(1944, 602, 100, 50);
 }
 
 void townScene::render()
@@ -65,9 +79,9 @@ void townScene::render()
 	SelectObject(getMemDC(), oldPen);
 	DeleteObject(pen); 
 	*/
-	CAMERAMANAGER->render(getMemDC());
 
 	OBJECTMANAGER->render(getMemDC());
+	RectangleCam(getMemDC(), enterRc, rc);
 
 
 

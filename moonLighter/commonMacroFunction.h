@@ -54,3 +54,9 @@ inline void Rectangle(HDC hdc, RECT rc)
 {
 	Rectangle(hdc, rc.left, rc.top, rc.right, rc.bottom);
 }
+
+//카메라 빼주는 렉트
+inline void RectangleCam(HDC hdc, RECT rc, RECT cam)
+{
+	Rectangle(hdc, rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
+}

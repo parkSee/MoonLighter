@@ -8,6 +8,9 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("map", "./Image/map.bmp", 3000, 2460);
 	_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 
+	//¼¥
+	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
+
 	//¿ÀºêÁ§Æ®
 	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 679, true, RGB(255, 0, 255));
 	_loading->loadImage("build_Top1", "./Image/town_object/build_Top1.bmp", 459, 383, true, RGB(255, 0, 255));

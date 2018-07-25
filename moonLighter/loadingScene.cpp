@@ -66,6 +66,7 @@ void loadingScene::loadingImage()
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
 void loadingScene::loadingSound()
 {
-	_loading->loadSound("마을노래", "./gameSound/마을노래.mp3", true, true);
+	_loading->loadSound("townBGM", "./gameSound/townBGM.mp3", true, true);
+	_loading->loadSound("shopBGM", "./gameSound/shopBGM.mp3", true, true);
 }
 

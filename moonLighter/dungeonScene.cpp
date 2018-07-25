@@ -5,9 +5,7 @@ HRESULT dungeonScene::init()
 {
 
 	//lejADD ´øÀü ¸Ê Ãß°¡
-	//player* _player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
-	//_player->init("player", tagFloat(WINSIZEX - WINSIZEX / 4, WINSIZEY / 2));
-	
+
 	_player = new player;
 	_player->init("player", tagFloat(WINSIZEX / 2, WINSIZEY / 2));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);

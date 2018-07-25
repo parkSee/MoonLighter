@@ -21,10 +21,7 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->loadScene("loadingScene");
 
 
-	/*_player = new player;
-	_player->init("player", tagFloat(WINSIZEX / 2, WINSIZEY / 2));
-	OBJECTMANAGER->addObject(objectType::PLAYER, _player);*/
-
+	
 	return S_OK;
 }
 

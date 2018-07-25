@@ -22,6 +22,7 @@ HRESULT objectContainer::init()
 		_house[7]->init("house", tagFloat(2620, 1031), IMAGEMANAGER->findImage("build_Forge"));
 		_house[8]->init("house", tagFloat(2429, 2052), IMAGEMANAGER->findImage("build_Well"));
 		_house[9]->init("house", tagFloat(1676, 1124), IMAGEMANAGER->findImage("build_Board"));
+	
 	for (int i = 0; i < 10; ++i)
 	{
 		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _house[i]);
