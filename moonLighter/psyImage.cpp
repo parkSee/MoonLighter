@@ -4,7 +4,7 @@
 
 void loadingScene::psyImageLoading()
 {
-	//맵
+	//타운맵
 	_loading->loadImage("map", "./Image/map.bmp", 3000, 2460);
 	_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 
@@ -12,6 +12,13 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
 	_loading->loadImage("shopLayer", "./Image/shop_object/shopLayer.bmp", 1122, 248, true, MAGENTA);
 	_loading->loadImage("shopPixel", "./Image/shop_object/shopPixel.bmp", 1122, 1440);
+
+	//던전 로비
+	_loading->loadImage("dunIntro", "./Image/dungeon_object/dungeonLobby_base.bmp", 1680, 1434);
+	_loading->loadImage("dunIntroRed", "./Image/dungeon_object/dungeonLobby_redzone2.bmp", 1680, 1434);
+
+	//던전
+	//_loading->loadImage("stage2","./Image/dungeon_object/stage2.bmp")
 
 	//오브젝트
 	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 679, true, RGB(255, 0, 255));

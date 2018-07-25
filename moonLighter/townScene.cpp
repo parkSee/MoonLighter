@@ -13,13 +13,13 @@ HRESULT townScene::init()
 	_container = new objectContainer;
 	_container->init();
 
-	enterRc = RectMakeCenter(1944, 602, 100, 50);
-
+	_enterShopRc = RectMakeCenter(1944, 602, 100, 50);
+	_enterDgInRc = RectMakeCenter(2950, 788, 50, 100);
 	//IMAGEMANAGER->addImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
-		//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
+	//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
-	SOUNDMANAGER->play("townBGM");
+	//SOUNDMANAGER->play("townBGM");
 
 	return S_OK;
 }
@@ -36,22 +36,28 @@ void townScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
-		SOUNDMANAGER->stop("townBGM");
+		//SOUNDMANAGER->stop("townBGM");
 	}
 	
 	RECT temp;
-	if (IntersectRect(&temp, &_player->rc, &enterRc))
+	if (IntersectRect(&temp, &_player->rc, &_enterShopRc))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("shopScene");
-		SOUNDMANAGER->stop("townBGM");
+		//SOUNDMANAGER->stop("townBGM");
 	}
 
+	if (IntersectRect(&temp, &_player->rc, &_enterDgInRc))
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("dungeonLobby");
+	}
 	OBJECTMANAGER->update();
 
 	CAMERAMANAGER->update();
 
-	enterRc = RectMakeCenter(1944, 602, 100, 50);
+	_enterShopRc = RectMakeCenter(1944, 602, 100, 50);
+	_enterDgInRc = RectMakeCenter(2950, 788, 50, 100);
 }
 
 void townScene::render()
@@ -82,7 +88,8 @@ void townScene::render()
 	*/
 
 	OBJECTMANAGER->render(getMemDC());
-	RectangleCam(getMemDC(), enterRc, rc);
+	RectangleCam(getMemDC(), _enterShopRc, rc);
+	RectangleCam(getMemDC(), _enterDgInRc, rc);
 
 
 

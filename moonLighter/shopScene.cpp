@@ -18,7 +18,7 @@ HRESULT shopScene::init()
 	//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 	CAMERAMANAGER->setMapSize(WINSIZEX, 1440);
 
-	//SOUNDMANAGER->play("shopBGM");
+	SOUNDMANAGER->play("shopBGM");
 
 	return S_OK;
 }
@@ -37,7 +37,7 @@ void shopScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("townScene");
-		//SOUNDMANAGER->stop("townBGM");
+		SOUNDMANAGER->stop("shopBGM");
 	}
 
 }
