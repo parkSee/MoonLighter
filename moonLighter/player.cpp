@@ -30,6 +30,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_probeX = pos.x;
 	_probeY = pos.y;
 	
+	
+
 	CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	return S_OK;
@@ -249,7 +251,7 @@ void player::move()
 			int disTemp = _rcProbe.top - rc.top;
 			for (int i = _probeY; i > _probeY - 15; --i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -290,7 +292,7 @@ void player::move()
 			int disTemp = _rcProbe.bottom - rc.bottom;
 			for (int i = _probeY; i < _probeY + 15; ++i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -331,7 +333,7 @@ void player::move()
 			int disTemp = _rcProbe.right - _rcProbe.left;
 			for (int i = _probeX; i < _probeX + 15; ++i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -372,7 +374,7 @@ void player::move()
 			int disTemp = _rcProbe.right - _rcProbe.left;
 			for (int i = _probeX; i > _probeX - 15 ; --i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -490,7 +492,7 @@ void player::move()
 			int disTemp = _rcProbe.top - rc.top;
 			for (int i = _probeY; i > _probeY - 15; --i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -524,7 +526,7 @@ void player::move()
 			int disTemp = _rcProbe.bottom - rc.bottom;
 			for (int i = _probeY; i < _probeY + 15; ++i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), _probeX, i);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -558,7 +560,7 @@ void player::move()
 			int disTemp = _rcProbe.right - _rcProbe.left;
 			for (int i = _probeX; i < _probeX + 15; ++i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -592,7 +594,7 @@ void player::move()
 			int disTemp = _rcProbe.right - _rcProbe.left;
 			for (int i = _probeX; i > _probeX - 15; --i)
 			{
-				COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, _probeY);
+				COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
 				int r = GetRValue(color);
 				int g = GetGValue(color);
 				int b = GetBValue(color);
@@ -640,3 +642,4 @@ void player::move()
 
 	*/
 }
+
