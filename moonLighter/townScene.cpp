@@ -27,14 +27,6 @@ void townScene::update()
 	
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
-	
-		//vector<gameObject*> houseObj = OBJECTMANAGER->findObjects(objectType::HOUSE_OBJECT, "house");
-		//
-		//for (int i = 0; i < houseObj.size(); ++i)
-		//{
-		//	((house*)houseObj[i])->setIsLive(false);
-		//}
-
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
 	}

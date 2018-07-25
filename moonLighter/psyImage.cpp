@@ -6,7 +6,7 @@ void loadingScene::psyImageLoading()
 {
 	//¸Ê
 	_loading->loadImage("map", "./Image/map.bmp", 3000, 2460);
-	_loading->loadImage("redZone", "./Image/town_object/zOder_town.bmp", 3000, 2460);
+	_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 
 	//¿ÀºêÁ§Æ®
 	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 679, true, RGB(255, 0, 255));
