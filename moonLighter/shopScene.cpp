@@ -6,7 +6,7 @@ HRESULT shopScene::init()
 
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
 	_player = new player;
-	_player->init("player", tagFloat(WINSIZEX/2, WINSIZEY/2));
+	_player->init("player", tagFloat(WINSIZEX/2, 1000));
 
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
 
@@ -16,6 +16,7 @@ HRESULT shopScene::init()
 	//_loading->loadImage("shopMap", "./Image/shop_object/red.bmp", 811, 850, true, MAGENTA);
 	//IMAGEMANAGER->addImage("shopMap", "./Image/shop_object/shop.bmp", 811, 850);
 	//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
+	
 	CAMERAMANAGER->setMapSize(WINSIZEX, 1440);
 
 	SOUNDMANAGER->play("shopBGM");
@@ -30,7 +31,7 @@ void shopScene::release()
 void shopScene::update()
 {
 	OBJECTMANAGER->update();
-
+	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	CAMERAMANAGER->update();
 
 	if (KEYMANAGER->isOnceKeyDown('C'))
@@ -44,18 +45,18 @@ void shopScene::update()
  
 void shopScene::render()
 {
-	RECT rc = CAMERAMANAGER->getRenderRc();
+	RECT cam = CAMERAMANAGER->getRenderRc();
 
 
-	IMAGEMANAGER->findImage("shopMap")->render(getMemDC(),0- rc.left,0 - rc.top);//, 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
+	IMAGEMANAGER->findImage("shopMap")->render(getMemDC(),0- cam.left,0 - cam.top);//, 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
 	if (KEYMANAGER->isStayKeyDown('V'))
 	{
-		IMAGEMANAGER->findImage("shopPixel")->render(getMemDC(), 0 - rc.left, 0 - rc.top);//, 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
+		IMAGEMANAGER->findImage("shopPixel")->render(getMemDC(), 0 - cam.left, 0 - cam.top);//, 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
 	}
 
 	
 	OBJECTMANAGER->render(getMemDC());
-	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - rc.left, 555 - rc.top);
+	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - cam.left, 555 - cam.top);
 	
 
 

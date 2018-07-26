@@ -8,12 +8,13 @@ private:
 	tagInt _mapSize;	//맵사이즈
 
 	tagFloat _target;	//타켓의 좌표
-
+	tagFloat _oldPos;
 	tagFloat _shakePos;	//카메라 흔들림 좌표
 	bool _isShake;		//카메라 흔들림 불값
 	float _shakeTimer;	//카메라 흔들림 시간
 	float _shakeStrenth;//카메라 흔들림 강도
-
+	int _speed;
+	float _angle;
 	RECT _renderRc;		//카메라 렉트
 
 public:
@@ -26,9 +27,11 @@ public:
 	void render(HDC hdc);
 	void cameraMove();	//카메라 움직임
 
-						//카메라 타겟 설정, 딜레이 타임이 있다면 예약타겟에넣어둔다
-	void connectTarget(float x, float y, float delayTime = 0.0f);
+	void cameraSlideMove(float speed);
 
+	//카메라 타겟 설정, 딜레이 타임이 있다면 예약타겟에넣어둔다
+	void connectTarget(float x, float y, float delayTime = 0.0f);
+	
 	//맵사이즈 설정자
 	void setMapSize(int width, int height) { _mapSize.x = width; _mapSize.y = height; }
 

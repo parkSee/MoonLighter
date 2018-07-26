@@ -4,6 +4,7 @@
 #include "player.h"
 #include "itemManager.h"
 
+
 class dungeonScene : public gameNode
 {
 
@@ -14,6 +15,7 @@ private:
 	itemManager * _im;
 	enemyController * _em;
 
+	RECT _enterRc[8];
 public:
 
 
@@ -22,7 +24,7 @@ public:
 	void update();
 	void render();
 
-
+	void moveDungeon();
 
 	dungeonScene(){}
 	~dungeonScene(){}

@@ -18,8 +18,8 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("dunIntroRed", "./Image/dungeon_object/dungeonLobby_redzone.bmp", 1680, 1434);
 
 	//던전
-	_loading->loadImage("stage1", "./Image/dungeon_object/stage1.bmp",1280,720);
-	_loading->loadImage("stage2", "./Image/dungeon_object/stage2.bmp", 1280, 720);
+	_loading->loadImage("dungeonMap", "./Image/dungeon_object/dungeonMap.bmp",3840,2160,true,MAGENTA);
+	//_loading->loadImage("stage2", "./Image/dungeon_object/stage2.bmp", 1280, 720);
 
 	//오브젝트
 	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 679, true, RGB(255, 0, 255));

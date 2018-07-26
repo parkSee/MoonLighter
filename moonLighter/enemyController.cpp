@@ -24,6 +24,7 @@ HRESULT enemyController::init()
 	OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
 	OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 	OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+
 	return S_OK;
 }
 
