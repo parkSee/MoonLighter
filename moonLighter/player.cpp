@@ -24,8 +24,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
-	
-	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);										//lysADD(플레이어 몸뚱아리 렉트 초기화)
+	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());		//		 플레이어 이미지 렉트 초기화
 	
 	_probeX = pos.x;
 	_probeY = pos.y;
@@ -164,13 +164,17 @@ void player::render(void)
 	will->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 
 
-	if (KEYMANAGER->isToggleKey(VK_DELETE))
+	if (KEYMANAGER->isToggleKey(VK_DELETE))  //lysADD(카메라 렉트 출력)
 	{
 		Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
 	}
-	if (KEYMANAGER->isToggleKey(VK_END))
+	if (KEYMANAGER->isToggleKey(VK_END))	//lysADD(픽셀충돌체크 렉트 출력)
 	{
 		Rectangle(getMemDC(), _rcProbe.left - cam.left, _rcProbe.top - cam.top, _rcProbe.right - cam.left, _rcProbe.bottom - cam.top);
+	}
+	if (KEYMANAGER->isToggleKey(VK_F12))	//lysADD(아이템토글, 몬스터 충돌 렉트 출력)
+	{
+		Rectangle(getMemDC(), _rcBody.left - cam.left, _rcBody.top - cam.top, _rcBody.right - cam.left, _rcBody.bottom - cam.top);
 	}
 	
 
@@ -608,6 +612,7 @@ void player::move()
 		}
 	}
 	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);
 	_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 	
 		
