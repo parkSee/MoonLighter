@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 
-//csyADD [충돌박스 용 렉트 추가]
+//csyADD [다른 클래스에서 받아올 겟터함수 추가]
 
 class item : public gameNode
 {	
@@ -11,6 +11,10 @@ protected:
 	RECT _collisionBox;
 
 public:
+
+	tagFloat get_pos() { return _pos; }
+	image* get_img() { return _img; }
+	RECT get_collisionBox() { return _collisionBox; }
 
 	virtual HRESULT init();
 	virtual void release();
