@@ -17,7 +17,7 @@ HRESULT dungeonScene::init()
 	_im = new itemManager;
 	_im->init();
 
-	IMAGEMANAGER->addImage("Dungeon","./image/Dungeon/던전.bmp",WINSIZEX,WINSIZEY);
+	/*IMAGEMANAGER->addImage("Dungeon","./image/Dungeon/던전.bmp",WINSIZEX,WINSIZEY);*/
 	CAMERAMANAGER->setMapSize(WINSIZEX, WINSIZEY);
 
 	
@@ -27,6 +27,7 @@ HRESULT dungeonScene::init()
 
 void dungeonScene::release()
 {
+
 }
 
 void dungeonScene::update()
@@ -45,7 +46,7 @@ void dungeonScene::update()
 void dungeonScene::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	IMAGEMANAGER->render("Dungeon", getMemDC(),0,0,cam.left,cam.top,WINSIZEX,WINSIZEY);
+	IMAGEMANAGER->render("stage1", getMemDC(),0,0,cam.left,cam.top,WINSIZEX,WINSIZEY);
 
 	OBJECTMANAGER->render(getMemDC());
 
