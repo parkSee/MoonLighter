@@ -2,7 +2,7 @@
 #include "itemManager.h"
 #include "gameObject.h"
 
-// csyADD [아이템 매니저 cpp -  아이템 _liquidItem, _twig, _redCristal, _rebar, _golemCore 맵에 insert]
+// csyADD [아이템 매니저 cpp - 플레이어 동적할당 [렉트 충돌 위한]]
 
 HRESULT itemManager::init()
 {
@@ -29,6 +29,9 @@ HRESULT itemManager::init()
 	_golemCore = new golemCore;
 	_golemCore->init();
 	_mItem.insert(make_pair(itemType::GOLEMCORE, _golemCore));
+
+	_player = new player;
+	
 
 	//_liquidItem = new item;
 	/*_potion->init("potion", tagFloat(WINSIZEX / 2, WINSIZEY / 2));	
