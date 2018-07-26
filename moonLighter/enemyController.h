@@ -13,7 +13,6 @@ private:
 	smallSlime* _smallSlime;
 	bigSlime* _bigSlime;
 
-	//vector<golem*> _vgolem;
 public:
 
 	HRESULT init();

@@ -6,6 +6,7 @@ HRESULT cameraManager::init()
 	_pos.x = WINSIZEX / 2;
 	_pos.y = WINSIZEY / 2;
 
+	_oldPos = _pos;
 	_renderRc = RectMakeCenter(_pos.x, _pos.y, WINSIZEX, WINSIZEY);
 
 	_mapSize.x = WINSIZEX;
@@ -49,7 +50,7 @@ void cameraManager::update()
 		_pos.y -= _renderRc.bottom - _mapSize.y;
 	}
 
-
+	
 }
 
 void cameraManager::render(HDC hdc)
@@ -87,6 +88,68 @@ void cameraManager::cameraMove()
 	//·£´õ ·ºÆ® ÁÂÇ¥ ÃÊ±âÈ­
 	_renderRc = RectMakeCenter(_pos.x, _pos.y, WINSIZEX, WINSIZEY);
 
+}
+
+void cameraManager::cameraSlideMove(float speed)
+{
+	//Å¸°Ù°ú ÁÂÇ¥°¡ ¸ÂÁö¾ÊÀ¸¸é?
+	if (_target.x != _pos.x || _target.y != _pos.y)
+	{
+		_angle = getAngle(_pos.x, _pos.y, _target.x, _target.y);
+		
+		_pos.x += cosf(_angle) * speed;
+		_pos.y += -sinf(_angle)* speed;
+	
+		_oldPos = _pos;
+		
+		if ((_oldPos.x < _target.x && _target.x < _pos.x) ||
+			(_oldPos.x > _target.x && _target.x > _pos.x))
+		{
+			_pos.x = _target.x;
+		}
+		if ((_oldPos.y < _target.y && _target.y < _pos.y) ||
+			(_oldPos.y > _target.y && _target.y > _pos.y))
+		{
+			_pos.y = _target.y;
+		}
+	}
+
+	if (_renderRc.left < 0)
+	{
+		_pos.x -= _renderRc.left;
+	}
+	if (_renderRc.right > _mapSize.x)
+	{
+		_pos.x -= _renderRc.right - _mapSize.x;
+	}
+	if (_renderRc.top < 0)
+	{
+		_pos.y -= _renderRc.top;
+	}
+	if (_renderRc.bottom > _mapSize.y)
+	{
+		_pos.y -= _renderRc.bottom - _mapSize.y;
+	}
+	/*if (_isShake)
+	{
+		static int dir = 1;
+
+		_shakeTimer -= 0.001f;
+
+		_shakePos.x += _shakeStrenth * dir;
+		_shakePos.y += _shakeStrenth * dir;
+
+		dir *= -1;
+
+		if (_shakeTimer < 0)
+		{
+			_isShake = false;
+			_shakePos = tagFloat(0, 0);
+			_shakeTimer = 0;
+		}
+	}*/
+
+	_renderRc = RectMakeCenter(_pos.x, _pos.y, WINSIZEX, WINSIZEY);
 }
 
 void cameraManager::connectTarget(float x, float y, float delayTime)

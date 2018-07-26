@@ -3,11 +3,11 @@
 
 HRESULT dungeonScene::init()
 {
-
+	//½Ã¿µÂ» ³» µ¿·á°¡ µÅ¶ó - ±«µµ Á¦ÀÌ
 	//lejADD ´øÀü ¸Ê Ãß°¡
 
 	_player = new player;
-	_player->init("player", tagFloat(WINSIZEX / 2, WINSIZEY / 2));
+	_player->init("player", tagFloat(1631, 1848));
 	_player->setPixelImage(IMAGEMANAGER->findImage("redZone"));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
@@ -17,10 +17,17 @@ HRESULT dungeonScene::init()
 	_im = new itemManager;
 	_im->init();
 
-	/*IMAGEMANAGER->addImage("Dungeon","./image/Dungeon/´øÀü.bmp",WINSIZEX,WINSIZEY);*/
-	CAMERAMANAGER->setMapSize(WINSIZEX, WINSIZEY);
+	CAMERAMANAGER->setMapSize(3840, 2160);
+	CAMERAMANAGER->connectTarget(1920, 1800);
 
-	
+	_enterRc[0] = RectMakeCenter(1916, 1455, 50, 50);
+	_enterRc[1] = RectMakeCenter(1912, 1391, 50, 50);
+	_enterRc[2] = RectMakeCenter(1341, 1080, 50, 50);
+	_enterRc[3] = RectMakeCenter(1203, 1075, 50, 50);
+	_enterRc[4] = RectMakeCenter(1935, 773, 50, 50);
+	_enterRc[5] = RectMakeCenter(1951, 631, 50, 50);
+	_enterRc[6] = RectMakeCenter(2482, 346, 50, 50);
+	_enterRc[7] = RectMakeCenter(2618, 346, 50, 50);
 
 	return S_OK;
 }
@@ -31,8 +38,11 @@ void dungeonScene::release()
 }
 
 void dungeonScene::update()
-{ 
-	CAMERAMANAGER->update();
+{
+	//CAMERAMANAGER->update();
+
+	//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
+	
 	OBJECTMANAGER->update();
 
 	if (KEYMANAGER->isOnceKeyDown('C'))
@@ -40,16 +50,112 @@ void dungeonScene::update()
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("townScene");
 	}
+	
 
+	this->moveDungeon();
+
+	CAMERAMANAGER->cameraSlideMove(5.0f);
 }
 
 void dungeonScene::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	IMAGEMANAGER->render("stage1", getMemDC(),0,0,cam.left,cam.top,WINSIZEX,WINSIZEY);
+	IMAGEMANAGER->render("dungeonMap", getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
 
 	OBJECTMANAGER->render(getMemDC());
 
 	_im->render();
+	//RectangleCam(getMemDC(), upRc, cam);
+	//RectangleCam(getMemDC(), RectMakeCenter(640, 740, 50, 50), cam);
+	//RectangleCam(getMemDC(), RectMakeCenter(640, 690, 50, 50), cam);
+	/*
+	HPEN pen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
+	HPEN oldPen = (HPEN)SelectObject(getMemDC(), pen);
+
+	SelectObject(getMemDC(), GetStockObject(NULL_BRUSH));
+
+	Rectangle(getMemDC(), CAMERAMANAGER->getRenderRc());
+
+
+	SelectObject(getMemDC(), oldPen);
+	DeleteObject(pen);
+	*/
+	
+
+
+	for (int i = 0; i < 8; ++i)
+	{
+		RectangleCam(getMemDC(), _enterRc[i], cam);
+	}
+
+}
+
+void dungeonScene::moveDungeon()
+{
+
+	RECT temp;
+	
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[0]))
+	{
+		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
+		_player->pos.x = 1916;
+		_player->pos.y = 1266;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[1]))
+	{
+		CAMERAMANAGER->connectTarget((int)1920, (int)1800);
+		_player->pos.x = 1916;
+		_player->pos.y = 1644;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[2]))
+	{
+		//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
+		CAMERAMANAGER->connectTarget((int)640, (int)1080);
+		_player->pos.x = 647;
+		_player->pos.y = 1077;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[3]))
+	{
+		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
+		_player->pos.x = 1916;
+		_player->pos.y = 1266;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[4]))
+	{
+		CAMERAMANAGER->connectTarget((int)1920, (int)360);
+		_player->pos.x = 1920;
+		_player->pos.y = 360;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[5]))
+	{
+		CAMERAMANAGER->connectTarget((int)640, (int)1080);
+		_player->pos.x = 640;
+		_player->pos.y = 360;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[6]))
+	{
+		CAMERAMANAGER->connectTarget((int)3200, (int)360);
+		_player->pos.x = 3200;
+		_player->pos.y = 360;
+	}
+	if (IntersectRect(&temp, &_player->rc, &_enterRc[7]))
+	{
+		CAMERAMANAGER->connectTarget((int)1920, (int)360);
+		_player->pos.x = 1920;
+		_player->pos.y = 360;
+	}
+
+	/*if (IntersectRect(&temp, &RectMakeCenter(640, 740, 50, 50), &_player->rc))
+	{
+	CAMERAMANAGER->connectTarget(640, 330);
+	_player->pos.y = 300;
+	}
+
+
+	if (IntersectRect(&temp, &RectMakeCenter(640, 690, 50, 50), &_player->rc))
+	{
+	CAMERAMANAGER->connectTarget(640, 1070);
+	_player->pos.y = 1000;
+	}*/
 
 }

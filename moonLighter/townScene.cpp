@@ -31,6 +31,7 @@ void townScene::release()
 
 void townScene::update()
 {
+	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
@@ -52,6 +53,8 @@ void townScene::update()
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonLobby");
 	}
+
+
 	OBJECTMANAGER->update();
 
 	CAMERAMANAGER->update();
@@ -66,7 +69,6 @@ void townScene::render()
 
 
 	IMAGEMANAGER->findImage("map")->render(getMemDC(), 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
-
 
 	if (KEYMANAGER->isStayKeyDown('V'))
 	{

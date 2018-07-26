@@ -32,7 +32,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	
 	
 
-	CAMERAMANAGER->connectTarget(pos.x, pos.y);
+	//CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	return S_OK;
 }
@@ -46,7 +46,7 @@ void player::update(void)
 {
 	gameObject::update();
 
-	CAMERAMANAGER->connectTarget(pos.x, pos.y);
+	//CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	/*
 	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
