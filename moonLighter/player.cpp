@@ -18,14 +18,18 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isRight = false;
 	_isRolling = false;
 	_isInvincible = false;
+	_isAttacking = false;
+	_isRcSwordOn = false;
 
 
 	will = IMAGEMANAGER->findImage("will");
+	willAttack = IMAGEMANAGER->findImage("will_shortAttack");
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
 	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);										//lysADD(플레이어 몸뚱아리 렉트 초기화)
-	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());		//		 플레이어 이미지 렉트 초기화
+	_rcSword = RectMakeCenter(pos.x, pos.y, 100, 100);										//플레이어 검 공격범위 렉트 초기화
+	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());		//플레이어 이미지 렉트 초기화
 	
 	_probeX = pos.x;
 	_probeY = pos.y;
@@ -145,7 +149,7 @@ void player::update(void)
 	//rc = RectMakeCenter(pos.x, pos.y, 70, 70);
 	
 	
-	//this->collision();
+	this->collision();
 	
 	this->move();
 }
@@ -160,22 +164,34 @@ void player::render(void)
 	//RectangleMake(getMemDC(), pos.x - cam.left, _probeY - cam.top, 10, 10);
 	//RectangleMake(getMemDC(),_probeX- cam.left, pos.y - cam.top, 10, 10);
 
+	if (!_isAttacking)	//공격모션이 아닐 경우에 출력
+	{
+		will->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+	}
+	else    //공격 모션일 경우의 출력
+	{
+		willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+	}
+	
 
-	will->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 
-
-	if (KEYMANAGER->isToggleKey(VK_DELETE))  //lysADD(카메라 렉트 출력)
+	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
 	{
 		Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
 	}
-	if (KEYMANAGER->isToggleKey(VK_END))	//lysADD(픽셀충돌체크 렉트 출력)
+	if (KEYMANAGER->isToggleKey(VK_F10))	//lysADD(픽셀충돌체크 렉트 출력)
 	{
 		Rectangle(getMemDC(), _rcProbe.left - cam.left, _rcProbe.top - cam.top, _rcProbe.right - cam.left, _rcProbe.bottom - cam.top);
 	}
-	if (KEYMANAGER->isToggleKey(VK_F12))	//lysADD(아이템토글, 몬스터 충돌 렉트 출력)
+	if (KEYMANAGER->isToggleKey(VK_F11))	//lysADD(아이템토글, 몬스터 충돌 렉트 출력)
 	{
 		Rectangle(getMemDC(), _rcBody.left - cam.left, _rcBody.top - cam.top, _rcBody.right - cam.left, _rcBody.bottom - cam.top);
 	}
+	if (KEYMANAGER->isToggleKey(VK_F12))	//lysADD(공격 모션 중 공격 범위 렉트 출력)
+	{
+		Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
+	}
+	
 	
 
 }
@@ -192,7 +208,7 @@ void player::collision()
 	
 	for (int i = 0; i < _mini.size(); ++i)
 	{
-		if (IntersectRect(&temp, &rc, &_mini[i]->rc))
+		if (IntersectRect(&temp, &_rcSword, &_mini[i]->rc))
 		{
 			//오브젝트 매니저 업데이트로 가보면
 			/*
@@ -228,247 +244,329 @@ void player::move()
 	//if(_scene == 상점 or 마을)
 	if (_isRolling != true)
 	{
-		if (KEYMANAGER->isStayKeyDown(VK_UP))
+		if (_isAttacking == false)
 		{
-			_isIdle = false;
-			_isUp = true;
-			_isDown = false;
-			_isRight = false;
-			_isLeft = false;
-			will->setFrameX(_index);
-			will->setFrameY(4);
-			if (_count % 10 == 0)
+			if (KEYMANAGER->isStayKeyDown(VK_UP))
 			{
-				++_index;
-				if (_index > 7)
-				{
-					_index = 0;
-				}
-			}
-			pos.y -= _speed;
-
-			
-			_probeX = pos.x;
-			_probeY = pos.y - (will->getFrameHeight() / 4);
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
-			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-			int disTemp = _rcProbe.top - rc.top;
-			for (int i = _probeY; i > _probeY - 15; --i)
-			{
-				COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-
-				if (r == 255 && g == 0 && b == 0)
-				{
-					pos.y = i + will->getFrameHeight() * 0.5 - disTemp;
-					break;
-				}
-			}
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_UP))
-		{
-			_isIdle = true;
-		}
-		if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-		{
-			_isIdle = false;
-			_isDown = true;
-			_isUp = false;
-			_isRight = false;
-			_isLeft = false;
-			will->setFrameX(_index);
-			will->setFrameY(5);
-			if (_count % 10 == 0)
-			{
-				++_index;
-				if (_index > 7)
-				{
-					_index = 0;
-				}
-			}
-			pos.y += _speed;
-			_probeX = pos.x;
-			_probeY = pos.y + (will->getFrameHeight() / 4);
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
-			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-			int disTemp = _rcProbe.bottom - rc.bottom;
-			for (int i = _probeY; i < _probeY + 15; ++i)
-			{
-				COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-
-				if (r == 255 && g == 0 && b == 0)
-				{
-					pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
-					break;
-				}
-			}
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
-		{
-			_isIdle = true;
-		}
-		if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-		{
-			_isIdle = false;
-			_isDown = false;
-			_isUp = false;
-			_isRight = true;
-			_isLeft = false;
-			will->setFrameX(_index);
-			will->setFrameY(6);
-			if (_count % 10 == 0)
-			{
-				++_index;
-				if (_index > 7)
-				{
-					_index = 0;
-				}
-			}
-			pos.x += _speed;
-			_probeX = pos.x + 20;
-			_probeY = pos.y; 
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
-			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-			int disTemp = _rcProbe.right - _rcProbe.left;
-			for (int i = _probeX; i < _probeX + 15; ++i)
-			{
-				COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-			
-				if (r == 255 && g == 0 && b == 0)
-				{
-					pos.x = i - disTemp;
-					break;
-				}
-			}
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
-		{
-			_isIdle = true;
-		}
-		if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-		{
-			_isDown = false;
-			_isUp = false;
-			_isIdle = false;
-			_isLeft = true;
-			_isRight = false;
-			will->setFrameX(_index);
-			will->setFrameY(7);
-			if (_count % 10 == 0)
-			{
-				--_index;
-				if (_index < 0)
-				{
-					_index = 7;
-				}
-			}
-			pos.x -= _speed;
-			_probeX = pos.x - 20;
-			_probeY = pos.y;
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
-			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-			int disTemp = _rcProbe.right - _rcProbe.left;
-			for (int i = _probeX; i > _probeX - 15 ; --i)
-			{
-				COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
-				int r = GetRValue(color);
-				int g = GetGValue(color);
-				int b = GetBValue(color);
-
-				if (r == 255 && g == 0 && b == 0)
-				{
-					pos.x = i + disTemp;
-					break;
-				}
-			}
-		}
-		if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
-		{
-			_isIdle = true;
-		
-		}		
-		if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-		{
-			_index = 0;
-			_isRolling = true;
-			_isInvincible = true;
-			_acceleration = 0.5f;
-		}
-		if(_isIdle == true)
-		{
-			if (_isUp)
-			{
+				_isIdle = false;
+				_isUp = true;
+				_isDown = false;
+				_isRight = false;
+				_isLeft = false;
 				will->setFrameX(_index);
-				will->setFrameY(0);
-				if (_count % 7 == 0)
+				will->setFrameY(4);
+				if (_count % 10 == 0)
 				{
 					++_index;
-					if (_index > 9)
+					if (_index > 7)
 					{
 						_index = 0;
 					}
 				}
+				pos.y -= _speed;
+
+
+				_probeX = pos.x;
+				_probeY = pos.y - (will->getFrameHeight() / 4);
+				rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+				_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+				int disTemp = _rcProbe.top - rc.top;
+				for (int i = _probeY; i > _probeY - 15; --i)
+				{
+					COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
+					int r = GetRValue(color);
+					int g = GetGValue(color);
+					int b = GetBValue(color);
+
+					if (r == 255 && g == 0 && b == 0)
+					{
+						pos.y = i + will->getFrameHeight() * 0.5 - disTemp;
+						break;
+					}
+				}
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_UP))
+			{
+				_isIdle = true;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+			{
+				_isIdle = false;
+				_isDown = true;
+				_isUp = false;
+				_isRight = false;
+				_isLeft = false;
+				will->setFrameX(_index);
+				will->setFrameY(5);
+				if (_count % 10 == 0)
+				{
+					++_index;
+					if (_index > 7)
+					{
+						_index = 0;
+					}
+				}
+				pos.y += _speed;
+				_probeX = pos.x;
+				_probeY = pos.y + (will->getFrameHeight() / 4);
+				rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+				_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+				int disTemp = _rcProbe.bottom - rc.bottom;
+				for (int i = _probeY; i < _probeY + 15; ++i)
+				{
+					COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
+					int r = GetRValue(color);
+					int g = GetGValue(color);
+					int b = GetBValue(color);
+
+					if (r == 255 && g == 0 && b == 0)
+					{
+						pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
+						break;
+					}
+				}
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
+			{
+				_isIdle = true;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+			{
+				_isIdle = false;
+				_isDown = false;
+				_isUp = false;
+				_isRight = true;
+				_isLeft = false;
+				will->setFrameX(_index);
+				will->setFrameY(6);
+				if (_count % 10 == 0)
+				{
+					++_index;
+					if (_index > 7)
+					{
+						_index = 0;
+					}
+				}
+				pos.x += _speed;
+				_probeX = pos.x + 20;
+				_probeY = pos.y;
+				rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+				_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+				int disTemp = _rcProbe.right - _rcProbe.left;
+				for (int i = _probeX; i < _probeX + 15; ++i)
+				{
+					COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
+					int r = GetRValue(color);
+					int g = GetGValue(color);
+					int b = GetBValue(color);
+
+					if (r == 255 && g == 0 && b == 0)
+					{
+						pos.x = i - disTemp;
+						break;
+					}
+				}
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
+			{
+				_isIdle = true;
+			}
+			if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+			{
+				_isDown = false;
+				_isUp = false;
+				_isIdle = false;
+				_isLeft = true;
+				_isRight = false;
+				will->setFrameX(_index);
+				will->setFrameY(7);
+				if (_count % 10 == 0)
+				{
+					--_index;
+					if (_index < 0)
+					{
+						_index = 7;
+					}
+				}
+				pos.x -= _speed;
+				_probeX = pos.x - 20;
+				_probeY = pos.y;
+				rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+				_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+				int disTemp = _rcProbe.right - _rcProbe.left;
+				for (int i = _probeX; i > _probeX - 15; --i)
+				{
+					COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
+					int r = GetRValue(color);
+					int g = GetGValue(color);
+					int b = GetBValue(color);
+
+					if (r == 255 && g == 0 && b == 0)
+					{
+						pos.x = i + disTemp;
+						break;
+					}
+				}
+			}
+			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+			{
+				_isIdle = true;
+
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
+			{
+				_index = 0;
+				_isRolling = true;
+				_isInvincible = true;
+				_acceleration = 0.5f;
+			}
+			if (_isIdle == true)
+			{
+				if (_isUp)
+				{
+					will->setFrameX(_index);
+					will->setFrameY(0);
+					if (_count % 7 == 0)
+					{
+						++_index;
+						if (_index > 9)
+						{
+							_index = 0;
+						}
+					}
+				}
+				else if (_isDown)
+				{
+					will->setFrameX(_index);
+					will->setFrameY(1);
+					if (_count % 7 == 0)
+					{
+						++_index;
+						if (_index > 9)
+						{
+							_index = 0;
+						}
+					}
+				}
+				else if (_isRight)
+				{
+					will->setFrameX(_index);
+					will->setFrameY(2);
+					if (_count % 7 == 0)
+					{
+						++_index;
+						if (_index > 9)
+						{
+							_index = 0;
+						}
+					}
+				}
+				else if (_isLeft)
+				{
+					will->setFrameX(_index);
+					will->setFrameY(3);
+					if (_count % 7 == 0)
+					{
+						++_index;
+						if (_index > 9)
+						{
+							_index = 0;
+						}
+					}
+				}
+			}
+		}
+			//////////////////////////////////////////////////행동////////////////
+
+		if (KEYMANAGER->isOnceKeyDown('A'))		// 공격
+		{
+			if (_isAttacking == false && _isRolling == false)
+			{
+				_isAttacking = true;
+				_index = 0;
+			}
+		}
+		if (KEYMANAGER->isOnceKeyDown('S'))
+		{
+
+		}
+		if (KEYMANAGER->isOnceKeyDown('D'))
+		{
+
+		}
+		if (_isAttacking == true)
+		{
+			if (_count % 7 == 0)
+			{
+				++_index;
+			}
+
+			if (_isUp)
+			{
+				willAttack->setFrameX(_index);
+				willAttack->setFrameY(0);
+				if (_index > willAttack->getMaxFrameX())
+				{
+					_isAttacking = false;
+					_isIdle = true;
+				}
+				if (2 <= _index && _index <= 5)
+				{
+					_isRcSwordOn = true;
+					_rcSword = RectMakeCenter(pos.x, pos.y - 20, 130, 100);
+				}
+				else
+				{
+					_isRcSwordOn = false;
+				}
+
 			}
 			else if (_isDown)
 			{
-				will->setFrameX(_index);
-				will->setFrameY(1);
-				if (_count % 7 == 0)
+				willAttack->setFrameX(_index);
+				willAttack->setFrameY(1);
+				if (_index > willAttack->getMaxFrameX())
 				{
-					++_index;
-					if (_index > 9)
-					{
-						_index = 0;
-					}
+					_isAttacking = false;
+					_isIdle = true;
+				}
+				if (2 <= _index && _index <= 5)
+				{
+					_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
 				}
 			}
 			else if (_isRight)
 			{
-				will->setFrameX(_index);
-				will->setFrameY(2);
-				if (_count % 7 == 0)
+				willAttack->setFrameX(_index);
+				willAttack->setFrameY(2);
+				if (_index > willAttack->getMaxFrameX())
 				{
-					++_index;
-					if (_index > 9)
-					{
-						_index = 0;
-					}
+					_isAttacking = false;
+					_isIdle = true;
+				}
+				if (2 <= _index && _index <= 5)
+				{
+					_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
 				}
 			}
 			else if (_isLeft)
 			{
-				will->setFrameX(_index);
-				will->setFrameY(3);
-				if (_count % 7 == 0)
+				willAttack->setFrameX(_index);
+				willAttack->setFrameY(3);
+				if (_index > willAttack->getMaxFrameX())
 				{
-					++_index;
-					if (_index > 9)
-					{
-						_index = 0;
-					}
+					_isAttacking = false;
+					_isIdle = true;
+				}
+				if (2 <= _index && _index <= 5)
+				{
+					_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
 				}
 			}
 		}
-		//////////////////////////////////////////////////행동////////////////
-		if (KEYMANAGER->isOnceKeyDown('A'))
+		else
 		{
-			//대화
-		}
-		if (KEYMANAGER->isOnceKeyDown('S'))
-		{
-			
-		}
-		if (KEYMANAGER->isOnceKeyDown('D'))
-		{
-			
+			_isRcSwordOn = false;
 		}
 		///////////////////////////////////////////////////////////////////////////////
 	}
