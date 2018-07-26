@@ -41,6 +41,7 @@ public:
 	void move();
 	bool getInvincible() { return _isInvincible; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	float getSpeed() { return _speed; }	//lysADD  (겟스피드 함수 추가)
 
 
 	player() {}
