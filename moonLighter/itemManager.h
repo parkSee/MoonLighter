@@ -7,8 +7,9 @@
 #include "twig.h"
 #include "rebar.h"
 #include "golemCore.h"
+#include "player.h"
 
-//csyADD [아이템 매니저 헤더 - 아이템 _liquidItem, _twig, _redCristal, _rebar, _golemCore 추가]
+//csyADD [아이템 매니저 헤더 - 플레이어 클래스 포인터 선언]
 
 namespace itemType
 {
@@ -29,6 +30,7 @@ class itemManager : public gameNode
 	item* _redCristal;
 	item* _rebar;
 	item* _golemCore;
+	player* _player;
 
 public:
 
