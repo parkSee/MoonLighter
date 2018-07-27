@@ -16,6 +16,8 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
 	_isAttacked2 = false;
+	_xCollision = false;
+	_yCollision = false;
 
 
 	return S_OK;
@@ -42,6 +44,8 @@ void smallSlime::update()
 		//_isDead = true;
 		EFFECTMANAGER->play("뿅뿅", pos.x + 10, pos.y + 10);
 	}
+
+	pixelCollision();
 }
 
 void smallSlime::render()
@@ -102,14 +106,105 @@ void smallSlime::smallSlimeFrame()
 	}
 }
 
+void smallSlime::pixelCollision()
+{
+	_rc[0] = RectMakeCenter(pos.x + _smallSlime->getFrameWidth() / 2, pos.y, 2, _smallSlime->getFrameHeight());//오른쪽
+	_rc[1] = RectMakeCenter(pos.x - _smallSlime->getFrameWidth() / 2, pos.y, 2, _smallSlime->getFrameHeight());//왼쪽
+	_rc[2] = RectMakeCenter(pos.x, pos.y - _smallSlime->getFrameHeight() / 2, _smallSlime->getFrameWidth(), 2);//위
+	_rc[3] = RectMakeCenter(pos.x, pos.y + _smallSlime->getFrameHeight() / 2, _smallSlime->getFrameWidth(), 2);//아래
+
+
+	_rc0X = pos.x + _smallSlime->getFrameWidth() / 2;
+	_rc0Y = pos.y - _smallSlime->getFrameHeight() / 2;
+
+	_rc1X = pos.x - _smallSlime->getFrameWidth() / 2;
+	_rc1Y = pos.y - _smallSlime->getFrameHeight() / 2;
+
+	_rc2Y = pos.y - _smallSlime->getFrameHeight() / 2;
+	_rc2X = pos.x - _smallSlime->getFrameWidth() / 2;
+
+
+	_rc3Y = pos.y + _smallSlime->getFrameHeight() / 2;
+	_rc3X = pos.x - _smallSlime->getFrameWidth() / 2;
+
+
+
+	for (int j = _rc0Y + 5; j < pos.y + _smallSlime->getFrameHeight() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), pos.x + _smallSlime->getFrameWidth() / 2, j);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.x = pos.x + _smallSlime->getFrameWidth() / 2 - 27;
+			break;
+		}
+
+
+	}
+	for (int j = _rc1Y + 5; j < pos.y + _smallSlime->getFrameHeight() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), pos.x - _smallSlime->getFrameWidth() / 2, j);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.x = pos.x - _smallSlime->getFrameWidth() / 2 + 27;
+			break;
+		}
+
+	}
+	for (int j = _rc2X + 5; j < pos.x + _smallSlime->getFrameWidth() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), j, pos.y + _smallSlime->getFrameHeight() / 2);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.y = pos.y + _smallSlime->getFrameWidth() / 2 - 27;
+			break;
+		}
+
+	}
+	for (int j = _rc2X + 5; j < pos.x + _smallSlime->getFrameWidth() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), j, pos.y - _smallSlime->getFrameHeight() / 2);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.y = pos.y - _smallSlime->getFrameWidth() / 2 + 27;
+			break;
+		}
+
+	}
+}
+
 void smallSlime::move()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	angle = getAngle(pos.x, pos.y, _player->pos.x, _player->pos.y);
 	speed = 1.2f;
 
-	pos.x += speed * cosf(angle);
-	pos.y += speed * -sinf(angle);
+	if (_xCollision == false)pos.x += speed * cosf(angle);
+	if (_yCollision == false)pos.y += speed * -sinf(angle);
 }
+
+
+
+
+
 
 

@@ -7,6 +7,10 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 
 	gameObject::init(_objName, _pos);
 	_weed = IMAGEMANAGER->findImage("ÀâÃÊ");
+	_hp = new progressBar;
+	_hp->init("»¡°£Ã¼·Â¹Ù", "Ã¼·Â²®µ¥±â", pos.x, pos.y, 73, 8);
+	_hp->setGauge(200, 200);
+	_currentHp = 200;
 	_attackedWeed[0] = IMAGEMANAGER->findImage("ÀâÃÊ»¡°­");
 	_attackedWeed[1] = IMAGEMANAGER->findImage("ÀâÃÊÇÏ¾ç");
 	_weedFrameX = _weedFrameY = _count = _attackedCount = 0;
@@ -25,6 +29,8 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 
 void weed::release()
 {
+	_hp->release();
+	SAFE_DELETE(_hp);
 }
 
 void weed::update()
@@ -33,6 +39,9 @@ void weed::update()
 	weedFrame();
 	move();
 	pixelCollision();
+	_hp->update();
+	_hp->setGauge(_currentHp, 100);
+
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 
 	if (_isAttacked)
@@ -45,6 +54,7 @@ void weed::update()
 	{
 		//_isDead = true;
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
+		
 	}
 
 
@@ -85,10 +95,11 @@ void weed::render()
 		_attackedWeed[0]->setFrameX(_weedFrameX);
 		_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 	}
-	if (KEYMANAGER->isOnceKeyDown('P'))
+	if (KEYMANAGER->isStayKeyDown('P'))
 	{
 		_isAttacked = true;
 		_noneAttacked = false;
+		_currentHp-= 50;
 	}
 
 	Rectangle(getMemDC(), _rc[0]);
@@ -100,6 +111,10 @@ void weed::render()
 	sprintf_s(str, "%d", _xCollision);
 	TextOut(getMemDC(), 100, 200, str, strlen(str));
 
+	_hp->setX((pos.x - IMAGEMANAGER->findImage("ÀâÃÊ")->getFrameWidth()/2) - cam.left);
+	_hp->setY((pos.y - 50) - cam.top);
+	_hp->setGauge(_currentHp, 200);
+	_hp->render();
 }
 
 void weed::weedFrame()

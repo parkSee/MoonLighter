@@ -1,6 +1,6 @@
 #pragma once
 #include "gameObject.h"
-
+#include"progressBar.h"
 // lejADD 잡초 클래스 생성
 
 class weed : public gameObject
@@ -8,6 +8,8 @@ class weed : public gameObject
 private:
 	image * _weed;
 	image* _attackedWeed[2];
+	progressBar* _hp;
+	int _currentHp;
 	int _count;
 	int _weedFrameX;
 	int _weedFrameY;
