@@ -11,7 +11,7 @@ HRESULT dungeonLobby::init()
 	
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 	
-	CAMERAMANAGER->setMapSize(1680, 1434);
+	CAMERAMANAGER->setMapSize(2460, 2100);
 
 	//SOUNDMANAGER->play("townBGM");
 
@@ -21,11 +21,14 @@ HRESULT dungeonLobby::init()
 
 void dungeonLobby::release()
 {
+	/*_player->release();
+	SAFE_DELETE(_player);*/
 }
 
 void dungeonLobby::update()
 {
 
+	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	OBJECTMANAGER->update();
 
 	CAMERAMANAGER->update();

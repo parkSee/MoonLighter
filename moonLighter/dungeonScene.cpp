@@ -8,7 +8,7 @@ HRESULT dungeonScene::init()
 
 	_player = new player;
 	_player->init("player", tagFloat(1631, 1848));
-	_player->setPixelImage(IMAGEMANAGER->findImage("redZone"));
+	_player->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
 	_em = new enemyController;
@@ -34,7 +34,14 @@ HRESULT dungeonScene::init()
 
 void dungeonScene::release()
 {
+	//_player->release();
+	//SAFE_DELETE(_player);
 
+	//_em->release();
+	//SAFE_DELETE(_em);
+	//
+	//_im->release();
+	//SAFE_DELETE(_im);
 }
 
 void dungeonScene::update()
@@ -123,14 +130,14 @@ void dungeonScene::moveDungeon()
 	if (IntersectRect(&temp, &_player->rc, &_enterRc[4]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
-		_player->pos.x = 1920;
+		_player->pos.x = 1520;
 		_player->pos.y = 360;
 	}
 	if (IntersectRect(&temp, &_player->rc, &_enterRc[5]))
 	{
-		CAMERAMANAGER->connectTarget((int)640, (int)1080);
-		_player->pos.x = 640;
-		_player->pos.y = 360;
+		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
+		_player->pos.x = 1920;
+		_player->pos.y = 1080;
 	}
 	if (IntersectRect(&temp, &_player->rc, &_enterRc[6]))
 	{

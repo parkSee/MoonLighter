@@ -26,7 +26,13 @@ HRESULT townScene::init()
 
 void townScene::release()
 {
-	
+	//_player->release();
+	//SAFE_DELETE(_player);
+
+	//_container->release();
+	//SAFE_DELETE(_container);
+
+
 }
 
 void townScene::update()

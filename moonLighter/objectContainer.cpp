@@ -34,6 +34,11 @@ HRESULT objectContainer::init()
 
 void objectContainer::release()
 {
+	for (int i = 0; i < 10; ++i)
+	{
+		_house[i]->release();
+		SAFE_DELETE(_house[i]);
+	}
 }
 
 void objectContainer::update()

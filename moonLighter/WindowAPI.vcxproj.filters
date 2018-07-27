@@ -57,9 +57,6 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{48c9a5f2-baa5-458a-998a-76388fbaa8d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Object\houseObject">
-      <UniqueIdentifier>{ea0145ab-f2af-4966-8c7d-69b9f8c31f5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Scene\loadingImages">
       <UniqueIdentifier>{d04181d3-44c1-4cbc-9176-e5d0b3f1b9a0}</UniqueIdentifier>
     </Filter>
@@ -77,6 +74,12 @@
     </Filter>
     <Filter Include="GameFramework2D\Animation">
       <UniqueIdentifier>{63c8ca67-ce84-46f7-b0d4-add0104aaeeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\LobbyObject">
+      <UniqueIdentifier>{3b0cd1c3-74ad-44a0-a392-dcc88a2e435f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Object\townObject">
+      <UniqueIdentifier>{ea0145ab-f2af-4966-8c7d-69b9f8c31f5a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -156,7 +159,7 @@
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="house.h">
-      <Filter>MainGame\Object\houseObject</Filter>
+      <Filter>MainGame\Object\townObject</Filter>
     </ClInclude>
     <ClInclude Include="startScene.h">
       <Filter>MainGame\Scene</Filter>
@@ -220,6 +223,9 @@
     </ClInclude>
     <ClInclude Include="objectContainer.h">
       <Filter>MainGame\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="stone.h">
+      <Filter>MainGame\Object\LobbyObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -296,7 +302,7 @@
       <Filter>MainGame\Enemy</Filter>
     </ClCompile>
     <ClCompile Include="house.cpp">
-      <Filter>MainGame\Object\houseObject</Filter>
+      <Filter>MainGame\Object\townObject</Filter>
     </ClCompile>
     <ClCompile Include="startScene.cpp">
       <Filter>MainGame\Scene</Filter>
@@ -369,6 +375,9 @@
     </ClCompile>
     <ClCompile Include="timeManager.cpp">
       <Filter>GameFramework2D\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="stone.cpp">
+      <Filter>MainGame\Object\LobbyObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

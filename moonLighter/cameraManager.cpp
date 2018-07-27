@@ -97,11 +97,12 @@ void cameraManager::cameraSlideMove(float speed)
 	{
 		_angle = getAngle(_pos.x, _pos.y, _target.x, _target.y);
 		
-		_pos.x += cosf(_angle) * speed;
-		_pos.y += -sinf(_angle)* speed;
 	
 		_oldPos = _pos;
-		
+
+		_pos.x += cosf(_angle) * speed;
+		_pos.y += -sinf(_angle)* speed;
+
 		if ((_oldPos.x < _target.x && _target.x < _pos.x) ||
 			(_oldPos.x > _target.x && _target.x > _pos.x))
 		{
@@ -116,19 +117,27 @@ void cameraManager::cameraSlideMove(float speed)
 
 	if (_renderRc.left < 0)
 	{
-		_pos.x -= _renderRc.left;
+		//_pos.x -= _renderRc.left;
+		_pos.x = WINSIZEX/2;
+		_target.x = _pos.x;
 	}
 	if (_renderRc.right > _mapSize.x)
 	{
-		_pos.x -= _renderRc.right - _mapSize.x;
+		//_pos.x -= _renderRc.right - _mapSize.x;
+		_pos.x = _mapSize.x - WINSIZEX/2;
+		_target.x = _pos.x;
 	}
 	if (_renderRc.top < 0)
 	{
-		_pos.y -= _renderRc.top;
+		//_pos.y -= _renderRc.top;
+		_pos.y = WINSIZEY / 2;
+		_target.y = _pos.y;
 	}
 	if (_renderRc.bottom > _mapSize.y)
 	{
-		_pos.y -= _renderRc.bottom - _mapSize.y;
+		//_pos.y -= _renderRc.bottom - _mapSize.y;
+		_pos.y = _mapSize.y - WINSIZEY / 2;
+		_target.y = _pos.y;
 	}
 	/*if (_isShake)
 	{
