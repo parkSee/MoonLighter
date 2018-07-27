@@ -44,6 +44,7 @@ void mainGame::update(void)
 
 	SCENEMANAGER->update();
 	SOUNDMANAGER->update();
+	EFFECTMANAGER->update();
 
 }
 
@@ -59,8 +60,10 @@ void mainGame::render(void)
 
 
 	SCENEMANAGER->render();
-
-
+	EFFECTMANAGER->render();
+	char str[128];
+	sprintf_s(str, "%.3f %.3f", CAMERAMANAGER->_pos.x, CAMERAMANAGER->_pos.y);
+	TextOut(getMemDC(), 10, 10, str, strlen(str));
 
 //=============================================================
 	//백버퍼의 내용을 HDC에 그린다 (이것도 렌더에 그냥 둘것!!)

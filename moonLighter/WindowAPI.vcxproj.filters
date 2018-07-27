@@ -81,6 +81,9 @@
     <Filter Include="MainGame\Object\townObject">
       <UniqueIdentifier>{ea0145ab-f2af-4966-8c7d-69b9f8c31f5a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\UI">
+      <UniqueIdentifier>{1b8005ff-9093-45ad-a67e-5575986e7a19}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="stone.h">
       <Filter>MainGame\Object\LobbyObject</Filter>
+    </ClInclude>
+    <ClInclude Include="ui.h">
+      <Filter>MainGame\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +384,9 @@
     </ClCompile>
     <ClCompile Include="stone.cpp">
       <Filter>MainGame\Object\LobbyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="ui.cpp">
+      <Filter>MainGame\UI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

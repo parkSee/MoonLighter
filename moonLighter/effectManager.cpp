@@ -12,7 +12,7 @@ void effectManager::release(void)
 	miEffect iter = _mEffect.begin();
 	for (iter; iter != _mEffect.end(); ++iter)
 	{
-		viEffect vIter = iter->second.begin();
+		//viEffect vIter = iter->second.begin();
 		for (int i = 0; i < iter->second.size(); i++)
 		{
 			iter->second[i]->release();
@@ -54,6 +54,7 @@ void effectManager::addEffect(string effectName, const char * imageName, float e
 	vEffect vEffectBuffer;
 
 	img = IMAGEMANAGER->findImage(imageName);
+
 	for (int i = 0; i < buffer; i++)
 	{
 		vEffectBuffer.push_back(new effect);

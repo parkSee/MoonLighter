@@ -194,6 +194,7 @@
     <ClInclude Include="townScene.h" />
     <ClInclude Include="twig.h" />
     <ClInclude Include="txtData.h" />
+    <ClInclude Include="ui.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="weed.h" />
   </ItemGroup>
@@ -250,6 +251,7 @@
     <ClCompile Include="townScene.cpp" />
     <ClCompile Include="twig.cpp" />
     <ClCompile Include="txtData.cpp" />
+    <ClCompile Include="ui.cpp" />
     <ClCompile Include="util.cpp" />
     <ClCompile Include="weed.cpp" />
     <ClCompile Include="winMain.cpp" />

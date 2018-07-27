@@ -34,7 +34,6 @@ public:
 	
 	//맵사이즈 설정자
 	void setMapSize(int width, int height) { _mapSize.x = width; _mapSize.y = height; }
-
 	//맵 사이즈 접근자
 	tagInt getMapSize() { return _mapSize; }
 

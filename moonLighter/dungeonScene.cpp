@@ -5,7 +5,6 @@ HRESULT dungeonScene::init()
 {
 	//½Ã¿µÂ» ³» µ¿·á°¡ µÅ¶ó - ±«µµ Á¦ÀÌ
 	//lejADD ´øÀü ¸Ê Ãß°¡
-
 	_player = new player;
 	_player->init("player", tagFloat(1631, 1848));
 	_player->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
@@ -19,6 +18,9 @@ HRESULT dungeonScene::init()
 
 	CAMERAMANAGER->setMapSize(3840, 2160);
 	CAMERAMANAGER->connectTarget(1920, 1800);
+	//CAMERAMANAGER->_pos.x = 1920;
+	//CAMERAMANAGER->_pos.y = 1800;
+
 
 	_enterRc[0] = RectMakeCenter(1916, 1455, 50, 50);
 	_enterRc[1] = RectMakeCenter(1912, 1391, 50, 50);
@@ -61,7 +63,7 @@ void dungeonScene::update()
 
 	this->moveDungeon();
 
-	CAMERAMANAGER->cameraSlideMove(5.0f);
+	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
 }
 
 void dungeonScene::render()
@@ -102,53 +104,53 @@ void dungeonScene::moveDungeon()
 
 	RECT temp;
 	
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[0]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[0]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
 		_player->pos.x = 1916;
 		_player->pos.y = 1266;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[1]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[1]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)1800);
 		_player->pos.x = 1916;
 		_player->pos.y = 1644;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[2]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[2]))
 	{
 		//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 		CAMERAMANAGER->connectTarget((int)640, (int)1080);
 		_player->pos.x = 647;
 		_player->pos.y = 1077;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[3]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[3]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
-		_player->pos.x = 1916;
+		_player->pos.x = 1400;
 		_player->pos.y = 1266;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[4]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[4]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
 		_player->pos.x = 1520;
 		_player->pos.y = 360;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[5]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[5]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
 		_player->pos.x = 1920;
 		_player->pos.y = 1080;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[6]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[6]))
 	{
 		CAMERAMANAGER->connectTarget((int)3200, (int)360);
 		_player->pos.x = 3200;
 		_player->pos.y = 360;
 	}
-	if (IntersectRect(&temp, &_player->rc, &_enterRc[7]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[7]))
 	{
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
-		_player->pos.x = 1920;
+		_player->pos.x = 1520;
 		_player->pos.y = 360;
 	}
 

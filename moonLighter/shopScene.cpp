@@ -21,6 +21,8 @@ HRESULT shopScene::init()
 
 	SOUNDMANAGER->play("shopBGM");
 
+	_enterRc = RectMakeCenter(650, 1290, 50, 50);
+
 	return S_OK;
 }
 
@@ -33,14 +35,16 @@ void shopScene::update()
 	OBJECTMANAGER->update();
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	CAMERAMANAGER->update();
-
-	if (KEYMANAGER->isOnceKeyDown('C'))
+	RECT temp;
+	if (IntersectRect(&temp,&_player->getRcBody(), &_enterRc))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("townScene");
+		_player->pos.x = 1952;
+		_player->pos.y = 770;
 		SOUNDMANAGER->stop("shopBGM");
 	}
-
+	_enterRc = RectMakeCenter(650, 1290, 50, 50);
 }
  
 void shopScene::render()
@@ -58,8 +62,8 @@ void shopScene::render()
 	OBJECTMANAGER->render(getMemDC());
 	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - cam.left, 555 - cam.top);
 	
+	RectangleCam(getMemDC(), _enterRc, cam);
 
-
-	//RectangleCam(getMemDC(), enterRc, rc);
+	
 
 }

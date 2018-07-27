@@ -7,6 +7,7 @@ class dungeonLobby : public gameNode
 private:
 
 	player * _player;
+	RECT _enterRc;
 
 public:
 

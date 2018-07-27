@@ -93,7 +93,18 @@ void objectManager::render(HDC getMemDC)
 		- 변수를 하나 만들어 배열의 값을 참조할뿐 직접 배열에 접근하는것은 아니다.
 
 		- for문이 속도면에서 아주 미세하게 빠르지만 개발에서 신경쓸 정도는 아니다.
+
+		for each (auto iter in zOrder) {
+
+		}
+		for (auto iter : zOderList)
+		{
+		iter.second->render();
+		}
+
 	*/
+	
+
 	for (pair<float, gameObject*> iter : zOderList)
 	{
 		
