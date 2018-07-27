@@ -61,13 +61,8 @@ void mainGame::render(void)
 
 	SCENEMANAGER->render();
 	EFFECTMANAGER->render();
-<<<<<<< HEAD
-	char str[128];
-	sprintf_s(str, "%.3f %.3f", CAMERAMANAGER->_pos.x, CAMERAMANAGER->_pos.y);
-	TextOut(getMemDC(), 10, 10, str, strlen(str));
 
-=======
->>>>>>> 63a802b701c9757ed2f99bba9a12c1b2d817f657
+
 //=============================================================
 	//백버퍼의 내용을 HDC에 그린다 (이것도 렌더에 그냥 둘것!!)
 	this->getBackBuffer()->render(getHDC());
