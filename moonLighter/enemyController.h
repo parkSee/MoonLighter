@@ -8,10 +8,13 @@
 class enemyController : public gameNode
 {
 private:
-	golem * _golem;
-	weed* _weed;
-	smallSlime* _smallSlime;
-	bigSlime* _bigSlime;
+
+	vector<golem*> _vGolem;
+	vector<weed*> _vWeed;
+	vector<smallSlime*> _vSmallSlime;
+	vector<bigSlime*> _vBigSlime;
+
+
 
 public:
 
@@ -20,8 +23,13 @@ public:
 	void update();
 	void render();
 
+	void golemInit();
+	void bigSlimeInit();
+	void smallSlimeInit();
+	void weedInit();
 
-	enemyController(){}
-	~enemyController(){}
+
+	enemyController() {}
+	~enemyController() {}
 };
 
