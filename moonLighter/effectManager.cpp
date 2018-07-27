@@ -70,7 +70,7 @@ void effectManager::play(string effectName, int x, int y)
 	
 	for (mIter = _mEffect.begin(); mIter != _mEffect.end(); ++mIter)
 	{
-		if (!(mIter->first == effectName)) break;
+		if (!(mIter->first == effectName)) continue;
 
 		//이펙트키와 일치하면 이펙트 실행
 		for (int i = 0; i < mIter->second.size(); i++)

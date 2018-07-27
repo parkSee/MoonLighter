@@ -17,6 +17,14 @@ HRESULT dungeonScene::init()
 	_im = new itemManager;
 	_im->init();
 
+	vector<gameObject*> _vWeeds = OBJECTMANAGER->findObjects(objectType::ENEMY, "weed");
+
+	for (int i = 0; i < _vWeeds.size(); i++)
+	{
+		((weed*)_vWeeds[i])->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+
+	}
+
 	CAMERAMANAGER->setMapSize(3840, 2160);
 	CAMERAMANAGER->connectTarget(1920, 1800);
 
@@ -95,6 +103,10 @@ void dungeonScene::render()
 		RectangleCam(getMemDC(), _enterRc[i], cam);
 	}
 
+
+	char str[128];
+	sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
+	TextOut(getMemDC(), 200, 200, str, strlen(str));
 }
 
 void dungeonScene::moveDungeon()
