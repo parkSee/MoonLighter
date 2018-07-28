@@ -42,6 +42,8 @@ public:
 	void update();
 	void render();
 
+	void imgRectMake();
+	void hp();
 	void weedFrame();
 	void move();
 	void pixelCollision();
