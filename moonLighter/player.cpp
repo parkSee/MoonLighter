@@ -546,7 +546,12 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
+					_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
+				}
+				else
+				{
+					_isRcSwordOn = false;
 				}
 			}
 			else if (_isRight)
@@ -560,7 +565,12 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
+					_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
+				}
+				else
+				{
+					_isRcSwordOn = false;
 				}
 			}
 			else if (_isLeft)
@@ -574,7 +584,12 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
+					_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
+				}
+				else
+				{
+					_isRcSwordOn = false;
 				}
 			}
 		}
