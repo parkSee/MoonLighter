@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "liquidItem.h"
 
-//csyADD [liquidItem 아이템의 좌표, 이미지, 충돌박스 초기화 및 랜더 추가]
-
 HRESULT liquidItem::init()
 {
 	_pos = tagFloat(WINSIZEX / 3, WINSIZEY / 3);

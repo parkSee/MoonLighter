@@ -1,10 +1,8 @@
 #pragma once
 #include "item.h"
 
-// csyADD [rebar 클래스의 init,release,update,render 생성]
 
-class rebar :
-	public item
+class rebar : public item
 {
 public:
 
