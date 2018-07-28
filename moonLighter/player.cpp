@@ -526,12 +526,13 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
-					_isRcSwordOn = true;
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y - 20, 130, 100);
 				}
 				else
 				{
-					_isRcSwordOn = false;
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 
 			}
@@ -546,12 +547,13 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
-					_isRcSwordOn = true;
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
 				}
 				else
 				{
-					_isRcSwordOn = false;
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 			}
 			else if (_isRight)
@@ -565,12 +567,13 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
-					_isRcSwordOn = true;
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
 				}
 				else
 				{
-					_isRcSwordOn = false;
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 			}
 			else if (_isLeft)
@@ -584,18 +587,20 @@ void player::move()
 				}
 				if (2 <= _index && _index <= 5)
 				{
-					_isRcSwordOn = true;
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
 				}
 				else
 				{
-					_isRcSwordOn = false;
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 			}
 		}
 		else
 		{
-			_isRcSwordOn = false;
+			//_isRcSwordOn = false;
+			_rcSword = RectMake(-50, -50, 2, 2);
 		}
 		///////////////////////////////////////////////////////////////////////////////
 	}
