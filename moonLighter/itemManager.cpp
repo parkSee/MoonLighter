@@ -63,6 +63,7 @@ void itemManager::release()
 	SAFE_DELETE(_rebar);
 	SAFE_DELETE(_twig);
 	SAFE_DELETE(_golemCore);
+	SAFE_DELETE(_inven);
 }
 
 void itemManager::update()
