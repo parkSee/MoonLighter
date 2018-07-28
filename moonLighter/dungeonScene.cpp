@@ -69,7 +69,7 @@ void dungeonScene::update()
 		SCENEMANAGER->loadScene("townScene");
 	}
 	
-
+	_im->update();
 	this->moveDungeon();
 
 	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
