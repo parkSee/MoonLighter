@@ -10,20 +10,12 @@
 #include "player.h"
 #include "inventory.h"
 
-//csyADD [아이템 매니저 헤더 - 플레이어, 인벤토리 클래스 벡터 선언]
+//csyADD [아이템 매니저 헤더 - 네임스페이스 삭제 (공유를 위해 유틸헤더로 이동)]
 
-namespace itemType
-{
-	enum Enum	//아이템 종류 이넘문
-	{
-		POTION, LIQUIDITEM, REDCRISTAL, TWIG, REBAR, GOLEMCORE, END
-	};
-}
+
 
 class itemManager : public gameNode
 {
-	unordered_map<itemType::Enum , vector<item*>> _mItem;		//맵을 이용한 아이템 목록
-	typedef unordered_map<itemType::Enum, vector<item*>>::iterator mItemIter;		// 맵을 이용한 아이템 반복자
 
 	item* _potion;
 	item* _liquidItem;
@@ -38,8 +30,11 @@ class itemManager : public gameNode
 	vector<item*> _vRedCristal;
 	vector<item*> _vRebar;
 	vector<item*> _vGolemCore;
-	player* _player;
+	
 	inventory* _inven;
+
+	unordered_map<itemType::Enum , vector<item*>> _mItem;		//맵을 이용한 아이템 목록
+	typedef unordered_map<itemType::Enum, vector<item*>>::iterator mItemIter;		// 맵을 이용한 아이템 반복자
 
 public:
 
