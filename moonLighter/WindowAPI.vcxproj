@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="animation.h" />
     <ClInclude Include="bigSlime.h" />
+    <ClInclude Include="bossRoomScene.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
     <ClInclude Include="dungeonLobby.h" />
@@ -201,6 +202,7 @@
   <ItemGroup>
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="bigSlime.cpp" />
+    <ClCompile Include="bossRoomScene.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="csyImage.cpp" />
     <ClCompile Include="dungeonLobby.cpp" />

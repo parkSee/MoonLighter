@@ -6,6 +6,7 @@
 #include "shopScene.h"
 #include "dungeonScene.h"
 #include "dungeonLobby.h"
+#include "bossRoomScene.h"
 #include "player.h"
 
 

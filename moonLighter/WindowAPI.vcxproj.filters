@@ -233,6 +233,9 @@
     <ClInclude Include="ui.h">
       <Filter>MainGame\UI</Filter>
     </ClInclude>
+    <ClInclude Include="bossRoomScene.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -387,6 +390,9 @@
     </ClCompile>
     <ClCompile Include="ui.cpp">
       <Filter>MainGame\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="bossRoomScene.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

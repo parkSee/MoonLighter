@@ -40,13 +40,17 @@ void townScene::update()
 {
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 
-
+	//ToDo : 키중복 나지 않게 'C','B','V' 사용중입니다 한번씩만 봐주세요
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
 	}
-	
+	if (KEYMANAGER->isOnceKeyDown('B'))
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("bossRoomRedZoon");
+	}
 	RECT temp;
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
 	{

@@ -38,6 +38,7 @@ HRESULT dungeonScene::init()
 	_enterRc[5] = RectMakeCenter(1951, 631, 50, 50);
 	_enterRc[6] = RectMakeCenter(2482, 346, 50, 50);
 	_enterRc[7] = RectMakeCenter(2618, 346, 50, 50);
+	_enterRc[8] = RectMakeCenter(3760, 360, 50, 50);
 
 	return S_OK;
 }
@@ -100,7 +101,7 @@ void dungeonScene::render()
 	
 
 
-	for (int i = 0; i < 8; ++i)
+	for (int i = 0; i < 9; ++i)
 	{
 		RectangleCam(getMemDC(), _enterRc[i], cam);
 	}
@@ -165,7 +166,11 @@ void dungeonScene::moveDungeon()
 		_player->pos.x = 1520;
 		_player->pos.y = 360;
 	}
-
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[8]))
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("bossRoomScene");
+	}
 	/*if (IntersectRect(&temp, &RectMakeCenter(640, 740, 50, 50), &_player->rc))
 	{
 	CAMERAMANAGER->connectTarget(640, 330);

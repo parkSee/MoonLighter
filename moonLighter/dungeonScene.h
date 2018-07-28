@@ -15,7 +15,7 @@ private:
 	itemManager * _im;
 	enemyController * _em;
 
-	RECT _enterRc[8];
+	RECT _enterRc[9];
 public:
 
 
