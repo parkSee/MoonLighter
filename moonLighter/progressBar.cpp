@@ -27,6 +27,40 @@ HRESULT progressBar::init(const char * frontImageKey, const char * backImageKey,
 	_progressBarFront = IMAGEMANAGER->addImage(frontImageKey, frontImage, x, y, width, height, true, RGB(255, 0, 255));
 	_progressBarBack = IMAGEMANAGER->addImage(backImageKey, backImage, x, y, width, height, true, RGB(255, 0, 255));
 
+	//카운트, 맞았는지 초기화
+	_count = 0;
+	_isHit = false;
+	return S_OK;
+}
+
+HRESULT progressBar::init(const char * imageKey, int x, int y, int imgWidth, int imgHeight, int hpWidth, int hpHeight)  //내가 추가한거
+{
+	//const char * imageKey, int x, int y, int imgWidth, int imgHeight, int hpWidth, int hpHeight
+	//체력바 위치 초기화
+	_x = x;
+	_y = y;
+	//체력바 가로, 세로길이 초기화
+	_width = imgWidth;
+	_height = imgHeight;
+	_hpWidth = hpWidth;
+	_beforeHpWidth = hpWidth;
+	_currentHpWidth = hpWidth;
+
+	_hpHeight = hpHeight;
+	//체력바 렉트 위치 및 크기 초기화
+	_rcProgress = RectMake(x, y, imgWidth, imgHeight);
+
+	////키값으로 이미지이름(~.bmp)으로 바로 초기화
+	//char image[128];
+	////메모리 깔끔하게 밀어주기
+	//ZeroMemory(image, sizeof(image));
+	////~.bmp로 만들기
+	////키, 파일이름, IMAGEMANGER->ADDIMAGE("background", "background.bmp",,,,)
+	//sprintf(image, "%s.bmp", imageKey);
+
+	//체력바 이미지 초기화
+	//_progressBar = IMAGEMANAGER->addImage(imageKey, image, x, y, imgWidth, imgHeight, true, RGB(255, 0, 255));
+	_progressBar = IMAGEMANAGER->findImage(imageKey);
 	return S_OK;
 }
 
@@ -36,7 +70,18 @@ void progressBar::release(void)
 
 void progressBar::update(void)
 {
-	_rcProgress = RectMake(_x, _y, _progressBarBack->getWidth(), _progressBarBack->getHeight());
+	//_rcProgress = RectMake(_x, _y, _progressBarBack->getWidth(), _progressBarBack->getHeight()); //샘이 하신거
+	_rcProgress = RectMake(_x + 10, _y, _hpWidth, _hpHeight); //내가 추가한거
+	if (_isHit) //쳐맞으면 카운트 시작
+	{
+		--_count;
+		_beforeHpWidth -= _hpDifferential;
+		if (_count < 0)
+		{
+			_isHit = false;
+			_beforeHpWidth = _currentHpWidth;
+		}
+	}
 }
 
 void progressBar::render(void)
@@ -48,7 +93,54 @@ void progressBar::render(void)
 		0, 0, _width, _progressBarFront->getHeight());
 }
 
+void progressBar::render_isHit()   	//내가 한거 
+{
+	//38
+	if (!_isHit)
+	{
+		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
+		_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 38, _beforeHpWidth, _hpHeight);
+	}
+	else
+	{
+		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
+
+		if (_count > _damage * 0.6)
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 76, _beforeHpWidth, _hpHeight);
+		}
+		else if (_count > _damage * 0.4)
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 114, _beforeHpWidth, _hpHeight);
+		}
+		else if (_count > _damage * 0.2)
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 152, _beforeHpWidth, _hpHeight);
+		}
+		else
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 190, _beforeHpWidth, _hpHeight);
+		}
+	}
+}
+
 void progressBar::setGauge(float currentHp, float maxHp)
 {
 	_width = (currentHp / maxHp) * _progressBarBack->getWidth();
+}
+
+void progressBar::setGaugeOfDamage(float currentHp, float maxHp, int damage)
+{
+	_damage = damage;
+	_count = _damage;
+	_currentHpWidth = (currentHp / maxHp) * _hpWidth;
+	_hpDifferential = (_beforeHpWidth - _currentHpWidth) / _damage;
+}
+
+void progressBar::setRect(int x, int y)
+{
+	_rcProgress.left = _x + 10;
+	_rcProgress.top = _y + y;
+	_rcProgress.right = _x + _hpWidth;
+	_rcProgress.bottom = _y + _hpHeight;
 }
