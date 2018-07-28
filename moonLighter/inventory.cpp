@@ -5,8 +5,7 @@
 
 HRESULT inventory::init(string _objName, tagFloat _pos)
 {
-	//_item = new item;
-
+	
 	return S_OK;
 }
 
