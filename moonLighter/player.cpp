@@ -524,7 +524,7 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
 					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y - 20, 130, 100);
@@ -545,7 +545,7 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
 					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
@@ -565,7 +565,7 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
 					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
@@ -585,7 +585,7 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
 					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
