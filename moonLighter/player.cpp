@@ -12,8 +12,6 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_speed = 5.0f;
 	_acceleration = 2.5f;
 	_attCharge = 0;
-	_maxHp = 1000;
-	_currentHp = 1000;
 	_isUp = true;
 	_isDown = false;
 	_isLeft = false;
@@ -22,15 +20,10 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isInvincible = false;
 	_isAttacking = false;
 	_isRcSwordOn = false;
-	_isHit = false;
-	_isDead = false;
 
 
 	will = IMAGEMANAGER->findImage("will");
 	willAttack = IMAGEMANAGER->findImage("will_shortAttack");
-	_hpBar = new progressBar;
-	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
-	_hpBar->setRect(10, 0);
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
@@ -157,8 +150,8 @@ void player::update(void)
 	
 	
 	this->collision();
+	
 	this->move();
-	_hpBar->update();
 }
 
 void player::render(void)
@@ -199,7 +192,7 @@ void player::render(void)
 		Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
 	}
 	
-	_hpBar->render_isHit(); //Ã¼·Â¹Ù ·»´õ
+	
 
 }
 
@@ -496,15 +489,6 @@ void player::move()
 		if (KEYMANAGER->isOnceKeyDown('S'))
 		{
 
-			_isHit = true;
-			_damage = 30;
-			_currentHp -= _damage;
-			_hpBar->setIsHit();
-			_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
-		}
-		if (KEYMANAGER->isOnceKeyUp('S'))
-		{
-			_isHit = false;
 		}
 		if (KEYMANAGER->isOnceKeyDown('D'))
 		{
@@ -760,6 +744,5 @@ void player::move()
 	}
 
 	*/
-	
 }
 

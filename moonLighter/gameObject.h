@@ -11,9 +11,8 @@ private:
 public:
 	tagFloat pos;
 	string name;
-	int _currentHp;
-	int _maxHp;
-	int _attack;
+	int hp;
+	int attack;
 	
 	RECT rc;
 
