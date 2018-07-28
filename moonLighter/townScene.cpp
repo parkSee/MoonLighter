@@ -49,7 +49,7 @@ void townScene::update()
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("bossRoomRedZoon");
+		SCENEMANAGER->loadScene("bossRoomScene");
 	}
 	RECT temp;
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
