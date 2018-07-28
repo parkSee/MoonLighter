@@ -19,6 +19,11 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 
 	EFFECTMANAGER->addEffect("»Ð»Ð", "»Ð", 0.2f, 20);
 
+	_hp = new progressBar;
+	_hp->init("»¡°£Ã¼·Â¹Ù", "Ã¼·Â²®µ¥±â", pos.x, pos.y, 73, 8);
+	_hp->setGauge(200, 200);
+	_currentHp = 200;
+
 
 
 	RECT rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
@@ -49,27 +54,24 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 
 void golem::release()
 {
-
-
-
+	_hp->release();
+	SAFE_DELETE(_hp);
 }
 
 void golem::update()
 {
 	_count++;
-	rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
+	
 
 	if (!_startAttack)move();
-
+	imgRectMake();
 	golemFrame();
 	golemAttack();
+	hp();
+	_hp->update();
 
 	//key();
-	if (_isAttacked)
-	{
-		pos.x += 5 * cosf(PI - angle);
-		pos.y += 5 * sinf(PI - angle);
-	}
+	
 	if (KEYMANAGER->isStayKeyDown('E'))
 	{
 		//_isDead = true;
@@ -78,7 +80,7 @@ void golem::update()
 
 	}
 
-
+	
 
 }
 
@@ -382,13 +384,27 @@ void golem::render()
 	}
 
 
+	_hp->render();
 
 
 
 
 
 
+}
 
+void golem::imgRectMake()
+{
+	rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
+
+}
+
+void golem::hp()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	_hp->setX((pos.x - IMAGEMANAGER->findImage("°ñ·½Á¤¸é")->getFrameWidth() / 2 +5) - cam.left);
+	_hp->setY((pos.y - 80) - cam.top);
+	_hp->setGauge(_currentHp, 200);
 }
 
 void golem::golemFrame()
@@ -442,7 +458,7 @@ void golem::golemAttack()
 
 	distance = getDistance(pos.x, pos.y, _player->pos.x, _player->pos.y);
 
-	if (distance < 50)
+	if (distance < 90)
 	{
 		_startAttack = true;
 	}
@@ -495,10 +511,11 @@ void golem::move()
 	tempX = speed * cosf(angle);
 	tempY = speed * -sinf(angle);
 
-
-
-
-
+	if (_isAttacked)
+	{
+		pos.x += 5 * cosf(PI - angle);
+		pos.y += 5 * sinf(PI - angle);
+	}
 
 }
 void golem::key()

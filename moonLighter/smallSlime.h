@@ -1,5 +1,6 @@
 #pragma once
 #include "gameObject.h"
+#include"progressBar.h"
 
 // lejADD 스몰 슬라임 클래스 생성
 class smallSlime : public gameObject
@@ -7,6 +8,8 @@ class smallSlime : public gameObject
 private:
 	image * _smallSlime;
 	image* _attackedSmallSlime[2];
+	progressBar* _hp;
+	int _currentHp;
 	int _count;
 	int _currentX;
 	int _currentY;
@@ -38,6 +41,8 @@ public:
 	void update();
 	void render();
 
+	void imgRectMake();
+	void hp();
 	void smallSlimeFrame();
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }

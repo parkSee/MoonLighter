@@ -9,6 +9,10 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	_bigSlime = IMAGEMANAGER->findImage("Å«½½¶óÀÓ");
 	_attackedBigSlime[0] = IMAGEMANAGER->findImage("Å«½½¶óÀÓ»¡°­");
 	_attackedBigSlime[1] = IMAGEMANAGER->findImage("Å«½½¶óÀÓÇÏ¾ç");
+	_hp = new progressBar;
+	_hp->init("»¡°£Ã¼·Â¹Ù", "Ã¼·Â²®µ¥±â", pos.x, pos.y, 73, 8);
+	_hp->setGauge(200, 200);
+	_currentHp = 200;
 	//EFFECTMANAGER->addEffect("»Ð»Ð",)
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_alpha = 255;
@@ -25,13 +29,20 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 
 void bigSlime::release()
 {
+	_hp->release();
+	SAFE_DELETE(_hp);
 }
 
 void bigSlime::update()
 {
 	_count++;
+	imgRectMake();
 	bigSlimeFrame();
-	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+	move();
+	hp();
+	pixelCollision();
+	_hp->update();
+	
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
@@ -39,13 +50,7 @@ void bigSlime::update()
 		_currentX = 24;
 	}
 
-	move();
-
-	if (_isAttacked)
-	{
-		pos.x += 5 * cosf(PI - angle);
-		pos.y += 5 * sinf(PI - angle);
-	}
+	
 
 	if (KEYMANAGER->isOnceKeyDown('W'))
 	{
@@ -53,14 +58,17 @@ void bigSlime::update()
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 5, pos.y + 20);
 	}
 
-	this->pixelCollision();
-
+	
+	
 }
 
 void bigSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	//Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
+
+	_hp->render();
+
 	if (_noneAttacked)_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
 
 	if (_isAttacked2)
@@ -95,6 +103,23 @@ void bigSlime::render()
 		_noneAttacked = false;
 	}
 
+	
+	
+
+}
+
+void bigSlime::imgRectMake()
+{
+
+	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+}
+
+void bigSlime::hp()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	_hp->setGauge(_currentHp, 200);
+	_hp->setX((pos.x - IMAGEMANAGER->findImage("Å«½½¶óÀÓ")->getFrameWidth() / 3) - cam.left);
+	_hp->setY((pos.y - 50) - cam.top);
 }
 
 void bigSlime::bigSlimeFrame()
@@ -126,6 +151,8 @@ void bigSlime::bigSlimeFrame()
 		}
 
 	}
+
+	
 }
 
 void bigSlime::move()
@@ -137,7 +164,11 @@ void bigSlime::move()
 	if (_xCollision == false)pos.x += speed * cosf(angle);
 	if (_yCollision == false)pos.y += speed * -sinf(angle);
 
-
+	if (_isAttacked)
+	{
+		pos.x += 5 * cosf(PI - angle);
+		pos.y += 5 * sinf(PI - angle);
+	}
 
 }
 

@@ -35,20 +35,19 @@ void weed::release()
 
 void weed::update()
 {
+	
+
 	_count++;
+	imgRectMake();
 	weedFrame();
 	move();
 	pixelCollision();
+	hp();
 	_hp->update();
-	_hp->setGauge(_currentHp, 100);
+	
 
-	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
-
-	if (_isAttacked)
-	{
-		pos.x += 5 * cosf(PI - angle);
-		pos.y += 5 * sinf(PI - angle);
-	}
+	
+	
 
 	if (KEYMANAGER->isOnceKeyDown('Q'))
 	{
@@ -67,7 +66,7 @@ void weed::render()
 	//Rectangle(getMemDC(), rc);
 	RECT cam = CAMERAMANAGER->getRenderRc();
 
-	if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+	if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 
 	if (_isAttacked2)
 	{
@@ -79,8 +78,8 @@ void weed::render()
 			_noneAttacked = true;
 			_attackedCount = 0;
 		}
-		_attackedWeed[1]->setFrameX(_weedFrameX);
-		_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		
+		_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 	}
 	if (_isAttacked)
 	{
@@ -92,8 +91,8 @@ void weed::render()
 			_attackedCount = 0;
 		}
 
-		_attackedWeed[0]->setFrameX(_weedFrameX);
-		_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		
+		_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 	}
 	if (KEYMANAGER->isStayKeyDown('P'))
 	{
@@ -111,10 +110,23 @@ void weed::render()
 	sprintf_s(str, "%d", _xCollision);
 	TextOut(getMemDC(), 100, 200, str, strlen(str));
 
-	_hp->setX((pos.x - IMAGEMANAGER->findImage("説段")->getFrameWidth()/2) - cam.left);
+	
+	_hp->render();
+}
+
+
+
+void weed::imgRectMake()
+{
+	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+}
+
+void weed::hp()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	_hp->setX((pos.x - IMAGEMANAGER->findImage("説段")->getFrameWidth() / 2) - cam.left);
 	_hp->setY((pos.y - 50) - cam.top);
 	_hp->setGauge(_currentHp, 200);
-	_hp->render();
 }
 
 void weed::weedFrame()
@@ -141,6 +153,13 @@ void weed::move()
 	speed = 0.7f;
 	if (_xCollision == false)pos.x += speed * cosf(angle);
 	if (_yCollision == false)pos.y += speed * -sinf(angle);
+
+	if (_isAttacked)
+	{
+		pos.x += 5 * cosf(PI - angle);
+		pos.y += 5 * sinf(PI - angle);
+	}
+
 }
 
 void weed::pixelCollision()

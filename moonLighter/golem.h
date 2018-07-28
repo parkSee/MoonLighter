@@ -1,5 +1,6 @@
 #pragma once
 #include "gameObject.h"
+#include"progressBar.h"
 #define golemMaxImg 4
 
 class golem : public gameObject
@@ -8,6 +9,8 @@ private:
 	//lejADD [골렘 클래스 생성]
 	image * _golem[4];
 	image* _attackedGolem[8];
+	progressBar* _hp;
+	int _currentHp;
 
 	int _currentX[4]; // 현재 X 프레임 좌표용 변수
 	int _currentY[4];
@@ -46,6 +49,8 @@ public:
 	void update();
 	void render();
 
+	void imgRectMake();
+	void hp();
 	void golemFrame();
 	void golemAttack();
 	void move();

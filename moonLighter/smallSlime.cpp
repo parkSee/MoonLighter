@@ -9,6 +9,10 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_smallSlime = IMAGEMANAGER->findImage("작은슬라임");
 	_attackedSmallSlime[0] = IMAGEMANAGER->findImage("작은슬라임빨강");
 	_attackedSmallSlime[1] = IMAGEMANAGER->findImage("작은슬라임하양");
+	_hp = new progressBar;
+	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
+	_hp->setGauge(200, 200);
+	_currentHp = 200;
 	_count = _currentX = _attackedCount = _currentY = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
 
@@ -25,14 +29,21 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 
 void smallSlime::release()
 {
+	_hp->release();
+	SAFE_DELETE(_hp);
 }
 
 void smallSlime::update()
 {
 	_count++;
+	imgRectMake();
 	smallSlimeFrame();
 	move();
-	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
+	pixelCollision();
+	hp();
+	_hp->update();
+
+	
 
 	if (_isAttacked)
 	{
@@ -45,15 +56,17 @@ void smallSlime::update()
 		EFFECTMANAGER->play("뿅뿅", pos.x + 10, pos.y + 10);
 	}
 
-	pixelCollision();
+	
+
+	
 }
 
 void smallSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
+	_hp->render();
 
-
-	if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+	if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
 
 	if (_isAttacked2)
 	{
@@ -65,8 +78,8 @@ void smallSlime::render()
 			_noneAttacked = true;
 			_attackedCount = 0;
 		}
-		_attackedSmallSlime[1]->setFrameX(_currentX);
-		_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		
+		_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX,_currentY);
 	}
 	if (_isAttacked)
 	{
@@ -78,14 +91,30 @@ void smallSlime::render()
 			_attackedCount = 0;
 		}
 
-		_attackedSmallSlime[0]->setFrameX(_currentX);
-		_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		
+		_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
 	}
 	if (KEYMANAGER->isOnceKeyDown('L'))
 	{
 		_isAttacked = true;
 		_noneAttacked = false;
 	}
+
+	
+	
+}
+
+void smallSlime::imgRectMake()
+{
+	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
+}
+
+void smallSlime::hp()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	_hp->setGauge(_currentHp, 200);
+	_hp->setX((pos.x - 2 * IMAGEMANAGER->findImage("작은슬라임")->getFrameWidth() / 3) - cam.left);
+	_hp->setY((pos.y - 50) - cam.top);
 }
 
 void smallSlime::smallSlimeFrame()
