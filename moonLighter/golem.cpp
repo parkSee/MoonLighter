@@ -26,7 +26,7 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 
 
 
-	RECT rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
+	 rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 
 	_count = _attackedCount = _tempCurrent = 0;
 
@@ -86,7 +86,7 @@ void golem::update()
 
 void golem::render()
 {
-
+	
 	if (_isDead)  //Á×¾úÀ»¶§ ·£´õ
 	{
 		//_dead->frameRender(getMemDC(), pos.x - 55, pos.y - 20);
@@ -107,6 +107,8 @@ void golem::render()
 
 
 	RECT cam = CAMERAMANAGER->getRenderRc();
+	RectangleCam(getMemDC(), rc, cam);
+
 	if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 	{
 		_right = true; _left = false; _down = false; _up = false;
@@ -385,7 +387,9 @@ void golem::render()
 
 
 	_hp->render();
-
+	
+	
+	
 
 
 

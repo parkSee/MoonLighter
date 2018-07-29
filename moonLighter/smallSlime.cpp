@@ -65,7 +65,7 @@ void smallSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	_hp->render();
-
+	RectangleCam(getMemDC(), rc, cam);
 	if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
 
 	if (_isAttacked2)

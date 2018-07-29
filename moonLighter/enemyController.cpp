@@ -23,6 +23,7 @@ HRESULT enemyController::init()
 	bigSlimeInit();
 	smallSlimeInit();
 	weedInit();
+	bossInit();
 
 
 
@@ -53,6 +54,14 @@ void enemyController::render()
 
 }
 
+void enemyController::bossInit()
+{
+	boss* _boss = new boss;
+	_boss->init("boss", tagFloat(2000, 1800));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _boss);
+	_boss->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+}
+
 void enemyController::golemInit()
 {
 	for (int i = 0; i < 2; ++i)
@@ -61,6 +70,7 @@ void enemyController::golemInit()
 		_golem->init("golem", tagFloat(600 + 300 * i, 1000)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
 															  //_vGolem.push_back(_golem);
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+	
 	}
 
 	for (int i = 0; i < 3; ++i)

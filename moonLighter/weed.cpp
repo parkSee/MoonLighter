@@ -71,7 +71,7 @@ void weed::render()
 {
 	//Rectangle(getMemDC(), rc);
 	RECT cam = CAMERAMANAGER->getRenderRc();
-
+	RectangleCam(getMemDC(), rc, cam);
 	if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 
 	if (_isAttacked2)

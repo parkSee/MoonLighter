@@ -170,15 +170,6 @@
     <ClInclude Include="loadingScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="bigSlime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="smallSlime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="weed.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="golemCore.h">
       <Filter>MainGame\Item\ItemType</Filter>
     </ClInclude>
@@ -235,6 +226,18 @@
     </ClInclude>
     <ClInclude Include="bossRoomScene.h">
       <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="weed.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="smallSlime.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="bigSlime.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>MainGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -331,15 +334,6 @@
     <ClCompile Include="lysImage.cpp">
       <Filter>MainGame\Scene\loadingImages</Filter>
     </ClCompile>
-    <ClCompile Include="bigSlime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="smallSlime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="weed.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="inventory.cpp">
       <Filter>MainGame\inventory</Filter>
     </ClCompile>
@@ -393,6 +387,18 @@
     </ClCompile>
     <ClCompile Include="bossRoomScene.cpp">
       <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="smallSlime.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="weed.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="bigSlime.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

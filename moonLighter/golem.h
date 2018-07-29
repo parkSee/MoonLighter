@@ -36,7 +36,7 @@ private:
 	bool _up;
 
 
-	int _alpha; //빅슬라임 캐릭터 덮쳤을때 알파값
+	
 	float speed;
 	float angle;
 	float distance;
@@ -49,6 +49,7 @@ public:
 	void update();
 	void render();
 
+	RECT getRect() { return rc; }
 	void imgRectMake();
 	void hp();
 	void golemFrame();
