@@ -57,7 +57,7 @@ void enemyController::render()
 void enemyController::bossInit()
 {
 	boss* _boss = new boss;
-	_boss->init("boss", tagFloat(2000, 1800));
+	_boss->init("boss", tagFloat(2000, 1000));
 	OBJECTMANAGER->addObject(objectType::ENEMY, _boss);
 	_boss->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 }
@@ -67,26 +67,26 @@ void enemyController::golemInit()
 	for (int i = 0; i < 2; ++i)
 	{
 		golem* _golem = new golem;
-		_golem->init("golem", tagFloat(600 + 300 * i, 1000)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
-															  //_vGolem.push_back(_golem);
+		_golem->init("golem", tagFloat(600 + 300 * i, 1000));													 
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	
 	}
 
 	for (int i = 0; i < 3; ++i)
 	{
 		golem* _golem = new golem;
-		_golem->init("golem", tagFloat(3000+ 300 * i, 400)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
-															  //_vGolem.push_back(_golem);
+		_golem->init("golem", tagFloat(3000+ 300 * i, 400)); 													 
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
 
 	for (int i = 0; i < 1; ++i)
 	{
 		golem* _golem = new golem;
-		_golem->init("golem", tagFloat(1700 + 300 * i, 400)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
-															  //_vGolem.push_back(_golem);
+		_golem->init("golem", tagFloat(1700 + 300 * i, 400)); 
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
 
 }

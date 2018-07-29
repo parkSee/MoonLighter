@@ -19,17 +19,6 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_attackedBoss[7] = IMAGEMANAGER->findImage("보스뒤왼쪽하양");
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 	_boss[8] = IMAGEMANAGER->findImage("보스생성");
 
@@ -96,6 +85,7 @@ void boss::update()
 	imgRectMake();
 	bossFrame();
 	bossAttack();
+	pixelCollision();
 	hp();
 	_hp->update();
 
@@ -106,6 +96,9 @@ void boss::render()
 {
 	
 	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	RectangleCam(getMemDC(), rc, cam);
+
 	if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 	{
 		_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
@@ -368,7 +361,14 @@ void boss::render()
 			_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
 		}
 	}
-	
+	char str[128];
+	sprintf_s(str, "leftDown ;%d ,LeftUp : %d , RightDown : %d, Right Up : %d", _leftDown, _leftUp, _rightDown, _rightUp);
+	TextOut(getMemDC(), 300, 300, str, strlen(str));
+
+	//RectangleCam(getMemDC(), _rc[0], cam);
+	//RectangleCam(getMemDC(), _rc[1], cam);
+	//RectangleCam(getMemDC(), _rc[2], cam);
+	//RectangleCam(getMemDC(), _rc[3], cam);
 	
 }
 
@@ -397,7 +397,7 @@ void boss::bossFrame()
 				_boss[i]->setFrameX(_currentX[i]);
 				_currentX[i]++;
 
-				if (_currentX[i] > 8)
+				if (_currentX[i] > 7)
 				{
 					_currentX[i] = 0;
 				}
@@ -431,7 +431,7 @@ void boss::bossAttack()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 
-	distance = getDistance(pos.x, pos.y, _player->pos.x, _player->pos.y);
+	distance = getDistance(pos.x-40 , pos.y+10, _player->pos.x, _player->pos.y);
 
 	if (distance < 100)
 	{
@@ -493,4 +493,91 @@ void boss::move()
 
 void boss::pixelCollision()
 {
+
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	
+	_rc[0] = RectMakeCenter(pos.x + _boss[0]->getFrameWidth() / 2, pos.y, 2, _boss[0]->getFrameHeight());//오른쪽
+	_rc[1] = RectMakeCenter(pos.x - _boss[0]->getFrameWidth() / 2, pos.y, 2, _boss[0]->getFrameHeight());//왼쪽
+	_rc[2] = RectMakeCenter(pos.x, pos.y - _boss[0]->getFrameHeight() / 2, _boss[0]->getFrameWidth(), 2);//위
+	_rc[3] = RectMakeCenter(pos.x, pos.y + _boss[0]->getFrameHeight() / 2, _boss[0]->getFrameWidth(), 2);//아래
+
+
+	_rc0X = pos.x + _boss[0]->getFrameWidth() / 2;
+	_rc0Y = pos.y - _boss[0]->getFrameHeight() / 2;
+
+	_rc1X = pos.x - _boss[0]->getFrameWidth() / 2;
+	_rc1Y = pos.y - _boss[0]->getFrameHeight() / 2;
+
+	_rc2Y = pos.y - _boss[0]->getFrameHeight() / 2;
+	_rc2X = pos.x - _boss[0]->getFrameWidth() / 2;
+
+
+	_rc3Y = pos.y + _boss[0]->getFrameHeight() / 2;
+	_rc3X = pos.x - _boss[0]->getFrameWidth() / 2;
+
+
+
+
+	for (int j = _rc0Y + 5; j < pos.y + _boss[0]->getFrameHeight() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), pos.x + _boss[0]->getFrameWidth() / 2, j);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.x = pos.x + _boss[0]->getFrameWidth() / 2 - 129;
+			break;
+		}
+
+
+	}
+	for (int j = _rc1Y + 5; j < pos.y + _boss[0]->getFrameHeight() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), pos.x - _boss[0]->getFrameWidth() / 2, j);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.x = pos.x - _boss[0]->getFrameWidth() / 2 + 129;
+			break;
+		}
+
+	}
+	for (int j = _rc2X + 5; j < pos.x + _boss[0]->getFrameWidth() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), j, pos.y + _boss[0]->getFrameHeight() / 2);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.y = pos.y + _boss[0]->getFrameWidth() / 2 - 129;
+			break;
+		}
+
+	}
+	for (int j = _rc2X + 5; j < pos.x + _boss[0]->getFrameWidth() / 2 - 5; j++)
+	{
+
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), j, pos.y - _boss[0]->getFrameHeight() / 2);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.y = pos.y - _boss[0]->getFrameWidth() / 2 + 129;
+			break;
+		}
+
+	}
+
 }

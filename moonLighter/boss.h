@@ -33,7 +33,14 @@ private:
 	bool _leftDown;
 	bool _rightDown;
 
-
+	int _rc0X;
+	int _rc0Y;
+	int _rc1X;
+	int _rc1Y;
+	int _rc2X;
+	int _rc2Y;
+	int _rc3X;
+	int _rc3Y;
 
 	float speed;
 	float angle;
@@ -47,6 +54,7 @@ public:
 	void update();
 	void render();
 
+	RECT getRect() { return rc; }
 	void imgRectMake();
 	void damagged();
 	void hp();

@@ -36,11 +36,20 @@ private:
 	bool _up;
 
 
+	int _rc0X;
+	int _rc0Y;
+	int _rc1X;
+	int _rc1Y;
+	int _rc2X;
+	int _rc2Y;
+	int _rc3X;
+	int _rc3Y;
 	
 	float speed;
 	float angle;
 	float distance;
-
+	image* _pixelImg;
+	RECT _rc[4];
 
 
 public:
@@ -55,8 +64,8 @@ public:
 	void golemFrame();
 	void golemAttack();
 	void move();
-
-
+	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	void pixelCollision();
 	void key();
 
 	golem() {}

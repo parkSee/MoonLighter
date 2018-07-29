@@ -106,11 +106,11 @@ void weed::render()
 		_noneAttacked = false;
 		_currentHp-= 50;
 	}
-
-	Rectangle(getMemDC(), _rc[0]);
-	Rectangle(getMemDC(), _rc[1]);
-	Rectangle(getMemDC(), _rc[2]);
-	Rectangle(getMemDC(), _rc[3]);
+	//RectangleCam(getMemDC(), _rc[0], cam);
+	//Rectangle(getMemDC(), _rc[0]);
+	//Rectangle(getMemDC(), _rc[1]);
+	//Rectangle(getMemDC(), _rc[2]);
+	//Rectangle(getMemDC(), _rc[3]);
 
 	char str[128];
 	sprintf_s(str, "%d", _xCollision);
