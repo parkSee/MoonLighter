@@ -56,8 +56,7 @@ void townScene::update()
 		SCENEMANAGER->loadScene("shopScene");
 		//SOUNDMANAGER->stop("townBGM");
 	}
-
-	if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
+	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonLobby");

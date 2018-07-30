@@ -180,6 +180,7 @@
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="objectContainer.h" />
     <ClInclude Include="objectManager.h" />
+    <ClInclude Include="pixelManager.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="potion.h" />
     <ClInclude Include="progressBar.h" />
@@ -238,6 +239,7 @@
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="objectContainer.cpp" />
     <ClCompile Include="objectManager.cpp" />
+    <ClCompile Include="pixelManager.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="potion.cpp" />
     <ClCompile Include="progressBar.cpp" />

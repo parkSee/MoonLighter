@@ -7,6 +7,7 @@ class AIKids : public gameObject
 private:
 
 	image * _img;
+	image* _pixelImg;
 	AIKidsState* _state;
 
 public:
@@ -15,6 +16,8 @@ public:
 	void release();
 	void update();
 	void render();
+
+	void setPixel(image* img) {_pixelImg = img;}
 
 	AIKids(){}
 	~AIKids(){}

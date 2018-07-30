@@ -28,6 +28,7 @@ HRESULT gameNode::init(bool managerInit)
 		OBJECTMANAGER->init();
 		EFFECTMANAGER->init();
 		TIMEMANAGER->init();
+		PIXELMANAGER->init();
 	}
 
 	return S_OK;
@@ -51,10 +52,13 @@ void gameNode::release(void)
 		//이미지매니져 싱글톤 해제
 		IMAGEMANAGER->release();
 		IMAGEMANAGER->releaseSingleton();
+		//카메라 매니저 싱글톤 해제
 		CAMERAMANAGER->release();
 		CAMERAMANAGER->releaseSingleton();
+		//씬매니저 싱글톤 해제
 		SCENEMANAGER->release();
 		SCENEMANAGER->releaseSingleton();
+		//사운드매니저 싱글톤 해제
 		SOUNDMANAGER->release();
 		SOUNDMANAGER->releaseSingleton();
 		TXTDATA->release();
@@ -67,6 +71,10 @@ void gameNode::release(void)
 		EFFECTMANAGER->releaseSingleton();
 		TIMEMANAGER->release();
 		TIMEMANAGER->releaseSingleton();
+
+		//픽셀 테스트
+		PIXELMANAGER->release();
+		PIXELMANAGER->releaseSingleton();
 	}
 
 	//DC 해제

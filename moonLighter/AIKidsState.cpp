@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "AIKidsState.h"
 #include "AIKids.h"
-void AIKidsState::enter(gameObject * parent, State::Enum state, image * img)
+void AIKidsState::enter(gameObject * parent, State::Enum state, image * img, image* pixel)
 {
 	_parent = parent;
 	_state = state;
 	_img = img;
-
+	_pixel = pixel;
 
 	switch (_state)
 	{
@@ -94,22 +94,24 @@ void AIKidsState::update()
 	break;
 	case State::LEFT:
 	{
-
+		PIXELMANAGER->collision(_img, _pixel, Direction::LEFT, _parent->pos.x, _parent->pos.y);
 	}
 	break;
 	case State::RIGHT:
 	{
-
+		PIXELMANAGER->collision(_img, _pixel, Direction::RIGHT, _parent->pos.x, _parent->pos.y);
 	}
 	break;
 	case State::UP:
 	{
-
+		_parent->pos.y--;
+		PIXELMANAGER->collision(_img, _pixel, Direction::TOP, _parent->pos.x, _parent->pos.y);
+	
 	}
 	break;
 	case State::DOWN:
 	{
-
+		PIXELMANAGER->collision(_img, _pixel, Direction::BOTTOM, _parent->pos.x, _parent->pos.y);
 	}
 	break;
 	case State::BUY:
@@ -134,8 +136,6 @@ void AIKidsState::move()
 	{
 		_vDot[_currentIndex].x = 288;
 		_vDot[_currentIndex].y = 1097;
-
-
 		return;
 	}
 
