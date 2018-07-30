@@ -29,7 +29,7 @@ void loadingScene::update()
 	//로딩완료후 씬변경
 	if (_loading->loadingDone())
 	{
-		SCENEMANAGER->loadScene("townScene");
+		SCENEMANAGER->loadScene("startScene");
 	}
 }
 

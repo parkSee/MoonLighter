@@ -45,14 +45,12 @@ HRESULT dungeonScene::init()
 
 void dungeonScene::release()
 {
-	//_player->release();
-	//SAFE_DELETE(_player);
-
-	//_em->release();
-	//SAFE_DELETE(_em);
+	
+	_em->release();
+	SAFE_DELETE(_em);
 	//
-	//_im->release();
-	//SAFE_DELETE(_im);
+	_im->release();
+	SAFE_DELETE(_im);
 }
 
 void dungeonScene::update()

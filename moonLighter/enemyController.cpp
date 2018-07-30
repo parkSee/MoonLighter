@@ -11,8 +11,6 @@
 
 HRESULT enemyController::init()
 {
-	
-	
 
 	golemInit();
 	bigSlimeInit();

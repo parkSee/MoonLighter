@@ -47,9 +47,16 @@ void loadingScene::psyImageLoading()
 
 
 	//AI
-
 	_loading->loadImage("AiKids", "Image/ai/AiKids.bmp", 600, 400, true, MAGENTA);
+	
+	//door
+	_loading->loadImage("door_left", "Image/door_left.bmp", 640, 737, true, MAGENTA);
+	_loading->loadImage("door_right", "Image/door_right.bmp", 640, 737, true, MAGENTA);
 
+	//mainFrame
+	_loading->loadFrameImage("main_frame", "Image/main_frame.bmp", 14080, 720, 16, 1,true,MAGENTA);
+	//logo
 
+	
 }
 

@@ -27,18 +27,13 @@ HRESULT objectContainer::init()
 	{
 		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _house[i]);
 	}
-		//OBJECTMANAGER->addObject(objectType::OBJECT, _house[1]);
-	
+		
 	return S_OK;
 }
 
 void objectContainer::release()
 {
-	for (int i = 0; i < 10; ++i)
-	{
-		_house[i]->release();
-		SAFE_DELETE(_house[i]);
-	}
+	
 }
 
 void objectContainer::update()
