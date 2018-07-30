@@ -33,6 +33,7 @@ HRESULT shopScene::init()
 
 void shopScene::release()
 {
+	SAFE_DELETE(_inven);
 }
 
 void shopScene::update()
