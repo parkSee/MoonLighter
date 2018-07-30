@@ -107,7 +107,7 @@ HRESULT loading::init(void)
 	
 	//로딩바 클래스 초기화
 	_loadingBar = new progressBar;
-	_loadingBar->init("loadingBarFront", "loadingBarBack", 100, 430, 600, 20);
+	_loadingBar->init("loadingBar_front", "loadingBar", 200, 430, 880, 209);
 	_loadingBar->setGauge(0, 0);
 	//현재 게이지 초기화
 	_currentGauge = 0;

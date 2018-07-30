@@ -7,6 +7,8 @@ class loadingScene : public gameNode
 private:
 	loading * _loading;
 	image* _img;
+	image* _frame;
+	int _count, _index;
 	
 public:
 
@@ -26,6 +28,7 @@ public:
 	void csyImageLoading();
 	void lysImageLoading();
 
+	void frame();
 
 
 
