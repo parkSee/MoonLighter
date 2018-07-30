@@ -513,8 +513,8 @@ void player::move()
 			{
 				_isAttacking = true;
 				_index = 0;
+				SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
 			}
-			SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
 		}
 		if (KEYMANAGER->isOnceKeyDown('S'))
 		{
@@ -523,7 +523,6 @@ void player::move()
 			_currentHp -= _damage;
 			_hpBar->setIsHit();
 			_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
-
 		}
 		if (KEYMANAGER->isOnceKeyUp('S'))
 		{
@@ -840,12 +839,16 @@ void player::enemyCheckCollision()
 		{
 			a = false;
 		}
+	}
+	for (int i = 0; i < _enemyObject.size(); ++i)
+	{
+	
 		if (IntersectRect(&rcTemp, &_rcBody, &((weed*)_enemyObject[i])->getRect()))
 		{
 			if (_isInvincible == false)
 			{
 				_isHit = true;
-				_damage = 700;
+				_damage = 300;
 				_currentHp -= _damage;
 				_hpBar->setIsHit();
 				_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
