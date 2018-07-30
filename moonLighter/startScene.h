@@ -16,8 +16,16 @@ private:
 	Door _doorRight;
 
 	image* main_frame;
+
 	image* _logo;
-	image* _font;
+	image* _aniKeyFont;
+	image* _startFont;
+	image* _optionFont;
+	image* _exitFont;
+
+	image* _selectImg;
+	tagInt _selectPos;
+
 	int _count, _index;
 
 	bool _isOpen;

@@ -14,7 +14,13 @@ HRESULT startScene::init()
 	_logo = IMAGEMANAGER->findImage("logo");
 	_count = _index = 0;
 
-	_font = IMAGEMANAGER->findImage("font");
+	_aniKeyFont = IMAGEMANAGER->findImage("aniKey");
+	_startFont = IMAGEMANAGER->findImage("start");
+	_optionFont = IMAGEMANAGER->findImage("option");
+	_exitFont = IMAGEMANAGER->findImage("exit");
+	_selectImg = IMAGEMANAGER->findImage("select");
+	_selectPos = tagInt(WINSIZEX / 2 - _selectImg->getWidth() / 2, WINSIZEY - 200);
+
 	_isOpen = false;
 	_alpha = 0;
 
@@ -31,11 +37,36 @@ void startScene::update()
 {
 
 	this->Frame();
-
+	
+	//문이 열릴떄 키
 	if (KEYMANAGER->isOnceKeyDown(VK_RETURN))
 	{
 		_isOpen = true;
-		
+	}
+	//상태 선택 키들
+	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+	{
+		_selectPos.y += 50;
+		if (_selectPos.y > 650)
+			_selectPos.y = WINSIZEY - 200;
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_UP))
+	{
+		_selectPos.y -= 50;
+		if (_selectPos.y < 520)
+			_selectPos.y = WINSIZEY - 100;
+	}
+
+	//결정 선택키들
+	if ((_selectPos.x == WINSIZEX / 2 - _selectImg->getWidth() / 2) && _selectPos.y == WINSIZEY - 200)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+			SCENEMANAGER->loadScene("townScene");
+	}
+	else if (_selectPos.y == WINSIZEY - 100)
+	{
+		if (KEYMANAGER->isOnceKeyDown('Z'))
+			exit(0);
 	}
 
 	if (_isOpen)
@@ -47,14 +78,10 @@ void startScene::update()
 		}
 		
 	}
-	if (KEYMANAGER->isOnceKeyDown('M'))
-	{
-		SCENEMANAGER->loadScene("townScene");
-	}
 	_alphaTime++;
 	if (_alphaTime % 5 == 0)
 	{
-		_alpha++;
+		_alpha+= 5;
 		if (_alpha > 255)
 			_alpha = 0;
 	}
@@ -71,7 +98,15 @@ void startScene::render()
 	_logo->render(getMemDC(), WINSIZEX/2 - _logo->getWidth()/2,100);
 
 	if (!_isOpen)
-		_font->alphaRender(getMemDC(), WINSIZEX / 2 - _font->getWidth() / 2, WINSIZEY - 100,_alpha);
+		_aniKeyFont->alphaRender(getMemDC(), WINSIZEX / 2 - _aniKeyFont->getWidth() / 2, WINSIZEY - 100,_alpha);
+	else
+	{
+		_startFont->render(getMemDC(), WINSIZEX / 2 - _startFont->getWidth() / 2, WINSIZEY - 200);
+		_optionFont->render(getMemDC(), WINSIZEX / 2 - _optionFont->getWidth() / 2, WINSIZEY - 150);
+		_exitFont->render(getMemDC(), WINSIZEX / 2 - _exitFont->getWidth() / 2, WINSIZEY - 100);
+		_selectImg->render(getMemDC(),_selectPos.x,_selectPos.y);
+
+	}
 }
 
 void startScene::Frame()
