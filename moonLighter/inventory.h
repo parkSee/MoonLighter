@@ -3,7 +3,7 @@
 #include "item.h"
 #include "player.h"
 
-// csyADD [인벤토리 클래스 추가 / 아이템을 벡터가 아닌 맵으로 담도록 수정 (함수도 맵의 키를 받도록)]
+// csyADD [인벤토리 헤더 - 인벤토리 슬롯 선택용 박스&이미지 선언 ]
 
 class inventory : public gameNode
 {
@@ -11,9 +11,13 @@ class inventory : public gameNode
 	typedef map<itemType::Enum, vector<item*>>::iterator mItemIter;		// 맵을 이용한 아이템 반복자
 
 	image* _invenImg;
-	bool _openInven;
-	bool _onceOpen;
+	image* _slotImg;
+	bool _openInven; // 인벤이 열렸는지 구분하는 함수
+	bool _onceOpen;	// I가 눌렸을 때 한번만 오픈하게 할려고 했는데 굳이 필요해?
+	int _slotNum;
 	RECT _invenSlot[20];
+	RECT _selectSlot;
+	
 
 public:
 
