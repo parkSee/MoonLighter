@@ -24,6 +24,12 @@ void startScene::update()
 {
 
 	this->Frame();
+
+
+	if (KEYMANAGER->isOnceKeyDown('M'))
+	{
+		SCENEMANAGER->loadScene("townScene");
+	}
 }
 
 void startScene::render()
