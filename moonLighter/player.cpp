@@ -8,6 +8,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	gameObject::init(_objName, _pos);
 	
 	_index = _count = 0;
+	_cntIsInvincible = 0;
 	_time = 0.0f;
 	_speed = 5.0f;
 	_acceleration = 2.5f;
@@ -20,9 +21,11 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isRight = false;
 	_isRolling = false;
 	_isInvincible = false;
+	
 	_isAttacking = false;
 	_isRcSwordOn = false;
 
+	a = false;
 
 	will = IMAGEMANAGER->findImage("will");
 	willAttack = IMAGEMANAGER->findImage("will_shortAttack");
@@ -35,6 +38,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_efcShortSword1->init(IMAGEMANAGER->findImage("will_shortSword1"), 0.3f);
 
 	EFFECTMANAGER->addEffect("¼ô¼Òµå", "will_shortSword1", 0.3f, 50);
+
+
 
 
 
@@ -68,7 +73,7 @@ void player::release(void)
 void player::update(void)
 {
 	gameObject::update();
-
+	
 	//CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	/*
@@ -167,10 +172,11 @@ void player::update(void)
 
 	//rc = RectMakeCenter(pos.x, pos.y, 70, 70);
 	
-	
+	 
 	this->collision();
 	this->move();
 	_hpBar->update_isHit();
+	this->enemyCheckCollision();
 }
 
 void player::render(void)
@@ -213,6 +219,7 @@ void player::render(void)
 	
 	
 	_hpBar->render_isHit(); //Ã¼·Â¹Ù ·»´õ
+	this->enemyCheckCollision();
 	//_efcShortSword1->render();
 	//EFFECTMANAGER->render();
 }
@@ -436,6 +443,7 @@ void player::move()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 			{
+				SOUNDMANAGER->play("will_roll", 0.7f);
 				_index = 0;
 				_isRolling = true;
 				_isInvincible = true;
@@ -506,11 +514,12 @@ void player::move()
 				_isAttacking = true;
 				_index = 0;
 			}
+			SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
 		}
 		if (KEYMANAGER->isOnceKeyDown('S'))
 		{
 			_isHit = true;
-			_damage = 30;
+			_damage = 150;
 			_currentHp -= _damage;
 			_hpBar->setIsHit();
 			_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
@@ -763,7 +772,16 @@ void player::move()
 	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);
 	_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 	
-		
+	if (_isInvincible)
+	{
+		++_cntIsInvincible;
+		if (_cntIsInvincible > 100)
+		{
+			_cntIsInvincible = 0;
+			_isInvincible = false;
+
+		}
+	}
 	
 	
 	
@@ -794,5 +812,48 @@ void player::move()
 	}
 
 	*/
+}
+
+void player::enemyCheckCollision()
+{
+	RECT rcTemp;
+	vector<gameObject*> _enemyObject = OBJECTMANAGER->findObjects(objectType::ENEMY, "weed");
+
+	//gameObject* _enemyObject = OBJECTMANAGER->findObject(objectType::ENEMY, "weed");
+	
+	
+	char str[128];
+	sprintf_s(str, "%d", a);
+	TextOut(getMemDC(), WINSIZEX-100,100 , str, strlen(str));
+	for (int i = 0; i < _enemyObject.size(); ++i)
+	{
+		//if (IntersectRect(&rcTemp, &_rcSword, &((smallSlime*)_enemyObject[i])->getRect()))
+		//{
+		//	EFFECTMANAGER->play("¼ô¼Òµå", _enemyObject[i]->pos.x, _enemyObject[i]->pos.y);
+		//}
+		if (IntersectRect(&rcTemp, &_rcSword, &((weed*)_enemyObject[i])->getRect()))
+		{
+			EFFECTMANAGER->play("¼ô¼Òµå", _enemyObject[i]->pos.x - CAMERAMANAGER->getRenderRc().left, _enemyObject[i]->pos.y - CAMERAMANAGER->getRenderRc().top);
+			a = true;
+		}
+		else
+		{
+			a = false;
+		}
+		if (IntersectRect(&rcTemp, &_rcBody, &((weed*)_enemyObject[i])->getRect()))
+		{
+			if (_isInvincible == false)
+			{
+				_isHit = true;
+				_damage = 700;
+				_currentHp -= _damage;
+				_hpBar->setIsHit();
+				_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
+				_isInvincible = true;
+				SOUNDMANAGER->play("will_damaged", 0.7f);
+			}
+			a = true;
+		}
+	}
 }
 

@@ -68,6 +68,8 @@ void loadingScene::loadingSound()
 {
 	_loading->loadSound("townBGM", "./gameSound/townBGM.mp3", true, true);
 	_loading->loadSound("shopBGM", "./gameSound/shopBGM.mp3", true, true);
-
+	_loading->loadSound("will_damaged", "./gameSound/will_damaged.wav", false, false);
+	_loading->loadSound("will_shortSwordAttack", "./gameSound/will_shortSwordAttack.wav", false, false);
+	_loading->loadSound("will_roll", "./gameSound/will_roll.wav", false, false);
 }
 
