@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "shopScene.h"
 
+//csyADD [인벤 출력 테스트 용 추가]
+
 HRESULT shopScene::init()
 {
 
@@ -12,9 +14,14 @@ HRESULT shopScene::init()
 
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
+
 	_aiKid = new AIKids;
 	_aiKid->init("aiKid", tagFloat(655, 1303),IMAGEMANAGER->findImage("AiKids"));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
+
+	_inven = new inventory;
+	_inven->init();
+
 
 	//enterRc = RectMakeCenter(1944, 602, 100, 50);
 	//_loading->loadImage("shopMap", "./Image/shop_object/red.bmp", 811, 850, true, MAGENTA);
@@ -49,6 +56,8 @@ void shopScene::update()
 		SOUNDMANAGER->stop("shopBGM");
 	}
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
+
+	_inven->update();
 }
  
 void shopScene::render()
@@ -67,7 +76,6 @@ void shopScene::render()
 	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - cam.left, 555 - cam.top);
 	
 	RectangleCam(getMemDC(), _enterRc, cam);
-
 	
-
+	_inven->render();
 }

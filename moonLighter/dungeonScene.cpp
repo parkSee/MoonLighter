@@ -60,7 +60,7 @@ void dungeonScene::update()
 	//CAMERAMANAGER->update();
 
 	//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
-	
+
 	OBJECTMANAGER->update();
 
 	if (KEYMANAGER->isOnceKeyDown('C'))
@@ -68,11 +68,13 @@ void dungeonScene::update()
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("townScene");
 	}
-	
 
 	this->moveDungeon();
 
+
 	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
+
+	_im->update();
 }
 
 void dungeonScene::render()
