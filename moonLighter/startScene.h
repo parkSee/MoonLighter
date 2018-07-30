@@ -16,7 +16,10 @@ private:
 	Door _doorRight;
 
 	image* main_frame;
+	image* _logo;
 	int _count, _index;
+
+	bool _isOpen;
 public:
 
 	HRESULT init();
