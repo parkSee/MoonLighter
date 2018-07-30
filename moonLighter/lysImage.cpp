@@ -12,3 +12,11 @@ void loadingScene::lysImageLoading()
 	
 }
 
+void loadingScene::lysSoundLoading()
+{
+	_loading->loadSound("will_damaged", "./gameSound/will_damaged.wav", false, false);
+	_loading->loadSound("will_shortSwordAttack", "./gameSound/will_shortSwordAttack.wav", false, false);
+	_loading->loadSound("will_roll", "./gameSound/will_roll.wav", false, false);
+	_loading->loadSound("will_step_town_gravel", "./gameSound/will_step_town_gravel.wav", false, false);
+}
+

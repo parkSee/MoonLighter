@@ -88,11 +88,11 @@ void loadingScene::loadingImage()
 //로딩사운드 함수(이곳에 사운드를 전부 넣어라)
 void loadingScene::loadingSound()
 {
-	_loading->loadSound("townBGM", "./gameSound/townBGM.mp3", true, true);
-	_loading->loadSound("shopBGM", "./gameSound/shopBGM.mp3", true, true);
-	_loading->loadSound("will_damaged", "./gameSound/will_damaged.wav", false, false);
-	_loading->loadSound("will_shortSwordAttack", "./gameSound/will_shortSwordAttack.wav", false, false);
-	_loading->loadSound("will_roll", "./gameSound/will_roll.wav", false, false);
-	_loading->loadSound("will_step_town_gravel", "./gameSound/will_step_town_gravel.wav", false, false);
+	this->psySoundLoading();
+	this->lejSoundLoading();
+	this->lysSoundLoading();
+	this->csySoundLoading();
+	
+	
 }
 

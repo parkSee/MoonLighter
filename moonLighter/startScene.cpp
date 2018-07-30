@@ -3,7 +3,7 @@
 
 HRESULT startScene::init()
 {
-	
+	SOUNDMANAGER->play("introBGM");
 
 	_doorLeft.img = IMAGEMANAGER->findImage("door_left");
 	_doorLeft.pos = tagInt(0, 0);
@@ -25,6 +25,7 @@ HRESULT startScene::init()
 	_alpha = 0;
 
 	_alphaTime = 0;
+	
 
 	return S_OK;
 }
@@ -61,7 +62,12 @@ void startScene::update()
 	if ((_selectPos.x == WINSIZEX / 2 - _selectImg->getWidth() / 2) && _selectPos.y == WINSIZEY - 200)
 	{
 		if (KEYMANAGER->isOnceKeyDown('Z'))
+		{
+			SOUNDMANAGER->stop("introBGM");
 			SCENEMANAGER->loadScene("townScene");
+
+		}
+
 	}
 	else if (_selectPos.y == WINSIZEY - 100)
 	{

@@ -16,3 +16,7 @@ void loadingScene::csyImageLoading()
 	_loading->loadImage("invenSlot", "./Image/inventory_ui/invenSlot.bmp", 68, 68, true, MAGENTA);
 
 }
+
+void loadingScene::csySoundLoading()
+{
+}

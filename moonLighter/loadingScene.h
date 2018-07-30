@@ -24,9 +24,13 @@ public:
 	void loadingSound();
 
 	void psyImageLoading();
+	void psySoundLoading();
 	void lejImageLoading();
+	void lejSoundLoading();
 	void csyImageLoading();
+	void csySoundLoading();
 	void lysImageLoading();
+	void lysSoundLoading();
 
 	void frame();
 

@@ -68,3 +68,10 @@ void loadingScene::psyImageLoading()
 	
 }
 
+void loadingScene::psySoundLoading()
+{
+	_loading->loadSound("townBGM", "./gameSound/townBGM.mp3", true, true);
+	_loading->loadSound("shopBGM", "./gameSound/shopBGM.mp3", true, true);
+	_loading->loadSound("introBGM", "./gameSound/introBGM.mp3", true, true);
+}
+

@@ -74,5 +74,9 @@ void loadingScene::lejImageLoading()
 
 }
 
+void loadingScene::lejSoundLoading()
+{
+}
+
 
 
