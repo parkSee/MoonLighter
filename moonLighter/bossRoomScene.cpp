@@ -33,6 +33,7 @@ void bossRoomScene::update()
 
 	OBJECTMANAGER->update();
 
+	// csyADD [º¸½º·ı cpp - c´©¸£¸é Å¸¿î¾À ³Ñ¾î°£´Ù]
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
