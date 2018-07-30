@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "smallSlime.h"
-
+#include"player.h"
 
 HRESULT smallSlime::init(string _objName, tagFloat _pos)
 {
@@ -13,7 +13,7 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
 	_hp->setGauge(200, 200);
 	_currentHp = 200;
-	_count = _currentX = _attackedCount = _currentY = 0;
+	_count = _currentX = _attackedCount = _currentY = _dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
 
 
@@ -22,6 +22,7 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_isAttacked2 = false;
 	_xCollision = false;
 	_yCollision = false;
+	_damaaged = false;
 
 
 	return S_OK;
@@ -41,6 +42,7 @@ void smallSlime::update()
 	move();
 	pixelCollision();
 	hp();
+	this->damagged();
 	_hp->update();
 
 	
@@ -115,6 +117,43 @@ void smallSlime::hp()
 	_hp->setGauge(_currentHp, 200);
 	_hp->setX((pos.x - 2 * IMAGEMANAGER->findImage("작은슬라임")->getFrameWidth() / 3) - cam.left);
 	_hp->setY((pos.y - 50) - cam.top);
+}
+
+void smallSlime::damagged()
+{
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	RECT tempRc;
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
+	{
+		_damaaged = true;
+
+	}
+
+	if (_damaaged)
+	{
+		_dmgCount++;
+		_damaaged = false;
+		_isAttacked = true;
+		_noneAttacked = false;
+
+
+
+	}
+
+	if (0 < _dmgCount && _dmgCount <= 15)
+	{
+		_dmgCount++;
+		pos.x += 7 * cosf(PI - angle);
+		pos.y += 7 * sinf(PI - angle);
+	}
+
+	if (_dmgCount > 15)
+	{
+
+		_currentHp -= 100;
+		_dmgCount = 0;
+	}
 }
 
 void smallSlime::smallSlimeFrame()
