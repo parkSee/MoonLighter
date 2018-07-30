@@ -6,6 +6,7 @@ class saveData : public singletonBase <saveData>
 private:
 	int _hp;
 
+
 public:
 	HRESULT init();
 	void release();

@@ -22,7 +22,8 @@ HRESULT dungeonLobby::init()
 
 void dungeonLobby::release()
 {
-	
+	_lobbyObj->release();
+	SAFE_DELETE(_lobbyObj);
 }
 
 void dungeonLobby::update()

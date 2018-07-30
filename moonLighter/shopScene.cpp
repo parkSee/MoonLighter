@@ -21,12 +21,6 @@ HRESULT shopScene::init()
 
 	_inven = new inventory;
 	_inven->init();
-
-
-	//enterRc = RectMakeCenter(1944, 602, 100, 50);
-	//_loading->loadImage("shopMap", "./Image/shop_object/red.bmp", 811, 850, true, MAGENTA);
-	//IMAGEMANAGER->addImage("shopMap", "./Image/shop_object/shop.bmp", 811, 850);
-	//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
 	
 	CAMERAMANAGER->setMapSize(WINSIZEX, 1440);
 

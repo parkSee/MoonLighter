@@ -15,12 +15,10 @@ HRESULT townScene::init()
 
 	_enterShopRc = RectMakeCenter(1944, 652, 100, 50);
 	_enterDgInRc = RectMakeCenter(2950, 788, 50, 100);
-	//IMAGEMANAGER->addImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
-	//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
+	
 	
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
-	//SOUNDMANAGER->play("townBGM");
 
 	return S_OK;
 }
@@ -30,8 +28,8 @@ void townScene::release()
 	//_player->release();
 	//SAFE_DELETE(_player);
 
-	//_container->release();
-	//SAFE_DELETE(_container);
+	_container->release();
+	SAFE_DELETE(_container);
 
 
 }
