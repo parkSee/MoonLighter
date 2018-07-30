@@ -21,7 +21,7 @@ HRESULT dungeonScene::init()
 	for (int i = 0; i < _vWeeds.size(); i++)
 	{
 		((weed*)_vWeeds[i])->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
-
+	
 	}
 
 	CAMERAMANAGER->setMapSize(3840, 2160);
