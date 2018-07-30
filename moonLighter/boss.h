@@ -33,6 +33,9 @@ private:
 	bool _leftDown;
 	bool _rightDown;
 
+	bool _start;
+	bool _playing;
+
 	int _rc0X;
 	int _rc0Y;
 	int _rc1X;
@@ -47,6 +50,8 @@ private:
 	float distance;
 	image* _pixelImg;
 	RECT _rc[4];
+	RECT _detectRect;
+
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
