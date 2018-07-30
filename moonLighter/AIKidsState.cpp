@@ -104,7 +104,6 @@ void AIKidsState::update()
 	break;
 	case State::UP:
 	{
-		_parent->pos.y--;
 		PIXELMANAGER->collision(_img, _pixel, Direction::TOP, _parent->pos.x, _parent->pos.y);
 	
 	}
