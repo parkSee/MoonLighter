@@ -59,7 +59,12 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("logo", "Image/logo.bmp", 400, 325, true, MAGENTA);
 
 	//font
-	_loading->loadImage("font", "Image/아무키나.bmp", 509, 45, true, MAGENTA);
+	_loading->loadImage("aniKey", "Image/아무키나.bmp", 509, 45, true, MAGENTA);
+	_loading->loadImage("start", "Image/새로운.bmp", 200, 45, true, MAGENTA);
+	_loading->loadImage("option", "Image/옵션.bmp", 200, 45, true, MAGENTA);
+	_loading->loadImage("exit", "Image/나가기.bmp", 200, 45, true, MAGENTA);
+	_loading->loadImage("select", "Image/selectMain.bmp", 280, 50, true, MAGENTA);
+
 	
 }
 
