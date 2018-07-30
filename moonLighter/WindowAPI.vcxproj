@@ -148,11 +148,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AIKids.h" />
-    <ClInclude Include="AIKidsState.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="bigSlime.h" />
-    <ClInclude Include="boss.h" />
     <ClInclude Include="bossRoomScene.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -176,7 +173,6 @@
     <ClInclude Include="liquidItem.h" />
     <ClInclude Include="loading.h" />
     <ClInclude Include="loadingScene.h" />
-    <ClInclude Include="lobbyContainer.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="objectContainer.h" />
     <ClInclude Include="objectManager.h" />
@@ -204,11 +200,8 @@
     <ClInclude Include="weed.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AIKids.cpp" />
-    <ClCompile Include="AIKidsState.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="bigSlime.cpp" />
-    <ClCompile Include="boss.cpp" />
     <ClCompile Include="bossRoomScene.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="csyImage.cpp" />
@@ -233,7 +226,6 @@
     <ClCompile Include="liquidItem.cpp" />
     <ClCompile Include="loading.cpp" />
     <ClCompile Include="loadingScene.cpp" />
-    <ClCompile Include="lobbyContainer.cpp" />
     <ClCompile Include="lysImage.cpp" />
     <ClCompile Include="mainGame.cpp" />
     <ClCompile Include="objectContainer.cpp" />
