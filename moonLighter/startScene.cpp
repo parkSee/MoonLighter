@@ -39,12 +39,11 @@ void startScene::Frame()
 	_count++;
 	if (_count % 7 == 0)
 	{
-		_index++;
 		main_frame->setFrameX(_index);
+		_index++;
 
 		if (_index > main_frame->getMaxFrameX())
 		{
-			//main_frame->setFrameX(0);
 			_index = 0;
 
 		}
