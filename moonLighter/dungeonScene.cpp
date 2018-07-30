@@ -66,7 +66,7 @@ void dungeonScene::update()
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("townScene");
+		SCENEMANAGER->loadScene("bossRoomScene");
 	}
 
 	this->moveDungeon();

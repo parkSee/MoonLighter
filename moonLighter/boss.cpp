@@ -20,7 +20,7 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 
 	
 
-	_boss[8] = IMAGEMANAGER->findImage("焊胶积己");
+	_boss[5] = IMAGEMANAGER->findImage("焊胶积己");
 
 
 
@@ -55,6 +55,8 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 		_currentX[i] = 0;
 		_currentY[i] = 0;
 	}
+	_currentX[5] = 0;
+	_currentY[5] = 0;
 	_leftUp = false;
 	_rightUp = false;
 	_leftDown = false;
@@ -99,6 +101,18 @@ void boss::render()
 
 	RectangleCam(getMemDC(), rc, cam);
 
+	_boss[5]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX[5],_currentY[5]);
+
+	if (_count % 3 == 0)
+	{
+		_currentX[5]++;
+		if (_currentX[5] > _boss[5]->getMaxFrameX())
+		{
+			_currentX[5] = 0;
+		}
+	}
+
+	/*
 	if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 	{
 		_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
@@ -369,7 +383,7 @@ void boss::render()
 	//RectangleCam(getMemDC(), _rc[1], cam);
 	//RectangleCam(getMemDC(), _rc[2], cam);
 	//RectangleCam(getMemDC(), _rc[3], cam);
-	
+	*/
 }
 
 void boss::imgRectMake()

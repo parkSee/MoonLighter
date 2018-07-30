@@ -22,7 +22,6 @@ public:
 	void update();
 	void render();
 
-	void bossInit();
 	void golemInit();
 	void bigSlimeInit();
 	void smallSlimeInit();
