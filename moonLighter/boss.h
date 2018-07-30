@@ -6,7 +6,7 @@ class boss :public gameObject
 {
 private:
 	image * _boss[5];
-	image* _attackedBoss[16];
+	image* _attackedBoss[9];
 	progressBar* _hp;
 	int _currentHp;
 
@@ -26,15 +26,14 @@ private:
 	bool _isAttacked2;
 	bool _isDead;
 	int _attackedCount;
-
+	int _dmgCount;
 
 	bool _leftUp;
 	bool _rightUp;
 	bool _leftDown;
 	bool _rightDown;
 
-	bool _start;
-	bool _playing;
+	bool _damaaged;
 
 	int _rc0X;
 	int _rc0Y;
@@ -50,8 +49,6 @@ private:
 	float distance;
 	image* _pixelImg;
 	RECT _rc[4];
-	RECT _detectRect;
-
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);

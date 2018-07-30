@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "golem.h"
+#include"player.h"
 
 HRESULT golem::init(string _objName, tagFloat _pos)
 {
@@ -28,7 +29,7 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 
 	 rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 
-	_count = _attackedCount = _tempCurrent = 0;
+	_count = _attackedCount = _tempCurrent = _dmgCount = 0;
 
 
 
@@ -49,6 +50,8 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_isAttacked2 = false;
 	_noneAttacked = true;
 	_isDead = false;
+	_damaaged = false;
+
 	return S_OK;
 }
 
@@ -68,6 +71,7 @@ void golem::update()
 	golemFrame();
 	golemAttack();
 	this->pixelCollision();
+	this->damaged();
 	hp();
 	_hp->update();
 
@@ -412,6 +416,45 @@ void golem::hp()
 	_hp->setX((pos.x - IMAGEMANAGER->findImage("°ñ·½Á¤¸é")->getFrameWidth() / 2 +5) - cam.left);
 	_hp->setY((pos.y - 80) - cam.top);
 	_hp->setGauge(_currentHp, 200);
+}
+
+void golem::damaged()
+{
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	RECT tempRc;
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
+	{
+		_damaaged = true;
+
+	}
+
+	if (_damaaged)
+	{
+		_dmgCount++;
+		_damaaged = false;
+		_isAttacked = true;
+		_noneAttacked = false;
+
+
+
+	}
+
+	if (0 < _dmgCount && _dmgCount <= 15)
+	{
+		_dmgCount++;
+		pos.x += 7 * cosf(PI - angle);
+		pos.y += 7 * sinf(PI - angle);
+	}
+
+	if (_dmgCount > 15)
+	{
+
+		_currentHp -= 100;
+		_dmgCount = 0;
+	}
+
+
 }
 
 void golem::golemFrame()

@@ -57,6 +57,21 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("main_frame", "Image/main_frame.bmp", 14080, 720, 16, 1,true,MAGENTA);
 	//logo
 	_loading->loadImage("logo", "Image/logo.bmp", 400, 325, true, MAGENTA);
+
+	//font
+	_loading->loadImage("aniKey", "Image/아무키나.bmp", 509, 45, true, MAGENTA);
+	_loading->loadImage("start", "Image/새로운.bmp", 200, 45, true, MAGENTA);
+	_loading->loadImage("option", "Image/옵션.bmp", 200, 45, true, MAGENTA);
+	_loading->loadImage("exit", "Image/나가기.bmp", 200, 45, true, MAGENTA);
+	_loading->loadImage("select", "Image/selectMain.bmp", 280, 50, true, MAGENTA);
+
 	
+}
+
+void loadingScene::psySoundLoading()
+{
+	_loading->loadSound("townBGM", "./gameSound/townBGM.mp3", true, true);
+	_loading->loadSound("shopBGM", "./gameSound/shopBGM.mp3", true, true);
+	_loading->loadSound("introBGM", "./gameSound/introBGM.mp3", true, true);
 }
 

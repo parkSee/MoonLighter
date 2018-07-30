@@ -21,6 +21,9 @@ HRESULT inventory::init()
 			{
 				_invenSlot[i * 5 + j] = RectMake(191 + 69 * j, 14+160 + 69 * i, 57, 58);
 			}
+
+			_invenPos[i * 5 + j].x = _invenSlot[i*5+j].left;
+			_invenPos[i * 5 + j].y = _invenSlot[i*5+j].top;
 		}
 	}
 
@@ -28,6 +31,7 @@ HRESULT inventory::init()
 	_selectSlot = _invenSlot[_slotNum];
 
 	_slotImg = IMAGEMANAGER->findImage("invenSlot");
+		
 
 	return S_OK;	
 }
@@ -83,6 +87,7 @@ void inventory::update()
 	}
 
 	_selectSlot = _invenSlot[_slotNum];
+
 }
 
 void inventory::render()
@@ -91,9 +96,9 @@ void inventory::render()
 
 	if (KEYMANAGER->isOnceKeyDown(VK_F1))
 	{
-		char str[367];
-		sprintf_s(str, " 포션개수 : %d ", _mItem[itemType::POTION].size());
-		TextOut(getMemDC(), 10, 20, str, strlen(str));
+		//char str[367];
+		//sprintf_s(str, " 포션개수 : %d ", _mItem[itemType::POTION].size());
+		//TextOut(getMemDC(), 10, 20, str, strlen(str));
 		//sprintf(str, "%g", _player->pos.x);
 		//TextOut(getMemDC(), 80, 100, str, strlen(str));
 		//sprintf(str, "%g", _player->pos.y);
@@ -133,17 +138,21 @@ void inventory::render()
 	}
 
 
-
+	mItemIter miter;
+	for (miter = _mItem.begin(); miter != _mItem.end(); miter++)
+	{
+		for (int i = 0; i < _mItem.size(); i++)
+		{
+			miter->second[i]->set_pos(_invenPos[i]);
+			miter->second[i]->render();
+		}
+	}
+	int a = 0;
 }
 
 void inventory::addItem(itemType::Enum _itemType, item* _item)
 {
-
 	vector<item*> temp;
-	if (_itemType == itemType::GOLEMCORE)
-	{
-		temp.push_back(_item);
-	}
+	temp.push_back(_item);
 	_mItem.insert(make_pair(_itemType, temp));
-
 }

@@ -45,12 +45,15 @@ private:
 	int _rc3X;
 	int _rc3Y;
 	
+
+	int _dmgCount;
 	float speed;
 	float angle;
 	float distance;
 	image* _pixelImg;
 	RECT _rc[4];
 
+	bool _damaaged;
 
 public:
 	HRESULT init(string _objName, tagFloat _pos);
@@ -61,12 +64,13 @@ public:
 	RECT getRect() { return rc; }
 	void imgRectMake();
 	void hp();
+	void damaged();
 	void golemFrame();
 	void golemAttack();
 	void move();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void pixelCollision();
-	void key();
+
 
 	golem() {}
 	~golem() {}

@@ -31,11 +31,12 @@ private:
 	int _rc3X;
 	int _rc3Y;
 
+	bool _damaaged;
 	bool _noneAttacked;//공격안받았을때
 	bool _isAttacked; // 공격받았다는 신호
 	bool _isAttacked2;
 	int _attackedCount;
-
+	int _dmgCount;
 
 public:
 
@@ -48,6 +49,7 @@ public:
 	void hp();
 	void bigSlimeFrame();
 	void move();
+	void damaged();
 	void pixelCollision();
 	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }

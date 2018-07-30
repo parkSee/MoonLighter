@@ -9,7 +9,7 @@ HRESULT AIKids::init(string _objName, tagFloat _pos, image * imgName)
 	_img = imgName;
 
 	_state = new AIKidsState;
-	_state->enter(this, State::UP, _img);
+	_state->enter(this, State::UP, IMAGEMANAGER->findImage("AiKids"), IMAGEMANAGER->findImage("shopPixel"));
 
 	this->rc = RectMakeCenter(pos.x, pos.y, _state->_ani1->getFrameWidth(), _state->_ani1->getFrameHeight());
 

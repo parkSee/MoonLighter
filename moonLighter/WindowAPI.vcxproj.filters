@@ -42,9 +42,6 @@
     <Filter Include="MainGame\Item">
       <UniqueIdentifier>{252e6af5-1940-470a-a05b-e92696f3a8b3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Enemy">
-      <UniqueIdentifier>{707b6e9e-f0fe-485c-a3c4-71eaeb8765e1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameFramework2D\InIData">
       <UniqueIdentifier>{a21b459c-20ee-48ef-9706-4b7695730dd7}</UniqueIdentifier>
     </Filter>
@@ -86,6 +83,9 @@
     </Filter>
     <Filter Include="MainGame\AI">
       <UniqueIdentifier>{c2896b69-47cb-4166-b5fb-37ca0e883fe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Enemy">
+      <UniqueIdentifier>{707b6e9e-f0fe-485c-a3c4-71eaeb8765e1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="lobbyContainer.h">
       <Filter>MainGame\Object\LobbyObject</Filter>
+    </ClInclude>
+    <ClInclude Include="pixelManager.h">
+      <Filter>GameFramework2D\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -420,6 +423,9 @@
     </ClCompile>
     <ClCompile Include="lobbyContainer.cpp">
       <Filter>MainGame\Object\LobbyObject</Filter>
+    </ClCompile>
+    <ClCompile Include="pixelManager.cpp">
+      <Filter>GameFramework2D\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

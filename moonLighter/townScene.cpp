@@ -16,7 +16,7 @@ HRESULT townScene::init()
 	_enterShopRc = RectMakeCenter(1944, 652, 100, 50);
 	_enterDgInRc = RectMakeCenter(2950, 788, 50, 100);
 	
-	
+	SOUNDMANAGER->play("townBGM");
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
 
@@ -54,10 +54,9 @@ void townScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("shopScene");
-		//SOUNDMANAGER->stop("townBGM");
+		SOUNDMANAGER->stop("townBGM");
 	}
-
-	if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
+	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonLobby");

@@ -58,7 +58,7 @@ void enemyController::golemInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-
+	
 	for (int i = 0; i < 1; ++i)
 	{
 		golem* _golem = new golem;
@@ -105,7 +105,7 @@ void enemyController::smallSlimeInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
 		_smallSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-
+	
 	for (int i = 0; i < 6; ++i)
 	{
 		smallSlime* _smallSlime = new smallSlime;
@@ -135,5 +135,5 @@ void enemyController::weedInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 		_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-
+	
 }

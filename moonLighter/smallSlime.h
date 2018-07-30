@@ -28,6 +28,9 @@ private:
 	int _rc3X;
 	int _rc3Y;
 
+	bool _damaaged;
+	int _dmgCount;
+	
 	bool _noneAttacked;//공격안받았을때
 	bool _isAttacked; // 공격받았다는 신호
 	bool _isAttacked2;
@@ -43,6 +46,7 @@ public:
 
 	void imgRectMake();
 	void hp();
+	void damagged();
 	void smallSlimeFrame();
 	void pixelCollision();
 	RECT getRect() { return rc; }

@@ -1,6 +1,12 @@
 #pragma once
 #include "gameNode.h"
 #include "item.h"
+#include "potion.h"
+#include "liquidItem.h"
+#include "redCristal.h"
+#include "twig.h"
+#include "rebar.h"
+#include "golemCore.h"
 #include "player.h"
 
 // csyADD [인벤토리 헤더 - 인벤토리 슬롯 선택용 박스&이미지 선언 ]
@@ -18,6 +24,7 @@ class inventory : public gameNode
 	RECT _invenSlot[20];
 	RECT _selectSlot;
 	
+	tagFloat _invenPos[20];
 
 public:
 
