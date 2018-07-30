@@ -312,6 +312,10 @@ void player::move()
 						break;
 					}
 				}
+				if (_count % 30 == 0)
+				{
+					SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
+				}
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_UP))
 			{
@@ -352,6 +356,10 @@ void player::move()
 						pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
 						break;
 					}
+				}
+				if (_count % 30 == 0)
+				{
+					SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
 				}
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
@@ -394,6 +402,10 @@ void player::move()
 						break;
 					}
 				}
+				if (_count % 30 == 0)
+				{
+					SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
+				}
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
 			{
@@ -434,6 +446,10 @@ void player::move()
 						pos.x = i + disTemp;
 						break;
 					}
+				}
+				if (_count % 30 == 0)
+				{
+					SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
 				}
 			}
 			if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
