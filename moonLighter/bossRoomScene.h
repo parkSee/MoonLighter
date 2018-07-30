@@ -1,6 +1,8 @@
 #pragma once
 #include "gameNode.h"
 #include "player.h"
+#include"boss.h"
+
 class bossRoomScene : public gameNode
 {
 private:

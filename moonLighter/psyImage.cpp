@@ -35,6 +35,21 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("build_Well", "./Image/town_object/build_Well.bmp", 132, 160, true, MAGENTA);
 	_loading->loadImage("build_Board", "./Image/town_object/build_Board.bmp", 204, 134, true, MAGENTA);
 
+	_loading->loadImage("bottomLeftRock", "Image/dungeon_object/dungeonLobby_bottomLeftRock.bmp", 45, 62, true, MAGENTA);
+	_loading->loadImage("bottomRight2Rock", "Image/dungeon_object/dungeonLobby_bottomRight2Rock.bmp", 105, 194, true, MAGENTA);
+	_loading->loadImage("middleLeftRock", "Image/dungeon_object/dungeonLobby_middleLeftRock.bmp", 47, 68, true, MAGENTA);
+	_loading->loadImage("middleRighttRock", "Image/dungeon_object/dungeonLobby_middleRighttRock.bmp", 61, 91, true, MAGENTA);
+	_loading->loadImage("topLeft3Rock", "Image/dungeon_object/dungeonLobby_topLeft3Rock.bmp", 116, 134, true, MAGENTA);
+	_loading->loadImage("topRightRock", "Image/dungeon_object/dungeonLobby_topRightRock.bmp", 69, 112, true, MAGENTA);
+	_loading->loadImage("entryStructure", "Image/dungeon_object/dungeonLobby_entryStructure.bmp", 531, 234, true, MAGENTA);
+	_loading->loadImage("top3LongBoard", "Image/dungeon_object/dungeonLobby_top3LongBoard.bmp", 462, 117, true, MAGENTA);
+	_loading->loadImage("bottomLeftTent", "Image/dungeon_object/dungeonLobby_bottomLeftTent.bmp", 248, 235, true, MAGENTA);
+
+
+	//AI
+
+	_loading->loadImage("AiKids", "Image/ai/AiKids.bmp", 600, 400, true, MAGENTA);
+
 
 }
 

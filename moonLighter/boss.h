@@ -5,13 +5,13 @@
 class boss :public gameObject
 {
 private:
-	image * _boss[9];
+	image * _boss[5];
 	image* _attackedBoss[16];
 	progressBar* _hp;
 	int _currentHp;
 
-	int _currentX[4]; // 현재 X 프레임 좌표용 변수
-	int _currentY[4];
+	int _currentX[5]; // 현재 X 프레임 좌표용 변수
+	int _currentY[5];
 	int _tempCurrent;
 	int _count;
 	float tempX;

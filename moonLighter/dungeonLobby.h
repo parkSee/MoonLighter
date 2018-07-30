@@ -1,5 +1,6 @@
 #pragma once
 #include "gameNode.h"
+#include "lobbyContainer.h"
 #include "player.h"
 
 class dungeonLobby : public gameNode
@@ -7,6 +8,7 @@ class dungeonLobby : public gameNode
 private:
 
 	player * _player;
+	lobbyContainer* _lobbyObj;
 	RECT _enterRc;
 
 public:

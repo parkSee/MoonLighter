@@ -2,7 +2,9 @@
 #include "itemManager.h"
 #include "gameObject.h"
 
+
 // csyADD [아이템 매니저 cpp - 동적할당 해제 누락된 부분 수정, 아이템과 캐릭터 충돌 시 인벤토리에 아이템 들어가도록 처리]
+
 
 HRESULT itemManager::init()
 {
@@ -37,7 +39,9 @@ HRESULT itemManager::init()
 	_mItem.insert(make_pair(itemType::GOLEMCORE, _vGolemCore));	
 
 	
+
 	_inven = new inventory;
+
 	
 
 	//_liquidItem = new item;
@@ -63,6 +67,7 @@ void itemManager::release()
 	SAFE_DELETE(_rebar);
 	SAFE_DELETE(_twig);
 	SAFE_DELETE(_golemCore);
+	SAFE_DELETE(_inven);
 }
 
 void itemManager::update()
@@ -117,7 +122,6 @@ void itemManager::update()
 		}
 
 	}
-	
 
 }
 

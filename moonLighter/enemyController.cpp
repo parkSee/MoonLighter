@@ -12,26 +12,13 @@
 HRESULT enemyController::init()
 {
 	
-	//_golem2 = new golem;
-	//_golem2->init("golem", tagFloat(100, 700));
-	//OBJECTMANAGER->addObject(objectType::ENEMY, _golem2);
-	
-	
 	
 
 	golemInit();
 	bigSlimeInit();
 	smallSlimeInit();
 	weedInit();
-	bossInit();
-
-
-
-
-
-
-
-
+	
 	return S_OK;
 }
 
@@ -54,13 +41,6 @@ void enemyController::render()
 
 }
 
-void enemyController::bossInit()
-{
-	boss* _boss = new boss;
-	_boss->init("boss", tagFloat(2000, 1000));
-	OBJECTMANAGER->addObject(objectType::ENEMY, _boss);
-	_boss->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
-}
 
 void enemyController::golemInit()
 {

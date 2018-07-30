@@ -13,6 +13,8 @@ HRESULT dungeonLobby::init()
 	
 	CAMERAMANAGER->setMapSize(2460, 2100);
 
+	_lobbyObj = new lobbyContainer;
+	_lobbyObj->init();
 
 	_enterRc = RectMakeCenter(720, 953, 50, 50);
 	return S_OK;
@@ -64,5 +66,5 @@ void dungeonLobby::render()
 
 	RectangleCam(getMemDC(), _enterRc, cam);
 	OBJECTMANAGER->render(getMemDC());
-
+	
 }

@@ -8,6 +8,13 @@ HRESULT bossRoomScene::init()
 	_player->init("player", tagFloat(1576, 1900));
 	_player->setPixelImage(IMAGEMANAGER->findImage("bossRoomRedZoon"));
 
+	boss* _boss = new boss;
+	_boss->init("boss", tagFloat(2000, 1000));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _boss);
+	_boss->setPixelImage(IMAGEMANAGER->findImage("bossRoomRedZoon"));
+
+
+
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
 	CAMERAMANAGER->setMapSize(3152, 2131);

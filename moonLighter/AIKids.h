@@ -1,9 +1,13 @@
 #pragma once
 #include "gameObject.h"
-class stone : public gameObject
+#include "AIKidsState.h"
+
+class AIKids : public gameObject
 {
 private:
+
 	image * _img;
+	AIKidsState* _state;
 
 public:
 
@@ -12,7 +16,7 @@ public:
 	void update();
 	void render();
 
-	stone(){}
-	~stone(){}
+	AIKids(){}
+	~AIKids(){}
 };
 
