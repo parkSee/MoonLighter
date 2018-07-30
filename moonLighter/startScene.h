@@ -17,9 +17,13 @@ private:
 
 	image* main_frame;
 	image* _logo;
+	image* _font;
 	int _count, _index;
 
 	bool _isOpen;
+	int _alpha;
+
+	int _alphaTime;
 public:
 
 	HRESULT init();

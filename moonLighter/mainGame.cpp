@@ -47,6 +47,7 @@ void mainGame::update(void)
 	SOUNDMANAGER->update();
 	EFFECTMANAGER->update();
 
+
 }
 
 //=============================================================
@@ -59,9 +60,9 @@ void mainGame::render(void)
 //=============================================================
 	
 
-
 	SCENEMANAGER->render();
 	EFFECTMANAGER->render();
+	TIMEMANAGER->render(getMemDC());
 
 
 //=============================================================

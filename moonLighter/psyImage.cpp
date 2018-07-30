@@ -57,6 +57,9 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("main_frame", "Image/main_frame.bmp", 14080, 720, 16, 1,true,MAGENTA);
 	//logo
 	_loading->loadImage("logo", "Image/logo.bmp", 400, 325, true, MAGENTA);
+
+	//font
+	_loading->loadImage("font", "Image/아무키나.bmp", 509, 45, true, MAGENTA);
 	
 }
 

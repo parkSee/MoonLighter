@@ -14,7 +14,12 @@ HRESULT startScene::init()
 	_logo = IMAGEMANAGER->findImage("logo");
 	_count = _index = 0;
 
+	_font = IMAGEMANAGER->findImage("font");
 	_isOpen = false;
+	_alpha = 0;
+
+	_alphaTime = 0;
+
 	return S_OK;
 }
 
@@ -46,6 +51,15 @@ void startScene::update()
 	{
 		SCENEMANAGER->loadScene("townScene");
 	}
+	_alphaTime++;
+	if (_alphaTime % 5 == 0)
+	{
+		_alpha++;
+		if (_alpha > 255)
+			_alpha = 0;
+	}
+	
+
 }
 
 void startScene::render()
@@ -56,14 +70,14 @@ void startScene::render()
 
 	_logo->render(getMemDC(), WINSIZEX/2 - _logo->getWidth()/2,100);
 
-
-
+	if (!_isOpen)
+		_font->alphaRender(getMemDC(), WINSIZEX / 2 - _font->getWidth() / 2, WINSIZEY - 100,_alpha);
 }
 
 void startScene::Frame()
 {
 	_count++;
-	if (_count % 7 == 0)
+	if (_count % 10 == 0)
 	{
 		main_frame->setFrameX(_index);
 		_index++;
