@@ -44,7 +44,7 @@ void townScene::update()
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("dungeonScene");
+		SCENEMANAGER->loadScene("dungeonLobby");
 	}
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{

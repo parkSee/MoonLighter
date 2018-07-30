@@ -162,7 +162,7 @@ void animation::setPlayFrame(int start, int end, bool reverse, bool loop)
 
 void animation::setFPS(int framePerSec)
 {
-	_frameUpdateSec = 1.0f / framePerSec;
+	_frameUpdateSec = 1.0f / ((float)framePerSec);
 }
 
 void animation::frameUpdate(float elapsedTime)
@@ -196,6 +196,7 @@ void animation::start()
 {
 	_play = true;
 	_nowPlayIdx = 0;
+	_elapsedSec = 0.f;
 }
 
 void animation::stop()

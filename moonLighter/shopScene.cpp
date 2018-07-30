@@ -12,6 +12,10 @@ HRESULT shopScene::init()
 
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
+	_aiKid = new AIKids;
+	_aiKid->init("aiKid", tagFloat(655, 1303),IMAGEMANAGER->findImage("AiKids"));
+	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
+
 	//enterRc = RectMakeCenter(1944, 602, 100, 50);
 	//_loading->loadImage("shopMap", "./Image/shop_object/red.bmp", 811, 850, true, MAGENTA);
 	//IMAGEMANAGER->addImage("shopMap", "./Image/shop_object/shop.bmp", 811, 850);
