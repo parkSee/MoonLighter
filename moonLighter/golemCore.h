@@ -1,10 +1,7 @@
 #pragma once
 #include "item.h"
 
-// csyADD [golemCore 클래스의 init,release,update,render 생성]
-
-class golemCore :
-	public item
+class golemCore : public item
 {
 public:
 

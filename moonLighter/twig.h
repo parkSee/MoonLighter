@@ -1,10 +1,7 @@
 #pragma once
 #include "item.h"
 
-// csyADD [twig 클래스의 init,release,update,render 생성]
-
-class twig :
-	public item
+class twig : public item
 {
 public:
 

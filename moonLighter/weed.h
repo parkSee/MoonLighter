@@ -28,6 +28,8 @@ private:
 
 	bool _xCollision;
 	bool _yCollision;
+	bool _damaaged;
+	int _dmgCount;
 
 	bool _noneAttacked;//공격안받았을때
 	bool _isAttacked; // 공격받았다는 신호
@@ -43,10 +45,12 @@ public:
 	void render();
 
 	void imgRectMake();
+	void damagged();
 	void hp();
 	void weedFrame();
 	void move();
 	void pixelCollision();
+	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 
 	weed() {}

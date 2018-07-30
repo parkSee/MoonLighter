@@ -4,15 +4,14 @@
 #include"weed.h"
 #include"smallSlime.h"
 #include"bigSlime.h"
+#include"boss.h"
+
 // lejADD 잡초 스몰슬라임 빅슬라임 클래스 추가및 할당
 class enemyController : public gameNode
 {
 private:
 
-	vector<golem*> _vGolem;
-	vector<weed*> _vWeed;
-	vector<smallSlime*> _vSmallSlime;
-	vector<bigSlime*> _vBigSlime;
+
 
 
 
@@ -23,6 +22,7 @@ public:
 	void update();
 	void render();
 
+	void bossInit();
 	void golemInit();
 	void bigSlimeInit();
 	void smallSlimeInit();

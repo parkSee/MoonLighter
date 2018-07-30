@@ -2,7 +2,7 @@
 #include "itemManager.h"
 #include "gameObject.h"
 
-// csyADD [아이템 매니저 cpp - 플레이어 동적할당 (렉트 충돌 위한) , 인벤토리 동적할당 (아이템 획득처리 용)]
+// csyADD [아이템 매니저 cpp - 동적할당 해제 누락된 부분 수정, 아이템과 캐릭터 충돌 시 인벤토리에 아이템 들어가도록 처리]
 
 HRESULT itemManager::init()
 {
@@ -36,7 +36,7 @@ HRESULT itemManager::init()
 	_vGolemCore.push_back(_golemCore);
 	_mItem.insert(make_pair(itemType::GOLEMCORE, _vGolemCore));	
 
-	_player = new player;
+	
 	_inven = new inventory;
 	
 
@@ -57,91 +57,65 @@ HRESULT itemManager::init()
 
 void itemManager::release()
 {
+	SAFE_DELETE(_potion);
+	SAFE_DELETE(_liquidItem);
+	SAFE_DELETE(_redCristal);
+	SAFE_DELETE(_rebar);
+	SAFE_DELETE(_twig);
+	SAFE_DELETE(_golemCore);
 }
 
 void itemManager::update()
 {
+	player* _player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+
 	RECT rcTemp;
 	mItemIter miter;
 	for (miter = _mItem.begin(); miter != _mItem.end(); ++miter)
-	{			
-			switch (miter->first)
+	{
+		for (int i = 0; i < miter->second.size(); i++)
+		{
+			if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
 			{
-			case itemType::POTION:					
-				for (int i = 0; i < _vPotion.size(); i++)
+				switch (miter->first)
 				{
-					if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
-					{
-						_inven->addItem(miter->second[i]);
-						miter->second[i]->release();
-						SAFE_DELETE(miter->second[i]);
-						break;
-					}
+				case itemType::POTION:
+					_inven->addItem(itemType::POTION, miter->second[i]);
+					miter->second[i]->release();
+					miter->second.erase(miter->second.begin() + i);
+					break;
+				case itemType::LIQUIDITEM:
+					_inven->addItem(itemType::LIQUIDITEM, miter->second[i]);
+					miter->second[i]->release();
+					miter->second.erase(miter->second.begin() + i);
+					break;
+				case itemType::REBAR:
+					_inven->addItem(itemType::REBAR, miter->second[i]);
+					miter->second[i]->release();
+					miter->second.erase(miter->second.begin() + i);
+					break;
+				case itemType::TWIG:
+					_inven->addItem(itemType::TWIG, miter->second[i]);
+					miter->second[i]->release();
+					miter->second.erase(miter->second.begin() + i);
+					break;
+				case itemType::REDCRISTAL:
+					_inven->addItem(itemType::REDCRISTAL, miter->second[i]);
+					miter->second[i]->release();
+					miter->second.erase(miter->second.begin() + i);
+					break;
+				case itemType::GOLEMCORE:
+					_inven->addItem(itemType::GOLEMCORE, miter->second[i]);
+					miter->second[i]->release();
+					miter->second.erase(miter->second.begin() + i);
+					break;
+				default:
+					break;
+
 				}
-				break;
-			case itemType::LIQUIDITEM:
-				for (int i = 0; i < _vLiquidItem.size(); i++)
-				{
-					if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
-					{
-						_inven->addItem(miter->second[i]);
-						miter->second[i]->release();
-						SAFE_DELETE(miter->second[i]);
-						break;
-					}
-				}
-				break;
-			case itemType::REBAR:
-				for (int i = 0; i < _vRebar.size(); i++)
-				{
-					if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
-					{
-						_inven->addItem(miter->second[i]);
-						miter->second[i]->release();
-						SAFE_DELETE(miter->second[i]);
-						break;
-					}
-				}
-				break;
-			case itemType::TWIG:
-				for (int i = 0; i < _vTwig.size(); i++)
-				{
-					if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
-					{
-						_inven->addItem(miter->second[i]);
-						miter->second[i]->release();
-						SAFE_DELETE(miter->second[i]);
-						break;
-					}
-				}
-				break;
-			case itemType::GOLEMCORE:
-				for (int i = 0; i < _vGolemCore.size(); i++)
-				{
-					if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
-					{
-						_inven->addItem(miter->second[i]);
-						miter->second[i]->release();
-						SAFE_DELETE(miter->second[i]);
-						break;
-					}
-				}
-				break;
-			case itemType::REDCRISTAL:
-				for (int i = 0; i < _vRedCristal.size(); i++)
-				{
-					if (IntersectRect(&rcTemp, &_player->getRcBody(), &miter->second[i]->get_collisionBox()))
-					{
-						_inven->addItem(miter->second[i]);
-						miter->second[i]->release();
-						SAFE_DELETE(miter->second[i]);
-						break;
-					}
-				}
-				break;
-			default:
-				break;
-			}		
+			}
+		}
+
 	}
 	
 
@@ -151,50 +125,13 @@ void itemManager::render()
 {
 	mItemIter miter;
 	for (miter = _mItem.begin(); miter != _mItem.end(); ++miter)
-	{	
-		switch (miter->first)
-		{
-		case itemType::POTION:
-			for (int i = 0; i < _vPotion.size(); i++)
-			{
-				miter->second[i]->render();
-			}
-			break;
-		case itemType::LIQUIDITEM:
-			for (int i = 0; i < _vLiquidItem.size(); i++)
-			{
-				miter->second[i]->render();
-			}
-			break;
-		case itemType::REBAR:
-			for (int i = 0; i < _vRebar.size(); i++)
-			{
-				miter->second[i]->render();
-			}
-			break;
-		case itemType::TWIG:
-			for (int i = 0; i < _vTwig.size(); i++)
-			{
-				miter->second[i]->render();
-			}
-			break;
-		case itemType::GOLEMCORE:
-			for (int i = 0; i < _vGolemCore.size(); i++)
-			{
-				miter->second[i]->render();
-			}
-			break;
-		case itemType::REDCRISTAL:
-			for (int i = 0; i < _vRedCristal.size(); i++)
-			{
-				miter->second[i]->render();
-			}
-			break;
-		default:
-			break;
-		}
+	{
+		for (int i = 0; i < miter->second.size(); i++)
 
-		
+		{
+			miter->second[i]->render();
+		}
 	}
+
 
 }

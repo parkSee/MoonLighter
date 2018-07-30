@@ -173,15 +173,6 @@
     <ClInclude Include="loadingScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="bigSlime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="smallSlime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="weed.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
     <ClInclude Include="golemCore.h">
       <Filter>MainGame\Item\ItemType</Filter>
     </ClInclude>
@@ -236,6 +227,7 @@
     <ClInclude Include="bossRoomScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="lobbyContainer.h">
       <Filter>MainGame\Object\LobbyObject</Filter>
     </ClInclude>
@@ -247,6 +239,19 @@
     </ClInclude>
     <ClInclude Include="AIKidsState.h">
       <Filter>MainGame\AI</Filter>
+=======
+    <ClInclude Include="weed.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="smallSlime.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="bigSlime.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>MainGame\Enemy</Filter>
+>>>>>>> fe4ba521f3740a3589444945782edeaf0f8390a2
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -340,15 +345,6 @@
     <ClCompile Include="lysImage.cpp">
       <Filter>MainGame\Scene\loadingImages</Filter>
     </ClCompile>
-    <ClCompile Include="bigSlime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="smallSlime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="weed.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="inventory.cpp">
       <Filter>MainGame\inventory</Filter>
     </ClCompile>
@@ -403,6 +399,7 @@
     <ClCompile Include="bossRoomScene.cpp">
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="lobbyContainer.cpp">
       <Filter>MainGame\Object\LobbyObject</Filter>
     </ClCompile>
@@ -414,6 +411,19 @@
     </ClCompile>
     <ClCompile Include="AIKidsState.cpp">
       <Filter>MainGame\AI</Filter>
+=======
+    <ClCompile Include="smallSlime.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="weed.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="bigSlime.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>MainGame\Enemy</Filter>
+>>>>>>> fe4ba521f3740a3589444945782edeaf0f8390a2
     </ClCompile>
   </ItemGroup>
 </Project>

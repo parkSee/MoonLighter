@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "rebar.h"
 
-//csyADD [rebar 아이템의 좌표, 이미지, 충돌박스 초기화 및 랜더 추가]
 
 HRESULT rebar::init()
 {

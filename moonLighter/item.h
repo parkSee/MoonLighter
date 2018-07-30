@@ -1,7 +1,7 @@
 #pragma once
 #include "gameNode.h"
 
-//csyADD [다른 클래스에서 받아올 겟터함수 추가]
+//csyADD [다른 클래스에서 좌표 세팅할 세터함수 추가]
 
 class item : public gameNode
 {	
@@ -13,6 +13,8 @@ protected:
 public:
 
 	tagFloat get_pos() { return _pos; }
+	void set_pos(tagFloat pos) { _pos = pos; }
+
 	image* get_img() { return _img; }
 	RECT get_collisionBox() { return _collisionBox; }
 

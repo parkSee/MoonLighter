@@ -1,13 +1,15 @@
 #include "stdafx.h"
 #include "golemCore.h"
 
-//csyADD [golemCore 아이템의 좌표, 이미지, 충돌박스 초기화 및 랜더 추가]
+//csyADD [golemCore cpp - 테스트 용 포지션 변경]
 
 HRESULT golemCore::init()
 {
-	_pos = tagFloat(WINSIZEX / 2, WINSIZEY / 4);
+	_pos = tagFloat(1620, 1730);
 	_img = IMAGEMANAGER->findImage("golemCore");
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
+
+	// OBJECTMANAGER->findObject(objectType::ENEMY,"golem") //csyADD 이거는 어떻게 사용해야할지 테스트 한거
 
 	return S_OK;
 }

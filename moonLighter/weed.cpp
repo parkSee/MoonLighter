@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "weed.h"
-
+#include"player.h"
 
 HRESULT weed::init(string _objName, tagFloat _pos)
 {
@@ -13,7 +13,7 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 	_currentHp = 200;
 	_attackedWeed[0] = IMAGEMANAGER->findImage("잡초빨강");
 	_attackedWeed[1] = IMAGEMANAGER->findImage("잡초하양");
-	_weedFrameX = _weedFrameY = _count = _attackedCount = 0;
+	_weedFrameX = _weedFrameY = _count = _attackedCount=_dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 
 	_noneAttacked = true;//공격안받았을때
@@ -21,6 +21,7 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 	_isAttacked2 = false;
 	_xCollision = false;
 	_yCollision = false;
+	_damaaged = false;
 
 
 
@@ -42,8 +43,10 @@ void weed::update()
 	weedFrame();
 	move();
 	pixelCollision();
+	damagged();
 	hp();
 	_hp->update();
+
 	
 
 	
@@ -56,7 +59,10 @@ void weed::update()
 		
 	}
 
+	
+	
 
+	
 
 
 }
@@ -65,7 +71,7 @@ void weed::render()
 {
 	//Rectangle(getMemDC(), rc);
 	RECT cam = CAMERAMANAGER->getRenderRc();
-
+	RectangleCam(getMemDC(), rc, cam);
 	if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 
 	if (_isAttacked2)
@@ -100,11 +106,11 @@ void weed::render()
 		_noneAttacked = false;
 		_currentHp-= 50;
 	}
-
-	Rectangle(getMemDC(), _rc[0]);
-	Rectangle(getMemDC(), _rc[1]);
-	Rectangle(getMemDC(), _rc[2]);
-	Rectangle(getMemDC(), _rc[3]);
+	//RectangleCam(getMemDC(), _rc[0], cam);
+	//Rectangle(getMemDC(), _rc[0]);
+	//Rectangle(getMemDC(), _rc[1]);
+	//Rectangle(getMemDC(), _rc[2]);
+	//Rectangle(getMemDC(), _rc[3]);
 
 	char str[128];
 	sprintf_s(str, "%d", _xCollision);
@@ -119,6 +125,44 @@ void weed::render()
 void weed::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+}
+
+void weed::damagged()
+{
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	RECT tempRc;
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
+	{
+		_damaaged = true;
+		
+	}
+
+	if (_damaaged)
+	{
+		_dmgCount++;
+		_damaaged = false;
+		_isAttacked = true;
+		_noneAttacked = false;
+		
+		
+		
+	}
+
+	if (0 < _dmgCount && _dmgCount <= 15)
+	{
+		_dmgCount++;
+		pos.x += 7 * cosf(PI - angle);
+		pos.y += 7 * sinf(PI - angle);
+	}
+
+	if (_dmgCount > 15)
+	{
+		
+		_currentHp -= 100;
+		_dmgCount = 0;
+	}
+	
 }
 
 void weed::hp()
@@ -154,11 +198,7 @@ void weed::move()
 	if (_xCollision == false)pos.x += speed * cosf(angle);
 	if (_yCollision == false)pos.y += speed * -sinf(angle);
 
-	if (_isAttacked)
-	{
-		pos.x += 5 * cosf(PI - angle);
-		pos.y += 5 * sinf(PI - angle);
-	}
+	
 
 }
 

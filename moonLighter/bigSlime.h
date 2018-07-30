@@ -49,6 +49,7 @@ public:
 	void bigSlimeFrame();
 	void move();
 	void pixelCollision();
+	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 
 	bigSlime() {}

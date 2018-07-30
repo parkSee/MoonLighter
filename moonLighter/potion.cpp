@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "potion.h"
 
-// csyADD [충돌박스 선언 추가]
+
 HRESULT potion::init()
 {
 	_pos = tagFloat(WINSIZEX / 2, WINSIZEY / 2);

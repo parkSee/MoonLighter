@@ -66,7 +66,7 @@ void bigSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	//Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
-
+	RectangleCam(getMemDC(), rc, cam);
 	_hp->render();
 
 	if (_noneAttacked)_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);

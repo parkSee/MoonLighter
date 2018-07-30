@@ -152,6 +152,7 @@
     <ClInclude Include="AIKidsState.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="bigSlime.h" />
+    <ClInclude Include="boss.h" />
     <ClInclude Include="bossRoomScene.h" />
     <ClInclude Include="cameraManager.h" />
     <ClInclude Include="commonMacroFunction.h" />
@@ -207,6 +208,7 @@
     <ClCompile Include="AIKidsState.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="bigSlime.cpp" />
+    <ClCompile Include="boss.cpp" />
     <ClCompile Include="bossRoomScene.cpp" />
     <ClCompile Include="cameraManager.cpp" />
     <ClCompile Include="csyImage.cpp" />

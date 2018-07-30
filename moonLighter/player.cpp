@@ -30,6 +30,17 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
 	_hpBar->setRect(10, 0);
 
+	//°ø°Ý effect ÃÊ±âÈ­
+	_efcShortSword1 = new effect;
+	_efcShortSword1->init(IMAGEMANAGER->findImage("will_shortSword1"), 0.3f);
+
+	EFFECTMANAGER->addEffect("¼ô¼Òµå", "will_shortSword1", 0.3f, 50);
+
+
+
+
+
+
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
@@ -50,6 +61,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 void player::release(void)
 {
 	gameObject::release();
+	_efcShortSword1->release();
+	SAFE_DELETE(_efcShortSword1);
 }
 
 void player::update(void)
@@ -200,6 +213,8 @@ void player::render(void)
 	
 	
 	_hpBar->render_isHit(); //Ã¼·Â¹Ù ·»´õ
+	//_efcShortSword1->render();
+	//EFFECTMANAGER->render();
 }
 
 
@@ -499,14 +514,15 @@ void player::move()
 			_currentHp -= _damage;
 			_hpBar->setIsHit();
 			_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
+
 		}
 		if (KEYMANAGER->isOnceKeyUp('S'))
 		{
 			_isHit = false;
 		}
-		if (KEYMANAGER->isOnceKeyDown('D'))
+		if (KEYMANAGER->isStayKeyDown('D'))
 		{
-
+			EFFECTMANAGER->play("¼ô¼Òµå", _ptMouse.x, _ptMouse.y);
 		}
 		if (_isAttacking == true)
 		{
@@ -524,14 +540,15 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
-					_isRcSwordOn = true;
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y - 20, 130, 100);
 				}
 				else
 				{
-					_isRcSwordOn = false;
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 
 			}
@@ -544,9 +561,15 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
+				}
+				else
+				{
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 			}
 			else if (_isRight)
@@ -558,9 +581,15 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
+				}
+				else
+				{
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 			}
 			else if (_isLeft)
@@ -572,15 +601,22 @@ void player::move()
 					_isAttacking = false;
 					_isIdle = true;
 				}
-				if (2 <= _index && _index <= 5)
+				if (2 == _index)
 				{
+					//_isRcSwordOn = true;
 					_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
+				}
+				else
+				{
+					//_isRcSwordOn = false;
+					_rcSword = RectMake(-50, -50, 2, 2);
 				}
 			}
 		}
 		else
 		{
-			_isRcSwordOn = false;
+			//_isRcSwordOn = false;
+			_rcSword = RectMake(-50, -50, 2, 2);
 		}
 		///////////////////////////////////////////////////////////////////////////////
 	}

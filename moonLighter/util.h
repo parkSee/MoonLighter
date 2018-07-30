@@ -36,3 +36,13 @@ struct tagInt
 	tagInt() { x = 0; y = 0; }
 	tagInt(int X, int Y) { x = X; y = Y; }
 };
+
+//csyAdd [아이템 종류 네임스페이스 공유 사용을 위해 이동]
+
+namespace itemType
+{
+	enum Enum	//아이템 종류 이넘문
+	{
+		POTION, LIQUIDITEM, REDCRISTAL, TWIG, REBAR, GOLEMCORE, END
+	};
+}

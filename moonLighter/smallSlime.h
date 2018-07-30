@@ -45,6 +45,7 @@ public:
 	void hp();
 	void smallSlimeFrame();
 	void pixelCollision();
+	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void move();
 
