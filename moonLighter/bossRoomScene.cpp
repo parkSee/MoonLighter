@@ -33,6 +33,12 @@ void bossRoomScene::update()
 
 	OBJECTMANAGER->update();
 
+	if (KEYMANAGER->isOnceKeyDown('C'))
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("townScene");
+	}
+
 }
 
 void bossRoomScene::render()
