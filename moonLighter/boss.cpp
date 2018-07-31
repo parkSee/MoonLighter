@@ -38,7 +38,7 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 
-	_count = _attackedCount = _tempCurrent = _dmgCount = 0;
+	_count = _attackedCount = _tempCurrent = _dmgCount =_dmgHp= 0;
 
 
 
@@ -417,7 +417,7 @@ void boss::imgRectMake()
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 }
 
-void boss::damagged()
+int boss::damagged()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	RECT tempRc;
@@ -425,6 +425,7 @@ void boss::damagged()
 	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
 	{
 		_damaaged = true;
+		
 
 	}
 
@@ -442,16 +443,18 @@ void boss::damagged()
 	if (0 < _dmgCount && _dmgCount <= 15)
 	{
 		_dmgCount++;
-		pos.x += 7 * cosf(PI - angle);
-		pos.y += 7 * sinf(PI - angle);
+		pos.x += 10 * cosf(PI - angle);
+		pos.y += 10 * sinf(PI - angle);
 	}
 
 	if (_dmgCount > 15)
 	{
-
-		_currentHp -= 100;
 		_dmgCount = 0;
+		_dmgHp = 10;
 	}
+
+
+	return _dmgHp;
 }
 
 void boss::hp()

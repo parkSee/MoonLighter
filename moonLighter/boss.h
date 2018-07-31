@@ -27,6 +27,7 @@ private:
 	bool _isDead;
 	int _attackedCount;
 	int _dmgCount;
+	int _dmgHp;
 
 	bool _leftUp;
 	bool _rightUp;
@@ -62,13 +63,15 @@ public:
 
 	RECT getRect() { return rc; }
 	void imgRectMake();
-	void damagged();
+	int damagged();
 	void hp();
 	void bossFrame();
 	void bossAttack();
 	void move();
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+
+	
 
 	boss() {}
 	~boss() {}
