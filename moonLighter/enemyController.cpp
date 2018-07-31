@@ -16,7 +16,7 @@ HRESULT enemyController::init()
 	bigSlimeInit();
 	smallSlimeInit();
 	weedInit();
-	
+
 	return S_OK;
 }
 

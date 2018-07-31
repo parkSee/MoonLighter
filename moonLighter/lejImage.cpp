@@ -55,14 +55,15 @@ void loadingScene::lejImageLoading()
 	_loading->loadFrameImage("보스정면오른쪽빨강", "./image/enemy/보스정면오른쪽빨강.bmp", 7680, 256, 30, 1);
 	_loading->loadFrameImage("보스정면오른쪽하양", "./image/enemy/보스정면오른쪽하양.bmp", 7680, 256, 30, 1);
 
-	_loading->loadFrameImage("보스생성", "./image/enemy/보스생성.bmp", 9216, 256, 36, 1);
+	_loading->loadFrameImage("보스생성", "./image/enemy/보스생성.bmp", 9216, 256, 37, 1);
 
 	
 
 	_loading->loadFrameImage("보스이펙트오른쪽", "./image/enemy/보스이펙트오른쪽.bmp", 61, 68, 1, 1);
 	_loading->loadFrameImage("보스이펙트왼쪽", "./image/enemy/보스이펙트왼쪽.bmp", 61, 68, 1, 1);
 	
-
+	_loading->loadImage("보스체력", "보스체력.bmp", 1000, 14);
+	_loading->loadImage("보스체력껍데기", "보스체력껍데기.bmp", 1000, 14);
 
 
 
