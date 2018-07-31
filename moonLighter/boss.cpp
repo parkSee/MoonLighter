@@ -417,11 +417,25 @@ void boss::render()
 	if (_currentX[0] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x, pos.y);
+		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x-80, pos.y+50);
 	}
 	//_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
-	
-	
+	if (_currentX[1] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트다운오른쪽2", pos.x , pos.y + 50);
+	}
+	if (_currentX[2] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트업오른쪽2", pos.x +30, pos.y +10);
+		
+	}
+	if (_currentX[3] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 120, pos.y + 15);
+	}
 }
 
 void boss::imgRectMake()
@@ -521,7 +535,7 @@ void boss::bossAttack()
 
 	distance = getDistance(pos.x-40 , pos.y+10, _player->pos.x, _player->pos.y);
 
-	if (distance < 100)
+	if (distance < 150)
 	{
 		_startAttack = true;
 	}
