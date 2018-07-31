@@ -24,6 +24,13 @@ HRESULT bossRoomScene::init()
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
 	CAMERAMANAGER->setMapSize(3152, 2131);
+
+/*
+	_test = new progressBar;
+	_test->init("testF", "testB", WINSIZEX / 2, WINSIZEY / 2, 20, 600);*/
+	
+
+
 	return S_OK;
 }
 
@@ -46,9 +53,10 @@ void bossRoomScene::update()
 		SCENEMANAGER->loadScene("townScene");
 	}
 
-
-	
-
+	/*_test->setX(WINSIZEX/2);
+	_test->setY(WINSIZEY-200);
+	_test->update();
+	_test->setHeightGuge(_currentHp, 200);*/
 
 	_bossHp->update();
 	
@@ -104,6 +112,8 @@ void bossRoomScene::render()
 	char str[128];
 	sprintf(str, "%d", _currentHp);
 	TextOut(getMemDC(), 100, WINSIZEY / 2, str, strlen(str));
+
+	//_test->renderHeight();
 }
 
 void bossRoomScene::cloneBoss()

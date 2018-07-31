@@ -23,7 +23,7 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	
 
 	EFFECTMANAGER->addEffect("보스공격이펙트다운오른쪽2", "보스공격이펙트다운오른쪽", 0.2f, 20);
-	EFFECTMANAGER->addEffect("보스공격이펙트다운왼쪽2", "보스공격이펙트다운왼쪽", 0.2f, 20);
+	EFFECTMANAGER->addEffect("보스공격이펙트다운왼쪽2", "보스공격이펙트다운왼쪽", 0.2f, 1);
 	EFFECTMANAGER->addEffect("보스공격이펙트업왼쪽2", "보스공격이펙트업왼쪽", 0.2f, 20);
 	EFFECTMANAGER->addEffect("보스공격이펙트업오른쪽2", "보스공격이펙트업오른쪽", 0.2f, 20);
 	EFFECTMANAGER->addEffect("보스이펙트오른쪽2", "보스이펙트오른쪽", 0.2f, 20);
@@ -408,8 +408,20 @@ void boss::render()
 	//	//RectangleCam(getMemDC(), _rc[3], cam);
 
 	}
+	if (!_attackCountBool[0])
+	{
+		tempX2 = pos.x;
+		tempY2 = pos.y;
+	}
 
+	if (_currentX[0] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x, pos.y);
+	}
 	//_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
+	
+	
 }
 
 void boss::imgRectMake()
@@ -527,6 +539,8 @@ void boss::bossAttack()
 		{
 			_attackCountBool[0] = true;
 			_currentX[0] = 9;
+			
+			
 		}
 		if (_rightDown)
 		{

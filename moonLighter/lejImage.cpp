@@ -62,8 +62,8 @@ void loadingScene::lejImageLoading()
 	_loading->loadFrameImage("보스이펙트오른쪽", "./image/enemy/보스이펙트오른쪽.bmp", 61, 68, 1, 1);
 	_loading->loadFrameImage("보스이펙트왼쪽", "./image/enemy/보스이펙트왼쪽.bmp", 61, 68, 1, 1);
 	
-	_loading->loadImage("보스체력", "보스체력.bmp", 1000, 14);
-	_loading->loadImage("보스체력껍데기", "보스체력껍데기.bmp", 1000, 14);
+	//_loading->loadImage("보스체력", "보스체력.bmp", 1000, 14);
+	//_loading->loadImage("보스체력껍데기", "보스체력껍데기.bmp", 1000, 14,true);
 
 
 

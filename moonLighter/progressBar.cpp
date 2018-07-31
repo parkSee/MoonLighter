@@ -93,6 +93,14 @@ void progressBar::render(void)
 	_progressBarFront->render(getMemDC(), _rcProgress.left, _y,
 		0, 0, _width, _progressBarFront->getHeight());
 }
+//응주오빠가 만든거
+void progressBar::renderHeight()
+{
+	_progressBarBack->render(getMemDC(), _rcProgress.left, _y);
+	//앞에 보여지는 체력바 이미지
+	_progressBarFront->render(getMemDC(), _rcProgress.left, _y  -_height,
+		0,0, _progressBarFront->getWidth(),_height);
+}
 
 void progressBar::render_isHit()   	//내가 한거 
 {
@@ -128,6 +136,11 @@ void progressBar::render_isHit()   	//내가 한거
 void progressBar::setGauge(float currentHp, float maxHp)
 {
 	_width = (currentHp / maxHp) * _progressBarBack->getWidth();
+}
+
+void progressBar::setHeightGuge(float currentHp, float maxHp)
+{
+	_height = (currentHp / maxHp) * _progressBarBack->getHeight();
 }
 
 void progressBar::setGaugeOfDamage(float currentHp, float maxHp, int damage)

@@ -10,6 +10,7 @@ private:
 
 	player * _player;
 	progressBar* _bossHp;
+	progressBar* _test;
 	boss* _boss;
 	boss*_boss2;
 	int _currentHp;

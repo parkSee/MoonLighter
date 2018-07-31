@@ -47,6 +47,9 @@ private:
 	int _rc3X;
 	int _rc3Y;
 
+	int tempX2;
+	int tempY2;
+
 	float speed;
 	float angle;
 	float distance;
