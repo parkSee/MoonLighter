@@ -181,7 +181,7 @@ void bigSlime::hp()
 
 void bigSlime::bigSlimeFrame()
 {
-	if (_count % 7 == 0)
+	if (_count % 4 == 0)
 	{
 
 		_bigSlime->setFrameX(_currentX);
@@ -385,9 +385,11 @@ void bigSlime::Attack()
 	{
 		
 		_jellyCount++;
-		speed = 5.0f;
+		speed = 8.0f;
 		if (_distance < 10)
 		{
+			_slimeBool = true;
+
 			((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
 			_playerMove = false;
 			pos.x = _player->pos.x;
@@ -398,25 +400,32 @@ void bigSlime::Attack()
 
 		}
 	}
+	if (_distance < 50 && _slimeBool == false)
+	{
+		_slimeBool = true;
+		_currentX = 24;
+	}
 
-	if (_jellyCount > 100 && _jellyCount < 120)
+
+	if (_jellyCount > 100 && _jellyCount < 150)
 	{
 		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
 		_playerMove = false;
 		_jellyCount++;
 		_jellyAttack = true;
-		_player->pos.x += 8 * cosf(_tempAngleX);
-		_player->pos.y += 8 * sinf(_tempAngleX);
+		_player->pos.x += 5 * cosf(_tempAngleX);
+		_player->pos.y += 5 * sinf(_tempAngleX);
 		speed = 1.1f;
 		
 	}
-	if (_jellyCount == 120)
+	if (_jellyCount == 150)
 	{
 		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(true);
 		_xCollision = false;
 		_yCollision = false;
 		_jellyAttack = false;
 		_playerMove = true;
+		_slimeBool = false;
 		_jellyCount = 0;
 		_tempAngleX = RND->getFloat(6.2);
 		
