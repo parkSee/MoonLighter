@@ -86,6 +86,11 @@ void enemyController::bigSlimeInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _bigSlime);
 		_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
+
+	bigSlime* _bigSlime = new bigSlime;
+	_bigSlime->init("bigSlime", tagFloat(2000 , 1800));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _bigSlime);
+	_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 }
 
 void enemyController::smallSlimeInit()

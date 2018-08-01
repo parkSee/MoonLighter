@@ -31,6 +31,9 @@ private:
 	int _rc3X;
 	int _rc3Y;
 
+	bool _jellyAttack;
+	int _jellyCount;
+
 	bool _damaaged;
 	bool _noneAttacked;//공격안받았을때
 	bool _isAttacked; // 공격받았다는 신호
@@ -42,6 +45,12 @@ private:
 	bool _dmg ;
 	bool _isAttacked3;
 	RECT _rc2;
+
+	float _distance;
+	float _tempAngleX;
+	float _tempAngleY;
+
+	bool _playerMove;
 
 public:
 
@@ -59,6 +68,8 @@ public:
 	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void dead();
+	void Attack();
+	
 
 	bigSlime() {}
 	~bigSlime() {}

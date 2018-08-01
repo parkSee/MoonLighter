@@ -18,6 +18,7 @@ private:
 	bool _damaged;
 	bool _dmgCountBool;
 	bool _clone;
+	
 
 public:
 
@@ -27,6 +28,7 @@ public:
 	void update();
 	void render();
 	void cloneBoss();
+	
 	
 	bossRoomScene(){}
 	~bossRoomScene(){}

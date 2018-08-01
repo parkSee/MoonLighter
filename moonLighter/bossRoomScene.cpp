@@ -9,7 +9,7 @@ HRESULT bossRoomScene::init()
 	_player->setPixelImage(IMAGEMANAGER->findImage("bossRoomRedZoon"));
 
 	 _boss = new boss;
-	_boss->init("boss", tagFloat(2000, 1000));
+	_boss->init("boss", tagFloat(1650, 1000));
 	OBJECTMANAGER->addObject(objectType::ENEMY, _boss);
 	_boss->setPixelImage(IMAGEMANAGER->findImage("bossRoomRedZoon"));
 
@@ -20,6 +20,7 @@ HRESULT bossRoomScene::init()
 	_damaged = false;
 	_dmgCountBool = false;
 	_clone = false;
+	
 
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 

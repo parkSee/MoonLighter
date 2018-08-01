@@ -38,6 +38,9 @@ private:
 	bool _start;
 	bool _playing;
 
+	bool _xMove;
+	bool _yMove;
+
 	int _rc0X;
 	int _rc0Y;
 	int _rc1X;

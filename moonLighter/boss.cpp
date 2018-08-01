@@ -64,6 +64,9 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_damaaged = false;
 	_start = false;
 	_playing = false;
+	_xMove = true;
+	_yMove = true;
+	
 
 	return S_OK;
 }
@@ -79,7 +82,9 @@ void boss::update()
 	_count++;
 	
 	
-	if (!_startAttack)move();
+	if (!_startAttack )move();
+	
+	
 	imgRectMake();
 	bossFrame();
 	bossAttack();
@@ -122,7 +127,10 @@ void boss::render()
 
 	if (_start)
 	{
-		if (_count % 3 == 0)
+		_xMove = false;
+		_yMove = false;
+		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
+		if (_count %3 == 0)
 		{
 			_currentX[4]++;
 			if (_currentX[4] > _boss[4]->getMaxFrameX())
@@ -135,6 +143,9 @@ void boss::render()
 	
 	if (_playing)
 	{
+		_xMove = true;
+		_yMove = true;
+		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(true);
 		_currentX[4] = 0;
 		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
@@ -583,8 +594,8 @@ void boss::move()
 	speed = 0.5f;
 	distance = getDistance(pos.x, pos.y, _player->pos.x, _player->pos.y);
 
-	pos.x += speed * cosf(angle);
-	pos.y += speed * -sinf(angle);
+	if(_xMove)pos.x += speed * cosf(angle);
+	if(_yMove)pos.y += speed * -sinf(angle);
 	tempX = speed * cosf(angle);
 	tempY = speed * -sinf(angle);
 
