@@ -2,14 +2,15 @@
 #include "gameNode.h"
 #include "gameObject.h"
 #include "progressBar.h"
-
-
+#include "effect.h"
+#include "enemyController.h"
 class player : public gameObject
 {
 private:
 
 	int _index;
 	int _count;
+	int _cntIsInvincible;
 	int _probeY;
 	int _probeX;
 	int _attCharge;
@@ -29,17 +30,22 @@ private:
 	bool _isHit;
 	bool _isDead;
 
+	bool a;
+
+
+	effect* _efcShortSword1;   //lysADD( 플레이어 공격이펙트이미지 야매 초기화 )
 	image* backGround;
 	image* will;
-	image* willAttack;  //lysADD( 플레이어 공격이미지 야매 초기화 )
+	image* willAttack;  
 
 	image* _pixelImg;
 
-	RECT _rcBody;	//lysADD( 플레이어 몸뚱아리 크기의 렉트 하나 추가 (에너미와의 충돌, 아이템 먹기 위한 충돌체크) )
-	RECT _rcSword;	//lysADD( 플레이어 공격 시 공격범위 렉트 변수 추가)
+	RECT _rcBody;	
+	RECT _rcSword;	
 	RECT _rcProbe;
 
 	progressBar* _hpBar;
+	
 public:
 	HRESULT init(string _objName, tagFloat _pos);
 	void release();
@@ -54,6 +60,8 @@ public:
 	RECT getRcBody() { return _rcBody; }	//lysADD  (겟몸뚱아리 렉트 함수 추가)
 	RECT getRcSword() { return _rcSword;}	//lysADD (겟 공격범위 렉트 함수 추가)
 	bool getIsRcSwordOn() { return _isRcSwordOn; } //lysADD (공격중인지 아닌지 bool값 반환)
+	void enemyCheckCollision();
+
 	player() {}
 	~player() {}
 };

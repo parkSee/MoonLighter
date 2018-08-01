@@ -11,25 +11,11 @@
 
 HRESULT enemyController::init()
 {
-	
-	//_golem2 = new golem;
-	//_golem2->init("golem", tagFloat(100, 700));
-	//OBJECTMANAGER->addObject(objectType::ENEMY, _golem2);
-	
-	
-	
 
 	golemInit();
 	bigSlimeInit();
 	smallSlimeInit();
 	weedInit();
-
-
-
-
-
-
-
 
 	return S_OK;
 }
@@ -53,30 +39,32 @@ void enemyController::render()
 
 }
 
+
 void enemyController::golemInit()
 {
 	for (int i = 0; i < 2; ++i)
 	{
 		golem* _golem = new golem;
-		_golem->init("golem", tagFloat(600 + 300 * i, 1000)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
-															  //_vGolem.push_back(_golem);
+		_golem->init("golem", tagFloat(600 + 300 * i, 1000));													 
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+	
 	}
 
 	for (int i = 0; i < 3; ++i)
 	{
 		golem* _golem = new golem;
-		_golem->init("golem", tagFloat(3000+ 300 * i, 400)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
-															  //_vGolem.push_back(_golem);
+		_golem->init("golem", tagFloat(3000+ 300 * i, 400)); 													 
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-
+	
 	for (int i = 0; i < 1; ++i)
 	{
 		golem* _golem = new golem;
-		_golem->init("golem", tagFloat(1700 + 300 * i, 400)); // 이건 왜 +100*i 안넣고 한위치에서 출력하게 했냐고?
-															  //_vGolem.push_back(_golem);
+		_golem->init("golem", tagFloat(1700 + 300 * i, 400)); 
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
 
 }
@@ -117,7 +105,7 @@ void enemyController::smallSlimeInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
 		_smallSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-
+	
 	for (int i = 0; i < 6; ++i)
 	{
 		smallSlime* _smallSlime = new smallSlime;
@@ -147,5 +135,5 @@ void enemyController::weedInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 		_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-
+	
 }

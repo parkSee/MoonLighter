@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "golem.h"
+#include"player.h"
 
 HRESULT golem::init(string _objName, tagFloat _pos)
 {
@@ -26,9 +27,9 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 
 
 
-	RECT rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
+	 rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 
-	_count = _attackedCount = _tempCurrent = 0;
+	_count = _attackedCount = _tempCurrent = _dmgCount = 0;
 
 
 
@@ -49,6 +50,8 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_isAttacked2 = false;
 	_noneAttacked = true;
 	_isDead = false;
+	_damaaged = false;
+
 	return S_OK;
 }
 
@@ -67,6 +70,8 @@ void golem::update()
 	imgRectMake();
 	golemFrame();
 	golemAttack();
+	this->pixelCollision();
+	this->damaged();
 	hp();
 	_hp->update();
 
@@ -86,7 +91,7 @@ void golem::update()
 
 void golem::render()
 {
-
+	
 	if (_isDead)  //죽었을때 랜더
 	{
 		//_dead->frameRender(getMemDC(), pos.x - 55, pos.y - 20);
@@ -107,6 +112,7 @@ void golem::render()
 
 
 	RECT cam = CAMERAMANAGER->getRenderRc();
+	
 	if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 	{
 		_right = true; _left = false; _down = false; _up = false;
@@ -385,8 +391,13 @@ void golem::render()
 
 
 	_hp->render();
-
-
+	
+	
+	
+	RectangleCam(getMemDC(), _rc[0], cam);
+	RectangleCam(getMemDC(), _rc[1], cam);
+	RectangleCam(getMemDC(), _rc[2], cam);
+	RectangleCam(getMemDC(), _rc[3], cam);
 
 
 
@@ -405,6 +416,45 @@ void golem::hp()
 	_hp->setX((pos.x - IMAGEMANAGER->findImage("골렘정면")->getFrameWidth() / 2 +5) - cam.left);
 	_hp->setY((pos.y - 80) - cam.top);
 	_hp->setGauge(_currentHp, 200);
+}
+
+void golem::damaged()
+{
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	RECT tempRc;
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
+	{
+		_damaaged = true;
+
+	}
+
+	if (_damaaged)
+	{
+		_dmgCount++;
+		_damaaged = false;
+		_isAttacked = true;
+		_noneAttacked = false;
+
+
+
+	}
+
+	if (0 < _dmgCount && _dmgCount <= 15)
+	{
+		_dmgCount++;
+		pos.x += 7 * cosf(PI - angle);
+		pos.y += 7 * sinf(PI - angle);
+	}
+
+	if (_dmgCount > 15)
+	{
+
+		_currentHp -= 100;
+		_dmgCount = 0;
+	}
+
+
 }
 
 void golem::golemFrame()
@@ -518,53 +568,98 @@ void golem::move()
 	}
 
 }
-void golem::key()
+void golem::pixelCollision()
 {
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
+	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	_rc[0] = RectMakeCenter(pos.x + _golem[0]->getFrameWidth() / 2, pos.y, 2, _golem[0]->getFrameHeight());//오른쪽
+	_rc[1] = RectMakeCenter(pos.x - _golem[0]->getFrameWidth() / 2, pos.y, 2, _golem[0]->getFrameHeight());//왼쪽
+	_rc[2] = RectMakeCenter(pos.x, pos.y - _golem[0]->getFrameHeight() / 2, _golem[0]->getFrameWidth(), 2);//위
+	_rc[3] = RectMakeCenter(pos.x, pos.y + _golem[0]->getFrameHeight() / 2, _golem[0]->getFrameWidth(), 2);//아래
+
+
+	_rc0X = pos.x +  _golem[0]->getFrameWidth() / 2;
+	_rc0Y = pos.y -  _golem[0]->getFrameHeight() / 2;
+
+	_rc1X = pos.x -  _golem[0]->getFrameWidth() / 2;
+	_rc1Y = pos.y -  _golem[0]->getFrameHeight() / 2;
+
+	_rc2Y = pos.y -  _golem[0]->getFrameHeight() / 2;
+	_rc2X = pos.x -  _golem[0]->getFrameWidth() / 2;
+
+
+	_rc3Y = pos.y +  _golem[0]->getFrameHeight() / 2;
+	_rc3X = pos.x -  _golem[0]->getFrameWidth() / 2;
+
+	
+
+
+	for (int j = _rc0Y + 5; j < pos.y + _golem[0]->getFrameHeight() / 2 - 5; j++)
 	{
-		_left = true;
-		_right = false;
-		_up = false;
-		_down = false;
-		pos.x -= 1;
+	
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), pos.x + _golem[0]->getFrameWidth() / 2, j);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+	
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.x = pos.x + _golem[0]->getFrameWidth() / 2 - 41;
+			break;
+		}
+	
+	
 	}
-	//오른쪽 이동
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
+	for (int j = _rc1Y + 5; j < pos.y + _golem[0]->getFrameHeight() / 2 - 5; j++)
 	{
-		_left = false;
-		_right = true;
-		_up = false;
-		_down = false;
-
-		pos.x += 1.f;
-
+	
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), pos.x - _golem[0]->getFrameWidth() / 2, j);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+	
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.x = pos.x - _golem[0]->getFrameWidth() / 2 + 41;
+			break;
+		}
+	
 	}
-	//위로이동
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	for (int j = _rc2X + 5; j < pos.x + _golem[0]->getFrameWidth() / 2 - 5; j++)
 	{
-		_left = false;
-		_right = false;
-		_up = true;
-		_down = false;
-
-		pos.y -= 1.f;
-
+	
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), j, pos.y + _golem[0]->getFrameHeight() / 2);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+	
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.y = pos.y + _golem[0]->getFrameWidth() / 2 - 41;
+			break;
+		}
+	
 	}
-	//아래쪽이동
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
+	for (int j = _rc2X + 5; j < pos.x + _golem[0]->getFrameWidth() / 2 - 5; j++)
 	{
-		_left = false;
-		_right = false;
-		_up = false;
-		_down = true;
-
-		pos.y += 1.f;
-
+	
+		COLORREF color = GetPixel(_pixelImg->getMemDC(), j, pos.y - _golem[0]->getFrameHeight() / 2);
+		int r = GetRValue(color);
+		int g = GetGValue(color);
+		int b = GetBValue(color);
+	
+		if (r == 255 && g == 0 && b == 0)
+		{
+			pos.y = pos.y - _golem[0]->getFrameWidth() / 2 + 41;
+			break;
+		}
+	
 	}
+	
 
-
-	// 골렘 공격
-
-
-
+	
 }
+
+
+
+

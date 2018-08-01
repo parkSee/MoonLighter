@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "shopScene.h"
 
+//csyADD [인벤 출력 테스트 용 추가]
+
 HRESULT shopScene::init()
 {
 
@@ -12,10 +14,13 @@ HRESULT shopScene::init()
 
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
-	//enterRc = RectMakeCenter(1944, 602, 100, 50);
-	//_loading->loadImage("shopMap", "./Image/shop_object/red.bmp", 811, 850, true, MAGENTA);
-	//IMAGEMANAGER->addImage("shopMap", "./Image/shop_object/shop.bmp", 811, 850);
-	//_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
+
+	_aiKid = new AIKids;
+	_aiKid->init("aiKid", tagFloat(600, 1303),IMAGEMANAGER->findImage("AiKids"));
+	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
+
+	_inven = new inventory;
+	_inven->init();
 	
 	CAMERAMANAGER->setMapSize(WINSIZEX, 1440);
 
@@ -28,6 +33,7 @@ HRESULT shopScene::init()
 
 void shopScene::release()
 {
+	SAFE_DELETE(_inven);
 }
 
 void shopScene::update()
@@ -45,6 +51,8 @@ void shopScene::update()
 		SOUNDMANAGER->stop("shopBGM");
 	}
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
+
+	_inven->update();
 }
  
 void shopScene::render()
@@ -63,7 +71,6 @@ void shopScene::render()
 	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - cam.left, 555 - cam.top);
 	
 	RectangleCam(getMemDC(), _enterRc, cam);
-
 	
-
+	_inven->render();
 }

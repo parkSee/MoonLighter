@@ -3,7 +3,7 @@
 
 HRESULT liquidItem::init()
 {
-	_pos = tagFloat(WINSIZEX / 3, WINSIZEY / 3);
+	_pos = tagFloat(2200, 1800);
 	_img = IMAGEMANAGER->findImage("liquidItem");
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());
 

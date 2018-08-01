@@ -34,12 +34,49 @@ void loadingScene::lejImageLoading()
 
 	_loading->loadFrameImage("뿅", "./image/enemy/뿅.bmp", 1150, 110, 10, 1);
 
+
+
+	_loading->loadFrameImage("보스공격이펙트다운오른쪽", "./image/enemy/보스공격이펙트다운오른쪽.bmp", 1408, 128, 11, 1);
+	_loading->loadFrameImage("보스공격이펙트다운왼쪽", "./image/enemy/보스공격이펙트다운왼쪽.bmp", 1408, 128, 11, 1);
+	_loading->loadFrameImage("보스공격이펙트업왼쪽", "./image/enemy/보스공격이펙트업왼쪽.bmp", 1408, 128, 10, 1);
+	_loading->loadFrameImage("보스공격이펙트업오른쪽", "./image/enemy/보스공격이펙트업오른쪽.bmp", 1408, 128, 10, 1);
+
+	_loading->loadFrameImage("보스뒤오른쪽", "./image/enemy/보스뒤오른쪽.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스뒤오른쪽빨강", "./image/enemy/보스뒤오른쪽빨강.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스뒤오른쪽하양", "./image/enemy/보스뒤오른쪽하양.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스뒤왼쪽", "./image/enemy/보스뒤왼쪽.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스뒤왼쪽빨강", "./image/enemy/보스뒤왼쪽빨강.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스뒤왼쪽하양", "./image/enemy/보스뒤왼쪽하양.bmp", 7680, 256, 30, 1);
+
+	_loading->loadFrameImage("보스정면왼쪽", "./image/enemy/보스정면왼쪽.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스정면왼쪽빨강", "./image/enemy/보스정면왼쪽빨강.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스정면왼쪽하양", "./image/enemy/보스정면왼쪽하양.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스정면오른쪽", "./image/enemy/보스정면오른쪽.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스정면오른쪽빨강", "./image/enemy/보스정면오른쪽빨강.bmp", 7680, 256, 30, 1);
+	_loading->loadFrameImage("보스정면오른쪽하양", "./image/enemy/보스정면오른쪽하양.bmp", 7680, 256, 30, 1);
+
+	_loading->loadFrameImage("보스생성", "./image/enemy/보스생성.bmp", 9216, 256, 37, 1);
+
+	
+
+	_loading->loadFrameImage("보스이펙트오른쪽", "./image/enemy/보스이펙트오른쪽.bmp", 61, 68, 1, 1);
+	_loading->loadFrameImage("보스이펙트왼쪽", "./image/enemy/보스이펙트왼쪽.bmp", 61, 68, 1, 1);
+	
+	//_loading->loadImage("보스체력", "보스체력.bmp", 1000, 14);
+	//_loading->loadImage("보스체력껍데기", "보스체력껍데기.bmp", 1000, 14,true);
+
+
+
 	
 
 
 	//_loading->loadFrameImage("뿅", "./image/enemy/뿅.bmp", 1150, 110, 10, 1);
 	//IMAGEMANAGER->addFrameImage("뿅", "./image/enemy/뿅.bmp", 1150, 110, 10, 1);
 
+}
+
+void loadingScene::lejSoundLoading()
+{
 }
 
 

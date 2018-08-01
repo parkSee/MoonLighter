@@ -93,6 +93,14 @@ void progressBar::render(void)
 	_progressBarFront->render(getMemDC(), _rcProgress.left, _y,
 		0, 0, _width, _progressBarFront->getHeight());
 }
+//응주오빠가 만든거
+void progressBar::renderHeight()
+{
+	_progressBarBack->render(getMemDC(), _rcProgress.left, _y);
+	//앞에 보여지는 체력바 이미지
+	_progressBarFront->render(getMemDC(), _rcProgress.left, _y  -_height,
+		0,0, _progressBarFront->getWidth(),_height);
+}
 
 void progressBar::render_isHit()   	//내가 한거 
 {
@@ -106,15 +114,15 @@ void progressBar::render_isHit()   	//내가 한거
 	{
 		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
 
-		if (_count > _damage * 0.6)
+		if (_count > _damage * 0.4 * 0.1)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 76, _beforeHpWidth, _hpHeight);
 		}
-		else if (_count > _damage * 0.4)
+		else if (_count > _damage * 0.2 * 0.1)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 114, _beforeHpWidth, _hpHeight);
 		}
-		else if (_count > _damage * 0.2)
+		else if (_count > _damage * 0.1 * 0.1)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 152, _beforeHpWidth, _hpHeight);
 		}
@@ -130,12 +138,17 @@ void progressBar::setGauge(float currentHp, float maxHp)
 	_width = (currentHp / maxHp) * _progressBarBack->getWidth();
 }
 
+void progressBar::setHeightGuge(float currentHp, float maxHp)
+{
+	_height = (currentHp / maxHp) * _progressBarBack->getHeight();
+}
+
 void progressBar::setGaugeOfDamage(float currentHp, float maxHp, int damage)
 {
 	_damage = damage;
-	_count = _damage;
+	_count = _damage * 0.1;
 	_currentHpWidth = (currentHp / maxHp) * _hpWidth;
-	_hpDifferential = (_beforeHpWidth - _currentHpWidth) / _damage;
+	_hpDifferential = (_beforeHpWidth - _currentHpWidth) / _count;
 }
 
 void progressBar::setRect(int x, int y)

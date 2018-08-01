@@ -71,7 +71,7 @@ void weed::render()
 {
 	//Rectangle(getMemDC(), rc);
 	RECT cam = CAMERAMANAGER->getRenderRc();
-
+	RectangleCam(getMemDC(), rc, cam);
 	if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 
 	if (_isAttacked2)
@@ -106,11 +106,11 @@ void weed::render()
 		_noneAttacked = false;
 		_currentHp-= 50;
 	}
-
-	Rectangle(getMemDC(), _rc[0]);
-	Rectangle(getMemDC(), _rc[1]);
-	Rectangle(getMemDC(), _rc[2]);
-	Rectangle(getMemDC(), _rc[3]);
+	//RectangleCam(getMemDC(), _rc[0], cam);
+	//Rectangle(getMemDC(), _rc[0]);
+	//Rectangle(getMemDC(), _rc[1]);
+	//Rectangle(getMemDC(), _rc[2]);
+	//Rectangle(getMemDC(), _rc[3]);
 
 	char str[128];
 	sprintf_s(str, "%d", _xCollision);

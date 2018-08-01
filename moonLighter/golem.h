@@ -36,12 +36,24 @@ private:
 	bool _up;
 
 
-	int _alpha; //ºò½½¶óÀÓ Ä³¸¯ÅÍ µ¤ÃÆÀ»¶§ ¾ËÆÄ°ª
+	int _rc0X;
+	int _rc0Y;
+	int _rc1X;
+	int _rc1Y;
+	int _rc2X;
+	int _rc2Y;
+	int _rc3X;
+	int _rc3Y;
+	
+
+	int _dmgCount;
 	float speed;
 	float angle;
 	float distance;
+	image* _pixelImg;
+	RECT _rc[4];
 
-
+	bool _damaaged;
 
 public:
 	HRESULT init(string _objName, tagFloat _pos);
@@ -49,14 +61,16 @@ public:
 	void update();
 	void render();
 
+	RECT getRect() { return rc; }
 	void imgRectMake();
 	void hp();
+	void damaged();
 	void golemFrame();
 	void golemAttack();
 	void move();
+	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	void pixelCollision();
 
-
-	void key();
 
 	golem() {}
 	~golem() {}

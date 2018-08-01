@@ -21,7 +21,7 @@ HRESULT dungeonScene::init()
 	for (int i = 0; i < _vWeeds.size(); i++)
 	{
 		((weed*)_vWeeds[i])->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
-
+	
 	}
 
 	CAMERAMANAGER->setMapSize(3840, 2160);
@@ -45,14 +45,12 @@ HRESULT dungeonScene::init()
 
 void dungeonScene::release()
 {
-	//_player->release();
-	//SAFE_DELETE(_player);
-
-	//_em->release();
-	//SAFE_DELETE(_em);
+	
+	_em->release();
+	SAFE_DELETE(_em);
 	//
-	//_im->release();
-	//SAFE_DELETE(_im);
+	_im->release();
+	SAFE_DELETE(_im);
 }
 
 void dungeonScene::update()
@@ -60,19 +58,26 @@ void dungeonScene::update()
 	//CAMERAMANAGER->update();
 
 	//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
-	
+
 	OBJECTMANAGER->update();
 
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("townScene");
+		SCENEMANAGER->loadScene("bossRoomScene");
 	}
+<<<<<<< HEAD
 	
 	_im->update();
+=======
+
+>>>>>>> 77b635cc87d82f6c2a16b0f3a7034f0863023f67
 	this->moveDungeon();
 
+
 	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
+
+	_im->update();
 }
 
 void dungeonScene::render()

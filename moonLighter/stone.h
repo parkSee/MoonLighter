@@ -12,7 +12,7 @@ public:
 	void update();
 	void render();
 
-	stone();
-	~stone();
+	stone(){}
+	~stone(){}
 };
 

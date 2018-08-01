@@ -4,7 +4,7 @@
 
 HRESULT potion::init()
 {
-	_pos = tagFloat(WINSIZEX / 2, WINSIZEY / 2);
+	_pos = tagFloat(1620, 1600);
 	_img = IMAGEMANAGER->findImage("potion");
 
 	_collisionBox = RectMakeCenter(_pos.x, _pos.y, _img->getWidth(), _img->getHeight());

@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "bigSlime.h"
-
+#include "player.h"
 
 HRESULT bigSlime::init(string _objName, tagFloat _pos)
 {
@@ -16,13 +16,14 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	//EFFECTMANAGER->addEffect("뿅뿅",)
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_alpha = 255;
-	_count = _currentX = _attackedCount = _currentY = 0;
+	_count = _currentX = _attackedCount = _dmgCount=_currentY = 0;
 	_slimeBool = false;
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
 	_isAttacked2 = false;
 	 _xCollision =false;
 	 _yCollision =false;
+	 _damaaged = false;
 
 	return S_OK;
 }
@@ -40,6 +41,7 @@ void bigSlime::update()
 	bigSlimeFrame();
 	move();
 	hp();
+	this->damaged();
 	pixelCollision();
 	_hp->update();
 	
@@ -66,7 +68,7 @@ void bigSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	//Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
-
+	RectangleCam(getMemDC(), rc, cam);
 	_hp->render();
 
 	if (_noneAttacked)_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
@@ -169,6 +171,45 @@ void bigSlime::move()
 		pos.x += 5 * cosf(PI - angle);
 		pos.y += 5 * sinf(PI - angle);
 	}
+
+}
+
+void bigSlime::damaged()
+{
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	RECT tempRc;
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
+	{
+		_damaaged = true;
+
+	}
+
+	if (_damaaged)
+	{
+		_dmgCount++;
+		_damaaged = false;
+		_isAttacked = true;
+		_noneAttacked = false;
+
+
+
+	}
+
+	if (0 < _dmgCount && _dmgCount <= 15)
+	{
+		_dmgCount++;
+		pos.x += 7 * cosf(PI - angle);
+		pos.y += 7 * sinf(PI - angle);
+	}
+
+	if (_dmgCount > 15)
+	{
+
+		_currentHp -= 100;
+		_dmgCount = 0;
+	}
+
 
 }
 
