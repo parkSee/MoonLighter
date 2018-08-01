@@ -55,7 +55,12 @@ void objectManager::update()
 			}
 			if (miter->second[i]->isActiveObject() == true)
 			{
-				miter->second[i]->update();
+				int x = miter->second[i]->pos.x - CAMERAMANAGER->getRenderRc().left;
+				int y = miter->second[i]->pos.y - CAMERAMANAGER->getRenderRc().top;
+
+				if (0 < x + 300 && x - 300 < WINSIZEX &&
+					0 < y + 300 && y - 300 < WINSIZEY)
+					miter->second[i]->update();
 			}
 		}
 	}
@@ -107,8 +112,14 @@ void objectManager::render(HDC getMemDC)
 
 	for (pair<float, gameObject*> iter : zOderList)
 	{
-		
-		iter.second->render();
+
+		int x = iter.second->pos.x - CAMERAMANAGER->getRenderRc().left;
+		int y = iter.second->pos.y - CAMERAMANAGER->getRenderRc().top;
+
+
+		if (0 < x + 300 && x - 300 < WINSIZEX &&
+			0 < y + 300 && y - 300 < WINSIZEY)
+			iter.second->render();
 	}
 
 
