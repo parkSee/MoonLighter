@@ -66,12 +66,12 @@ void dungeonScene::update()
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("bossRoomScene");
 	}
-<<<<<<< HEAD
+
 	
 	_im->update();
-=======
 
->>>>>>> 77b635cc87d82f6c2a16b0f3a7034f0863023f67
+
+
 	this->moveDungeon();
 
 
