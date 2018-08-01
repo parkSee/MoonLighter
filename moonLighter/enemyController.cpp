@@ -135,5 +135,10 @@ void enemyController::weedInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 		_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
+
+	weed* _weed = new weed;
+	_weed->init("weed", tagFloat(1800, 1800));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
+	_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	
 }

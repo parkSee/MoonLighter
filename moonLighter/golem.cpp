@@ -28,7 +28,7 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 
 
 	 rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
-
+	 _rc2 = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 	_count = _attackedCount = _tempCurrent = _dmgCount = 0;
 
 
@@ -51,6 +51,12 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_noneAttacked = true;
 	_isDead = false;
 	_damaaged = false;
+	_deadBool = false;
+	_deadEffectBool = false;
+	_deadBool = false;
+	_dmg = false;
+	_isAttacked3 = false;
+
 
 	return S_OK;
 }
@@ -65,8 +71,8 @@ void golem::update()
 {
 	_count++;
 	
-
-	if (!_startAttack)move();
+	
+	if (!_startAttack && _currentHp >0)move();
 	imgRectMake();
 	golemFrame();
 	golemAttack();
@@ -74,16 +80,10 @@ void golem::update()
 	this->damaged();
 	hp();
 	_hp->update();
-
+	if (_deadBool)dead();
 	//key();
 	
-	if (KEYMANAGER->isStayKeyDown('E'))
-	{
-		//_isDead = true;
-		//EFFECTMANAGER->play("»Ð»Ð", pos.x + 3 - CAMERAMANAGER->getRenderRc().left, pos.y + 10 - CAMERAMANAGER->getRenderRc().top);
-		EFFECTMANAGER->play("»Ð»Ð",pos.x- CAMERAMANAGER->getRenderRc().left, pos.y - CAMERAMANAGER->getRenderRc().top);
-
-	}
+	
 
 	
 
@@ -112,267 +112,672 @@ void golem::render()
 
 
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	
-	if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
+	if (_currentHp > 0)
 	{
-		_right = true; _left = false; _down = false; _up = false;
-		if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//¿À¸¥ÂÊ
-
-		if (_isAttacked2)
+		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
+			_right = true; _left = false; _down = false; _up = false;
+			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//¿À¸¥ÂÊ
 
-			_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
 		}
-		if (_isAttacked)
+		if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = true; _left = false; _down = false; _up = false;
+			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//¿À¸¥ÂÊ
+
+			if (_isAttacked2)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
+		}
+		if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
+		{
+			_right = false; _left = true; _down = false; _up = false;
+			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//¿ÞÂÊ
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+		}
+		if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
+		{
+			_right = false; _left = true; _down = false; _up = false;
+			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//¿ÞÂÊ
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+		}
+		if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
+		{
+			_right = false; _left = false; _down = true; _up = false;
+
+			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//¾Æ·¡
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+
 			}
 
 
-			_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+
+		}
+		if (tempX < 0 && tempY >0 && tempY*tempY > tempX*tempX)
+		{
+			_right = false; _left = false; _down = true; _up = false;
+
+			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//¾Æ·¡
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+			}
+		}
+		if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
+		{
+			_right = false; _left = false; _down = false; _up = true;
+			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//À§
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+			}
+		}
+		if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
+		{
+			_right = false; _left = false; _down = false; _up = true;
+			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//À§
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+			}
 		}
 	}
-	if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
+	else
 	{
-		_right = true; _left = false; _down = false; _up = false;
-		if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//¿À¸¥ÂÊ
-
-		if (_isAttacked2)
+		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = true; _left = false; _down = false; _up = false;
+			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//¿À¸¥ÂÊ
+
+			if (_isAttacked3)
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, 230);
+
 			}
 
-			_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
 		}
-		if (_isAttacked)
+		if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = true; _left = false; _down = false; _up = false;
+			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//¿À¸¥ÂÊ
+
+			if (_isAttacked3)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, 230);
+
 			}
 
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
 
-			_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+			}
 		}
-	}
-	if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
-	{
-		_right = false; _left = true; _down = false; _up = false;
-		if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//¿ÞÂÊ
-
-		if (_isAttacked2)
+		if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = false; _left = true; _down = false; _up = false;
+			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//¿ÞÂÊ
+
+			if (_isAttacked3)
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[3]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, 230);
+
 			}
 
-			_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
 		}
-		if (_isAttacked)
+		if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = false; _left = true; _down = false; _up = false;
+			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//¿ÞÂÊ
+
+			if (_isAttacked3)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[3]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, 230);
+
 			}
 
 
-			_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
 		}
-	}
-	if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
-	{
-		_right = false; _left = true; _down = false; _up = false;
-		if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//¿ÞÂÊ
-
-		if (_isAttacked2)
+		if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
+			_right = false; _left = false; _down = true; _up = false;
 
-			_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//¾Æ·¡
+
+			if (_isAttacked3)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+
 			}
 
 
-			_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
-		}
-	}
-	if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
-	{
-		_right = false; _left = false; _down = true; _up = false;
-
-		if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//¾Æ·¡
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			if (_isAttacked2)
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
 			}
-
-			_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			if (_isAttacked)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+
 			}
 
 
-			_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
 
 		}
-
-
-
-	}
-	if (tempX < 0 && tempY >0 && tempY*tempY > tempX*tempX)
-	{
-		_right = false; _left = false; _down = true; _up = false;
-
-		if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//¾Æ·¡
-
-		if (_isAttacked2)
+		if (tempX < 0 && tempY >0 && tempY*tempY > tempX*tempX)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = false; _left = false; _down = true; _up = false;
+
+			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//¾Æ·¡
+
+			if (_isAttacked3)
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+
 			}
 
-			_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+			}
 		}
-		if (_isAttacked)
+		if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = false; _left = false; _down = false; _up = true;
+			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//À§
+
+			if (_isAttacked3)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, 230);
+
 			}
 
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
 
-			_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+			}
 		}
-	}
-	if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
-	{
-		_right = false; _left = false; _down = false; _up = true;
-		if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//À§
-
-		if (_isAttacked2)
+		if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_right = false; _left = false; _down = false; _up = true;
+			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//À§
+
+			if (_isAttacked3)
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 10)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = false;
+					_attackedCount = 0;
+					_deadBool = true;
+
+
+				}
+				_attackedGolem[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, 230);
+
 			}
 
-			_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			if (_isAttacked2)
 			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_isAttacked3 = true;
+					_attackedCount = 0;
+				}
+
+				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
 			}
-
-
-			_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
-		}
-	}
-	if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
-	{
-		_right = false; _left = false; _down = false; _up = true;
-		if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//À§
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			if (_isAttacked)
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
 			}
-
-			_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
 		}
 	}
 
@@ -383,21 +788,17 @@ void golem::render()
 
 
 
-	if (KEYMANAGER->isStayKeyDown(VK_LBUTTON))
-	{
-		_isAttacked = true;
-		_noneAttacked = false;
-	}
+	
 
 
 	_hp->render();
 	
 	
 	
-	RectangleCam(getMemDC(), _rc[0], cam);
-	RectangleCam(getMemDC(), _rc[1], cam);
-	RectangleCam(getMemDC(), _rc[2], cam);
-	RectangleCam(getMemDC(), _rc[3], cam);
+	//RectangleCam(getMemDC(), _rc[0], cam);
+	//RectangleCam(getMemDC(), _rc[1], cam);
+	//RectangleCam(getMemDC(), _rc[2], cam);
+	//RectangleCam(getMemDC(), _rc[3], cam);
 
 
 
@@ -407,7 +808,7 @@ void golem::render()
 void golem::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
-
+	_rc2 = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 }
 
 void golem::hp()
@@ -426,6 +827,13 @@ void golem::damaged()
 	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
 	{
 		_damaaged = true;
+
+	}
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_rc2) && _dmg == false)
+	{
+		_damaaged = true;
+		_dmg = true;
+		_currentHp -= 120;
 
 	}
 
@@ -450,7 +858,7 @@ void golem::damaged()
 	if (_dmgCount > 15)
 	{
 
-		_currentHp -= 100;
+		_dmg = false;
 		_dmgCount = 0;
 	}
 
@@ -658,6 +1066,18 @@ void golem::pixelCollision()
 	
 
 	
+}
+
+void golem::dead()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	if (_deadBool && _deadEffectBool == false)
+	{
+		_deadEffectBool = true;
+		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
+	}
+	setIsLive(false);
 }
 
 

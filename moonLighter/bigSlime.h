@@ -37,6 +37,11 @@ private:
 	bool _isAttacked2;
 	int _attackedCount;
 	int _dmgCount;
+	bool _deadEffectBool ;
+	bool _deadBool ;
+	bool _dmg ;
+	bool _isAttacked3;
+	RECT _rc2;
 
 public:
 
@@ -53,6 +58,7 @@ public:
 	void pixelCollision();
 	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	void dead();
 
 	bigSlime() {}
 	~bigSlime() {}

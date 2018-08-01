@@ -30,13 +30,18 @@ private:
 	bool _yCollision;
 	bool _damaaged;
 	int _dmgCount;
+	bool _dmg;
 
 	bool _noneAttacked;//공격안받았을때
 	bool _isAttacked; // 공격받았다는 신호
 	bool _isAttacked2;
+	bool _isAttacked3;
+	bool _deadEffectBool;
+	bool _deadBool;
 	int _attackedCount;
 	image* _pixelImg;
 	RECT _rc[4];
+	RECT _rc2; //체력깍이는 렉트
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
@@ -52,6 +57,7 @@ public:
 	void pixelCollision();
 	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	void dead();
 
 	weed() {}
 	~weed() {}

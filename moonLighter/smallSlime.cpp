@@ -15,7 +15,7 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_currentHp = 200;
 	_count = _currentX = _attackedCount = _currentY = _dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
-
+	_rc2 = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
 
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
@@ -24,6 +24,10 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_yCollision = false;
 	_damaaged = false;
 
+	_deadEffectBool = false;
+	_deadBool = false;
+	_dmg = false;
+	_isAttacked3 = false;
 
 	return S_OK;
 }
@@ -39,12 +43,12 @@ void smallSlime::update()
 	_count++;
 	imgRectMake();
 	smallSlimeFrame();
-	move();
+	if (_currentHp >0)move();
 	pixelCollision();
 	hp();
 	this->damagged();
 	_hp->update();
-
+	if (_deadBool)dead();
 	
 
 	if (_isAttacked)
@@ -67,35 +71,91 @@ void smallSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	_hp->render();
-	RectangleCam(getMemDC(), rc, cam);
-	if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+	//RectangleCam(getMemDC(), rc, cam);
 
-	if (_isAttacked2)
+	if (_currentHp > 0)
 	{
-		_attackedCount++;
-		if (_attackedCount > 3)
+		if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+
+		if (_isAttacked2)
 		{
-			_isAttacked2 = false;
-			_isAttacked = false;
-			_noneAttacked = true;
-			_attackedCount = 0;
+			_attackedCount++;
+			if (_attackedCount > 3)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_noneAttacked = true;
+				_attackedCount = 0;
+			}
+
+			_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
 		}
-		
-		_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX,_currentY);
-	}
-	if (_isAttacked)
-	{
-		_attackedCount++;
-		if (_attackedCount > 3)
+		if (_isAttacked)
 		{
-			_isAttacked = false;
-			_isAttacked2 = true;
-			_attackedCount = 0;
+			_attackedCount++;
+			if (_attackedCount > 3)
+			{
+				_isAttacked = false;
+				_isAttacked2 = true;
+				_attackedCount = 0;
+			}
+
+
+			_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		}
+	}
+	else
+	{
+		if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+
+		if (_isAttacked3)
+		{
+			_attackedCount++;
+			if (_attackedCount > 10)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_isAttacked3 = false;
+				_attackedCount = 0;
+				_deadBool = true;
+
+
+			}
+			_attackedSmallSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+
 		}
 
-		
-		_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		if (_isAttacked2)
+		{
+			_attackedCount++;
+			if (_attackedCount > 5)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_isAttacked3 = true;
+				_attackedCount = 0;
+
+
+			}
+
+			_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		}
+		if (_isAttacked)
+		{
+			_attackedCount++;
+			if (_attackedCount > 5)
+			{
+				_isAttacked = false;
+				_isAttacked2 = true;
+				_attackedCount = 0;
+			}
+
+
+			_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		}
 	}
+
+
 	if (KEYMANAGER->isOnceKeyDown('L'))
 	{
 		_isAttacked = true;
@@ -109,6 +169,7 @@ void smallSlime::render()
 void smallSlime::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
+	_rc2 = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
 }
 
 void smallSlime::hp()
@@ -127,6 +188,13 @@ void smallSlime::damagged()
 	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
 	{
 		_damaaged = true;
+
+	}
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_rc2) && _dmg == false)
+	{
+		_damaaged = true;
+		_dmg = true;
+		_currentHp -= 120;
 
 	}
 
@@ -151,7 +219,7 @@ void smallSlime::damagged()
 	if (_dmgCount > 15)
 	{
 
-		_currentHp -= 100;
+		_dmg = false;
 		_dmgCount = 0;
 	}
 }
@@ -268,6 +336,18 @@ void smallSlime::move()
 
 	if (_xCollision == false)pos.x += speed * cosf(angle);
 	if (_yCollision == false)pos.y += speed * -sinf(angle);
+}
+
+void smallSlime::dead()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	if (_deadBool && _deadEffectBool == false)
+	{
+		_deadEffectBool = true;
+		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
+	}
+	setIsLive(false);
 }
 
 

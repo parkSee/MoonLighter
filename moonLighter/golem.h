@@ -53,7 +53,13 @@ private:
 	image* _pixelImg;
 	RECT _rc[4];
 
+
 	bool _damaaged;
+	RECT _rc2; //체력깍이는 렉트
+	bool _deadEffectBool ;
+	bool _deadBool ;
+	bool _dmg ;
+	bool _isAttacked3;
 
 public:
 	HRESULT init(string _objName, tagFloat _pos);
@@ -70,7 +76,7 @@ public:
 	void move();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void pixelCollision();
-
+	void dead();
 
 	golem() {}
 	~golem() {}

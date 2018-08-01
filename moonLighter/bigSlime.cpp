@@ -15,6 +15,7 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	_currentHp = 200;
 	//EFFECTMANAGER->addEffect("»Ð»Ð",)
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_alpha = 255;
 	_count = _currentX = _attackedCount = _dmgCount=_currentY = 0;
 	_slimeBool = false;
@@ -24,6 +25,11 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	 _xCollision =false;
 	 _yCollision =false;
 	 _damaaged = false;
+	 _deadEffectBool = false;
+	 _deadBool = false;
+	 _dmg = false; 
+	 _isAttacked3 = false;
+
 
 	return S_OK;
 }
@@ -39,11 +45,12 @@ void bigSlime::update()
 	_count++;
 	imgRectMake();
 	bigSlimeFrame();
-	move();
+	if (_currentHp >0)move();
 	hp();
 	this->damaged();
 	pixelCollision();
 	_hp->update();
+	if (_deadBool)dead();
 	
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
@@ -54,11 +61,7 @@ void bigSlime::update()
 
 	
 
-	if (KEYMANAGER->isOnceKeyDown('W'))
-	{
-		//_isDead = true;
-		EFFECTMANAGER->play("»Ð»Ð", pos.x + 5, pos.y + 20);
-	}
+	
 
 	
 	
@@ -68,41 +71,88 @@ void bigSlime::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	//Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
-	RectangleCam(getMemDC(), rc, cam);
+	//RectangleCam(getMemDC(), rc, cam);
 	_hp->render();
-
-	if (_noneAttacked)_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
-
-	if (_isAttacked2)
+	if (_currentHp > 0)
 	{
-		_attackedCount++;
-		if (_attackedCount > 3)
+		if (_noneAttacked)_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
+
+		if (_isAttacked2)
 		{
-			_isAttacked2 = false;
-			_isAttacked = false;
-			_noneAttacked = true;
-			_attackedCount = 0;
+			_attackedCount++;
+			if (_attackedCount > 3)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_noneAttacked = true;
+				_attackedCount = 0;
+			}
+			_attackedBigSlime[1]->setFrameX(_currentX);
+			_attackedBigSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
 		}
-		_attackedBigSlime[1]->setFrameX(_currentX);
-		_attackedBigSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
-	}
-	if (_isAttacked)
-	{
-		_attackedCount++;
-		if (_attackedCount > 3)
+		if (_isAttacked)
 		{
-			_isAttacked = false;
-			_isAttacked2 = true;
-			_attackedCount = 0;
+			_attackedCount++;
+			if (_attackedCount > 3)
+			{
+				_isAttacked = false;
+				_isAttacked2 = true;
+				_attackedCount = 0;
+			}
+
+			_attackedBigSlime[0]->setFrameX(_currentX);
+			_attackedBigSlime[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
+		}
+	}
+	else
+	{
+		if (_noneAttacked)_bigSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+
+		if (_isAttacked3)
+		{
+			_attackedCount++;
+			if (_attackedCount > 10)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_isAttacked3 = false;
+				_attackedCount = 0;
+				_deadBool = true;
+
+
+			}
+			_attackedBigSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+
 		}
 
-		_attackedBigSlime[0]->setFrameX(_currentX);
-		_attackedBigSlime[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
-	}
-	if (KEYMANAGER->isOnceKeyDown('K'))
-	{
-		_isAttacked = true;
-		_noneAttacked = false;
+		if (_isAttacked2)
+		{
+			_attackedCount++;
+			if (_attackedCount > 5)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_isAttacked3 = true;
+				_attackedCount = 0;
+
+
+			}
+
+			_attackedBigSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		}
+		if (_isAttacked)
+		{
+			_attackedCount++;
+			if (_attackedCount > 5)
+			{
+				_isAttacked = false;
+				_isAttacked2 = true;
+				_attackedCount = 0;
+			}
+
+
+			_attackedBigSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		}
 	}
 
 	
@@ -114,6 +164,7 @@ void bigSlime::imgRectMake()
 {
 
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 }
 
 void bigSlime::hp()
@@ -184,6 +235,13 @@ void bigSlime::damaged()
 		_damaaged = true;
 
 	}
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_rc2) && _dmg == false)
+	{
+		_damaaged = true;
+		_dmg = true;
+		_currentHp -= 120;
+
+	}
 
 	if (_damaaged)
 	{
@@ -206,7 +264,7 @@ void bigSlime::damaged()
 	if (_dmgCount > 15)
 	{
 
-		_currentHp -= 100;
+		_dmg = false;
 		_dmgCount = 0;
 	}
 
@@ -297,4 +355,16 @@ void bigSlime::pixelCollision()
 		}
 
 	}
+}
+
+void bigSlime::dead()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	if (_deadBool && _deadEffectBool == false)
+	{
+		_deadEffectBool = true;
+		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
+	}
+	setIsLive(false);
 }
