@@ -36,6 +36,10 @@ public:
 	void render(void);
 	void render_isHit(void);
 
+	//세로 프로그래스바 테스트
+	void renderHeight();
+	void setHeightGuge(float currentHp, float maxHp);
+
 	//체력바 게이지 세팅하기
 	void setGauge(float currentHp, float maxHp);
 	//맞은 데미지로 체력바 게이지 세팅하기

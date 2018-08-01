@@ -27,6 +27,7 @@ private:
 	bool _isDead;
 	int _attackedCount;
 	int _dmgCount;
+	int _dmgHp;
 
 	bool _leftUp;
 	bool _rightUp;
@@ -34,6 +35,8 @@ private:
 	bool _rightDown;
 
 	bool _damaaged;
+	bool _start;
+	bool _playing;
 
 	int _rc0X;
 	int _rc0Y;
@@ -44,11 +47,16 @@ private:
 	int _rc3X;
 	int _rc3Y;
 
+	int tempX2;
+	int tempY2;
+
 	float speed;
 	float angle;
 	float distance;
 	image* _pixelImg;
 	RECT _rc[4];
+	RECT _detectRect;
+
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
@@ -58,13 +66,15 @@ public:
 
 	RECT getRect() { return rc; }
 	void imgRectMake();
-	void damagged();
+	int damagged();
 	void hp();
 	void bossFrame();
 	void bossAttack();
 	void move();
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+
+	
 
 	boss() {}
 	~boss() {}

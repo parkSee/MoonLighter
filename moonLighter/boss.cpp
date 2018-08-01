@@ -7,7 +7,7 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	gameObject::init(_objName, _pos);
 
 	_boss[0] = IMAGEMANAGER->findImage("보스정면왼쪽");
-	_attackedBoss[8] = IMAGEMANAGER->findImage("보스정면왼쪽빨강");
+	_attackedBoss[0] = IMAGEMANAGER->findImage("보스정면왼쪽빨강");
 	_attackedBoss[1] = IMAGEMANAGER->findImage("보스정면왼쪽하양");
 	_boss[1] = IMAGEMANAGER->findImage("보스정면오른쪽");
 	_attackedBoss[2] = IMAGEMANAGER->findImage("보스정면오른쪽빨강");
@@ -18,19 +18,12 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_boss[3] = IMAGEMANAGER->findImage("보스뒤왼쪽");
 	_attackedBoss[6] = IMAGEMANAGER->findImage("보스뒤왼쪽빨강");
 	_attackedBoss[7] = IMAGEMANAGER->findImage("보스뒤왼쪽하양");
-
-	
-
-	_boss[5] = IMAGEMANAGER->findImage("보스생성");
-
-
-
-
+	_boss[4] = IMAGEMANAGER->findImage("보스생성");
 
 	
 
 	EFFECTMANAGER->addEffect("보스공격이펙트다운오른쪽2", "보스공격이펙트다운오른쪽", 0.2f, 20);
-	EFFECTMANAGER->addEffect("보스공격이펙트다운왼쪽2", "보스공격이펙트다운왼쪽", 0.2f, 20);
+	EFFECTMANAGER->addEffect("보스공격이펙트다운왼쪽2", "보스공격이펙트다운왼쪽", 0.2f, 1);
 	EFFECTMANAGER->addEffect("보스공격이펙트업왼쪽2", "보스공격이펙트업왼쪽", 0.2f, 20);
 	EFFECTMANAGER->addEffect("보스공격이펙트업오른쪽2", "보스공격이펙트업오른쪽", 0.2f, 20);
 	EFFECTMANAGER->addEffect("보스이펙트오른쪽2", "보스이펙트오른쪽", 0.2f, 20);
@@ -45,7 +38,7 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 
-	_count = _attackedCount = _tempCurrent = _dmgCount = 0;
+	_count = _attackedCount = _tempCurrent = _dmgCount =_dmgHp= 0;
 
 
 
@@ -56,8 +49,8 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 		_currentX[i] = 0;
 		_currentY[i] = 0;
 	}
-	_currentX[5] = 0;
-	_currentY[5] = 0;
+	_currentX[4] = 0;
+	_currentY[4] = 0;
 	_leftUp = false;
 	_rightUp = false;
 	_leftDown = false;
@@ -69,7 +62,8 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_noneAttacked = true;
 	_isDead = false;
 	_damaaged = false;
-
+	_start = false;
+	_playing = false;
 
 	return S_OK;
 }
@@ -90,10 +84,20 @@ void boss::update()
 	bossFrame();
 	bossAttack();
 	this->damagged();
-	pixelCollision();
+	//pixelCollision();
 	hp();
 	_hp->update();
 
+	_detectRect = RectMakeCenter(pos.x, pos.y, 500, 500);
+
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	RECT tempRc;
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcBody(), &_detectRect))
+	{
+		_start = true;
+
+	}
 	
 }
 
@@ -114,280 +118,324 @@ void boss::render()
 	//		_currentX[5] = 0;
 	//	}
 	//}
+	_boss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top, _currentX[4], _currentY[4]);
 
-	
-	if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
+	if (_start)
 	{
-		_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
-		if (_noneAttacked)_boss[1]->frameRender(getMemDC(), rc.left -30 - cam.left, rc.top +5 - cam.top, _currentX[1], _currentY[1]);//오른쪽
-
-		if (_isAttacked2)
+		if (_count % 3 == 0)
 		{
-			_attackedCount++;
-			if (_attackedCount > 3)
+			_currentX[4]++;
+			if (_currentX[4] > _boss[4]->getMaxFrameX())
 			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
+				_currentX[4] = 0;
+				_playing = true;
 			}
+		}
+	}
+	
+	if (_playing)
+	{
+		_currentX[4] = 0;
+		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
+		{
+			_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
+			if (_noneAttacked)_boss[1]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//오른쪽
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[3]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+			}
+		}
+		if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
+		{
+			_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
+			if (_noneAttacked)_boss[2]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[5]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[4]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+			}
+		}
+		if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
+		{
+			_rightUp = false; _leftUp = false; _rightDown = false; _leftDown = true;
+			if (_noneAttacked)_boss[0]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);//왼쪽
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[0]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);
+			}
+		}
+		if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
+		{
+			_rightUp = false; _leftUp = true; _rightDown = false; _leftDown = false;
+			if (_noneAttacked)_boss[3]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//왼쪽
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[7]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+			}
+		}
+		if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
+		{
+			_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
+
+			if (_noneAttacked)_boss[1]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);//아래
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[3]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);
+
+			}
+
+
+
+		}
+		if (tempX < 0 && tempY >0 && tempY*tempY > tempX*tempX)
+		{
+			_rightUp = false; _leftUp = false; _rightDown = false; _leftDown = true;
+
+			if (_noneAttacked)_boss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);//아래
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[1]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
+			}
+		}
+		if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
+		{
+			_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
+			if (_noneAttacked)_boss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//위
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[5]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+			}
+		}
+		if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
+		{
+			_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
+			if (_noneAttacked)_boss[3]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//위
+
+			if (_isAttacked2)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked2 = false;
+					_isAttacked = false;
+					_noneAttacked = true;
+					_attackedCount = 0;
+				}
+
+				_attackedBoss[7]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+			}
+			if (_isAttacked)
+			{
+				_attackedCount++;
+				if (_attackedCount > 3)
+				{
+					_isAttacked = false;
+					_isAttacked2 = true;
+					_attackedCount = 0;
+				}
+
+
+				_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+			}
+		}
+	//	//char str[128];
+	//	//sprintf_s(str, "leftDown ;%d ,LeftUp : %d , RightDown : %d, Right Up : %d", _leftDown, _leftUp, _rightDown, _rightUp);
+	//	//TextOut(getMemDC(), 300, 300, str, strlen(str));
+
+	//	//RectangleCam(getMemDC(), _rc[0], cam);
+	//	//RectangleCam(getMemDC(), _rc[1], cam);
+	//	//RectangleCam(getMemDC(), _rc[2], cam);
+	//	//RectangleCam(getMemDC(), _rc[3], cam);
+
+	}
+	if (!_attackCountBool[0])
+	{
+		tempX2 = pos.x;
+		tempY2 = pos.y;
+	}
+
+	if (_currentX[0] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x-80, pos.y+50);
+	}
+	//_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
+	if (_currentX[1] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트다운오른쪽2", pos.x , pos.y + 50);
+	}
+	if (_currentX[2] == 10)
+	{
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트업오른쪽2", pos.x +30, pos.y +10);
 		
-			_attackedBoss[3]->frameRender(getMemDC(), rc.left - cam.left -30, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[2]->frameRender(getMemDC(), rc.left - cam.left -30, rc.top +5 - cam.top, _currentX[1], _currentY[1]);
-		}
 	}
-	if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
+	if (_currentX[3] == 10)
 	{
-		_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
-		if (_noneAttacked)_boss[2]->frameRender(getMemDC(), rc.left -30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//오른쪽
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[5]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[4]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
-		}
+		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
+		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 120, pos.y + 15);
 	}
-	if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
-	{
-		_rightUp = false; _leftUp = false; _rightDown = false; _leftDown = true;
-		if (_noneAttacked)_boss[0]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);//왼쪽
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[8]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);
-		}
-	}
-	if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
-	{
-		_rightUp = false; _leftUp = true; _rightDown = false; _leftDown = false;
-		if (_noneAttacked)_boss[3]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//왼쪽
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[7]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
-		}
-	}
-	if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
-	{
-		_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
-
-		if (_noneAttacked)_boss[1]->frameRender(getMemDC(), rc.left - cam.left -30 , rc.top - cam.top +5, _currentX[1], _currentY[1]);//아래
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[3]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);
-
-		}
-
-
-
-	}
-	if (tempX < 0 && tempY >0 && tempY*tempY > tempX*tempX)
-	{
-		_rightUp = false; _leftUp = false; _rightDown = false; _leftDown = true;
-
-		if (_noneAttacked)_boss[0]->frameRender(getMemDC(), rc.left - cam.left -50, rc.top - cam.top +5, _currentX[0], _currentY[0]);//아래
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[1]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[8]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
-		}
-	}
-	if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
-	{
-		_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
-		if (_noneAttacked)_boss[2]->frameRender(getMemDC(), rc.left - cam.left -30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//위
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[5]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top ,_currentX[2], _currentY[2]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
-		}
-	}
-	if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
-	{
-		_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
-		if (_noneAttacked)_boss[3]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//위
-
-		if (_isAttacked2)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked2 = false;
-				_isAttacked = false;
-				_noneAttacked = true;
-				_attackedCount = 0;
-			}
-
-			_attackedBoss[7]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
-		}
-		if (_isAttacked)
-		{
-			_attackedCount++;
-			if (_attackedCount > 3)
-			{
-				_isAttacked = false;
-				_isAttacked2 = true;
-				_attackedCount = 0;
-			}
-
-
-			_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
-		}
-	}
-	//char str[128];
-	//sprintf_s(str, "leftDown ;%d ,LeftUp : %d , RightDown : %d, Right Up : %d", _leftDown, _leftUp, _rightDown, _rightUp);
-	//TextOut(getMemDC(), 300, 300, str, strlen(str));
-
-	//RectangleCam(getMemDC(), _rc[0], cam);
-	//RectangleCam(getMemDC(), _rc[1], cam);
-	//RectangleCam(getMemDC(), _rc[2], cam);
-	//RectangleCam(getMemDC(), _rc[3], cam);
-	
-	
 }
 
 void boss::imgRectMake()
@@ -395,7 +443,7 @@ void boss::imgRectMake()
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 }
 
-void boss::damagged()
+int boss::damagged()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	RECT tempRc;
@@ -403,6 +451,7 @@ void boss::damagged()
 	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
 	{
 		_damaaged = true;
+		
 
 	}
 
@@ -420,16 +469,18 @@ void boss::damagged()
 	if (0 < _dmgCount && _dmgCount <= 15)
 	{
 		_dmgCount++;
-		pos.x += 7 * cosf(PI - angle);
-		pos.y += 7 * sinf(PI - angle);
+		pos.x += 10 * cosf(PI - angle);
+		pos.y += 10 * sinf(PI - angle);
 	}
 
 	if (_dmgCount > 15)
 	{
-
-		_currentHp -= 100;
 		_dmgCount = 0;
+		_dmgHp = 10;
 	}
+
+
+	return _dmgHp;
 }
 
 void boss::hp()
@@ -484,7 +535,7 @@ void boss::bossAttack()
 
 	distance = getDistance(pos.x-40 , pos.y+10, _player->pos.x, _player->pos.y);
 
-	if (distance < 100)
+	if (distance < 150)
 	{
 		_startAttack = true;
 	}
@@ -502,6 +553,8 @@ void boss::bossAttack()
 		{
 			_attackCountBool[0] = true;
 			_currentX[0] = 9;
+			
+			
 		}
 		if (_rightDown)
 		{

@@ -15,13 +15,18 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 	_attackedWeed[1] = IMAGEMANAGER->findImage("잡초하양");
 	_weedFrameX = _weedFrameY = _count = _attackedCount=_dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+	_rc2 = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
 	_isAttacked2 = false;
+	_isAttacked3 = false;
 	_xCollision = false;
 	_yCollision = false;
 	_damaaged = false;
+	_deadEffectBool = false;
+	_deadBool = false;
+	_dmg = false;
 
 
 
@@ -41,23 +46,19 @@ void weed::update()
 	_count++;
 	imgRectMake();
 	weedFrame();
-	move();
+	if (_currentHp >0)move();
 	pixelCollision();
 	damagged();
 	hp();
 	_hp->update();
-
-	
-
+	if(_deadBool)dead();
 	
 	
 
-	if (KEYMANAGER->isOnceKeyDown('Q'))
-	{
-		//_isDead = true;
-		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
-		
-	}
+	
+	
+
+	
 
 	
 	
@@ -71,50 +72,102 @@ void weed::render()
 {
 	//Rectangle(getMemDC(), rc);
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	RectangleCam(getMemDC(), rc, cam);
-	if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+	//RectangleCam(getMemDC(), rc, cam);
+	if (_currentHp > 0)
+	{
+		if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 
-	if (_isAttacked2)
-	{
-		_attackedCount++;
-		if (_attackedCount > 3)
+		if (_isAttacked2)
 		{
-			_isAttacked2 = false;
-			_isAttacked = false;
-			_noneAttacked = true;
-			_attackedCount = 0;
+			_attackedCount++;
+			if (_attackedCount > 3)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_noneAttacked = true;
+				_attackedCount = 0;
+
+			}
+
+			_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 		}
-		
-		_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
-	}
-	if (_isAttacked)
-	{
-		_attackedCount++;
-		if (_attackedCount > 3)
+		if (_isAttacked)
 		{
-			_isAttacked = false;
-			_isAttacked2 = true;
-			_attackedCount = 0;
+			_attackedCount++;
+			if (_attackedCount > 3)
+			{
+				_isAttacked = false;
+				_isAttacked2 = true;
+				_attackedCount = 0;
+			}
+
+
+			_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+		}
+	}
+	else
+	{
+		if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+
+		if (_isAttacked3)
+		{
+			_attackedCount++;
+			if (_attackedCount > 10)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_isAttacked3 = false;
+				_attackedCount = 0;
+				_deadBool = true;
+
+
+			}
+			_attackedWeed[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+
 		}
 
-		
-		_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+		if (_isAttacked2)
+		{
+			_attackedCount++;
+			if (_attackedCount > 5)
+			{
+				_isAttacked2 = false;
+				_isAttacked = false;
+				_isAttacked3 = true;
+				_attackedCount = 0;
+				
+
+			}
+
+			_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+		}
+		if (_isAttacked)
+		{
+			_attackedCount++;
+			if (_attackedCount > 5)
+			{
+				_isAttacked = false;
+				_isAttacked2 = true;
+				_attackedCount = 0;
+			}
+
+
+			_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+		}
 	}
-	if (KEYMANAGER->isStayKeyDown('P'))
-	{
-		_isAttacked = true;
-		_noneAttacked = false;
-		_currentHp-= 50;
-	}
+
+	
 	//RectangleCam(getMemDC(), _rc[0], cam);
 	//Rectangle(getMemDC(), _rc[0]);
 	//Rectangle(getMemDC(), _rc[1]);
 	//Rectangle(getMemDC(), _rc[2]);
 	//Rectangle(getMemDC(), _rc[3]);
 
-	char str[128];
-	sprintf_s(str, "%d", _xCollision);
-	TextOut(getMemDC(), 100, 200, str, strlen(str));
+	//char str[128];
+	//sprintf_s(str, "%d", _xCollision);
+	//TextOut(getMemDC(), 100, 200, str, strlen(str));
+
+	
 
 	
 	_hp->render();
@@ -125,6 +178,7 @@ void weed::render()
 void weed::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+	_rc2 = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 }
 
 void weed::damagged()
@@ -136,6 +190,14 @@ void weed::damagged()
 	{
 		_damaaged = true;
 		
+	}
+
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_rc2) && _dmg==false)
+	{
+		_damaaged = true;
+		_dmg = true;
+		_currentHp -= 120;
+
 	}
 
 	if (_damaaged)
@@ -152,14 +214,14 @@ void weed::damagged()
 	if (0 < _dmgCount && _dmgCount <= 15)
 	{
 		_dmgCount++;
-		pos.x += 7 * cosf(PI - angle);
-		pos.y += 7 * sinf(PI - angle);
+		pos.x += 5 * cosf(PI - angle);
+		pos.y += 5 * sinf(PI - angle);
 	}
 
 	if (_dmgCount > 15)
 	{
+		_dmg = false;
 		
-		_currentHp -= 100;
 		_dmgCount = 0;
 	}
 	
@@ -287,5 +349,17 @@ void weed::pixelCollision()
 
 	}
 
+}
+
+void weed::dead()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	if (_deadBool && _deadEffectBool == false)
+	{
+		_deadEffectBool = true;
+		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
+	}
+	setIsLive(false);
 }
 

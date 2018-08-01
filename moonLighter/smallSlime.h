@@ -38,6 +38,13 @@ private:
 	image* _pixelImg;
 	RECT _rc[4];
 
+	bool _deadEffectBool;
+	bool _deadBool;
+	bool _dmg;
+	bool _isAttacked3;
+	RECT _rc2;
+
+
 public:
 	HRESULT init(string _objName, tagFloat _pos);
 	void release();
@@ -52,6 +59,7 @@ public:
 	RECT getRect() { return rc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void move();
+	void dead();
 
 	smallSlime() {}
 	~smallSlime() {}

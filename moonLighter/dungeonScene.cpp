@@ -67,6 +67,11 @@ void dungeonScene::update()
 		SCENEMANAGER->loadScene("bossRoomScene");
 	}
 
+	
+	_im->update();
+
+
+
 	this->moveDungeon();
 
 
