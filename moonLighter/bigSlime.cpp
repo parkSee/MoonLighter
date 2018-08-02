@@ -17,8 +17,11 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_alpha = 255;
-	_count = _currentX = _attackedCount = _dmgCount=_currentY = 0;
-	_slimeBool = false;
+	speed = 1.1f;
+	_count = _currentX = _attackedCount = _dmgCount=_currentY=_distance= _jellyCount  =0;
+	_tempAngleX = RND->getFloat(6.2);
+	
+	_slimeBool = false;																
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
 	_isAttacked2 = false;
@@ -29,6 +32,8 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	 _deadBool = false;
 	 _dmg = false; 
 	 _isAttacked3 = false;
+	 _jellyAttack = false;
+	 _playerMove = true;
 
 
 	return S_OK;
@@ -51,6 +56,7 @@ void bigSlime::update()
 	pixelCollision();
 	_hp->update();
 	if (_deadBool)dead();
+	Attack();
 	
 
 	if (KEYMANAGER->isOnceKeyDown('B'))
@@ -61,9 +67,7 @@ void bigSlime::update()
 
 	
 
-	
 
-	
 	
 }
 
@@ -177,7 +181,7 @@ void bigSlime::hp()
 
 void bigSlime::bigSlimeFrame()
 {
-	if (_count % 7 == 0)
+	if (_count % 4 == 0)
 	{
 
 		_bigSlime->setFrameX(_currentX);
@@ -212,7 +216,7 @@ void bigSlime::move()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	angle = getAngle(pos.x, pos.y, _player->pos.x, _player->pos.y);
-	speed = 1.1f;
+	
 
 	if (_xCollision == false)pos.x += speed * cosf(angle);
 	if (_yCollision == false)pos.y += speed * -sinf(angle);
@@ -367,4 +371,67 @@ void bigSlime::dead()
 		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
 	}
 	setIsLive(false);
+}
+
+void bigSlime::Attack()
+{
+	
+	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+
+	_distance = getDistance(pos.x, pos.y, _player->pos.x, _player->pos.y);
+
+	
+	if (_distance < 100 && _jellyAttack==false)
+	{
+		
+		_jellyCount++;
+		speed = 8.0f;
+		if (_distance < 10)
+		{
+			_slimeBool = true;
+
+			((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
+			_playerMove = false;
+			pos.x = _player->pos.x;
+			pos.y = _player->pos.y;
+			_xCollision = true;
+			_yCollision = true;
+			
+
+		}
+	}
+	if (_distance < 50 && _slimeBool == false)
+	{
+		_slimeBool = true;
+		_currentX = 24;
+	}
+
+
+	if (_jellyCount > 100 && _jellyCount < 150)
+	{
+		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
+		_playerMove = false;
+		_jellyCount++;
+		_jellyAttack = true;
+		_player->pos.x += 5 * cosf(_tempAngleX);
+		_player->pos.y += 5 * sinf(_tempAngleX);
+		speed = 1.1f;
+		
+	}
+	if (_jellyCount == 150)
+	{
+		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(true);
+		_xCollision = false;
+		_yCollision = false;
+		_jellyAttack = false;
+		_playerMove = true;
+		_slimeBool = false;
+		_jellyCount = 0;
+		_tempAngleX = RND->getFloat(6.2);
+		
+	}
+
+
+
+
 }

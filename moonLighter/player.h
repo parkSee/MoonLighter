@@ -31,7 +31,7 @@ private:
 	bool _isDead;
 
 	bool a;
-
+	bool _playerMove;
 
 	effect* _efcShortSword1;   //lysADD( 플레이어 공격이펙트이미지 야매 초기화 )
 	image* backGround;
@@ -61,6 +61,7 @@ public:
 	RECT getRcSword() { return _rcSword;}	//lysADD (겟 공격범위 렉트 함수 추가)
 	bool getIsRcSwordOn() { return _isRcSwordOn; } //lysADD (공격중인지 아닌지 bool값 반환)
 	void enemyCheckCollision();
+	void setPlayerMove(bool playermove) { _playerMove = playermove; }
 
 	player() {}
 	~player() {}
