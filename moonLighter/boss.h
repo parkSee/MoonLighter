@@ -55,6 +55,7 @@ private:
 
 	int tempX2;
 	int tempY2;
+	int _deadCount;
 
 	float speed;
 	float angle;
@@ -78,6 +79,7 @@ public:
 	void hp();
 	void bossFrame();
 	void bossAttack();
+	void setBossSpeed(float _speed) { speed = _speed; }
 	void move();
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }

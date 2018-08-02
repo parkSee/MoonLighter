@@ -23,6 +23,7 @@ private:
 	bool _damaged;
 	bool _dmgCountBool;
 	bool _clone[MAXBOSS];
+	int _deadCount;
 	
 
 public:
@@ -33,6 +34,7 @@ public:
 	void update();
 	void render();
 	void cloneBoss();
+	void removeClone(int index);
 	
 	
 	bossRoomScene(){}
