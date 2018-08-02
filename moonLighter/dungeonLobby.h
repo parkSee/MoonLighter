@@ -6,11 +6,15 @@
 class dungeonLobby : public gameNode
 {
 private:
+	int _count;
+	int _index;
 
 	player * _player;
 	lobbyContainer* _lobbyObj;
 	RECT _enterRc;
 
+	RECT _doorSensorRc;
+	bool _IsClose_Player;
 public:
 
 	HRESULT init();

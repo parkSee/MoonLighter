@@ -12,10 +12,11 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
 	_loading->loadImage("shopLayer", "./Image/shop_object/shopLayer.bmp", 1122, 248, true, MAGENTA);
 	_loading->loadImage("shopPixel", "./Image/shop_object/shopPixel.bmp", 1122, 1440);
-
+	
 	//던전 로비
 	_loading->loadImage("dunIntro", "./Image/dungeon_object/dungeonLobby_base.bmp", 2460, 2100);
 	_loading->loadImage("dunIntroRed", "./Image/dungeon_object/dungeonLobby_redzone.bmp", 2460, 2100);
+	_loading->loadFrameImage("dunIntroDoorOpen", "./Image/dungeon_object/dungeonLobby_doorOpen.bmp", 1344, 69, 16, 1);
 
 	//던전
 	_loading->loadImage("dungeonMap", "./Image/dungeon_object/dungeonMap.bmp",3840,2160,true,MAGENTA);
