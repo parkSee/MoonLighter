@@ -10,8 +10,10 @@ void loadingScene::psyImageLoading()
 
 	//¼¥
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
-	_loading->loadImage("shopLayer", "./Image/shop_object/shopLayer.bmp", 1122, 248, true, MAGENTA);
+	_loading->loadImage("shopLayer", "./Image/shop_object/shopLayer2.bmp", 167, 147, true, MAGENTA);
 	_loading->loadImage("shopPixel", "./Image/shop_object/shopPixel.bmp", 1122, 1440);
+	_loading->loadImage("display", "./Image/shop_object/display.bmp", 100, 152, true, MAGENTA);
+	_loading->loadImage("counter", "./Image/shop_object/counter.bmp", 300, 104, true, MAGENTA);
 
 	//´øÀü ·Îºñ
 	_loading->loadImage("dunIntro", "./Image/dungeon_object/dungeonLobby_base.bmp", 2460, 2100);
