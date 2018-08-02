@@ -37,6 +37,7 @@ private:
 	bool _damaaged;
 	bool _start;
 	bool _playing;
+	bool _first;
 
 	bool _xMove;
 	bool _yMove;
@@ -49,6 +50,8 @@ private:
 	int _rc2Y;
 	int _rc3X;
 	int _rc3Y;
+	int _delayTime;
+	int _delayTime2;
 
 	int tempX2;
 	int tempY2;
@@ -76,6 +79,7 @@ public:
 	void move();
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	bool getStart() { return _start; }
 
 	
 
