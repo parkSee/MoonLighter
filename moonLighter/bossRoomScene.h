@@ -3,7 +3,7 @@
 #include "player.h"
 #include"boss.h"
 #include"progressBar.h"
-#define MAXBOSS 10
+#define MAXBOSS 5
 
 class bossRoomScene : public gameNode
 {

@@ -62,6 +62,7 @@ private:
 	image* _pixelImg;
 	RECT _rc[4];
 	RECT _detectRect;
+	RECT _collisionRc;
 
 public:
 
@@ -71,6 +72,7 @@ public:
 	void render();
 
 	RECT getRect() { return rc; }
+	RECT getCollisionRC() { return _collisionRc; }
 	void imgRectMake();
 	int damagged();
 	void hp();

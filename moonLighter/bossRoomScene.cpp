@@ -81,7 +81,7 @@ void bossRoomScene::update()
 	
 	//_boss->damagged();
 	RECT tempRc;
-	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_boss->rc) && _damaged==false)
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_boss->getCollisionRC()) && _damaged==false)
 	{
 		_damaged = true;
 		_dmgCountBool = true;
@@ -92,13 +92,13 @@ void bossRoomScene::update()
 	{
 		if (_clone[i])
 		{
-			if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_boss2->rc) && _damaged == false)
+			if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_boss2->getCollisionRC()) && _damaged == false)
 			{
-
+	
 				_damaged = true;
 				_dmgCountBool = true;
 				_currentHp -= 10;
-
+	
 			}
 		}
 	}
@@ -116,33 +116,14 @@ void bossRoomScene::update()
 		_damaged = false;
 		
 	}
-	for (int i = 1; i < MAXBOSS ;i++)
+	for (int i = 0; i < MAXBOSS ;i++)
 	{
-		if (_currentHp < 280 - 20 * i  && _clone[i]==false)
+		if (_currentHp < 280 - 50 * i  && _clone[i]==false)
 		{
 			_clone[i] = true;
 			this->cloneBoss();
 			CAMERAMANAGER->shakeCamera(5.0f, 0.001f);
 		}
-	}
-
-	if (_currentHp < 280 && _clone[0]==false)
-	{
-		_clone[0] = true;
-		_blackBgBool = true;
-		this->cloneBoss();
-		CAMERAMANAGER->shakeCamera(5.0f, 0.001f);
-	}
-
-	if (_blackBgBool )
-	{
-		_blackBgAlpha++;
-		if (_blackBgAlpha >255)
-		{
-			_blackBgAlpha = 0;
-			_blackBgBool = false;
-		}
-		
 	}
 	
 }
@@ -163,10 +144,14 @@ void bossRoomScene::render()
 
 void bossRoomScene::cloneBoss()
 {
+	int rndNum = RND->getInt(2);
+	if ( rndNum == 0)rndNum = -1;
 	_boss2 = new boss;
-	_boss2->init("boss", tagFloat(_boss->pos.x-(100*RND->getInt(10)), _boss->pos.y));
+	_boss2->init("boss", tagFloat(_boss->pos.x+ (rndNum)*(500), _boss->pos.y));
 	OBJECTMANAGER->addObject(objectType::ENEMY, _boss2);
 	_boss2->setPixelImage(IMAGEMANAGER->findImage("bossRoomRedZoon"));
 
+
+	
 }
 
