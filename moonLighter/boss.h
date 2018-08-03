@@ -37,6 +37,7 @@ private:
 	bool _damaaged;
 	bool _start;
 	bool _playing;
+	bool _first;
 
 	bool _xMove;
 	bool _yMove;
@@ -49,6 +50,8 @@ private:
 	int _rc2Y;
 	int _rc3X;
 	int _rc3Y;
+	int _delayTime;
+	int _delayTime2;
 
 	int tempX2;
 	int tempY2;
@@ -59,6 +62,7 @@ private:
 	image* _pixelImg;
 	RECT _rc[4];
 	RECT _detectRect;
+	RECT _collisionRc;
 
 public:
 
@@ -68,6 +72,7 @@ public:
 	void render();
 
 	RECT getRect() { return rc; }
+	RECT getCollisionRC() { return _collisionRc; }
 	void imgRectMake();
 	int damagged();
 	void hp();
@@ -76,6 +81,7 @@ public:
 	void move();
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	bool getStart() { return _start; }
 
 	
 

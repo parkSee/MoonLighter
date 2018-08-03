@@ -3,7 +3,7 @@
 #include "player.h"
 
 #include "AIKids.h"
-
+#include "furnitureContainer.h"
 #include "inventory.h"
 
 
@@ -18,8 +18,9 @@ private:
 	AIKids* _aiKid;
 
 	inventory* _inven;
-
-
+	furnitureContainer* _furniture;
+	image* _counter;
+	image* _display;
 public:
 
 	HRESULT init();

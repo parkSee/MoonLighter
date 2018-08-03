@@ -33,11 +33,12 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_hp->init("»¡°£Ã¼·Â¹Ù", "Ã¼·Â²®µ¥±â", pos.x, pos.y, 73, 8);
 	_hp->setGauge(200, 200);
 	_currentHp = 200;
-
+	_delayTime = 0;
+	_delayTime2 = 0;
 
 
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
-
+	 _collisionRc = RectMakeCenter(pos.x, pos.y, 100, 100);
 	_count = _attackedCount = _tempCurrent = _dmgCount =_dmgHp= 0;
 
 
@@ -66,6 +67,7 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_playing = false;
 	_xMove = true;
 	_yMove = true;
+	_first = false;
 	
 
 	return S_OK;
@@ -88,20 +90,21 @@ void boss::update()
 	imgRectMake();
 	bossFrame();
 	bossAttack();
-	this->damagged();
+	if(!_start)this->damagged();
 	//pixelCollision();
 	hp();
 	_hp->update();
-
-	_detectRect = RectMakeCenter(pos.x, pos.y, 500, 500);
+	
+	_collisionRc= RectMakeCenter(pos.x-50, pos.y+10, 150, 120);
+	_detectRect = RectMakeCenter(pos.x, pos.y, 2000, 2000);
 
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	RECT tempRc;
 
-	if (IntersectRect(&tempRc, &((player*)_player)->getRcBody(), &_detectRect))
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcBody(), &_detectRect) && _first==false   )
 	{
 		_start = true;
-
+		_first = true;
 	}
 	
 }
@@ -110,7 +113,7 @@ void boss::render()
 {
 	
 	RECT cam = CAMERAMANAGER->getRenderRc();
-
+	RectangleCam(getMemDC(), _collisionRc, cam);
 	//RectangleCam(getMemDC(), rc, cam);
 
 	//_boss[5]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX[5],_currentY[5]);
@@ -123,26 +126,41 @@ void boss::render()
 	//		_currentX[5] = 0;
 	//	}
 	//}
-	_boss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top, _currentX[4], _currentY[4]);
+	
 
 	if (_start)
 	{
+		_delayTime2++;
+		if (_delayTime2 > 80&& _delayTime2<82)
+		{
+			CAMERAMANAGER->shakeCamera(5.0f, 2.0f);
+		}
+		_delayTime++;
+		//((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
 		_xMove = false;
 		_yMove = false;
-		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(false);
-		if (_count %3 == 0)
+
+		if (_delayTime > 200)
 		{
-			_currentX[4]++;
-			if (_currentX[4] > _boss[4]->getMaxFrameX())
+			
+			
+			if (_count % 5 == 0)
 			{
-				_currentX[4] = 0;
-				_playing = true;
+				_currentX[4]++;
+				if (_currentX[4] > _boss[4]->getMaxFrameX())
+				{
+					_currentX[4] = 0;
+					_playing = true;
+					_delayTime = 0;
+				}
 			}
+			_boss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top, _currentX[4], _currentY[4]);
 		}
 	}
 	
 	if (_playing)
 	{
+		_start = false;
 		_xMove = true;
 		_yMove = true;
 		((player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player"))->setPlayerMove(true);
@@ -447,6 +465,8 @@ void boss::render()
 		//EFFECTMANAGER->play("º¸½º°ø°ÝÀÌÆåÆ®´Ù¿î¿ÞÂÊ2", pos.x - cam.left, pos.y - cam.top);
 		EFFECTMANAGER->play("º¸½º°ø°ÝÀÌÆåÆ®¾÷¿ÞÂÊ2", pos.x - 120, pos.y + 15);
 	}
+	
+
 }
 
 void boss::imgRectMake()
@@ -459,7 +479,7 @@ int boss::damagged()
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	RECT tempRc;
 
-	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
+	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_collisionRc))
 	{
 		_damaaged = true;
 		

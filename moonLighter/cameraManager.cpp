@@ -70,7 +70,7 @@ void cameraManager::cameraMove()
 	{
 		static int dir = 1;
 
-		_shakeTimer -= 0.001f;
+		_shakeTimer -= TIMEMANAGER->getElapedTime();
 
 		_shakePos.x += _shakeStrenth * dir;
 		_shakePos.y += _shakeStrenth * dir;
@@ -97,7 +97,7 @@ void cameraManager::cameraSlideMove(float speed)
 	{
 		_angle = getAngle(_pos.x, _pos.y, _target.x, _target.y);
 		
-	
+		
 		_oldPos = _pos;
 
 		_pos.x += cosf(_angle) * speed;
@@ -139,11 +139,11 @@ void cameraManager::cameraSlideMove(float speed)
 		_pos.y = _mapSize.y - WINSIZEY / 2;
 		_target.y = _pos.y;
 	}
-	/*if (_isShake)
+	if (_isShake)
 	{
 		static int dir = 1;
 
-		_shakeTimer -= 0.001f;
+		_shakeTimer -= TIMEMANAGER->getElapedTime();
 
 		_shakePos.x += _shakeStrenth * dir;
 		_shakePos.y += _shakeStrenth * dir;
@@ -156,7 +156,7 @@ void cameraManager::cameraSlideMove(float speed)
 			_shakePos = tagFloat(0, 0);
 			_shakeTimer = 0;
 		}
-	}*/
+	}
 
 	_renderRc = RectMakeCenter(_pos.x, _pos.y, WINSIZEX, WINSIZEY);
 }

@@ -5,7 +5,6 @@
 
 HRESULT shopScene::init()
 {
-
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
 	_player = new player;
 	_player->init("player", tagFloat(WINSIZEX/2, 1000));
@@ -13,7 +12,6 @@ HRESULT shopScene::init()
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
 
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
-
 
 	_aiKid = new AIKids;
 	_aiKid->init("aiKid", tagFloat(600, 1303),IMAGEMANAGER->findImage("AiKids"));
@@ -27,6 +25,12 @@ HRESULT shopScene::init()
 	SOUNDMANAGER->play("shopBGM");
 
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
+
+	
+
+	_furniture = new furnitureContainer;
+	_furniture->init();
+
 
 	return S_OK;
 }
@@ -68,8 +72,9 @@ void shopScene::render()
 
 	
 	OBJECTMANAGER->render(getMemDC());
-	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 0 - cam.left, 555 - cam.top);
+	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 570 - cam.left, 603 - cam.top);
 	
+
 	RectangleCam(getMemDC(), _enterRc, cam);
 	
 	_inven->render();

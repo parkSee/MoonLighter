@@ -87,6 +87,9 @@
     <Filter Include="MainGame\Enemy">
       <UniqueIdentifier>{707b6e9e-f0fe-485c-a3c4-71eaeb8765e1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\shopObject">
+      <UniqueIdentifier>{631e5333-df31-43e9-95b2-06ff3603937e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -227,9 +230,6 @@
     <ClInclude Include="inventory.h">
       <Filter>MainGame\inventory</Filter>
     </ClInclude>
-    <ClInclude Include="objectContainer.h">
-      <Filter>MainGame\Object</Filter>
-    </ClInclude>
     <ClInclude Include="stone.h">
       <Filter>MainGame\Object\LobbyObject</Filter>
     </ClInclude>
@@ -253,6 +253,15 @@
     </ClInclude>
     <ClInclude Include="pixelManager.h">
       <Filter>GameFramework2D\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="objectContainer.h">
+      <Filter>MainGame\Object\townObject</Filter>
+    </ClInclude>
+    <ClInclude Include="furniture.h">
+      <Filter>MainGame\Object\shopObject</Filter>
+    </ClInclude>
+    <ClInclude Include="furnitureContainer.h">
+      <Filter>MainGame\Object\shopObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -294,9 +303,6 @@
     </ClCompile>
     <ClCompile Include="objectManager.cpp">
       <Filter>GameFramework2D\gameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="objectContainer.cpp">
-      <Filter>MainGame\Object</Filter>
     </ClCompile>
     <ClCompile Include="enemyController.cpp">
       <Filter>MainGame\Enemy</Filter>
@@ -426,6 +432,15 @@
     </ClCompile>
     <ClCompile Include="pixelManager.cpp">
       <Filter>GameFramework2D\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="objectContainer.cpp">
+      <Filter>MainGame\Object\townObject</Filter>
+    </ClCompile>
+    <ClCompile Include="furniture.cpp">
+      <Filter>MainGame\Object\shopObject</Filter>
+    </ClCompile>
+    <ClCompile Include="furnitureContainer.cpp">
+      <Filter>MainGame\Object\shopObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
