@@ -56,9 +56,10 @@ public:
 	void move();
 	bool getInvincible() { return _isInvincible; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
-	float getSpeed() { return _speed; }		//lysADD  (겟스피드 함수 추가)
-	RECT getRcBody() { return _rcBody; }	//lysADD  (겟몸뚱아리 렉트 함수 추가)
-	RECT getRcSword() { return _rcSword;}	//lysADD (겟 공격범위 렉트 함수 추가)
+	float getSpeed() { return _speed; }		
+	RECT getRcBody() { return _rcBody; }	
+	RECT getRcProbe() { return _rcProbe; }	
+	RECT getRcSword() { return _rcSword;}	
 	bool getIsRcSwordOn() { return _isRcSwordOn; } //lysADD (공격중인지 아닌지 bool값 반환)
 	void enemyCheckCollision();
 	void setPlayerMove(bool playermove) { _playerMove = playermove; }

@@ -299,7 +299,7 @@ void player::move()
 
 
 					_probeX = pos.x;
-					_probeY = pos.y - (will->getFrameHeight() / 4);
+					_probeY = pos.y;
 					rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.top - rc.top;

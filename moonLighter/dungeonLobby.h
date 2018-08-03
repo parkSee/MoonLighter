@@ -8,13 +8,15 @@ class dungeonLobby : public gameNode
 private:
 	int _count;
 	int _index;
+	int _index2;
 
 	player * _player;
 	lobbyContainer* _lobbyObj;
+	RECT temp;
 	RECT _enterRc;
-
 	RECT _doorSensorRc;
-	bool _IsClose_Player;
+	bool _isClose_Player;
+	bool _isDungeonIn;
 public:
 
 	HRESULT init();
