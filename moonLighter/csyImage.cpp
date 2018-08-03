@@ -13,8 +13,6 @@ void loadingScene::csyImageLoading()
 	_loading->loadImage("redCristal", "./Image/item_object/item_redCristal.bmp", 28, 36, true, MAGENTA);
 	_loading->loadImage("golemCore", "./Image/item_object/item_golemCore.bmp", 24, 24, true, MAGENTA);
 
-	_loading->loadImage("inventory", "./Image/item_object/inven.bmp", 828, 423, true, MAGENTA);
-
 	_loading->loadImage("inventory", "./Image/inventory_ui/inventory.bmp", 1000, 512, true, MAGENTA);
 	_loading->loadImage("invenSlot", "./Image/inventory_ui/invenSlot.bmp", 68, 68, true, MAGENTA);
 

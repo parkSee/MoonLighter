@@ -35,7 +35,8 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_currentHp = 200;
 	_delayTime = 0;
 	_delayTime2 = 0;
-
+	_deadCount = 0;
+	
 
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 	 _collisionRc = RectMakeCenter(pos.x, pos.y, 100, 100);
@@ -106,6 +107,8 @@ void boss::update()
 		_start = true;
 		_first = true;
 	}
+
+	
 	
 }
 
@@ -435,7 +438,14 @@ void boss::render()
 	//	//RectangleCam(getMemDC(), _rc[1], cam);
 	//	//RectangleCam(getMemDC(), _rc[2], cam);
 	//	//RectangleCam(getMemDC(), _rc[3], cam);
-
+		for (int i = 0; i < 4; i++)
+		{
+			if (9 < _currentX[i] && _currentX[i] < 31)
+			{
+				_xMove = false;
+				_yMove = false;
+			}
+		}
 	}
 	if (!_attackCountBool[0])
 	{
@@ -611,7 +621,7 @@ void boss::move()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	angle = getAngle(pos.x, pos.y, _player->pos.x, _player->pos.y);
-	speed = 0.5f;
+	
 	distance = getDistance(pos.x, pos.y, _player->pos.x, _player->pos.y);
 
 	if(_xMove)pos.x += speed * cosf(angle);
