@@ -33,10 +33,12 @@ private:
 	bool a;
 	bool _playerMove;
 
-	effect* _efcShortSword1;   //lysADD( 플레이어 공격이펙트이미지 야매 초기화 )
+	effect* _efcShortSword1;   
 	image* backGround;
 	image* will;
-	image* willAttack;  
+	image* willDungeon;
+	image* willAttack;
+	image* willDamaged;
 
 	image* _pixelImg;
 
@@ -54,6 +56,7 @@ public:
 
 	void collision();
 	void move();
+	void dungeonMove();
 	bool getInvincible() { return _isInvincible; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	float getSpeed() { return _speed; }		

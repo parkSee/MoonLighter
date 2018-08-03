@@ -33,6 +33,8 @@ void dungeonLobby::release()
 
 void dungeonLobby::update()
 {
+	++_count;
+
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	OBJECTMANAGER->update();
 
@@ -80,14 +82,13 @@ void dungeonLobby::update()
 	}
 	CAMERAMANAGER->update();
 	_player->update();
+	
 	_enterRc = RectMakeCenter(720, 953, 50, 50);
 	_doorSensorRc = RectMakeCenter(720, 1000, 100, 150);
 }
 
 void dungeonLobby::render()
 {
-	++_count;
-
 	RECT cam = CAMERAMANAGER->getRenderRc();
 
 	IMAGEMANAGER->findImage("dunIntro")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
