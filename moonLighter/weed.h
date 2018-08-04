@@ -8,6 +8,9 @@ class weed : public gameObject
 private:
 	image * _weed;
 	image* _attackedWeed[2];
+	image* _dmgFontTen;
+	image* _dmgFontOne;
+	RECT _dmgFontRc[2];
 	progressBar* _hp;
 	int _currentHp;
 	int _count;
@@ -30,7 +33,10 @@ private:
 	bool _yCollision;
 	bool _damaaged;
 	int _dmgCount;
+	int _dmgImgCount;
 	bool _dmg;
+	bool _dmgImgCountBool;
+	float _dmgImgY;
 
 	bool _noneAttacked;//공격안받았을때
 	bool _isAttacked; // 공격받았다는 신호

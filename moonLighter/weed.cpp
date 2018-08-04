@@ -7,15 +7,21 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 
 	gameObject::init(_objName, _pos);
 	_weed = IMAGEMANAGER->findImage("잡초");
+	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
 	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
 	_hp->setGauge(200, 200);
 	_currentHp = 200;
+	_dmgImgCount = 0;
+	_dmgImgY = -70;
 	_attackedWeed[0] = IMAGEMANAGER->findImage("잡초빨강");
 	_attackedWeed[1] = IMAGEMANAGER->findImage("잡초하양");
 	_weedFrameX = _weedFrameY = _count = _attackedCount=_dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x-30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
@@ -27,6 +33,7 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 	_deadEffectBool = false;
 	_deadBool = false;
 	_dmg = false;
+	_dmgImgCountBool = false;
 
 
 
@@ -155,8 +162,21 @@ void weed::render()
 			_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 		}
 	}
+	if (0 < _dmgImgCount && _dmgImgCount < 40)
+	{
+		_dmgImgCount++;
+		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 5, 0);
+		_dmgFontOne->frameRender(getMemDC(), _dmgFontRc[1].left - cam.left, _dmgFontRc[1].top - cam.top, 3, 0);
+		_dmgImgY -= 0.5f;
+	}
+		
 
 	
+	if (_dmgImgCount > 40)
+	{
+		_dmgImgCount = 0;
+		_dmgImgY = -70;
+	}
 	//RectangleCam(getMemDC(), _rc[0], cam);
 	//Rectangle(getMemDC(), _rc[0]);
 	//Rectangle(getMemDC(), _rc[1]);
@@ -179,10 +199,13 @@ void weed::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y +_dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x+20, pos.y +_dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 }
 
 void weed::damagged()
 {
+	RECT cam = CAMERAMANAGER->getRenderRc();
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	RECT tempRc;
 
@@ -203,6 +226,7 @@ void weed::damagged()
 	if (_damaaged)
 	{
 		_dmgCount++;
+		_dmgImgCount++;
 		_damaaged = false;
 		_isAttacked = true;
 		_noneAttacked = false;
@@ -214,16 +238,21 @@ void weed::damagged()
 	if (0 < _dmgCount && _dmgCount <= 15)
 	{
 		_dmgCount++;
+		_dmgImgCount++;
 		pos.x += 5 * cosf(PI - angle);
 		pos.y += 5 * sinf(PI - angle);
+		
+		
 	}
-
 	if (_dmgCount > 15)
 	{
 		_dmg = false;
-		
+
 		_dmgCount = 0;
 	}
+	
+
+	
 	
 }
 

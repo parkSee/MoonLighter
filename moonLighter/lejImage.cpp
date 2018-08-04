@@ -66,7 +66,7 @@ void loadingScene::lejImageLoading()
 	//_loading->loadImage("보스체력껍데기", "보스체력껍데기.bmp", 1000, 14,true);
 
 
-
+	_loading->loadFrameImage("대미지폰트", "./image/enemy/대미지폰트.bmp", 300, 40, 10, 1);
 	
 
 

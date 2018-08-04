@@ -71,7 +71,7 @@ void enemyController::golemInit()
 
 void enemyController::bigSlimeInit()
 {
-	for (int i = 0; i < 2; ++i)
+	for (int i = 0; i < 1; ++i)
 	{
 		bigSlime* _bigSlime = new bigSlime;
 		_bigSlime->init("bigSlime", tagFloat(200 + 500 * i, 1200));
@@ -87,10 +87,7 @@ void enemyController::bigSlimeInit()
 		_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
 
-	bigSlime* _bigSlime = new bigSlime;
-	_bigSlime->init("bigSlime", tagFloat(2000 , 1800));
-	OBJECTMANAGER->addObject(objectType::ENEMY, _bigSlime);
-	_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+	
 }
 
 void enemyController::smallSlimeInit()
