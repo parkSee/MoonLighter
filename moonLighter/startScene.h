@@ -1,6 +1,6 @@
 #pragma once
 #include "gameNode.h"
-
+#include "player.h"
 struct Door
 {
 	image* img;

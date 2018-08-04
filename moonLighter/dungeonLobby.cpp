@@ -5,11 +5,12 @@
 HRESULT dungeonLobby::init()
 {
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
-	_player = new player;
-	_player->init("player", tagFloat(1240, 1980));
-	_player->setPixelImage(IMAGEMANAGER->findImage("dunIntroRed"));
+
+	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	
-	//OBJECTMANAGER->addObject(objectType::PLAYER, _player);
+	_player->pos.x = 1240;
+	_player->pos.y = 1980;
+	_player->setPixelImage(IMAGEMANAGER->findImage("dunIntroRed"));
 	
 	CAMERAMANAGER->setMapSize(2460, 2100);
 
@@ -33,10 +34,11 @@ void dungeonLobby::release()
 
 void dungeonLobby::update()
 {
-	++_count;
 
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	OBJECTMANAGER->update();
+	
+	++_count;
 
 	if ((IntersectRect(&temp, &_player->getRcProbe(), &_enterRc) && KEYMANAGER->isOnceKeyDown('J')) && _isDungeonIn == false)   //던전입장
 	{
@@ -70,6 +72,10 @@ void dungeonLobby::update()
 		}
 
 	}
+	CAMERAMANAGER->update();
+	
+	this->willEnterFrame();
+
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
@@ -80,8 +86,7 @@ void dungeonLobby::update()
 		if (_isDungeonIn == false) { _isDungeonIn = true; }
 		else { _isDungeonIn = false; }
 	}
-	CAMERAMANAGER->update();
-	_player->update();
+
 	
 	_enterRc = RectMakeCenter(720, 953, 50, 50);
 	_doorSensorRc = RectMakeCenter(720, 1000, 100, 150);
@@ -93,18 +98,12 @@ void dungeonLobby::render()
 
 	IMAGEMANAGER->findImage("dunIntro")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
 	
+	
 	if (IntersectRect(&temp, &_player->getRcProbe(), &_enterRc))            //던전입장 출력
 	{
-		IMAGEMANAGER->findImage("dunIntroShowEnterText")->setFrameX(_index2);
-		IMAGEMANAGER->findImage("dunIntroShowEnterText")->setFrameY(0);
-		if (_count % 10 == 0)
-		{
-			++_index2;
-			if (_index2 > IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX()) { _index2 = IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX(); }
-		}
 		IMAGEMANAGER->findImage("dunIntroShowEnterText")->frameRender(getMemDC(), 750 - cam.left, 870 - cam.top);
 	}
-	else { _index2 = 0; }
+
 	if (!_isDungeonIn)
 	{
 		if (_isClose_Player)                                            //열려라 참깨 출력
@@ -116,6 +115,35 @@ void dungeonLobby::render()
 			IMAGEMANAGER->findImage("dunIntroDoorOpen")->frameRender(getMemDC(), 672 - cam.left, 905 - cam.top);
 		}
 	}
+
+	if (_isDungeonIn)                                                   //플레이어 윌 흡입 출력
+	{
+		IMAGEMANAGER->findImage("dunIntroGoInDungeon")->frameRender(getMemDC(), 672 - cam.left, 905 - cam.top);
+	}
+	if (KEYMANAGER->isStayKeyDown('V'))
+	{
+		IMAGEMANAGER->findImage("dunIntroRed")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
+	}
+	OBJECTMANAGER->render(getMemDC());
+}
+
+void dungeonLobby::willEnterFrame()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+	if (IntersectRect(&temp, &_player->getRcProbe(), &_enterRc))            //던전입장 출력
+	{
+		IMAGEMANAGER->findImage("dunIntroShowEnterText")->setFrameX(_index2);
+		IMAGEMANAGER->findImage("dunIntroShowEnterText")->setFrameY(0);
+		if (_count % 10 == 0)
+		{
+			++_index2;
+			if (_index2 > IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX()) { _index2 = IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX(); }
+		}
+		
+	}
+	else { _index2 = 0; }
+	
+	
 	if (_isDungeonIn)                                                   //플레이어 윌 흡입 출력
 	{
 		IMAGEMANAGER->findImage("dunIntroGoInDungeon")->setFrameX(_index);
@@ -129,16 +157,12 @@ void dungeonLobby::render()
 				SCENEMANAGER->loadScene("dungeonScene");
 			}
 		}
-		IMAGEMANAGER->findImage("dunIntroGoInDungeon")->frameRender(getMemDC(), 672 - cam.left, 905 - cam.top);
-	}
-	if (KEYMANAGER->isStayKeyDown('V'))
-	{
-		IMAGEMANAGER->findImage("dunIntroRed")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
+	
 	}
 	
-	OBJECTMANAGER->render(getMemDC());
-	if (_isDungeonIn == false)                                                   
+
+	if (_isDungeonIn == false)
 	{
-		_player->render();
+	
 	}
 }

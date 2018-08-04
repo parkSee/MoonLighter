@@ -4,8 +4,11 @@
 HRESULT bossRoomScene::init()
 {
 
-	_player = new player;
-	_player->init("player", tagFloat(1580, 1900));
+	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	//	_player->init("player", tagFloat(1580, 1900));
+	_player->pos.x = 1580;
+	_player->pos.y = 1900;
+
 	_player->setPixelImage(IMAGEMANAGER->findImage("bossRoomRedZoon"));
 
 	 _boss = new boss;

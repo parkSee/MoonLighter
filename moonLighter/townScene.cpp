@@ -5,10 +5,11 @@ HRESULT townScene::init()
 {
 
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
-	_player = new player;
-	_player->init("player", tagFloat(WINSIZEX / 2 + 100, WINSIZEY / 2));
+	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	_player->pos.x = WINSIZEX / 2;
+	_player->pos.y = WINSIZEY / 2;
 	_player->setPixelImage(IMAGEMANAGER->findImage("redZone"));
-	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
+
 
 	_container = new objectContainer;
 	_container->init();

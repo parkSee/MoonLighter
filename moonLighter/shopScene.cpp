@@ -6,12 +6,10 @@
 HRESULT shopScene::init()
 {
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
-	_player = new player;
-	_player->init("player", tagFloat(WINSIZEX/2, 1000));
-
+	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	_player->pos.x = WINSIZEX / 2;
+	_player->pos.y = 1000;
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
-
-	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
 	_aiKid = new AIKids;
 	_aiKid->init("aiKid", tagFloat(600, 1303),IMAGEMANAGER->findImage("AiKids"));

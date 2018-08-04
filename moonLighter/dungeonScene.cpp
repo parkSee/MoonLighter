@@ -5,10 +5,12 @@ HRESULT dungeonScene::init()
 {
 	//½Ã¿µÂ» ³» µ¿·á°¡ µÅ¶ó - ±«µµ Á¦ÀÌ
 	//lejADD ´øÀü ¸Ê Ãß°¡
-	_player = new player;
-	_player->init("player", tagFloat(1631, 1848));
+	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	_player->pos.x = 1920;
+	_player->pos.y = 1800;
+
 	_player->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
-	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
+
 
 	_em = new enemyController;
 	_em->init();
@@ -24,10 +26,11 @@ HRESULT dungeonScene::init()
 	
 	}
 
+	CAMERAMANAGER->_pos.x = 1920;
+	CAMERAMANAGER->_pos.y = 1800;
+	
 	CAMERAMANAGER->setMapSize(3840, 2160);
 	CAMERAMANAGER->connectTarget(1920, 1800);
-	//CAMERAMANAGER->_pos.x = 1920;
-	//CAMERAMANAGER->_pos.y = 1800;
 
 
 	_enterRc[0] = RectMakeCenter(1916, 1455, 50, 50);
@@ -55,10 +58,6 @@ void dungeonScene::release()
 
 void dungeonScene::update()
 {
-	//CAMERAMANAGER->update();
-
-	//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
-
 	OBJECTMANAGER->update();
 
 	if (KEYMANAGER->isOnceKeyDown('C'))
@@ -68,13 +67,8 @@ void dungeonScene::update()
 	}
 
 	
-	_im->update();
-
-
-
 	this->moveDungeon();
-
-
+	
 	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
 
 	_im->update();
@@ -136,7 +130,6 @@ void dungeonScene::moveDungeon()
 	}
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[2]))
 	{
-		//CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 		CAMERAMANAGER->connectTarget((int)640, (int)1080);
 		_player->pos.x = 647;
 		_player->pos.y = 1077;

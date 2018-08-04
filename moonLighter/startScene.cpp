@@ -27,6 +27,12 @@ HRESULT startScene::init()
 	_alphaTime = 0;
 	
 
+	player* _player;
+	_player = new player;
+	_player->init("player", tagFloat(0, 0));
+	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
+
+
 	return S_OK;
 }
 

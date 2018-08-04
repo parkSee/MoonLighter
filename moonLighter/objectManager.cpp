@@ -134,12 +134,17 @@ void objectManager::reset()
 	{
 		for (int i = 0; i < miter->second.size(); ++i)
 		{
-			miter->second[i]->release();
-			//SAFE_RELEASE(miter->second[i]);
-			SAFE_DELETE(miter->second[i]);
 
-			miter->second.erase(miter->second.begin() + i);
-			--i;
+			if (miter->first == objectType::PLAYER)continue;
+			else
+			{
+				miter->second[i]->release();
+				//SAFE_RELEASE(miter->second[i]);
+				SAFE_DELETE(miter->second[i]);
+
+				miter->second.erase(miter->second.begin() + i);
+				--i;
+			}
 		}
 	}
 
