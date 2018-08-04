@@ -57,7 +57,10 @@ void dungeonLobby::update()
 			if (_count % 7 == 0)
 			{
 				++_index;
-				if (_index > IMAGEMANAGER->findImage("dunIntroDoorOpen")->getMaxFrameX()) { _index = 10; }
+				if (_index > IMAGEMANAGER->findImage("dunIntroDoorOpen")->getMaxFrameX()) 
+				{
+					_index = 10; 
+				}
 			}
 		}
 		else                                                              //닫혀라 참깨
@@ -84,8 +87,14 @@ void dungeonLobby::update()
 	}
 	if (KEYMANAGER->isOnceKeyDown('P'))    //테스으용
 	{
-		if (_isDungeonIn == false) { _isDungeonIn = true; }
-		else { _isDungeonIn = false; }
+		if (_isDungeonIn == false)
+		{ 
+			_isDungeonIn = true; 
+		}
+		else 
+		{ 
+			_isDungeonIn = false; 
+		}
 	}
 
 	
@@ -138,11 +147,17 @@ void dungeonLobby::willEnterFrame()
 		if (_count % 10 == 0)
 		{
 			++_index2;
-			if (_index2 > IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX()) { _index2 = IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX(); }
+			if (_index2 > IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX())
+			{
+				_index2 = IMAGEMANAGER->findImage("dunIntroShowEnterText")->getMaxFrameX(); 
+			}
 		}
 		
 	}
-	else { _index2 = 0; }
+	else
+	{ 
+		_index2 = 0; 
+	}
 	
 	
 	if (_isDungeonIn)                                                   //플레이어 윌 흡입 출력
