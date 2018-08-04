@@ -6,6 +6,7 @@ HRESULT dungeonScene::init()
 	//½Ã¿µÂ» ³» µ¿·á°¡ µÅ¶ó - ±«µµ Á¦ÀÌ
 	//lejADD ´øÀü ¸Ê Ãß°¡
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
+	_player->setIsActive(true);
 	_player->pos.x = 1920;
 	_player->pos.y = 1800;
 

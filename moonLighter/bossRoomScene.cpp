@@ -32,7 +32,7 @@ HRESULT bossRoomScene::init()
 	
 
 	_blackBg = IMAGEMANAGER->findImage("검은화면");
-	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
+
 
 	CAMERAMANAGER->setMapSize(3152, 2131);
 

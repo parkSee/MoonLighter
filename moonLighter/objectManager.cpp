@@ -112,14 +112,16 @@ void objectManager::render(HDC getMemDC)
 
 	for (pair<float, gameObject*> iter : zOderList)
 	{
+		if (iter.second->isActiveObject() == true)
+		{
+			int x = iter.second->pos.x - CAMERAMANAGER->getRenderRc().left;
+			int y = iter.second->pos.y - CAMERAMANAGER->getRenderRc().top;
 
-		int x = iter.second->pos.x - CAMERAMANAGER->getRenderRc().left;
-		int y = iter.second->pos.y - CAMERAMANAGER->getRenderRc().top;
 
-
-		if (0 < x + 300 && x - 300 < WINSIZEX &&
-			0 < y + 300 && y - 300 < WINSIZEY)
-			iter.second->render();
+			if (0 < x + 300 && x - 300 < WINSIZEX &&
+				0 < y + 300 && y - 300 < WINSIZEY)
+				iter.second->render();
+		}
 	}
 
 

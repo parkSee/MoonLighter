@@ -44,7 +44,8 @@ void dungeonLobby::update()
 	{
 		_index = 0;
 		_isDungeonIn = true;
-		_player->setPlayerMove(false);
+		//_player->setPlayerMove(false);
+		_player->setIsActive(false);	//던전에서 바로 안나오느느 이유중하나
 	}
 	if (_isDungeonIn == false)
 	{
