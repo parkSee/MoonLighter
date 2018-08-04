@@ -195,7 +195,7 @@ void smallSlime::damagged()
 		_damaaged = true;
 		_dmg = true;
 		_currentHp -= 120;
-
+		SOUNDMANAGER->play("slime_hit", 0.5f);
 	}
 
 	if (_damaaged)
@@ -346,6 +346,7 @@ void smallSlime::dead()
 	{
 		_deadEffectBool = true;
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
+		SOUNDMANAGER->play("enemy_death", 1.f);
 	}
 	setIsLive(false);
 }

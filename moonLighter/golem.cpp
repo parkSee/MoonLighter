@@ -827,6 +827,7 @@ void golem::damaged()
 	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &rc))
 	{
 		_damaaged = true;
+		
 
 	}
 	if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_rc2) && _dmg == false)
@@ -834,6 +835,7 @@ void golem::damaged()
 		_damaaged = true;
 		_dmg = true;
 		_currentHp -= 120;
+		SOUNDMANAGER->play("golem_hit", 0.5f);
 
 	}
 
@@ -1076,6 +1078,7 @@ void golem::dead()
 	{
 		_deadEffectBool = true;
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
+		SOUNDMANAGER->play("enemy_death", 1.f);
 	}
 	setIsLive(false);
 }

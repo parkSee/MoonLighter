@@ -77,6 +77,10 @@ void loadingScene::lejImageLoading()
 
 void loadingScene::lejSoundLoading()
 {
+	_loading->loadSound("enemy_death", "./gameSound/enemy_death.wav", false, false);
+	_loading->loadSound("golem_hit", "./gameSound/golem_hit.wav", false, false);
+	_loading->loadSound("slime_hit", "./gameSound/slime_hit.wav", false, false);
+	_loading->loadSound("weed_hit", "./gameSound/weed_hit.wav", false, false);
 }
 
 

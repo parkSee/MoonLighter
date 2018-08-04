@@ -220,7 +220,7 @@ void weed::damagged()
 		_damaaged = true;
 		_dmg = true;
 		_currentHp -= 120;
-
+		SOUNDMANAGER->play("weed_hit", 0.5f);
 	}
 
 	if (_damaaged)
@@ -230,11 +230,11 @@ void weed::damagged()
 		_damaaged = false;
 		_isAttacked = true;
 		_noneAttacked = false;
-		
+	
 		
 		
 	}
-
+	
 	if (0 < _dmgCount && _dmgCount <= 15)
 	{
 		_dmgCount++;
@@ -249,6 +249,7 @@ void weed::damagged()
 		_dmg = false;
 
 		_dmgCount = 0;
+		
 	}
 	
 
@@ -388,6 +389,7 @@ void weed::dead()
 	{
 		_deadEffectBool = true;
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
+		SOUNDMANAGER->play("enemy_death", 1.f);
 	}
 	setIsLive(false);
 }
