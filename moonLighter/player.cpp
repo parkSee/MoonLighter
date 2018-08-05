@@ -6,7 +6,7 @@
 HRESULT player::init(string _objName, tagFloat _pos)
 {
 	gameObject::init(_objName, _pos);
-	
+	_cntPendant = 0;
 	_index = _count = 0;
 	_cntIsInvincible = 0;
 	_time = 0.0f;
@@ -22,7 +22,9 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isRight = false;
 	_isRolling = false;
 	_isInvincible = false;
-	
+	_isGoingHome = false;
+	_isAutomatic = false;
+	_isUsingPendant = false;
 	_isHit = false;
 	_isDead = false;
 	_isAttacking = false;
@@ -35,6 +37,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willDungeon = IMAGEMANAGER->findImage("will_dungeon");
 	willAttack = IMAGEMANAGER->findImage("will_shortAttack");
 	willDamaged = IMAGEMANAGER->findImage("will_damaged");
+	willPendant = IMAGEMANAGER->findImage("will_pendant");
+	willGoHome = IMAGEMANAGER->findImage("will_goHome");
 
 	_hpBar = new progressBar;
 	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
@@ -84,105 +88,14 @@ void player::update(void)
 	//CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	/*
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	{
-		
-		pos.x -= 5;
-
-		_probeX = pos.x - 35;
-
-		for (int i = _probeX + 5; i >= _probeX - 5; --i)
-		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, pos.y);
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if (r == 255 && g == 0 && b == 0)
-			{
-				pos.x = i + 35;
-				break;
-			}
-		}
-
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		pos.x += 5;
-
-		_probeX = pos.x + 35;
-
-		for (int i = _probeX - 5; i < _probeX + 5; ++i)
-		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), i, pos.y);
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if (r == 255 && g == 0 && b == 0)
-			{
-				pos.x = i - 35;
-				break;
-			}
-		}
-
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
-	{
-		pos.y -= 5;
-
-		_probeY = pos.y - 35;
-
-		for (int i = pos.y + 35; i >= pos.y - 35; i--)
-		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), pos.x, i);
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if (r == 255 && g == 0 && b == 0)
-			{
-				pos.y = i + 35;
-				break;
-			}
-		}
-
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		pos.y += 5;
-
-		_probeY = pos.y+ 35;
-
-		for (int i = _probeY - 10; i < _probeY + 10; ++i)
-		{
-			COLORREF color = GetPixel(IMAGEMANAGER->findImage("redZone")->getMemDC(), pos.x, i);
-			int r = GetRValue(color);
-			int g = GetGValue(color);
-			int b = GetBValue(color);
-
-			if (r == 255 && g == 0 && b == 0)
-			{
-				pos.y = i - 35;
-				break;
-			}
-		}
-
-
-	}
-	
 	if (KEYMANAGER->isStayKeyDown('T'))
 	{
 		CAMERAMANAGER->shakeCamera(5.0f, 11.0f);
 	}
 	*/
 
-	//rc = RectMakeCenter(pos.x, pos.y, 70, 70);
-	
-	 
-	this->collision();
-	//this->move();
-	this->dungeonMove();
+	//this->collision();
+	this->willAction();
 	_hpBar->update_isHit();
 	this->enemyCheckCollision();
 }
@@ -209,10 +122,12 @@ void player::render(void)
 	{
 		willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 	}
+	if (_isGoingHome)
+	{
+		willGoHome->frameRender(getMemDC(), (rc.left - willGoHome->getFrameWidth() / 4 + 5) - cam.left, (rc.top - willGoHome->getFrameHeight() / 4 + 20) - cam.top);
+	}
+	willPendant->frameRender(getMemDC(), 1190, 620);
 	
-	
-
-
 	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
 	{
 		Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
@@ -283,18 +198,14 @@ void player::collision()
 
 }
 
-void player::move()
+void player::dungeonMove()
 {
-	++_count;
-
-	//if(_scene == 상점 or 마을)
-	if (_isRolling != true )
+	if (_isRolling != true)
 	{
 		if (_playerMove)
 		{
 			if (_isAttacking == false)
 			{
-
 				if (KEYMANAGER->isStayKeyDown(VK_UP))
 				{
 					_isIdle = false;
@@ -302,8 +213,8 @@ void player::move()
 					_isDown = false;
 					_isRight = false;
 					_isLeft = false;
-					will->setFrameX(_index);
-					will->setFrameY(4);
+					willDungeon->setFrameX(_index);
+					willDungeon->setFrameY(0);
 					if (_count % 10 == 0)
 					{
 						++_index;
@@ -313,11 +224,9 @@ void player::move()
 						}
 					}
 					pos.y -= _speed;
-
-
 					_probeX = pos.x;
 					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.top - rc.top;
 					for (int i = _probeY; i > _probeY - 15; --i)
@@ -329,7 +238,7 @@ void player::move()
 
 						if (r == 255 && g == 0 && b == 0)
 						{
-							pos.y = i + will->getFrameHeight() * 0.5 - disTemp;
+							pos.y = i + willDungeon->getFrameHeight() * 0.5 - disTemp;
 							break;
 						}
 					}
@@ -349,8 +258,8 @@ void player::move()
 					_isUp = false;
 					_isRight = false;
 					_isLeft = false;
-					will->setFrameX(_index);
-					will->setFrameY(5);
+					willDungeon->setFrameX(_index);
+					willDungeon->setFrameY(1);
 					if (_count % 10 == 0)
 					{
 						++_index;
@@ -361,8 +270,8 @@ void player::move()
 					}
 					pos.y += _speed;
 					_probeX = pos.x;
-					_probeY = pos.y + (will->getFrameHeight() / 4);
-					rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+					_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.bottom - rc.bottom;
 					for (int i = _probeY; i < _probeY + 15; ++i)
@@ -374,7 +283,7 @@ void player::move()
 
 						if (r == 255 && g == 0 && b == 0)
 						{
-							pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
+							pos.y = i - willDungeon->getFrameHeight() * 0.5 - disTemp;
 							break;
 						}
 					}
@@ -394,8 +303,8 @@ void player::move()
 					_isUp = false;
 					_isRight = true;
 					_isLeft = false;
-					will->setFrameX(_index);
-					will->setFrameY(6);
+					willDungeon->setFrameX(_index);
+					willDungeon->setFrameY(2);
 					if (_count % 10 == 0)
 					{
 						++_index;
@@ -407,7 +316,7 @@ void player::move()
 					pos.x += _speed;
 					_probeX = pos.x + 20;
 					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.right - _rcProbe.left;
 					for (int i = _probeX; i < _probeX + 15; ++i)
@@ -439,20 +348,20 @@ void player::move()
 					_isIdle = false;
 					_isLeft = true;
 					_isRight = false;
-					will->setFrameX(_index);
-					will->setFrameY(7);
+					willDungeon->setFrameX(_index);
+					willDungeon->setFrameY(3);
 					if (_count % 10 == 0)
 					{
-						--_index;
-						if (_index < 0)
+						++_index;
+						if (_index > 7)
 						{
-							_index = 7;
+							_index = 0;
 						}
 					}
 					pos.x -= _speed;
 					_probeX = pos.x - 20;
 					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth() / 2, will->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.right - _rcProbe.left;
 					for (int i = _probeX; i > _probeX - 15; --i)
@@ -472,12 +381,11 @@ void player::move()
 					{
 						SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
 					}
+				}
+				if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
+				{
+					_isIdle = true;
 
-					if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
-					{
-						_isIdle = true;
-
-					}
 				}
 				if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
 				{
@@ -491,12 +399,12 @@ void player::move()
 				{
 					if (_isUp)
 					{
-						will->setFrameX(_index);
-						will->setFrameY(0);
+						willDungeon->setFrameX(_index);
+						willDungeon->setFrameY(10);
 						if (_count % 7 == 0)
 						{
 							++_index;
-							if (_index > 9)
+							if (_index > willDungeon->getMaxFrameX())
 							{
 								_index = 0;
 							}
@@ -504,12 +412,12 @@ void player::move()
 					}
 					else if (_isDown)
 					{
-						will->setFrameX(_index);
-						will->setFrameY(1);
+						willDungeon->setFrameX(_index);
+						willDungeon->setFrameY(11);
 						if (_count % 7 == 0)
 						{
 							++_index;
-							if (_index > 9)
+							if (_index > willDungeon->getMaxFrameX())
 							{
 								_index = 0;
 							}
@@ -517,12 +425,12 @@ void player::move()
 					}
 					else if (_isRight)
 					{
-						will->setFrameX(_index);
-						will->setFrameY(2);
+						willDungeon->setFrameX(_index);
+						willDungeon->setFrameY(8);
 						if (_count % 7 == 0)
 						{
 							++_index;
-							if (_index > 9)
+							if (_index > willDungeon->getMaxFrameX())
 							{
 								_index = 0;
 							}
@@ -530,19 +438,18 @@ void player::move()
 					}
 					else if (_isLeft)
 					{
-						will->setFrameX(_index);
-						will->setFrameY(3);
+						willDungeon->setFrameX(_index);
+						willDungeon->setFrameY(9);
 						if (_count % 7 == 0)
 						{
 							++_index;
-							if (_index > 9)
+							if (_index > willDungeon->getMaxFrameX())
 							{
 								_index = 0;
 							}
 						}
 					}
 				}
-
 			}
 			//////////////////////////////////////////////////행동////////////////
 
@@ -570,6 +477,35 @@ void player::move()
 			if (KEYMANAGER->isStayKeyDown('D'))
 			{
 				EFFECTMANAGER->play("숏소드", _ptMouse.x, _ptMouse.y);
+			}
+			if (KEYMANAGER->isOnceKeyDown('F'))
+			{
+				if (_isDead == false)
+				{
+					_index = 0;
+					_isDead = true;
+				}
+			}
+			if (KEYMANAGER->isStayKeyDown('L'))
+			{
+				_isUsingPendant = true;
+				willPendant->setFrameX(_cntPendant);
+				willPendant->setFrameY(0);
+				if (_count % 7 == 0)
+				{
+					++_cntPendant;
+					if (_cntPendant > willPendant->getMaxFrameX())
+					{
+						_index = 0;
+						_isAutomatic = true;
+						_isGoingHome = true;
+					}
+				}
+			}
+			if (KEYMANAGER->isOnceKeyUp('L'))
+			{
+				_isUsingPendant = false;
+				SOUNDMANAGER->stop("will_pendant_charge");
 			}
 			if (_isAttacking == true)
 			{
@@ -672,8 +608,8 @@ void player::move()
 	{
 		if (_isUp)
 		{
-			will->setFrameX(_index);
-			will->setFrameY(8);
+			willDungeon->setFrameX(_index);
+			willDungeon->setFrameY(6);
 			if (_count % 6 == 0)
 			{
 				++_index;
@@ -683,11 +619,11 @@ void player::move()
 					_isRolling = false;
 					_isInvincible = false;
 				}
-			}	
+			}
 			pos.y -= (_speed + _acceleration);
 			_probeX = pos.x;
-			_probeY = pos.y - (will->getFrameHeight() / 4);
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			_probeY = pos.y - (willDungeon->getFrameHeight() / 4);
+			rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 			int disTemp = _rcProbe.top - rc.top;
 			for (int i = _probeY; i > _probeY - 15; --i)
@@ -699,15 +635,15 @@ void player::move()
 
 				if (r == 255 && g == 0 && b == 0)
 				{
-					pos.y = i + will->getFrameHeight() * 0.5 - disTemp;
+					pos.y = i + willDungeon->getFrameHeight() * 0.5 - disTemp;
 					break;
 				}
 			}
 		}
 		else if (_isDown)
 		{
-			will->setFrameX(_index);
-			will->setFrameY(9);
+			willDungeon->setFrameX(_index);
+			willDungeon->setFrameY(7);
 			if (_count % 6 == 0)
 			{
 				++_index;
@@ -720,8 +656,8 @@ void player::move()
 			}
 			pos.y += (_speed + _acceleration);
 			_probeX = pos.x;
-			_probeY = pos.y + (will->getFrameHeight() / 4);
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
+			rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 			int disTemp = _rcProbe.bottom - rc.bottom;
 			for (int i = _probeY; i < _probeY + 15; ++i)
@@ -733,15 +669,15 @@ void player::move()
 
 				if (r == 255 && g == 0 && b == 0)
 				{
-					pos.y = i - will->getFrameHeight() * 0.5 - disTemp;
+					pos.y = i - willDungeon->getFrameHeight() * 0.5 - disTemp;
 					break;
 				}
 			}
 		}
 		else if (_isRight)
 		{
-			will->setFrameX(_index);
-			will->setFrameY(10);
+			willDungeon->setFrameX(_index);
+			willDungeon->setFrameY(4);
 			if (_count % 6 == 0)
 			{
 				++_index;
@@ -755,7 +691,7 @@ void player::move()
 			pos.x += (_speed + _acceleration);
 			_probeX = pos.x + 20;
 			_probeY = pos.y;
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 			int disTemp = _rcProbe.right - _rcProbe.left;
 			for (int i = _probeX; i < _probeX + 15; ++i)
@@ -772,10 +708,10 @@ void player::move()
 				}
 			}
 		}
-		else if(_isLeft)
+		else if (_isLeft)
 		{
-			will->setFrameX(_index);
-			will->setFrameY(11);
+			willDungeon->setFrameX(_index);
+			willDungeon->setFrameY(5);
 			if (_count % 6 == 0)
 			{
 				++_index;
@@ -789,7 +725,7 @@ void player::move()
 			pos.x -= (_speed + _acceleration);
 			_probeX = pos.x - 20;
 			_probeY = pos.y;
-			rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+			rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 			int disTemp = _rcProbe.right - _rcProbe.left;
 			for (int i = _probeX; i > _probeX - 15; --i)
@@ -807,614 +743,100 @@ void player::move()
 			}
 		}
 	}
-	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+
+	rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);
 	_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-	
+
 	if (_isInvincible)
 	{
 		++_cntIsInvincible;
-		if (_cntIsInvincible > 100)
+		if (_cntIsInvincible > 75)
 		{
 			_cntIsInvincible = 0;
 			_isInvincible = false;
 
 		}
 	}
-	
-	
-	
 
-
-	/*
-	//else if((_scene == 던전 )
-	if (KEYMANAGER->isStayKeyDown(VK_UP))
+	if (_isUsingPendant == true)
 	{
-		pos.y -= speed;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-	{
-		pos.y += speed;
-
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-	{
-		pos.x -= speed;
-	}
-	if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-	{
-		pos.x += speed;
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-	{
-
-	}
-
-	*/
-}
-
-void player::dungeonMove()
-{
-	++_count;
-
-	//if(_scene == 상점 or 마을)
-	if (_isDead != true)
-	{
-		if (_playerMove)
-		{	
-			if (_isRolling != true)
-			{
-				if (_isAttacking == false)
-				{
-					if (KEYMANAGER->isStayKeyDown(VK_UP))
-					{
-						_isIdle = false;
-						_isUp = true;
-						_isDown = false;
-						_isRight = false;
-						_isLeft = false;
-						willDungeon->setFrameX(_index);
-						willDungeon->setFrameY(0);
-						if (_count % 10 == 0)
-						{
-							++_index;
-							if (_index > 7)
-							{
-								_index = 0;
-							}
-						}
-						pos.y -= _speed;
-
-
-						_probeX = pos.x;
-						_probeY = pos.y;
-						rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
-						_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-						int disTemp = _rcProbe.top - rc.top;
-						for (int i = _probeY; i > _probeY - 15; --i)
-						{
-							COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
-							int r = GetRValue(color);
-							int g = GetGValue(color);
-							int b = GetBValue(color);
-
-							if (r == 255 && g == 0 && b == 0)
-							{
-								pos.y = i + willDungeon->getFrameHeight() * 0.5 - disTemp;
-								break;
-							}
-						}
-						if (_count % 30 == 0)
-						{
-							SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
-						}
-					}
-					if (KEYMANAGER->isOnceKeyUp(VK_UP))
-					{
-						_isIdle = true;
-					}
-					if (KEYMANAGER->isStayKeyDown(VK_DOWN))
-					{
-						_isIdle = false;
-						_isDown = true;
-						_isUp = false;
-						_isRight = false;
-						_isLeft = false;
-						willDungeon->setFrameX(_index);
-						willDungeon->setFrameY(1);
-						if (_count % 10 == 0)
-						{
-							++_index;
-							if (_index > 7)
-							{
-								_index = 0;
-							}
-						}
-						pos.y += _speed;
-						_probeX = pos.x;
-						_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
-						rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
-						_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-						int disTemp = _rcProbe.bottom - rc.bottom;
-						for (int i = _probeY; i < _probeY + 15; ++i)
-						{
-							COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
-							int r = GetRValue(color);
-							int g = GetGValue(color);
-							int b = GetBValue(color);
-
-							if (r == 255 && g == 0 && b == 0)
-							{
-								pos.y = i - willDungeon->getFrameHeight() * 0.5 - disTemp;
-								break;
-							}
-						}
-						if (_count % 30 == 0)
-						{
-							SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
-						}
-					}
-					if (KEYMANAGER->isOnceKeyUp(VK_DOWN))
-					{
-						_isIdle = true;
-					}
-					if (KEYMANAGER->isStayKeyDown(VK_RIGHT))
-					{
-						_isIdle = false;
-						_isDown = false;
-						_isUp = false;
-						_isRight = true;
-						_isLeft = false;
-						willDungeon->setFrameX(_index);
-						willDungeon->setFrameY(2);
-						if (_count % 10 == 0)
-						{
-							++_index;
-							if (_index > 7)
-							{
-								_index = 0;
-							}
-						}
-						pos.x += _speed;
-						_probeX = pos.x + 20;
-						_probeY = pos.y;
-						rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
-						_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-						int disTemp = _rcProbe.right - _rcProbe.left;
-						for (int i = _probeX; i < _probeX + 15; ++i)
-						{
-							COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
-							int r = GetRValue(color);
-							int g = GetGValue(color);
-							int b = GetBValue(color);
-
-							if (r == 255 && g == 0 && b == 0)
-							{
-								pos.x = i - disTemp;
-								break;
-							}
-						}
-						if (_count % 30 == 0)
-						{
-							SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
-						}
-					}
-					if (KEYMANAGER->isOnceKeyUp(VK_RIGHT))
-					{
-						_isIdle = true;
-					}
-					if (KEYMANAGER->isStayKeyDown(VK_LEFT))
-					{
-						_isDown = false;
-						_isUp = false;
-						_isIdle = false;
-						_isLeft = true;
-						_isRight = false;
-						willDungeon->setFrameX(_index);
-						willDungeon->setFrameY(3);
-						if (_count % 10 == 0)
-						{
-							++_index;
-							if (_index > 7)
-							{
-								_index = 0;
-							}
-						}
-						pos.x -= _speed;
-						_probeX = pos.x - 20;
-						_probeY = pos.y;
-						rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
-						_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-						int disTemp = _rcProbe.right - _rcProbe.left;
-						for (int i = _probeX; i > _probeX - 15; --i)
-						{
-							COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
-							int r = GetRValue(color);
-							int g = GetGValue(color);
-							int b = GetBValue(color);
-
-							if (r == 255 && g == 0 && b == 0)
-							{
-								pos.x = i + disTemp;
-								break;
-							}
-						}
-						if (_count % 30 == 0)
-						{
-							SOUNDMANAGER->play("will_step_town_gravel", 0.1f);
-						}
-					}
-					if (KEYMANAGER->isOnceKeyUp(VK_LEFT))
-					{
-						_isIdle = true;
-
-					}
-					if (KEYMANAGER->isOnceKeyDown(VK_SPACE))
-					{
-						SOUNDMANAGER->play("will_roll", 0.7f);
-						_index = 0;
-						_isRolling = true;
-						_isInvincible = true;
-						_acceleration = 0.5f;
-					}
-					if (_isIdle == true)
-					{
-						if (_isUp)
-						{
-							willDungeon->setFrameX(_index);
-							willDungeon->setFrameY(10);
-							if (_count % 7 == 0)
-							{
-								++_index;
-								if (_index > 7)
-								{
-									_index = 0;
-								}
-							}
-						}
-						else if (_isDown)
-						{
-							willDungeon->setFrameX(_index);
-							willDungeon->setFrameY(11);
-							if (_count % 7 == 0)
-							{
-								++_index;
-								if (_index > 7)
-								{
-									_index = 0;
-								}
-							}
-						}
-						else if (_isRight)
-						{
-							willDungeon->setFrameX(_index);
-							willDungeon->setFrameY(8);
-							if (_count % 7 == 0)
-							{
-								++_index;
-								if (_index > willDungeon->getMaxFrameX())
-								{
-									_index = 0;
-								}
-							}
-						}
-						else if (_isLeft)
-						{
-							willDungeon->setFrameX(_index);
-							willDungeon->setFrameY(9);
-							if (_count % 7 == 0)
-							{
-								++_index;
-								if (_index > willDungeon->getMaxFrameX())
-								{
-									_index = 0;
-								}
-							}
-						}
-					}
-				}
-				//////////////////////////////////////////////////행동////////////////
-
-				if (KEYMANAGER->isOnceKeyDown('A'))		// 공격
-				{
-					if (_isAttacking == false && _isRolling == false)
-					{
-						_isAttacking = true;
-						_index = 0;
-						SOUNDMANAGER->play("will_shortSwordAttack", 0.3f);
-					}
-				}
-				if (KEYMANAGER->isOnceKeyDown('S'))
-				{
-					_isHit = true;
-					_damage = 150;
-					_currentHp -= _damage;
-					_hpBar->setIsHit();
-					_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
-				}
-				if (KEYMANAGER->isOnceKeyUp('S'))
-				{
-					_isHit = false;
-				}
-				if (KEYMANAGER->isStayKeyDown('D'))
-				{
-					EFFECTMANAGER->play("숏소드", _ptMouse.x, _ptMouse.y);
-				}
-				if (KEYMANAGER->isOnceKeyDown('F'))
-				{
-					if (_isDead == false)
-					{
-						_index = 0;
-						_isDead = true;
-					}
-				}
-				if (_isAttacking == true)
-				{
-					if (_count % 7 == 0)
-					{
-						++_index;
-					}
-
-					if (_isUp)
-					{
-						willAttack->setFrameX(_index);
-						willAttack->setFrameY(0);
-						if (_index > willAttack->getMaxFrameX())
-						{
-							_isAttacking = false;
-							_isIdle = true;
-						}
-						if (2 == _index)
-						{
-							//_isRcSwordOn = true;
-							_rcSword = RectMakeCenter(pos.x, pos.y - 20, 130, 100);
-						}
-						else
-						{
-							//_isRcSwordOn = false;
-							_rcSword = RectMake(-50, -50, 2, 2);
-						}
-
-					}
-					else if (_isDown)
-					{
-						willAttack->setFrameX(_index);
-						willAttack->setFrameY(1);
-						if (_index > willAttack->getMaxFrameX())
-						{
-							_isAttacking = false;
-							_isIdle = true;
-						}
-						if (2 == _index)
-						{
-							//_isRcSwordOn = true;
-							_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
-						}
-						else
-						{
-							//_isRcSwordOn = false;
-							_rcSword = RectMake(-50, -50, 2, 2);
-						}
-					}
-					else if (_isRight)
-					{
-						willAttack->setFrameX(_index);
-						willAttack->setFrameY(2);
-						if (_index > willAttack->getMaxFrameX())
-						{
-							_isAttacking = false;
-							_isIdle = true;
-						}
-						if (2 == _index)
-						{
-							//_isRcSwordOn = true;
-							_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
-						}
-						else
-						{
-							//_isRcSwordOn = false;
-							_rcSword = RectMake(-50, -50, 2, 2);
-						}
-					}
-					else if (_isLeft)
-					{
-						willAttack->setFrameX(_index);
-						willAttack->setFrameY(3);
-						if (_index > willAttack->getMaxFrameX())
-						{
-							_isAttacking = false;
-							_isIdle = true;
-						}
-						if (2 == _index)
-						{
-							//_isRcSwordOn = true;
-							_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
-						}
-						else
-						{
-							//_isRcSwordOn = false;
-							_rcSword = RectMake(-50, -50, 2, 2);
-						}
-					}
-				}
-				else
-				{
-					//_isRcSwordOn = false;
-					_rcSword = RectMake(-50, -50, 2, 2);
-				}
-				///////////////////////////////////////////////////////////////////////////////
-			}
-			else
-			{
-				if (_isUp)
-				{
-					willDungeon->setFrameX(_index);
-					willDungeon->setFrameY(6);
-					if (_count % 6 == 0)
-					{
-						++_index;
-						if (_index > 7)
-						{
-							_index = 0;
-							_isRolling = false;
-							_isInvincible = false;
-						}
-					}
-					pos.y -= (_speed + _acceleration);
-					_probeX = pos.x;
-					_probeY = pos.y - (willDungeon->getFrameHeight() / 4);
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-					int disTemp = _rcProbe.top - rc.top;
-					for (int i = _probeY; i > _probeY - 15; --i)
-					{
-						COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
-						int r = GetRValue(color);
-						int g = GetGValue(color);
-						int b = GetBValue(color);
-
-						if (r == 255 && g == 0 && b == 0)
-						{
-							pos.y = i + willDungeon->getFrameHeight() * 0.5 - disTemp;
-							break;
-						}
-					}
-				}
-				else if (_isDown)
-				{
-					willDungeon->setFrameX(_index);
-					willDungeon->setFrameY(7);
-					if (_count % 6 == 0)
-					{
-						++_index;
-						if (_index > 7)
-						{
-							_index = 0;
-							_isRolling = false;
-							_isInvincible = false;
-						}
-					}
-					pos.y += (_speed + _acceleration);
-					_probeX = pos.x;
-					_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-					int disTemp = _rcProbe.bottom - rc.bottom;
-					for (int i = _probeY; i < _probeY + 15; ++i)
-					{
-						COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
-						int r = GetRValue(color);
-						int g = GetGValue(color);
-						int b = GetBValue(color);
-
-						if (r == 255 && g == 0 && b == 0)
-						{
-							pos.y = i - willDungeon->getFrameHeight() * 0.5 - disTemp;
-							break;
-						}
-					}
-				}
-				else if (_isRight)
-				{
-					willDungeon->setFrameX(_index);
-					willDungeon->setFrameY(4);
-					if (_count % 6 == 0)
-					{
-						++_index;
-						if (_index > 7)
-						{
-							_index = 0;
-							_isRolling = false;
-							_isInvincible = false;
-						}
-					}
-					pos.x += (_speed + _acceleration);
-					_probeX = pos.x + 20;
-					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-					int disTemp = _rcProbe.right - _rcProbe.left;
-					for (int i = _probeX; i < _probeX + 15; ++i)
-					{
-						COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
-						int r = GetRValue(color);
-						int g = GetGValue(color);
-						int b = GetBValue(color);
-
-						if (r == 255 && g == 0 && b == 0)
-						{
-							pos.x = i - disTemp;
-							break;
-						}
-					}
-				}
-				else if (_isLeft)
-				{
-					willDungeon->setFrameX(_index);
-					willDungeon->setFrameY(5);
-					if (_count % 6 == 0)
-					{
-						++_index;
-						if (_index > 7)
-						{
-							_index = 0;
-							_isRolling = false;
-							_isInvincible = false;
-						}
-					}
-					pos.x -= (_speed + _acceleration);
-					_probeX = pos.x - 20;
-					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-					int disTemp = _rcProbe.right - _rcProbe.left;
-					for (int i = _probeX; i > _probeX - 15; --i)
-					{
-						COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
-						int r = GetRValue(color);
-						int g = GetGValue(color);
-						int b = GetBValue(color);
-
-						if (r == 255 && g == 0 && b == 0)
-						{
-							pos.x = i + disTemp;
-							break;
-						}
-					}
-				}
-			}
-			rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-			_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);
-			_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
-
-			if (_isInvincible)
-			{
-				++_cntIsInvincible;
-				if (_cntIsInvincible > 75)
-				{
-					_cntIsInvincible = 0;
-					_isInvincible = false;
-
-				}
-			}
+		if (SOUNDMANAGER->isPlaySound("will_pendant_charge") == false)
+		{
+			SOUNDMANAGER->play("will_pendant_charge", 0.5f);
 		}
 	}
 	else
 	{
+		noUsePendant();
+	}
+}
+void player::willAction()
+{
+	++_count;
+	if (_isAutomatic == false)
+	{
+		dungeonMove();
+	}
+	else
+	{
+		willDoSomething();
+	}
+}
+void player::willDoSomething()
+{
+	if (_isDead)
+	{
+		if (SOUNDMANAGER->isPlaySound("will_death") == false)
+		{
+			SOUNDMANAGER->play("will_death", 0.7f);
+		}
 		willDungeon->setFrameX(_index);
 		willDungeon->setFrameY(12);
-		if (_count % 10 == 0)
+		if (_count % 4 == 0)
 		{
 			++_index;
 			if (_index > willDungeon->getMaxFrameX())
 			{
-				_index = willDungeon->getMaxFrameX();
+				OBJECTMANAGER->reset();
+				this->setIsActive(false);
+				SCENEMANAGER->loadScene("dungeonLobby");
 			}
 		}
-		if (KEYMANAGER->isOnceKeyDown('F'))
+	}
+	else if (_isGoingHome)
+	{
+		goHome();
+	}
+
+}
+void player::noUsePendant()
+{
+	willPendant->setFrameX(_cntPendant);
+	willPendant->setFrameY(0);
+	if (_count % 3 == 0)
+	{
+		--_cntPendant;
+		if (_cntPendant < 0) { _cntPendant = 0; }
+	}
+}
+void player::goHome()
+{
+	if (SOUNDMANAGER->isPlaySound("will_pendant_absorb"))
+	{
+		SOUNDMANAGER->play("will_pendant_absorb");
+	}
+	willGoHome->setFrameX(_index);
+	willGoHome->setFrameY(0);
+	if (_count % 4 == 0) //4
+	{
+		++_index;
+		if (_index > willGoHome->getMaxFrameX())
 		{
-			_index = 0;
-			_isDead = false;
+			_isGoingHome = false;
+			_isAutomatic = false;
+			OBJECTMANAGER->reset();
+			SCENEMANAGER->loadScene("townScene");
 		}
 	}
 }
@@ -1467,6 +889,7 @@ void player::enemyCheckCollision()
 					_count = 0;
 					_index = 0;
 					_isDead = true;
+					_isAutomatic = true;
 				}
 				a = true;
 			}

@@ -15,6 +15,7 @@ private:
 	RECT temp;
 	RECT _enterRc;
 	RECT _doorSensorRc;
+	bool _isDoorOpen;
 	bool _isClose_Player;
 	bool _isDungeonIn;
 public:
