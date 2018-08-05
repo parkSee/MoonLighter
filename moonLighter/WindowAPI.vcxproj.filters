@@ -242,9 +242,6 @@
     <ClInclude Include="AIKids.h">
       <Filter>MainGame\AI</Filter>
     </ClInclude>
-    <ClInclude Include="AIKidsState.h">
-      <Filter>MainGame\AI</Filter>
-    </ClInclude>
     <ClInclude Include="boss.h">
       <Filter>MainGame\Enemy</Filter>
     </ClInclude>
@@ -419,9 +416,6 @@
       <Filter>MainGame\Scene</Filter>
     </ClCompile>
     <ClCompile Include="AIKids.cpp">
-      <Filter>MainGame\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="AIKidsState.cpp">
       <Filter>MainGame\AI</Filter>
     </ClCompile>
     <ClCompile Include="boss.cpp">

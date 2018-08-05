@@ -149,7 +149,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AIKids.h" />
-    <ClInclude Include="AIKidsState.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="bigSlime.h" />
     <ClInclude Include="boss.h" />
@@ -208,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AIKids.cpp" />
-    <ClCompile Include="AIKidsState.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="bigSlime.cpp" />
     <ClCompile Include="boss.cpp" />

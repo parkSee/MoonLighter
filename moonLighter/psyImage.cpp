@@ -54,6 +54,12 @@ void loadingScene::psyImageLoading()
 
 	//AI
 	_loading->loadImage("AiKids", "Image/ai/AiKids.bmp", 600, 400, true, MAGENTA);
+
+	_loading->loadFrameImage("girl_front_run", "Image/ai/girl_front_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+	_loading->loadFrameImage("girl_back_run", "Image/ai/girl_back_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+	_loading->loadFrameImage("girl_left_run", "Image/ai/girl_left_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+	_loading->loadFrameImage("girl_right_run", "Image/ai/girl_right_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+
 	
 	//door
 	_loading->loadImage("door_left", "Image/door_left.bmp", 640, 737, true, MAGENTA);
