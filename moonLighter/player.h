@@ -10,6 +10,7 @@ private:
 
 	int _index;
 	int _count;
+	int _cntPendant;
 	int _cntIsInvincible;
 	int _probeY;
 	int _probeX;
@@ -18,6 +19,7 @@ private:
 	float _time;
 	float _speed;
 	float _acceleration;
+	bool _isAutomatic;
 	bool _isIdle;
 	bool _isUp;
 	bool _isDown;
@@ -26,6 +28,8 @@ private:
 	bool _isRolling;
 	bool _isInvincible;
 	bool _isAttacking;
+	bool _isUsingPendant;
+	bool _isGoingHome;
 	bool _isRcSwordOn;
 	bool _isHit;
 	bool _isDead;
@@ -39,6 +43,8 @@ private:
 	image* willDungeon;
 	image* willAttack;
 	image* willDamaged;
+	image* willPendant;
+	image* willGoHome;
 
 	image* _pixelImg;
 
@@ -57,8 +63,16 @@ public:
 	void collision();
 	void move();
 	void dungeonMove();
+	void willAction();
+	void willDoSomething();
+	void noUsePendant();
+	void goHome();
 	bool getInvincible() { return _isInvincible; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
+	void setIsAutomatic(bool isAutomatic) { _isAutomatic = isAutomatic; }
+	bool getIsAutomatic() { return _isAutomatic; }
+	void setIsDead(bool isDead) { _isDead = isDead; }
+	bool getIsDead() { return _isDead; }
 	float getSpeed() { return _speed; }		
 	RECT getRcBody() { return _rcBody; }	
 	RECT getRcProbe() { return _rcProbe; }	
