@@ -128,7 +128,7 @@ void boss::render()
 {
 	
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	RectangleCam(getMemDC(), _collisionRc, cam);
+	//RectangleCam(getMemDC(), _collisionRc, cam);
 	//RectangleCam(getMemDC(), rc, cam);
 
 	//_boss[5]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX[5],_currentY[5]);
@@ -488,7 +488,7 @@ void boss::render()
 		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 120, pos.y + 15);
 	}
 	
-	if (0 < _dmgImgCount && _dmgImgCount < 40)
+	if (0 < _dmgImgCount && _dmgImgCount < 30)
 	{
 		_dmgImgCount++;
 		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 8, 0);
@@ -498,7 +498,7 @@ void boss::render()
 
 
 
-	if (_dmgImgCount > 40)
+	if (_dmgImgCount >= 30)
 	{
 		_dmgImgCount = 0;
 		_dmgImgY = -70;

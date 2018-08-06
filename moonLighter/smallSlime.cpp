@@ -172,7 +172,7 @@ void smallSlime::render()
 		_noneAttacked = false;
 	}
 
-	if (0 < _dmgImgCount && _dmgImgCount < 40)
+	if (0 < _dmgImgCount && _dmgImgCount < 30)
 	{
 		_dmgImgCount++;
 		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 8, 0);
@@ -182,7 +182,7 @@ void smallSlime::render()
 
 
 
-	if (_dmgImgCount > 40)
+	if (_dmgImgCount >= 30)
 	{
 		_dmgImgCount = 0;
 		_dmgImgY = -70;

@@ -162,7 +162,7 @@ void weed::render()
 			_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
 		}
 	}
-	if (0 < _dmgImgCount && _dmgImgCount < 40)
+	if (0 < _dmgImgCount && _dmgImgCount < 30)
 	{
 		_dmgImgCount++;
 		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 5, 0);
@@ -172,7 +172,7 @@ void weed::render()
 		
 
 	
-	if (_dmgImgCount > 40)
+	if (_dmgImgCount >= 30)
 	{
 		_dmgImgCount = 0;
 		_dmgImgY = -70;
