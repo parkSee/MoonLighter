@@ -9,6 +9,8 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_smallSlime = IMAGEMANAGER->findImage("작은슬라임");
 	_attackedSmallSlime[0] = IMAGEMANAGER->findImage("작은슬라임빨강");
 	_attackedSmallSlime[1] = IMAGEMANAGER->findImage("작은슬라임하양");
+	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
 	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
 	_hp->setGauge(200, 200);
@@ -16,6 +18,14 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 	_count = _currentX = _attackedCount = _currentY = _dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+
+	 _dmgImgY =-70;
+	 _dmgImgCount=0;
+	 _dmgImgCountBool=false;
+
+
 
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
@@ -162,7 +172,21 @@ void smallSlime::render()
 		_noneAttacked = false;
 	}
 
-	
+	if (0 < _dmgImgCount && _dmgImgCount < 30)
+	{
+		_dmgImgCount++;
+		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 8, 0);
+		_dmgFontOne->frameRender(getMemDC(), _dmgFontRc[1].left - cam.left, _dmgFontRc[1].top - cam.top, 6, 0);
+		_dmgImgY -= 0.5f;
+	}
+
+
+
+	if (_dmgImgCount >= 30)
+	{
+		_dmgImgCount = 0;
+		_dmgImgY = -70;
+	}
 	
 }
 
@@ -170,6 +194,8 @@ void smallSlime::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _smallSlime->getFrameWidth(), _smallSlime->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x + 20, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 }
 
 void smallSlime::hp()
@@ -200,6 +226,7 @@ void smallSlime::damagged()
 
 	if (_damaaged)
 	{
+		_dmgImgCount++;
 		_dmgCount++;
 		_damaaged = false;
 		_isAttacked = true;

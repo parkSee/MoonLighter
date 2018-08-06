@@ -12,6 +12,13 @@ private:
 	progressBar* _hp;
 	int _currentHp;
 
+	image* _dmgFontTen;
+	image* _dmgFontOne;
+	RECT _dmgFontRc[2];
+	float _dmgImgY;
+	int _dmgImgCount;
+	bool _dmgImgCountBool;
+
 	int _currentX[4]; // 현재 X 프레임 좌표용 변수
 	int _currentY[4];
 	int _tempCurrent;

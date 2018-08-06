@@ -27,8 +27,10 @@ HRESULT bossRoomScene::init()
 	for (int i = 0; i < MAXBOSS; i++)
 	{
 		_clone[i] = false;
+		_deadBool[i] = false;
 	}
 	_blackBgBool = false;
+	_bgStart = false;
 	
 
 	_blackBg = IMAGEMANAGER->findImage("°ËÀºÈ­¸é");
@@ -39,6 +41,7 @@ HRESULT bossRoomScene::init()
 /*
 	_test = new progressBar;
 	_test->init("testF", "testB", WINSIZEX / 2, WINSIZEY / 2, 20, 600);*/
+	 _deadEffectBool=false;
 	
 
 
@@ -75,10 +78,7 @@ void bossRoomScene::update()
 		SCENEMANAGER->loadScene("townScene");
 	}
 
-	/*_test->setX(WINSIZEX/2);
-	_test->setY(WINSIZEY-200);
-	_test->update();
-	_test->setHeightGuge(_currentHp, 200);*/
+	
 
 	_bossHp->update();
 	
@@ -94,25 +94,7 @@ void bossRoomScene::update()
 		_currentHp -= 20;
 	}
 
-	//for(int i=0;i<MAXBOSS;i++)
-	//{
-	//	if (_clone[i])
-	//	{
-	//		if (IntersectRect(&tempRc, &((player*)_player)->getRcSword(), &_boss2->getCollisionRC()) && _damaged == false)
-	//		{
-	//
-	//			_damaged = true;
-	//			_dmgCountBool = true;
-	//			_currentHp -= 10;
-	//			_deadCount++;
-	//			
-	//			if (_deadCount == 2)
-	//			{
-	//				removeClone();
-	//			}
-	//		}
-	//	}
-	//}
+	
 		
 	
 	vector<gameObject*> _cloneBoss = OBJECTMANAGER->findObjects(objectType::ENEMY, "cloneBoss");
@@ -127,7 +109,10 @@ void bossRoomScene::update()
 	
 			if (_deadCount == 2)
 			{
+				_deadBool[i] = true;
 				removeClone(i);
+				_deadCount = 0;
+				_deadBool[i] = false;
 			}
 		}
 	}
@@ -157,6 +142,38 @@ void bossRoomScene::update()
 			CAMERAMANAGER->shakeCamera(5.0f, 0.001f);
 		}
 	}
+	
+	if (_currentHp <= 0)
+	{
+		_blackBgAlpha++;
+		if (_blackBgAlpha == 255)
+		{
+			//_bgStart = true;
+			_blackBgAlpha = 0;
+			_currentHp = 300;
+			SCENEMANAGER->loadScene("townScene");
+			
+		}
+		for (int i = 0; i < _cloneBoss.size(); i++)
+		{
+
+
+			EFFECTMANAGER->play("»Ð»Ð", _cloneBoss[i]->pos.x, _cloneBoss[i]->pos.y);
+			SOUNDMANAGER->play("enemy_death", 1.f);
+			_cloneBoss[i]->setIsLive(false);
+			_bgStart = true;
+
+		}
+		if (_bgStart)
+		{
+			_bgStart = false;
+			_boss->setIsActive(false);
+			EFFECTMANAGER->play("»Ð»Ð", _boss->pos.x, _boss->pos.y);
+			SOUNDMANAGER->play("enemy_death", 1.f);
+		}
+	}
+	
+
 	
 	
 
@@ -191,9 +208,20 @@ void bossRoomScene::cloneBoss()
 
 void bossRoomScene::removeClone(int index)
 {
+	RECT cam = CAMERAMANAGER->getRenderRc();
 	vector<gameObject*> _cloneBoss = OBJECTMANAGER->findObjects(objectType::ENEMY, "cloneBoss");
-	_cloneBoss[index]->setIsLive(false);
-	_deadCount = 0;
+
+	for (int i = 0; i < MAXBOSS; i++)
+	{
+		if (_deadBool[i] == true && _deadEffectBool == false)
+		{
+			
+			EFFECTMANAGER->play("»Ð»Ð", _cloneBoss[index]->pos.x, _cloneBoss[index]->pos.y);
+			SOUNDMANAGER->play("enemy_death", 1.f);
+			_cloneBoss[index]->setIsLive(false);
+			
+		}
+	}
 
 }
 

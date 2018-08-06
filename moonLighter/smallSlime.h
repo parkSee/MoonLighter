@@ -9,6 +9,14 @@ private:
 	image * _smallSlime;
 	image* _attackedSmallSlime[2];
 	progressBar* _hp;
+
+	image* _dmgFontTen;
+	image* _dmgFontOne;
+	RECT _dmgFontRc[2];
+	float _dmgImgY;
+	int _dmgImgCount;
+	bool _dmgImgCountBool;
+
 	int _currentHp;
 	int _count;
 	int _currentX;

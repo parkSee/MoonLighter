@@ -10,6 +10,14 @@ private:
 	progressBar* _hp;
 	int _currentHp;
 
+	image* _dmgFontTen;
+	image* _dmgFontOne;
+	RECT _dmgFontRc[2];
+	float _dmgImgY;
+	float _dmgImgX;
+	int _dmgImgCount;
+	bool _dmgImgCountBool;
+
 	int _currentX[5]; // 현재 X 프레임 좌표용 변수
 	int _currentY[5];
 	int _tempCurrent;
@@ -38,6 +46,8 @@ private:
 	bool _start;
 	bool _playing;
 	bool _first;
+	bool _deadEffectBool;
+	bool _deadBool;
 
 	bool _xMove;
 	bool _yMove;
@@ -84,6 +94,7 @@ public:
 	void pixelCollision();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	bool getStart() { return _start; }
+	void dead();
 
 	
 

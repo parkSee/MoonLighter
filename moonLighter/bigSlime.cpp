@@ -9,6 +9,8 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	_bigSlime = IMAGEMANAGER->findImage("큰슬라임");
 	_attackedBigSlime[0] = IMAGEMANAGER->findImage("큰슬라임빨강");
 	_attackedBigSlime[1] = IMAGEMANAGER->findImage("큰슬라임하양");
+	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
 	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
 	_hp->setGauge(200, 200);
@@ -16,6 +18,14 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	//EFFECTMANAGER->addEffect("뿅뿅",)
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+
+	_dmgImgY = -70;
+	_dmgImgCount = 0;
+	_dmgImgCountBool = false;
+
 	_alpha = 255;
 	speed = 1.1f;
 	_count = _currentX = _attackedCount = _dmgCount=_currentY=_distance= _jellyCount  =0;
@@ -159,7 +169,22 @@ void bigSlime::render()
 		}
 	}
 
-	
+	if (0 < _dmgImgCount && _dmgImgCount < 30)
+	{
+		_dmgImgCount++;
+		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 8, 0);
+		_dmgFontOne->frameRender(getMemDC(), _dmgFontRc[1].left - cam.left, _dmgFontRc[1].top - cam.top, 6, 0);
+		_dmgImgY -= 0.5f;
+	}
+
+
+
+	if (_dmgImgCount >= 30)
+	{
+		_dmgImgCount = 0;
+		_dmgImgY = -70;
+	}
+
 	
 
 }
@@ -169,6 +194,8 @@ void bigSlime::imgRectMake()
 
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x + 20, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 }
 
 void bigSlime::hp()
@@ -249,6 +276,7 @@ void bigSlime::damaged()
 
 	if (_damaaged)
 	{
+		_dmgImgCount++;
 		_dmgCount++;
 		_damaaged = false;
 		_isAttacked = true;

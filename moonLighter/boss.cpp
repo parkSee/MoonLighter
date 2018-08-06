@@ -19,7 +19,8 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_attackedBoss[6] = IMAGEMANAGER->findImage("보스뒤왼쪽빨강");
 	_attackedBoss[7] = IMAGEMANAGER->findImage("보스뒤왼쪽하양");
 	_boss[4] = IMAGEMANAGER->findImage("보스생성");
-
+	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	
 
 	EFFECTMANAGER->addEffect("보스공격이펙트다운오른쪽2", "보스공격이펙트다운오른쪽", 0.2f, 20);
@@ -37,6 +38,14 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_delayTime2 = 0;
 	_deadCount = 0;
 	
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+
+	_dmgImgY = -70;
+	_dmgImgX = -50;
+	_dmgImgCount = 0;
+	_dmgImgCountBool = false;
+
 
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 	 _collisionRc = RectMakeCenter(pos.x, pos.y, 100, 100);
@@ -69,6 +78,8 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_xMove = true;
 	_yMove = true;
 	_first = false;
+	_deadEffectBool=false;
+	_deadBool=false;
 	
 
 	return S_OK;
@@ -96,6 +107,7 @@ void boss::update()
 	hp();
 	_hp->update();
 	
+	
 	_collisionRc= RectMakeCenter(pos.x-50, pos.y+10, 150, 120);
 	_detectRect = RectMakeCenter(pos.x, pos.y, 2000, 2000);
 
@@ -116,7 +128,7 @@ void boss::render()
 {
 	
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	RectangleCam(getMemDC(), _collisionRc, cam);
+	//RectangleCam(getMemDC(), _collisionRc, cam);
 	//RectangleCam(getMemDC(), rc, cam);
 
 	//_boss[5]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX[5],_currentY[5]);
@@ -476,12 +488,29 @@ void boss::render()
 		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 120, pos.y + 15);
 	}
 	
+	if (0 < _dmgImgCount && _dmgImgCount < 30)
+	{
+		_dmgImgCount++;
+		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 8, 0);
+		_dmgFontOne->frameRender(getMemDC(), _dmgFontRc[1].left - cam.left, _dmgFontRc[1].top - cam.top, 6, 0);
+		_dmgImgY -= 0.5f;
+	}
 
+
+
+	if (_dmgImgCount >= 30)
+	{
+		_dmgImgCount = 0;
+		_dmgImgY = -70;
+		_dmgImgX = -50;
+	}
 }
 
 void boss::imgRectMake()
 {
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
+	 _dmgFontRc[0] = RectMakeCenter(pos.x - 10+ _dmgImgX, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	 _dmgFontRc[1] = RectMakeCenter(pos.x + 20+ _dmgImgX, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 }
 
 int boss::damagged()
@@ -499,6 +528,7 @@ int boss::damagged()
 	if (_damaaged)
 	{
 		_dmgCount++;
+		_dmgImgCount++;
 		_damaaged = false;
 		_isAttacked = true;
 		_noneAttacked = false;
@@ -725,4 +755,17 @@ void boss::pixelCollision()
 
 	}
 
+}
+
+void boss::dead()
+{
+	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	if (_deadBool && _deadEffectBool == false)
+	{
+		_deadEffectBool = true;
+		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
+		SOUNDMANAGER->play("enemy_death", 1.f);
+	}
+	setIsLive(false);
 }
