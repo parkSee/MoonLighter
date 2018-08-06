@@ -11,6 +11,8 @@ HRESULT shopScene::init()
 	_player->pos.y = 1000;
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
 
+	_shopDoor = IMAGEMANAGER->findImage("shopDoor");
+
 	_aiKid = new AIKids;
 	_aiKid->init("aiKid", tagFloat(650, 1303));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
@@ -45,7 +47,16 @@ HRESULT shopScene::init()
 	_furniture->init();
 
 	_exitCount = 0;
+	_outCount = 0;
+	_count2 = 0;
+	_exitCount = 0;
+	_index3 = 0;
+	_count3 = 0;
 	_isExit = _isOpen = false;
+	_j = false;
+	_button = false;
+	_ui = false;
+
 
 	_count = _index  = _index2 = 0;
 
@@ -62,51 +73,73 @@ void shopScene::update()
 	OBJECTMANAGER->update();
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	CAMERAMANAGER->update();
+	
 	RECT temp;
 
 
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc))
 	{
-		this->uiFrame();
+		_ui = true;
 
 		if (KEYMANAGER->isStayKeyDown('J'))
 		{
-			_exitCount++;
-			_isOpen = true;
-
-			if (_exitCount > 10)
-			{
-				this->buttonActionFrame();
-
-			}
+			_button = true;
+			_outCount++;
 		}
 		if (KEYMANAGER->isOnceKeyUp('J'))
 		{
-			_isOpen = false;
-			
-			if (_exitCount < 10)
-			{
-				OBJECTMANAGER->reset();
-				SCENEMANAGER->loadScene("townScene");
-				_player->pos.x = 1952;
-				_player->pos.y = 770;
-				SOUNDMANAGER->stop("shopBGM");
-				_exitCount = 0;
-				
-
-			}
-			_exitCount = 0;
-			_index = 0;
+			_button = false;
+			_count2 = 0;
+			_index2 = 0;
+			_exitCount = _outCount;
 		}
 
 
 	}
 	else
+	{
+		_ui = false;
 		_index = 0;
+		_index2 = 0;
+	}
+	
+	if(_ui)uiFrame();
+	if(_button)buttonActionFrame();
 
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
 
 	_inven->update();
+
+
+	if ( 1<_exitCount&&_exitCount < 10)
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("townScene");
+		_player->pos.x = 1952;
+		_player->pos.y = 770;
+		SOUNDMANAGER->stop("shopBGM");
+		
+		_outCount = 0;
+	}
+	if (_index2 == _buttonAction->getMaxFrameX())
+	{
+		_outCount = 0;
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("townScene");
+		_player->pos.x = 1952;
+		_player->pos.y = 770;
+		SOUNDMANAGER->stop("shopBGM");
+
+	}
+
+	if (KEYMANAGER->isStayKeyDown('Y'))
+	{
+		doorFrame();
+	}
+	if (KEYMANAGER->isStayKeyDown('U'))
+	{
+		RdoorFrame();
+	}
 }
  
 void shopScene::render()
@@ -123,19 +156,15 @@ void shopScene::render()
 	
 	OBJECTMANAGER->render(getMemDC());
 	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 570 - cam.left, 603 - cam.top);
+
+
 	
-
-	if (_exitCount > 10)
-	{
-		_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
-	}
-
-	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc) && _isOpen == false)
-	{
-		_buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
-
-	}
-	RectangleCam(getMemDC(), _enterRc, cam);
+		if(_ui && !_button)_buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
+		if(_button)_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
+	
+		_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
+	
+	//RectangleCam(getMemDC(), _enterRc, cam);
 	
 	_inven->render();
 }
@@ -162,11 +191,11 @@ void shopScene::uiFrame()
 
 void shopScene::buttonActionFrame()
 {
-	_count++;
+	_count2++;
 
 	_buttonAction->setFrameX(_index2);
 
-	if (_count % 10 == 0)
+	if (_count2 % 5 == 0)
 	{
 		++_index2;
 		if (_index2 > _buttonAction->getMaxFrameX())
@@ -178,5 +207,40 @@ void shopScene::buttonActionFrame()
 
 
 
+}
+
+void shopScene::doorFrame()
+{
+	_count3++;
+
+	_shopDoor->setFrameX(_index3);
+
+	if (_count3 % 5 == 0)
+	{
+		++_index3;
+		if (_index3 > _shopDoor->getMaxFrameX())
+		{
+			_index3 = _shopDoor->getMaxFrameX();
+
+		}
+	}
+
+}
+
+void shopScene::RdoorFrame()
+{
+	_count3++;
+
+	_shopDoor->setFrameX(_index3);
+
+	if (_count3 % 5 == 0)
+	{
+		--_index3;
+		if (_index3 < 0)
+		{
+			_index3 =0;
+
+		}
+	}
 }
 

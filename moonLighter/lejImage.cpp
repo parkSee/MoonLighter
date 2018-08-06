@@ -67,7 +67,7 @@ void loadingScene::lejImageLoading()
 
 
 	_loading->loadFrameImage("대미지폰트", "./image/enemy/대미지폰트.bmp", 300, 40, 10, 1);
-	
+	_loading->loadFrameImage("shopDoor", "./image/shop_object/shopDoor.bmp", 900, 139, 6, 1);
 
 
 	//_loading->loadFrameImage("뿅", "./image/enemy/뿅.bmp", 1150, 110, 10, 1);

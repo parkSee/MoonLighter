@@ -25,6 +25,7 @@ private:
 	furnitureContainer* _furniture;
 	image* _counter;
 	image* _display;
+	image* _shopDoor;
 
 	image* _buttonUi;
 	image* _buttonAction;
@@ -35,7 +36,13 @@ private:
 	bool _isExit , _isOpen;
 
 	int _count, _index;
-	int _index2;
+	int _count2,_index2;
+	int _outCount;
+	int _count3, _index3;
+	
+	bool _j;
+	bool _button;
+	bool _ui;
 
 public:
 
@@ -46,6 +53,8 @@ public:
 
 	void uiFrame();
 	void buttonActionFrame();
+	void doorFrame();
+	void RdoorFrame();
 
 	shopScene(){}
 	~shopScene(){}
