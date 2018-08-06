@@ -6,10 +6,10 @@ HRESULT AIKids::init(string _objName, tagFloat _pos, image * imgName)
 
 	gameObject::init(_objName, _pos);
 
-	_state[0] = IMAGEMANAGER->findImage("girl_front_run");
-	_state[1] = IMAGEMANAGER->findImage("girl_back_run");
-	_state[2] = IMAGEMANAGER->findImage("girl_left_run");
-	_state[3] = IMAGEMANAGER->findImage("girl_right_run");
+	_state[0] = IMAGEMANAGER->findImage("guy_front_run");
+	_state[1] = IMAGEMANAGER->findImage("guy_back_run");
+	_state[2] = IMAGEMANAGER->findImage("guy_left_run");
+	_state[3] = IMAGEMANAGER->findImage("guy_right_run");
 
 
 	//TODO: 애니메이션 변경 프레임으로 돌리고, 메세지통신
