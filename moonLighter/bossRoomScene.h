@@ -24,6 +24,9 @@ private:
 	bool _dmgCountBool;
 	bool _clone[MAXBOSS];
 	int _deadCount;
+
+	bool _deadEffectBool;
+	bool _deadBool[MAXBOSS];
 	
 
 public:

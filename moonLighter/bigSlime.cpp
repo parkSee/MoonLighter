@@ -9,6 +9,8 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	_bigSlime = IMAGEMANAGER->findImage("큰슬라임");
 	_attackedBigSlime[0] = IMAGEMANAGER->findImage("큰슬라임빨강");
 	_attackedBigSlime[1] = IMAGEMANAGER->findImage("큰슬라임하양");
+	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
 	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
 	_hp->setGauge(200, 200);
@@ -16,11 +18,15 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	//EFFECTMANAGER->addEffect("뿅뿅",)
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+	
 	_alpha = 255;
 	speed = 1.1f;
-	_count = _currentX = _attackedCount = _dmgCount=_currentY=_distance= _jellyCount  =0;
+	_dmgImgY - 70; 
+	_count = _currentX = _attackedCount = _dmgCount=_currentY=_distance= _jellyCount= _dmgImgCount =  0;
+	
 	_tempAngleX = RND->getFloat(6.2);
 	
+	_dmgImgCountBool = false;
 	_slimeBool = false;																
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
@@ -34,7 +40,8 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	 _isAttacked3 = false;
 	 _jellyAttack = false;
 	 _playerMove = true;
-
+	 _dmgFontRc[0] = RectMakeCenter(pos.x - 30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	 _dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 
 	return S_OK;
 }
@@ -52,7 +59,7 @@ void bigSlime::update()
 	bigSlimeFrame();
 	if (_currentHp >0)move();
 	hp();
-	this->damaged();
+	damaged();
 	pixelCollision();
 	_hp->update();
 	if (_deadBool)dead();
@@ -159,7 +166,22 @@ void bigSlime::render()
 		}
 	}
 
-	
+	if (0 < _dmgImgCount && _dmgImgCount < 40)
+	{
+		_dmgImgCount++;
+		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 7, 0);
+		_dmgFontOne->frameRender(getMemDC(), _dmgFontRc[1].left - cam.left, _dmgFontRc[1].top - cam.top, 2, 0);
+		_dmgImgY -= 0.5f;
+	}
+	if (_dmgImgCount == 40)
+	{
+
+		_dmgImgCount = 0;
+		_dmgImgY = -70;
+	}
+	char str[128];
+	sprintf(str, "%d", _dmgImgCount);
+	TextOut(getMemDC(), 400, 600, str, strlen(str));
 	
 
 }
@@ -169,6 +191,8 @@ void bigSlime::imgRectMake()
 
 	rc = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _bigSlime->getFrameWidth(), _bigSlime->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x + 20, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 }
 
 void bigSlime::hp()
@@ -250,6 +274,7 @@ void bigSlime::damaged()
 	if (_damaaged)
 	{
 		_dmgCount++;
+		_dmgImgCount++;
 		_damaaged = false;
 		_isAttacked = true;
 		_noneAttacked = false;

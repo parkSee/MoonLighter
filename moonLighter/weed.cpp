@@ -238,7 +238,7 @@ void weed::damagged()
 	if (0 < _dmgCount && _dmgCount <= 15)
 	{
 		_dmgCount++;
-		_dmgImgCount++;
+		
 		pos.x += 5 * cosf(PI - angle);
 		pos.y += 5 * sinf(PI - angle);
 		
@@ -247,7 +247,6 @@ void weed::damagged()
 	if (_dmgCount > 15)
 	{
 		_dmg = false;
-
 		_dmgCount = 0;
 		
 	}

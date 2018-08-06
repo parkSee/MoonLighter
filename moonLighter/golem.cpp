@@ -25,6 +25,13 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_hp->setGauge(200, 200);
 	_currentHp = 200;
 
+	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
+	_dmgImgY = -100;
+	_dmgImgCount = 0;
+	_dmgImgCountBool = false;
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 
 
 	 rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
@@ -799,7 +806,21 @@ void golem::render()
 	//RectangleCam(getMemDC(), _rc[1], cam);
 	//RectangleCam(getMemDC(), _rc[2], cam);
 	//RectangleCam(getMemDC(), _rc[3], cam);
+	if (0 < _dmgImgCount && _dmgImgCount < 40)
+	{
+		_dmgImgCount++;
+		_dmgFontTen->frameRender(getMemDC(), _dmgFontRc[0].left - cam.left, _dmgFontRc[0].top - cam.top, 9, 0);
+		_dmgFontOne->frameRender(getMemDC(), _dmgFontRc[1].left - cam.left, _dmgFontRc[1].top - cam.top, 0, 0);
+		_dmgImgY -= 0.5f;
+	}
 
+
+
+	if (_dmgImgCount > 40)
+	{
+		_dmgImgCount = 0;
+		_dmgImgY = -100;
+	}
 
 
 
@@ -809,6 +830,8 @@ void golem::imgRectMake()
 {
 	rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 	_rc2 = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
+	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_dmgFontRc[1] = RectMakeCenter(pos.x + 20, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 }
 
 void golem::hp()
@@ -841,6 +864,7 @@ void golem::damaged()
 
 	if (_damaaged)
 	{
+		_dmgImgCount++;
 		_dmgCount++;
 		_damaaged = false;
 		_isAttacked = true;
