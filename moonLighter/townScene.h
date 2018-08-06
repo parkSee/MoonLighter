@@ -13,7 +13,11 @@ private:
 	player * _player;	//플레이어 클래
 	RECT _enterShopRc;
 	RECT _enterDgInRc;
+	image* _enterText;
 	objectContainer* _container;
+
+
+	int _count, _index;
 public:
 
 	HRESULT init();
@@ -21,6 +25,7 @@ public:
 	void update();
 	void render();
 
+	void enterFrame();
 
 	townScene(){}
 	~townScene(){}

@@ -21,6 +21,18 @@ private:
 	furnitureContainer* _furniture;
 	image* _counter;
 	image* _display;
+
+	image* _buttonUi;
+	image* _buttonAction;
+
+	image* _jButton;
+
+	int _exitCount;
+	bool _isExit , _isOpen;
+
+	int _count, _index;
+	int _index2;
+
 public:
 
 	HRESULT init();
@@ -28,6 +40,8 @@ public:
 	void update();
 	void render();
 
+	void uiFrame();
+	void buttonActionFrame();
 
 	shopScene(){}
 	~shopScene(){}

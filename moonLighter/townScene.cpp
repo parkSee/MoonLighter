@@ -10,7 +10,7 @@ HRESULT townScene::init()
 	_player->pos.y = WINSIZEY / 2;
 	_player->setPixelImage(IMAGEMANAGER->findImage("redZone"));
 
-
+	_enterText = IMAGEMANAGER->findImage("dunIntroShowEnterText");
 	_container = new objectContainer;
 	_container->init();
 
@@ -20,7 +20,7 @@ HRESULT townScene::init()
 	SOUNDMANAGER->play("townBGM");
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
-
+	_count = _index = 0;
 	return S_OK;
 }
 
@@ -53,18 +53,25 @@ void townScene::update()
 	RECT temp;
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
 	{
-		//if (KEYMANAGER->isOnceKeyDown('J'))
-		//{
+		this->enterFrame();
+
+		if (KEYMANAGER->isOnceKeyDown('J'))
+		{
+			_index = 0;
 			OBJECTMANAGER->reset();
 			SCENEMANAGER->loadScene("shopScene");
 			SOUNDMANAGER->stop("townBGM");
-		//}
+		}
 	
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonLobby");
+	}
+	else
+	{
+		_index = 0;
 	}
 
 
@@ -100,16 +107,34 @@ void townScene::render()
 	SelectObject(getMemDC(), oldPen);
 	DeleteObject(pen); 
 	*/
-	/*RECT temp;
-	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
-	{
-		IMAGEMANAGER->findImage("dunIntroShowEnterText")->frameRender(getMemDC(), 2000 - rc.left, 575 - rc.top);
-	}
-*/
+	RECT temp;
+
+
 	OBJECTMANAGER->render(getMemDC());
 	RectangleCam(getMemDC(), _enterShopRc, rc);
 	RectangleCam(getMemDC(), _enterDgInRc, rc);
 
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
+	{
+		_enterText->frameRender(getMemDC(), 2000 - rc.left, 575 - rc.top);
+	}
+
+}
+
+void townScene::enterFrame()
+{
+	++_count;
+	_enterText->setFrameX(_index);
+	
+	if (_count % 10 == 0)
+	{
+		++_index;
+		if (_index > _enterText->getMaxFrameX())
+		{ 
+			_index = _enterText->getMaxFrameX();
+		}
+	}
+	
 
 
 }
