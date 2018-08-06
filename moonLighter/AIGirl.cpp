@@ -1,15 +1,17 @@
 #include "stdafx.h"
-#include "AIKids.h"
+#include "AIGirl.h"
 
-HRESULT AIKids::init(string _objName, tagFloat _pos)
+
+
+
+HRESULT AIGirl::init(string _objName, tagFloat _pos)
 {
-
 	gameObject::init(_objName, _pos);
 
-	_state[0] = IMAGEMANAGER->findImage("guy_front_run");
-	_state[1] = IMAGEMANAGER->findImage("guy_back_run");
-	_state[2] = IMAGEMANAGER->findImage("guy_left_run");
-	_state[3] = IMAGEMANAGER->findImage("guy_right_run");
+	_state[0] = IMAGEMANAGER->findImage("girl_front_run");
+	_state[1] = IMAGEMANAGER->findImage("girl_back_run");
+	_state[2] = IMAGEMANAGER->findImage("girl_left_run");
+	_state[3] = IMAGEMANAGER->findImage("girl_right_run");
 
 
 	//TODO: 애니메이션 변경 프레임으로 돌리고, 메세지통신
@@ -22,44 +24,49 @@ HRESULT AIKids::init(string _objName, tagFloat _pos)
 	_count = _index = 0;
 	_currentIndex = 0;
 	_maxIndex = 5;
-	_buyCount=0;
+	_buyCount = 0;
 	_moveCount = 0;
-	_isExit=false;
+	_isExit = false;
 	_buy = false;
 
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
 
-	_vDot[0] = tagFloat(650, 1185);
-	_vDot[1] = tagFloat(475, 1185);
-	_vDot[2] = tagFloat(405, 1185);
-	_vDot[3] = tagFloat(330, 1185);
-	_vDot[4] = tagFloat(288, 1161);
-	_vDot[5] = tagFloat(240, 1050);
+	_vDot[0] = tagFloat(649, 1185);
+	_vDot[1] = tagFloat(549, 1085);
+	_vDot[2] = tagFloat(549, 1000);
+	_vDot[3] = tagFloat(549, 900);
+	_vDot[4] = tagFloat(509, 920);
+	_vDot[5] = tagFloat(429, 920);
 
 	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+
 
 	return S_OK;
 }
 
-void AIKids::release()
+void AIGirl::release()
 {
 
 
 }
 
-void AIKids::update()
+void AIGirl::update()
 {
 	gameObject::update();
 
 	this->move();
+	
+	
+
 
 	this->Frame();
 	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+
 }
 
-void AIKids::render()
+void AIGirl::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 
@@ -70,19 +77,16 @@ void AIKids::render()
 		EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
 	}
 
-
-	char str[500];
-	//sprintf_s(str, "angle : %f ", angle);
-	//TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
-	_moveCount++;
-
+	
+		_moveCount++;
+	
 	char str2[500];
 	sprintf(str2, "%d", _moveCount);
 	TextOut(getMemDC(), 100, 100, str2, strlen(str2));
 
 }
 
-void AIKids::Frame()
+void AIGirl::Frame()
 {
 	_count++;
 	if (_count % 10 == 0)
@@ -100,56 +104,60 @@ void AIKids::Frame()
 
 }
 
-void AIKids::move()
+void AIGirl::move()
 {
+	if (_currentIndex >= _vDot.size())
+	{
+
+
+		return;
+	}
 
 	if (getDistance(pos.x, pos.y, _vDot[_currentIndex].x, _vDot[_currentIndex].y) < 10)
 	{
 		if (_currentIndex < _maxIndex)
 		{
 			_currentIndex++;
-
-			if (50 < _moveCount && _moveCount < 200)
+			if (200 < _moveCount && _moveCount < 300)
 			{
 				_curState = 2;
 			}
-			if (200 < _moveCount && _moveCount < 300)
-			{
-				_curState = 1;
-			}
-			if (300 < _moveCount && _moveCount < 450)
-			{
-				_curState = 1;
-			}
-			if (450 < _moveCount && _moveCount < 600)
-			{
-				_curState = 3;
-			}
-			if (600 < _moveCount && _moveCount < 650)
+			if (430 < _moveCount && _moveCount < 500)
 			{
 				_curState = 0;
 			}
-			if (650 < _moveCount && _moveCount < 700)
+			//else
+			//{
+			//	_curState = 3;
+			//}
+			if (500 <= _moveCount && _moveCount < 600)
 			{
-				_curState = 1;
+				_curState = 3;
 			}
 			
-
-
 		}
 		else if (_currentIndex >= _maxIndex)
 		{
 			_currentIndex = _maxIndex;
 
 			_buyCount++;
-			if (!_buy)
+			if (_buyCount < 100 && _buy == false)
 			{
-				_curState = 3;
+				_curState = 0;
 			}
 			else
 			{
+				_curState = 3;
+			}
+
+			
+
+			if (_buy)
+			{
 				_curState = 1;
 			}
+
+
 			_index = 0;
 
 			if (_buyCount >= 100)
@@ -157,17 +165,24 @@ void AIKids::move()
 				_buyCount = 0;
 				if (_isExit == false)
 				{
-					_buy = true;
 					_currentIndex = 0;
-					_vDot[0] = tagFloat(246, 1049);
-					_vDot[1] = tagFloat(246, 915);
-					_vDot[2] = tagFloat(465, 915);
+					_vDot[0] = tagFloat(429, 920);
+					_vDot[1] = tagFloat(509, 920);
+					_vDot[2] = tagFloat(549, 920);
 					_vDot[3] = tagFloat(565, 915);
 					_vDot[4] = tagFloat(576, 1045);
 					_vDot[5] = tagFloat(676, 1000);
-
+					/*
+					_vDot[0] = tagFloat(649, 1185);
+					_vDot[1] = tagFloat(549, 1085);
+					_vDot[2] = tagFloat(549, 1000);
+					_vDot[3] = tagFloat(549, 900);
+					_vDot[4] = tagFloat(509, 920);
+					_vDot[5] = tagFloat(429, 920);
+					*/
 
 					_isExit = true;
+					_buy = true;
 				}
 			}
 		}
@@ -196,5 +211,6 @@ void AIKids::move()
 			_currentIndex = 0;
 		}
 	}
+
 
 }
