@@ -31,6 +31,7 @@ private:
 	image* _buttonAction;
 
 	image* _jButton;
+	image* _layer;
 
 	int _exitCount;
 	bool _isExit , _isOpen;
@@ -43,6 +44,8 @@ private:
 	bool _j;
 	bool _button;
 	bool _ui;
+
+	float _vol;
 
 public:
 

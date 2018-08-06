@@ -15,7 +15,7 @@ private:
 	RECT _enterDgInRc;
 	image* _enterText;
 	objectContainer* _container;
-
+	float _vol;
 
 	int _count, _index;
 public:

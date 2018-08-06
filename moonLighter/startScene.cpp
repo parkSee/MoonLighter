@@ -3,7 +3,9 @@
 
 HRESULT startScene::init()
 {
-	SOUNDMANAGER->play("introBGM");
+
+	_vol = 1.0f;
+	SOUNDMANAGER->playBGM("introBGM",_vol);
 
 	_doorLeft.img = IMAGEMANAGER->findImage("door_left");
 	_doorLeft.pos = tagInt(0, 0);
@@ -70,8 +72,8 @@ void startScene::update()
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			SOUNDMANAGER->stop("introBGM");
+			SAVEDATA->setVolume(_vol);
 			SCENEMANAGER->loadScene("shopScene");
-
 		}
 
 	}
@@ -98,7 +100,11 @@ void startScene::update()
 			_alpha = 0;
 	}
 	
-
+	if (KEYMANAGER->isOnceKeyDown('6'))
+	{
+		_vol -= 0.1f;
+		SOUNDMANAGER->setVolume(_vol);
+	}
 }
 
 void startScene::render()
@@ -119,6 +125,11 @@ void startScene::render()
 		_selectImg->render(getMemDC(),_selectPos.x,_selectPos.y);
 
 	}
+
+	char str[128];
+	sprintf_s(str, "vol : %f", _vol);
+	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
+
 }
 
 void startScene::Frame()

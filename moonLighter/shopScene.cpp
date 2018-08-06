@@ -5,6 +5,9 @@
 
 HRESULT shopScene::init()
 {
+
+	_vol = SAVEDATA->getVolume();
+
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	_player->pos.x = WINSIZEX / 2;
@@ -32,12 +35,12 @@ HRESULT shopScene::init()
 	
 	CAMERAMANAGER->setMapSize(WINSIZEX, 1440);
 
-	SOUNDMANAGER->play("shopBGM");
+	SOUNDMANAGER->play("shopBGM",_vol);
 
 	_buttonUi = IMAGEMANAGER->findImage("buttonUi");
 	_buttonAction = IMAGEMANAGER->findImage("button");
 	_jButton = IMAGEMANAGER->findImage("jButton");
-
+	_layer = IMAGEMANAGER->findImage("shop_door_layer");
 	
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
 
@@ -106,7 +109,7 @@ void shopScene::update()
 	if(_ui)uiFrame();
 	if(_button)buttonActionFrame();
 
-	_enterRc = RectMakeCenter(650, 1290, 50, 50);
+	_enterRc = RectMakeCenter(650, 1230, 50, 50);
 
 	_inven->update();
 
@@ -156,8 +159,8 @@ void shopScene::render()
 	
 	OBJECTMANAGER->render(getMemDC());
 	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 570 - cam.left, 603 - cam.top);
-
-
+	_layer->render(getMemDC(), 558 - cam.left, 1234 - cam.top);
+	
 	
 		if(_ui && !_button)_buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
 		if(_button)_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);

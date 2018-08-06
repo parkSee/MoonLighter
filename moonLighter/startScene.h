@@ -30,7 +30,7 @@ private:
 
 	bool _isOpen;
 	int _alpha;
-
+	float _vol;
 	int _alphaTime;
 public:
 
