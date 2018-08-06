@@ -3,6 +3,8 @@
 #include "player.h"
 
 #include "AIKids.h"
+#include "AIGirl.h"
+#include"AILink.h"
 #include "furnitureContainer.h"
 #include "inventory.h"
 
@@ -16,6 +18,8 @@ private:
 
 
 	AIKids* _aiKid;
+	AILink* _aiLink;
+	AIGirl* _aiGirl;
 
 	inventory* _inven;
 	furnitureContainer* _furniture;

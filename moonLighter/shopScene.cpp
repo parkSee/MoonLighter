@@ -12,8 +12,18 @@ HRESULT shopScene::init()
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
 
 	_aiKid = new AIKids;
-	_aiKid->init("aiKid", tagFloat(600, 1303));
+	_aiKid->init("aiKid", tagFloat(650, 1303));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
+
+	//_aiGirl = new AIGirl;
+	//_aiGirl->init("aiGirl", tagFloat(650, 1303));
+	//OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
+
+	//_aiLink = new AILink;
+	//_aiLink->init("aiGirl", tagFloat(650, 1303));
+	//OBJECTMANAGER->addObject(objectType::AI, _aiLink);
+
+	
 
 	_inven = new inventory;
 	_inven->init();

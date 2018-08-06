@@ -148,7 +148,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AIGirl.h" />
     <ClInclude Include="AIKids.h" />
+    <ClInclude Include="AILink.h" />
     <ClInclude Include="animation.h" />
     <ClInclude Include="bigSlime.h" />
     <ClInclude Include="boss.h" />
@@ -206,7 +208,9 @@
     <ClInclude Include="weed.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AIGirl.cpp" />
     <ClCompile Include="AIKids.cpp" />
+    <ClCompile Include="AILink.cpp" />
     <ClCompile Include="animation.cpp" />
     <ClCompile Include="bigSlime.cpp" />
     <ClCompile Include="boss.cpp" />

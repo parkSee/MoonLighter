@@ -260,6 +260,12 @@
     <ClInclude Include="furnitureContainer.h">
       <Filter>MainGame\Object\shopObject</Filter>
     </ClInclude>
+    <ClInclude Include="AIGirl.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="AILink.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -435,6 +441,12 @@
     </ClCompile>
     <ClCompile Include="furnitureContainer.cpp">
       <Filter>MainGame\Object\shopObject</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGirl.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="AILink.cpp">
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

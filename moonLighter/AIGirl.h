@@ -3,16 +3,8 @@
 
 #define MAXSTATE 5
 
-namespace State
-{
-	enum Enum
-	{
-		FRONT, BACK, LEFT, RIGHT, BUY, END
-		//LEFT, RIGHT, UP, DOWN, BUY, END
-	};
-}
 
-class AIKids : public gameObject
+class AIGirl : public gameObject
 {
 private:
 
@@ -28,9 +20,9 @@ private:
 	int _probeY;
 
 	int _buyCount;
-	bool _isExit ;
-	int _moveCount;
+	bool _isExit;
 	bool _buy;
+	int _moveCount;
 	vector<tagFloat> _vDot;
 
 public:
@@ -40,11 +32,10 @@ public:
 	void update();
 	void render();
 
-	
+
 	void Frame();
 	void move();
 
-	AIKids() {}
-	~AIKids() {}
+	AIGirl() {}
+	~AIGirl() {}
 };
-

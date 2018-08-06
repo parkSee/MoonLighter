@@ -1,18 +1,11 @@
 #pragma once
 #include "gameObject.h"
 
+
 #define MAXSTATE 5
 
-namespace State
-{
-	enum Enum
-	{
-		FRONT, BACK, LEFT, RIGHT, BUY, END
-		//LEFT, RIGHT, UP, DOWN, BUY, END
-	};
-}
 
-class AIKids : public gameObject
+class AILink : public gameObject
 {
 private:
 
@@ -27,9 +20,9 @@ private:
 	int _maxIndex;
 	int _probeY;
 
+
 	int _buyCount;
-	bool _isExit ;
-	int _moveCount;
+	bool _isExit;
 	bool _buy;
 	vector<tagFloat> _vDot;
 
@@ -40,11 +33,10 @@ public:
 	void update();
 	void render();
 
-	
+
 	void Frame();
 	void move();
 
-	AIKids() {}
-	~AIKids() {}
+	AILink() {}
+	~AILink() {}
 };
-

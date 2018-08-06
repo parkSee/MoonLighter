@@ -70,7 +70,7 @@ void startScene::update()
 		if (KEYMANAGER->isOnceKeyDown('Z'))
 		{
 			SOUNDMANAGER->stop("introBGM");
-			SCENEMANAGER->loadScene("townScene");
+			SCENEMANAGER->loadScene("shopScene");
 
 		}
 
