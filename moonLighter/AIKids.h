@@ -33,7 +33,7 @@ private:
 
 public:
 
-	HRESULT init(string _objName, tagFloat _pos, image* imgName);
+	HRESULT init(string _objName, tagFloat _pos);
 	void release();
 	void update();
 	void render();

@@ -12,7 +12,7 @@ HRESULT shopScene::init()
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
 
 	_aiKid = new AIKids;
-	_aiKid->init("aiKid", tagFloat(600, 1303),IMAGEMANAGER->findImage("AiKids"));
+	_aiKid->init("aiKid", tagFloat(600, 1303));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
 
 	_inven = new inventory;

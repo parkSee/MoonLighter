@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AIKids.h"
 
-HRESULT AIKids::init(string _objName, tagFloat _pos, image * imgName)
+HRESULT AIKids::init(string _objName, tagFloat _pos)
 {
 
 	gameObject::init(_objName, _pos);
