@@ -53,9 +53,13 @@ void townScene::update()
 	RECT temp;
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
 	{
-		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("shopScene");
-		SOUNDMANAGER->stop("townBGM");
+		//if (KEYMANAGER->isOnceKeyDown('J'))
+		//{
+			OBJECTMANAGER->reset();
+			SCENEMANAGER->loadScene("shopScene");
+			SOUNDMANAGER->stop("townBGM");
+		//}
+	
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
 	{
@@ -96,7 +100,12 @@ void townScene::render()
 	SelectObject(getMemDC(), oldPen);
 	DeleteObject(pen); 
 	*/
-
+	/*RECT temp;
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterShopRc))
+	{
+		IMAGEMANAGER->findImage("dunIntroShowEnterText")->frameRender(getMemDC(), 2000 - rc.left, 575 - rc.top);
+	}
+*/
 	OBJECTMANAGER->render(getMemDC());
 	RectangleCam(getMemDC(), _enterShopRc, rc);
 	RectangleCam(getMemDC(), _enterDgInRc, rc);

@@ -66,6 +66,13 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("guy_left_run", "Image/ai/guy_left_run.bmp", 810, 90, 9, 1, true, MAGENTA);
 	_loading->loadFrameImage("guy_right_run", "Image/ai/guy_right_run.bmp", 810, 90, 9, 1, true, MAGENTA);
 	
+	_loading->loadFrameImage("link_front_run", "Image/ai/link_front_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+	_loading->loadFrameImage("link_back_run", "Image/ai/link_back_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+	_loading->loadFrameImage("link_left_run", "Image/ai/link_left_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+	_loading->loadFrameImage("link_right_run", "Image/ai/link_right_run.bmp", 810, 90, 9, 1, true, MAGENTA);
+
+
+
 	//door
 	_loading->loadImage("door_left", "Image/door_left.bmp", 640, 737, true, MAGENTA);
 	_loading->loadImage("door_right", "Image/door_right.bmp", 640, 737, true, MAGENTA);
