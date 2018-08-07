@@ -28,6 +28,8 @@ private:
 	bool _deadEffectBool;
 	bool _deadBool[MAXBOSS];
 	bool _bgStart;
+
+	float _vol;
 	
 
 public:

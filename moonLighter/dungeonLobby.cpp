@@ -56,6 +56,7 @@ void dungeonLobby::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("dungeonScene");
+		SOUNDMANAGER->stop("townBGM");
 	}
 }
 
@@ -149,6 +150,7 @@ void dungeonLobby::willEnterFrame()
 				{
 					OBJECTMANAGER->reset();
 					SCENEMANAGER->loadScene("dungeonScene");
+					SOUNDMANAGER->stop("townBGM");
 				}
 			}
 		}
