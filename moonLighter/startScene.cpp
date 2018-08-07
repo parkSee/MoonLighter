@@ -5,9 +5,6 @@
 HRESULT startScene::init()
 {
 
-	_vol = 1.0f;
-	SOUNDMANAGER->playBGM("introBGM",_vol);
-
 	_doorLeft.img = IMAGEMANAGER->findImage("door_left");
 	_doorLeft.pos = tagInt(0, 0);
 	_doorRight.img = IMAGEMANAGER->findImage("door_right");
@@ -35,8 +32,13 @@ HRESULT startScene::init()
 	_player->init("player", tagFloat(0, 0));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
+
+	_ui = new ui;
+	_ui->init();
+
 	_display = new display;
 	_display->init();
+
 
 	return S_OK;
 }
@@ -55,36 +57,45 @@ void startScene::update()
 	{
 		_isOpen = true;
 	}
-	//상태 선택 키들
-	if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
-	{
-		_selectPos.y += 50;
-		if (_selectPos.y > 650)
-			_selectPos.y = WINSIZEY - 200;
-	}
-	if (KEYMANAGER->isOnceKeyDown(VK_UP))
-	{
-		_selectPos.y -= 50;
-		if (_selectPos.y < 520)
-			_selectPos.y = WINSIZEY - 100;
-	}
 
-	//결정 선택키들
-	if ((_selectPos.x == WINSIZEX / 2 - _selectImg->getWidth() / 2) && _selectPos.y == WINSIZEY - 200)
+
+	if (_ui->getIsOpen() == false)
 	{
-		if (KEYMANAGER->isOnceKeyDown('Z'))
+		//결정 선택키들
+		if ((_selectPos.x == WINSIZEX / 2 - _selectImg->getWidth() / 2) && _selectPos.y == WINSIZEY - 200)
 		{
-			SOUNDMANAGER->stop("introBGM");
-			SAVEDATA->setVolume(_vol);
-			SAVEDATA->set_display(_display);
-			SCENEMANAGER->loadScene("townScene");
-		}
 
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				SOUNDMANAGER->stop("introBGM");
+				SAVEDATA->setVolume(_ui->getVolume());
+				SAVEDATA->set_display(_display);
+				SCENEMANAGER->loadScene("townScene");
+			}
+
+
+			
+
+		}
+		else if (_selectPos.y == WINSIZEY - 150)
+		{
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_ui->setIsOpen(true);
+
+			}
+		}
+		else if (_selectPos.y == WINSIZEY - 100)
+		{
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+				exit(0);
+		}
 	}
-	else if (_selectPos.y == WINSIZEY - 100)
+	if (_ui->getIsOpen())
+		_ui->update();
+	if (KEYMANAGER->isOnceKeyDown('O'))
 	{
-		if (KEYMANAGER->isOnceKeyDown('Z'))
-			exit(0);
+		_ui->setIsOpen(false);
 	}
 
 	if (_isOpen)
@@ -94,7 +105,23 @@ void startScene::update()
 			_doorLeft.pos.x -= 3.0f;
 			_doorRight.pos.x += 3.0f;
 		}
-		
+		if (_ui->getIsOpen() == false)
+		{
+			//나중에 _isOpen안으로 옮기기
+			//상태 선택 키들
+			if (KEYMANAGER->isOnceKeyDown(VK_DOWN))
+			{
+				_selectPos.y += 50;
+				if (_selectPos.y > 650)
+					_selectPos.y = WINSIZEY - 200;
+			}
+			if (KEYMANAGER->isOnceKeyDown(VK_UP))
+			{
+				_selectPos.y -= 50;
+				if (_selectPos.y < 520)
+					_selectPos.y = WINSIZEY - 100;
+			}
+		}
 	}
 	_alphaTime++;
 	if (_alphaTime % 5 == 0)
@@ -103,12 +130,7 @@ void startScene::update()
 		if (_alpha > 255)
 			_alpha = 0;
 	}
-	
-	if (KEYMANAGER->isOnceKeyDown('6'))
-	{
-		_vol -= 0.1f;
-		SOUNDMANAGER->setVolume(_vol);
-	}
+
 }
 
 void startScene::render()
@@ -130,9 +152,8 @@ void startScene::render()
 
 	}
 
-	char str[128];
-	sprintf_s(str, "vol : %f", _vol);
-	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
+	_ui->render();
+
 
 }
 

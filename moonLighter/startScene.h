@@ -2,7 +2,11 @@
 #include "gameNode.h"
 #include "player.h"
 
+#include "ui.h"
+
+
 class display;
+
 
 struct Door
 {
@@ -29,13 +33,17 @@ private:
 	image* _selectImg;
 	tagInt _selectPos;
 
+
+	ui* _ui;
+
 	display* _display;
+
 
 	int _count, _index;
 
 	bool _isOpen;
 	int _alpha;
-	float _vol;
+	
 	int _alphaTime;
 public:
 

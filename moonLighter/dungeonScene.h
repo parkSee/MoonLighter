@@ -16,6 +16,8 @@ private:
 	enemyController * _em;
 
 	RECT _enterRc[9];
+
+	float _vol;
 public:
 
 

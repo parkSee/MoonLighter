@@ -5,6 +5,8 @@ HRESULT dungeonScene::init()
 {
 	//½Ã¿µÂ» ³» µ¿·á°¡ µÅ¶ó - ±«µµ Á¦ÀÌ
 	//lejADD ´øÀü ¸Ê Ãß°¡
+	_vol = SAVEDATA->getVolume();
+	SOUNDMANAGER->play("dungeonBGM", _vol);
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	_player->setIsActive(true);
 	_player->pos.x = 1920;
@@ -65,6 +67,7 @@ void dungeonScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("bossRoomScene");
+		SOUNDMANAGER->stop("dungeonBGM");
 	}
 
 	
@@ -171,6 +174,7 @@ void dungeonScene::moveDungeon()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("bossRoomScene");
+		SOUNDMANAGER->stop("dungeonBGM");
 	}
 	/*if (IntersectRect(&temp, &RectMakeCenter(640, 740, 50, 50), &_player->rc))
 	{

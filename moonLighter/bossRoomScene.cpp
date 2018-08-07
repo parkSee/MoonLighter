@@ -3,7 +3,8 @@
 
 HRESULT bossRoomScene::init()
 {
-
+	_vol = SAVEDATA->getVolume();
+	SOUNDMANAGER->play("bossBGM", _vol);
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	//	_player->init("player", tagFloat(1580, 1900));
 	_player->pos.x = 1580;
@@ -34,7 +35,7 @@ HRESULT bossRoomScene::init()
 	
 
 	_blackBg = IMAGEMANAGER->findImage("검은화면");
-
+	
 
 	CAMERAMANAGER->setMapSize(3152, 2131);
 
@@ -76,6 +77,7 @@ void bossRoomScene::update()
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("townScene");
+		SOUNDMANAGER->stop("bossBGM");
 	}
 
 	
