@@ -11,7 +11,7 @@ private:
 	image* _attackedGolem[8];
 	progressBar* _hp;
 	int _currentHp;
-
+	RECT _attackRc;
 	image* _dmgFontTen;
 	image* _dmgFontOne;
 	RECT _dmgFontRc[2];
@@ -41,7 +41,7 @@ private:
 	bool _right;
 	bool _down;
 	bool _up;
-
+	bool _attackBool;
 
 	int _rc0X;
 	int _rc0Y;
@@ -83,6 +83,7 @@ public:
 	void move();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void pixelCollision();
+	RECT getAttackRc() { return _attackRc; }
 	void dead();
 
 	golem() {}

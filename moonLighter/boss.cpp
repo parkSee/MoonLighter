@@ -126,7 +126,7 @@ void boss::update()
 
 void boss::render()
 {
-	
+
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	//RectangleCam(getMemDC(), _collisionRc, cam);
 	//RectangleCam(getMemDC(), rc, cam);
@@ -141,12 +141,12 @@ void boss::render()
 	//		_currentX[5] = 0;
 	//	}
 	//}
-	
+
 
 	if (_start)
 	{
 		_delayTime2++;
-		if (_delayTime2 > 80&& _delayTime2<82)
+		if (_delayTime2 > 80 && _delayTime2 < 82)
 		{
 			CAMERAMANAGER->shakeCamera(5.0f, 2.0f);
 		}
@@ -157,8 +157,8 @@ void boss::render()
 
 		if (_delayTime > 200)
 		{
-			
-			
+
+
 			if (_count % 5 == 0)
 			{
 				_currentX[4]++;
@@ -172,7 +172,7 @@ void boss::render()
 			_boss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top, _currentX[4], _currentY[4]);
 		}
 	}
-	
+
 	if (_playing)
 	{
 		_start = false;
@@ -442,14 +442,14 @@ void boss::render()
 				_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
 			}
 		}
-	//	//char str[128];
-	//	//sprintf_s(str, "leftDown ;%d ,LeftUp : %d , RightDown : %d, Right Up : %d", _leftDown, _leftUp, _rightDown, _rightUp);
-	//	//TextOut(getMemDC(), 300, 300, str, strlen(str));
+		//	//char str[128];
+		//	//sprintf_s(str, "leftDown ;%d ,LeftUp : %d , RightDown : %d, Right Up : %d", _leftDown, _leftUp, _rightDown, _rightUp);
+		//	//TextOut(getMemDC(), 300, 300, str, strlen(str));
 
-	//	//RectangleCam(getMemDC(), _rc[0], cam);
-	//	//RectangleCam(getMemDC(), _rc[1], cam);
-	//	//RectangleCam(getMemDC(), _rc[2], cam);
-	//	//RectangleCam(getMemDC(), _rc[3], cam);
+		//	//RectangleCam(getMemDC(), _rc[0], cam);
+		//	//RectangleCam(getMemDC(), _rc[1], cam);
+		//	//RectangleCam(getMemDC(), _rc[2], cam);
+		//	//RectangleCam(getMemDC(), _rc[3], cam);
 		for (int i = 0; i < 4; i++)
 		{
 			if (9 < _currentX[i] && _currentX[i] < 31)
@@ -468,26 +468,26 @@ void boss::render()
 	if (_currentX[0] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x-80, pos.y+50);
+		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - 80, pos.y + 50);
 	}
 	//_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
 	if (_currentX[1] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트다운오른쪽2", pos.x , pos.y + 50);
+		EFFECTMANAGER->play("보스공격이펙트다운오른쪽2", pos.x, pos.y + 50);
 	}
 	if (_currentX[2] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트업오른쪽2", pos.x +30, pos.y +10);
-		
+		EFFECTMANAGER->play("보스공격이펙트업오른쪽2", pos.x + 30, pos.y + 10);
+
 	}
 	if (_currentX[3] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
 		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 120, pos.y + 15);
 	}
-	
+
 	if (0 < _dmgImgCount && _dmgImgCount < 30)
 	{
 		_dmgImgCount++;
@@ -504,8 +504,42 @@ void boss::render()
 		_dmgImgY = -70;
 		_dmgImgX = -50;
 	}
-}
+	
 
+
+
+
+	if (_startAttack)
+	{
+		if (9 < _currentX[0] && _currentX[0] < 30)
+		{
+			_attackRc = RectMakeCenter(pos.x-100, pos.y +20 , 100, 100);
+		}
+
+		if (9 < _currentX[1] && _currentX[0] < 30)
+		{
+			_attackRc = RectMakeCenter(pos.x +20, pos.y+20, 100, 100);
+		}
+
+		if (9 < _currentX[2] && _currentX[0] < 30)
+		{
+			_attackRc = RectMakeCenter(pos.x + 20, pos.y-50, 100, 100);
+		}
+
+		if (9 < _currentX[3] && _currentX[0] < 30)
+		{
+			_attackRc = RectMakeCenter(pos.x-100, pos.y - 50, 100, 100);
+		}
+	}
+	else
+	{
+		_attackRc = RectMakeCenter(pos.x, pos.y + 1000, 100, 100);
+	}
+
+	RectangleCam(getMemDC(), _attackRc, cam);
+
+
+}
 void boss::imgRectMake()
 {
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());

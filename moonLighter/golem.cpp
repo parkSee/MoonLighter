@@ -33,6 +33,7 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_dmgFontRc[0] = RectMakeCenter(pos.x - 30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 
+	
 
 	 rc = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 	 _rc2 = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
@@ -63,6 +64,7 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_deadBool = false;
 	_dmg = false;
 	_isAttacked3 = false;
+	_attackBool = false;
 
 
 	return S_OK;
@@ -821,9 +823,36 @@ void golem::render()
 		_dmgImgCount = 0;
 		_dmgImgY = -100;
 	}
+	
 
+	if (_startAttack)
+	{
+		if (50 < _currentX[0] && _currentX[0] < 60)
+		{
+			_attackRc = RectMakeCenter(pos.x, pos.y + 50, 50, 50);
+		}
 
+		if (50 < _currentX[1] && _currentX[0] < 60)
+		{
+			_attackRc = RectMakeCenter(pos.x - 50, pos.y, 50, 50);
+		}
 
+		if (50 < _currentX[2] && _currentX[0] < 60)
+		{
+			_attackRc = RectMakeCenter(pos.x + 50, pos.y, 50, 50);
+		}
+
+		if (50 < _currentX[3] && _currentX[0] < 60)
+		{
+			_attackRc = RectMakeCenter(pos.x, pos.y - 50, 50, 50);
+		}
+	}
+	else
+	{
+		_attackRc = RectMakeCenter(pos.x, pos.y + 2000, 50, 50);
+	}
+	
+	RectangleCam(getMemDC(), _attackRc, cam);
 }
 
 void golem::imgRectMake()
@@ -832,6 +861,7 @@ void golem::imgRectMake()
 	_rc2 = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	_dmgFontRc[1] = RectMakeCenter(pos.x + 20, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+
 }
 
 void golem::hp()

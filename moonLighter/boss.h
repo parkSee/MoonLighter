@@ -13,6 +13,7 @@ private:
 	image* _dmgFontTen;
 	image* _dmgFontOne;
 	RECT _dmgFontRc[2];
+	RECT _attackRc;
 	float _dmgImgY;
 	float _dmgImgX;
 	int _dmgImgCount;
@@ -95,6 +96,7 @@ public:
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	bool getStart() { return _start; }
 	void dead();
+	RECT getAttackRc() { return _attackRc; }
 
 	
 
