@@ -389,6 +389,7 @@ void weed::dead()
 		_deadEffectBool = true;
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
 		SOUNDMANAGER->play("enemy_death", 1.f);
+		OBJECTMANAGER->getItemManager()->appear(itemType::TWIG, tagFloat(pos.x, pos.y));
 	}
 	setIsLive(false);
 }

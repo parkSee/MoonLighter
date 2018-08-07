@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "saveData.h"
-
+#include "display.h"
 
 HRESULT saveData::init()
 {

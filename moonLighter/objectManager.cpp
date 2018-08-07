@@ -13,6 +13,8 @@ HRESULT objectManager::init()
 		totalList.insert(make_pair((objectType)i, v));
 	}
 
+	_im = new itemManager;
+
 	return S_OK;
 }
 

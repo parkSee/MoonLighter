@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "startScene.h"
+#include "display.h"
 
 HRESULT startScene::init()
 {
@@ -33,8 +34,13 @@ HRESULT startScene::init()
 	_player->init("player", tagFloat(0, 0));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
+<<<<<<< HEAD
 	_ui = new ui;
 	_ui->init();
+=======
+	_display = new display;
+	_display->init();
+>>>>>>> 108191f43cdc061f8b9c2433ab952969ea42abe1
 
 	return S_OK;
 }
@@ -60,6 +66,7 @@ void startScene::update()
 		//결정 선택키들
 		if ((_selectPos.x == WINSIZEX / 2 - _selectImg->getWidth() / 2) && _selectPos.y == WINSIZEY - 200)
 		{
+<<<<<<< HEAD
 			if (KEYMANAGER->isOnceKeyDown('Z'))
 			{
 				SOUNDMANAGER->stop("introBGM");
@@ -67,6 +74,12 @@ void startScene::update()
 				SCENEMANAGER->loadScene("shopScene");
 			}
 
+=======
+			SOUNDMANAGER->stop("introBGM");
+			SAVEDATA->setVolume(_vol);
+			SAVEDATA->set_display(_display);
+			SCENEMANAGER->loadScene("townScene");
+>>>>>>> 108191f43cdc061f8b9c2433ab952969ea42abe1
 		}
 		else if (_selectPos.y == WINSIZEY - 150)
 		{

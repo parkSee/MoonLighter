@@ -1,30 +1,27 @@
 #pragma once
-#include "gameNode.h"
 
-//csyADD [다른 클래스에서 좌표 세팅할 세터함수 추가]
-
-class item : public gameNode
-{	
-protected:
+class item
+{
+public:
+	image * _img;
 	tagFloat _pos;
-	image* _img;
-	RECT _collisionBox;
+	itemType::Enum _itemKind;
+	int _price;
+	RECT _rc;
+	bool _isActive;
 
 public:
 
-	tagFloat get_pos() { return _pos; }
-	void set_pos(tagFloat pos) { _pos = pos; }
+	HRESULT init(tagFloat pos,image* _im);
+	void release();
+	void update();
+	void render(HDC hdc);
 
-	image* get_img() { return _img; }
-	RECT get_collisionBox() { return _collisionBox; }
+	bool getActive() { return _isActive; }
+	void setActive(bool active) { _isActive = active; }
 
-	virtual HRESULT init();
-	virtual void release();
-	virtual void update();
-	virtual void render();
-
-
-	item() {}
-	~item() {}
+	item(){}
+	~item(){}
 };
+
 

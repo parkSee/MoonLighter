@@ -16,7 +16,7 @@ HRESULT dungeonScene::init()
 	_em = new enemyController;
 	_em->init();
 	
-	_im = new itemManager;
+	_im = OBJECTMANAGER->getItemManager();
 	_im->init();
 
 	vector<gameObject*> _vWeeds = OBJECTMANAGER->findObjects(objectType::ENEMY, "weed");
@@ -54,7 +54,7 @@ void dungeonScene::release()
 	SAFE_DELETE(_em);
 	//
 	_im->release();
-	SAFE_DELETE(_im);
+	
 }
 
 void dungeonScene::update()
@@ -82,7 +82,7 @@ void dungeonScene::render()
 
 	OBJECTMANAGER->render(getMemDC());
 
-	_im->render();
+	_im->render(getMemDC());
 	//RectangleCam(getMemDC(), upRc, cam);
 	//RectangleCam(getMemDC(), RectMakeCenter(640, 740, 50, 50), cam);
 	//RectangleCam(getMemDC(), RectMakeCenter(640, 690, 50, 50), cam);
@@ -110,6 +110,8 @@ void dungeonScene::render()
 	char str[128];
 	sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
 	TextOut(getMemDC(), 200, 200, str, strlen(str));
+
+	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 
 void dungeonScene::moveDungeon()
@@ -179,7 +181,7 @@ void dungeonScene::moveDungeon()
 
 	if (IntersectRect(&temp, &RectMakeCenter(640, 690, 50, 50), &_player->rc))
 	{
-	CAMERAMANAGER->connectTarget(640, 1070);
+	CAMERAMANAGER->connectTarget(640, 1070); 
 	_player->pos.y = 1000;
 	}*/
 

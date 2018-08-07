@@ -142,7 +142,7 @@ void dungeonLobby::willEnterFrame()
 		{
 			IMAGEMANAGER->findImage("dunIntroGoInDungeon")->setFrameX(_index);
 			IMAGEMANAGER->findImage("dunIntroGoInDungeon")->setFrameY(0);
-			if (_count % 8 == 0)
+			if (_count % 7 == 0)
 			{
 				++_index;
 				if (_index > IMAGEMANAGER->findImage("dunIntroGoInDungeon")->getMaxFrameX())
@@ -181,6 +181,8 @@ void dungeonLobby::willEnterFrame()
 				_player->setIsDead(false);
 				_player->setIsAutomatic(false);
 				_player->setIsActive(true);
+				_player->setRevive();
+				_player->setIsIdleUp(false);
 			}
 		}
 	}
