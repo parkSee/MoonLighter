@@ -1133,6 +1133,8 @@ void golem::dead()
 		_deadEffectBool = true;
 		EFFECTMANAGER->play("»Ð»Ð", pos.x + 7, pos.y + 20);
 		SOUNDMANAGER->play("enemy_death", 1.f);
+		OBJECTMANAGER->getItemManager()->appear(itemType::GOLEMCORE, tagFloat(pos.x, pos.y));
+		OBJECTMANAGER->getItemManager()->appear(itemType::REBAR, tagFloat(pos.x, pos.y));
 	}
 	setIsLive(false);
 }
