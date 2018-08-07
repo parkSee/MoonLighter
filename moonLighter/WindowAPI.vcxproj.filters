@@ -227,12 +227,6 @@
     <ClInclude Include="furnitureContainer.h">
       <Filter>MainGame\Object\shopObject</Filter>
     </ClInclude>
-    <ClInclude Include="AIGirl.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AILink.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="item.h">
       <Filter>MainGame\Item</Filter>
     </ClInclude>
@@ -250,6 +244,12 @@
     </ClInclude>
     <ClInclude Include="smallSlime.h">
       <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="AILink.h">
+      <Filter>MainGame\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="AIGirl.h">
+      <Filter>MainGame\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -394,12 +394,6 @@
     <ClCompile Include="furnitureContainer.cpp">
       <Filter>MainGame\Object\shopObject</Filter>
     </ClCompile>
-    <ClCompile Include="AIGirl.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AILink.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="item.cpp">
       <Filter>MainGame\Item</Filter>
     </ClCompile>
@@ -417,6 +411,12 @@
     </ClCompile>
     <ClCompile Include="weed.cpp">
       <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="AILink.cpp">
+      <Filter>MainGame\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="AIGirl.cpp">
+      <Filter>MainGame\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

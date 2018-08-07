@@ -26,6 +26,9 @@ public:
 	vector<item*> get_vDisplayItem() { return _vDisplayItem; }
 
 	void addDisplayItem(item* _item);
+	void dp_SetActiveFalse(int num);
+	void dp_SetActiveTrue(int num);
+	void dp_setPos(int num, float x, float y);
 	void subtractDisplay(int num); //csyADD 아이템 뺴는 함수
 
 	display(){}

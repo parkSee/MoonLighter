@@ -156,7 +156,7 @@ void AIKids::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(2);
+				if (_pickItem == false) _dp->dp_SetActiveFalse(1);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
@@ -188,8 +188,18 @@ void AIKids::move()
 
 	if (_isExit)
 	{
+		
+		
+		if (pos.x == 676 && pos.y == 1000)
+		{
+			RECT cam = CAMERAMANAGER->getRenderRc();
+			_dp->dp_setPos(1, 606 , 894);
+			_dp->dp_SetActiveTrue(1);
+		}
+
 		if (KEYMANAGER->isOnceKeyDown('9'))
 		{
+			_dp->subtractDisplay(1);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);
 			_vDot[1] = tagFloat(650, 1130);

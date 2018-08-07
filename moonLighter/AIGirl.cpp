@@ -163,7 +163,7 @@ void AIGirl::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(1);
+				if (_pickItem == false) _dp->subtractDisplay(2);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)

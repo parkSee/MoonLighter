@@ -17,13 +17,13 @@ HRESULT shopScene::init()
 
 	_shopDoor = IMAGEMANAGER->findImage("shopDoor");
 
-	//_aiKid = new AIKids;
-	//_aiKid->init("aiKid", tagFloat(650, 1303));
-	//OBJECTMANAGER->addObject(objectType::AI, _aiKid);
+	_aiKid = new AIKids;
+	_aiKid->init("aiKid", tagFloat(650, 1303));
+	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
 	
-	_aiGirl = new AIGirl;
-	_aiGirl->init("aiGirl", tagFloat(650, 1303));
-	OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
+	//_aiGirl = new AIGirl;
+	//_aiGirl->init("aiGirl", tagFloat(650, 1303));
+	//OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
 
 	//_aiLink = new AILink;
 	//_aiLink->init("aiGirl", tagFloat(650, 1303));

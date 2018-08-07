@@ -134,7 +134,7 @@ void AILink::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(3);
+				if (_pickItem == false) _dp->subtractDisplay(0);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)

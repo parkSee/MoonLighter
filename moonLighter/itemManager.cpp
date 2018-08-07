@@ -27,10 +27,7 @@ void itemManager::render(HDC hdc)
 	
 	for (int i = 0; i < _vItem.size(); ++i)
 	{
-		//if (_vItem[i]->_isActive == true)
-		//{
-			_vItem[i]->render(hdc);
-		//}
+		_vItem[i]->render(hdc);
 	}
 	
 }
