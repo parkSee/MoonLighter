@@ -70,7 +70,7 @@ void progressBar::update(void)
 	_rcProgress = RectMake(_x, _y, _progressBarBack->getWidth(), _progressBarBack->getHeight());
 }
 
-void progressBar::update_isHit(void)
+void progressBar::update_jyp(void)
 {
 	_rcProgress = RectMake(_x + 10, _y, _hpWidth, _hpHeight); //내가 추가한거
 	if (_isHit) //쳐맞으면 카운트 시작
@@ -80,6 +80,16 @@ void progressBar::update_isHit(void)
 		if (_count < 0)
 		{
 			_isHit = false;
+			_beforeHpWidth = _currentHpWidth;
+		}
+	}
+	if (_isHealed)
+	{
+		--_count;
+		_beforeHpWidth += _hpDifferential;
+		if (_count < 0)
+		{
+			_isHealed = false;
 			_beforeHpWidth = _currentHpWidth;
 		}
 	}
@@ -102,27 +112,47 @@ void progressBar::renderHeight()
 		0,0, _progressBarFront->getWidth(),_height);
 }
 
-void progressBar::render_isHit()   	//내가 한거 
+void progressBar::render_jyp()   	//내가 한거 
 {
-	//38
-	if (!_isHit)
+	if (!_isHit && !_isHealed)
 	{
 		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
 		_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 38, _beforeHpWidth, _hpHeight);
 	}
-	else
+	else if (_isHealed)
 	{
 		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
 
-		if (_count > _damage * 0.4 * 0.1)
+		if (_count > _heal * 0.4 * _speed)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 76, _beforeHpWidth, _hpHeight);
 		}
-		else if (_count > _damage * 0.2 * 0.1)
+		else if (_count > _heal * 0.2 * _speed)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 114, _beforeHpWidth, _hpHeight);
 		}
-		else if (_count > _damage * 0.1 * 0.1)
+		else if (_count > _heal * 0.1 * _speed)
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 152, _beforeHpWidth, _hpHeight);
+		}
+		else
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 190, _beforeHpWidth, _hpHeight);
+		}
+	}
+	else if (_isHit)
+	{
+		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
+
+		if (_count > _damage * 0.4 * _speed)
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 76, _beforeHpWidth, _hpHeight);
+		}
+		else if (_count > _damage * 0.2 * _speed)
+		{
+			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 114, _beforeHpWidth, _hpHeight);
+		}
+		else if (_count > _damage * 0.1 * _speed)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 152, _beforeHpWidth, _hpHeight);
 		}
@@ -143,12 +173,24 @@ void progressBar::setHeightGuge(float currentHp, float maxHp)
 	_height = (currentHp / maxHp) * _progressBarBack->getHeight();
 }
 
-void progressBar::setGaugeOfDamage(float currentHp, float maxHp, int damage)
+void progressBar::setGaugeOfDamage(float currentHp, float maxHp, int damage, float speed)
 {
+	_isHit = true;
+	_speed = speed;
 	_damage = damage;
-	_count = _damage * 0.1;
+	_count = _damage * _speed;
 	_currentHpWidth = (currentHp / maxHp) * _hpWidth;
 	_hpDifferential = (_beforeHpWidth - _currentHpWidth) / _count;
+}
+
+void progressBar::setGaugeOfHeal(float currentHp, float maxHp, int heal, float speed)
+{
+	_isHealed = true;
+	_speed = speed;
+	_heal = heal;
+	_count = _heal * _speed;
+	_currentHpWidth = (currentHp / maxHp) * _hpWidth;
+	_hpDifferential = (_currentHpWidth - _beforeHpWidth) / _count;
 }
 
 void progressBar::setRect(int x, int y)

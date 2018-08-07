@@ -6,13 +6,17 @@
 void loadingScene::lysImageLoading()
 {
 	_loading->loadImage("will_hpBar", "Image/player/hpBar.bmp", 150, 50, 130, 228, true, RGB(255, 0, 255));
-	_loading->loadImage("will_damaged", "Image/player/damaged.bmp", 1280, 720);
+	_loading->loadImage("will_damaged", "Image/player/will_damaged.bmp", 1280, 720);
+	_loading->loadFrameImage("will_damaged2", "Image/player/will_damaged2.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_damaged3", "Image/player/will_damaged3.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will", "Image/player/will_shop.bmp", 1500, 1800, 10, 12, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_dungeon", "Image/player/will_dungeon.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_shortAttack", "Image/player/will_shortAttack.bmp", 975, 592, 8, 4, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_shortSword1", "Image/player/shortSword1.bmp", 480, 160, 3, 1, true, RGB(255, 0, 255));  //lysADD(공격 이펙트 이미지 로딩)
+	_loading->loadFrameImage("will_shortSword1", "Image/player/shortSword1.bmp", 480, 160, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_pendant", "Image/player/pendant.bmp", 3400, 83, 40, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_goHome", "Image/player/goHome.bmp", 6572, 192, 31, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_foot", "Image/player/will_foot.bmp", 60, 12, 5, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_dungeon_shadow", "Image/player/will_dungeon_shadow.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
 	
 }
 

@@ -18,9 +18,12 @@ private:
 	float _beforeHpWidth;		//현재 쳐맞은 후 체력						내가 추가한거
 	float _hpDifferential;      //쳐맞기 전 체력과 쳐맞은 후 체력 차이		내가 추가한거
 
-	int _damage;				//내가 추가한 거
-	int _count;					//내가 추가한 거
-	int _isHit;					//내가 추가한 거
+	int _heal;
+	int _damage;				
+	int _count;					
+	float _speed;
+	bool _isHit;				
+	bool _isHealed;
 	image* _progressBar;		//체력바 이미지(내가 한거)
 								
 	image* _progressBarFront;	//체력바 앞 이미지
@@ -32,9 +35,9 @@ public:
 	HRESULT init(const char* ImageKey, int x, int y, int imgWidth, int imgHeight, int hpWidth, int hpHeight); //내가 추가한 거
 	void release(void);
 	void update(void);
-	void update_isHit(void);
+	void update_jyp(void);
 	void render(void);
-	void render_isHit(void);
+	void render_jyp(void);
 
 	//세로 프로그래스바 테스트
 	void renderHeight();
@@ -43,8 +46,8 @@ public:
 	//체력바 게이지 세팅하기
 	void setGauge(float currentHp, float maxHp);
 	//맞은 데미지로 체력바 게이지 세팅하기
-	void setGaugeOfDamage(float currentHp, float maxHp, int damage);
-
+	void setGaugeOfDamage(float currentHp, float maxHp, int damage, float speed = 0.2);
+	void setGaugeOfHeal(float currentHp, float maxHp, int heal, float speed = 0.2);
 	//체력바 위치 좌표 세팅하기
 	void setX(int x) { _x = x; }
 	void setY(int y) { _y = y; }
@@ -56,6 +59,7 @@ public:
 
 	//쳐맞았는지 세팅하기
 	void setIsHit(bool isHit = true) { _isHit = isHit; }
+	void setIsHealed(bool isHealed = true) { _isHealed = isHealed; }
 	void setHpWidth(int hpWidth) { _hpWidth = hpWidth; }
 
 	progressBar() {}
