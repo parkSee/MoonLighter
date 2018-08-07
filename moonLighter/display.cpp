@@ -66,5 +66,8 @@ void display::addDisplayItem(item * _item)
 
 void display::subtractDisplay(int num)
 {
-	this->_vDisplayItem.erase(_vDisplayItem.begin() + num); //聪部 昏力秦
+	if (_vDisplayItem.size() > 0)
+	{
+		this->_vDisplayItem.erase(_vDisplayItem.begin() + num); //聪部 昏力秦
+	}
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include "gameObject.h"
 
+class display;
+
 #define MAXSTATE 5
 
 namespace State
@@ -33,6 +35,8 @@ private:
 	bool _buy;
 	vector<tagFloat> _vDot;
 
+	display* _dp;
+	bool _pickItem;
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);

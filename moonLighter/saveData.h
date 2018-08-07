@@ -21,8 +21,8 @@ public:
 	float getVolume() { return _volume; }
 	void setVolume(float vol) { _volume = vol; }
 
-	display* get_display() { return _display; }
 	void set_display(display* display) { _display = display; }
+	display* get_display() { return _display; }
 
 	saveData() {}
 	~saveData() {}

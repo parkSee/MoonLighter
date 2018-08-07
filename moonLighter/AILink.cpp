@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "AILink.h"
-
+#include "display.h"
 
 
 HRESULT AILink::init(string _objName, tagFloat _pos)
@@ -13,6 +13,7 @@ HRESULT AILink::init(string _objName, tagFloat _pos)
 	_state[2] = IMAGEMANAGER->findImage("link_left_run");
 	_state[3] = IMAGEMANAGER->findImage("link_right_run");
 
+	_dp = SAVEDATA->get_display();
 
 	//TODO: 애니메이션 변경 프레임으로 돌리고, 메세지통신
 	//this->addCallback("buy",[this](tagMessage msg)
@@ -27,7 +28,7 @@ HRESULT AILink::init(string _objName, tagFloat _pos)
 	_buyCount = 0;
 	_isExit = false;
 	_buy = false;
-
+	_pickItem = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -56,7 +57,7 @@ void AILink::update()
 	this->move();
 
 	
-
+	
 
 	this->Frame();
 	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
@@ -133,6 +134,8 @@ void AILink::move()
 
 			if (_buyCount >= 100)
 			{
+				if (_pickItem == false) _dp->subtractDisplay(3);
+				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
 				{

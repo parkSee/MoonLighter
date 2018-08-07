@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "AIKids.h"
+#include "display.h"
 
 HRESULT AIKids::init(string _objName, tagFloat _pos)
 {
@@ -11,6 +12,7 @@ HRESULT AIKids::init(string _objName, tagFloat _pos)
 	_state[2] = IMAGEMANAGER->findImage("guy_left_run");
 	_state[3] = IMAGEMANAGER->findImage("guy_right_run");
 
+	_dp = SAVEDATA->get_display();
 
 	//TODO: 애니메이션 변경 프레임으로 돌리고, 메세지통신
 	//this->addCallback("buy",[this](tagMessage msg)
@@ -26,7 +28,7 @@ HRESULT AIKids::init(string _objName, tagFloat _pos)
 	_moveCount = 0;
 	_isExit=false;
 	_buy = false;
-
+	_pickItem = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -154,6 +156,8 @@ void AIKids::move()
 
 			if (_buyCount >= 100)
 			{
+				if (_pickItem == false) _dp->subtractDisplay(2);
+				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
 				{

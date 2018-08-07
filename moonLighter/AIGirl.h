@@ -1,6 +1,8 @@
 #pragma once
 #include "gameObject.h"
 
+class display;
+
 #define MAXSTATE 5
 
 
@@ -22,8 +24,11 @@ private:
 	int _buyCount;
 	bool _isExit;
 	bool _buy;
+	bool _pickItem;
 	int _moveCount;
 	vector<tagFloat> _vDot;
+	
+	display* _dp;
 
 public:
 

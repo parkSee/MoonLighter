@@ -120,5 +120,8 @@ void inventory::addInven(item* _item)
 
 void inventory::subtractInven(int num)
 {
-	this->_vInvenItem.erase(_vInvenItem.begin() + num); //聪部 昏力秦
+	if (_vInvenItem.size() > 0)
+	{
+		this->_vInvenItem.erase(_vInvenItem.begin() + num); //聪部 昏力秦
+	}
 }

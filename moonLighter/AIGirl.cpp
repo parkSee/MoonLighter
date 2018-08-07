@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "AIGirl.h"
-
-
-
+#include "display.h"
 
 HRESULT AIGirl::init(string _objName, tagFloat _pos)
 {
@@ -13,6 +11,8 @@ HRESULT AIGirl::init(string _objName, tagFloat _pos)
 	_state[2] = IMAGEMANAGER->findImage("girl_left_run");
 	_state[3] = IMAGEMANAGER->findImage("girl_right_run");
 
+	
+	_dp = SAVEDATA->get_display();
 
 	//TODO: 애니메이션 변경 프레임으로 돌리고, 메세지통신
 	//this->addCallback("buy",[this](tagMessage msg)
@@ -28,7 +28,7 @@ HRESULT AIGirl::init(string _objName, tagFloat _pos)
 	_moveCount = 0;
 	_isExit = false;
 	_buy = false;
-
+	_pickItem = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -42,13 +42,14 @@ HRESULT AIGirl::init(string _objName, tagFloat _pos)
 
 	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
 
+	
 
 	return S_OK;
 }
 
 void AIGirl::release()
 {
-
+	
 
 }
 
@@ -162,6 +163,8 @@ void AIGirl::move()
 
 			if (_buyCount >= 100)
 			{
+				if (_pickItem == false) _dp->subtractDisplay(1);
+				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
 				{
@@ -184,7 +187,10 @@ void AIGirl::move()
 					_isExit = true;
 					_buy = true;
 				}
+				
+				
 			}
+			
 		}
 	}
 	else
@@ -212,5 +218,6 @@ void AIGirl::move()
 		}
 	}
 
+	
 
 }

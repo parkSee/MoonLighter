@@ -7,8 +7,6 @@
 HRESULT itemManager::init()
 {
 
-	_DPTable = RectMake(290, 950, 210, 162);
-
 	return S_OK;
 }
 
@@ -130,3 +128,5 @@ void itemManager::collision()
 	}	
 
 }
+
+

@@ -9,8 +9,7 @@ class itemManager
 {
 private:
 
-	vector<item*> _vItem;
-	RECT _DPTable;
+	vector<item*> _vItem;	
 
 public:
 
