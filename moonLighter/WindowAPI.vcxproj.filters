@@ -63,9 +63,6 @@
     <Filter Include="MainGame\inventory">
       <UniqueIdentifier>{c5e750c5-dc79-4121-8be3-2aa06e7056a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Item\ItemType">
-      <UniqueIdentifier>{dde179f4-6246-47b4-8192-52b3e2f23b7e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameFramework2D\Effect">
       <UniqueIdentifier>{5db141e6-ab45-495f-b08d-a38d7f0fb62b}</UniqueIdentifier>
     </Filter>
@@ -89,6 +86,9 @@
     </Filter>
     <Filter Include="MainGame\Object\shopObject">
       <UniqueIdentifier>{631e5333-df31-43e9-95b2-06ff3603937e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Display">
+      <UniqueIdentifier>{5000992e-818d-4c81-8939-75751a5621b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -176,39 +176,6 @@
     <ClInclude Include="loadingScene.h">
       <Filter>MainGame\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="bigSlime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="smallSlime.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="weed.h">
-      <Filter>소스 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="golemCore.h">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClInclude>
-    <ClInclude Include="twig.h">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClInclude>
-    <ClInclude Include="rebar.h">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClInclude>
-    <ClInclude Include="redCristal.h">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClInclude>
-    <ClInclude Include="liquidItem.h">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClInclude>
-    <ClInclude Include="potion.h">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClInclude>
-    <ClInclude Include="item.h">
-      <Filter>MainGame\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="itemManager.h">
-      <Filter>MainGame\Item</Filter>
-    </ClInclude>
     <ClInclude Include="soundManager.h">
       <Filter>GameFramework2D\Manager</Filter>
     </ClInclude>
@@ -265,6 +232,24 @@
     </ClInclude>
     <ClInclude Include="AILink.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="itemManager.h">
+      <Filter>MainGame\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="display.h">
+      <Filter>MainGame\Display</Filter>
+    </ClInclude>
+    <ClInclude Include="weed.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="bigSlime.h">
+      <Filter>MainGame\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="smallSlime.h">
+      <Filter>MainGame\Enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -358,41 +343,8 @@
     <ClCompile Include="lysImage.cpp">
       <Filter>MainGame\Scene\loadingImages</Filter>
     </ClCompile>
-    <ClCompile Include="bigSlime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="smallSlime.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="weed.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="inventory.cpp">
       <Filter>MainGame\inventory</Filter>
-    </ClCompile>
-    <ClCompile Include="golemCore.cpp">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClCompile>
-    <ClCompile Include="rebar.cpp">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClCompile>
-    <ClCompile Include="redCristal.cpp">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClCompile>
-    <ClCompile Include="twig.cpp">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClCompile>
-    <ClCompile Include="liquidItem.cpp">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClCompile>
-    <ClCompile Include="potion.cpp">
-      <Filter>MainGame\Item\ItemType</Filter>
-    </ClCompile>
-    <ClCompile Include="item.cpp">
-      <Filter>MainGame\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="itemManager.cpp">
-      <Filter>MainGame\Item</Filter>
     </ClCompile>
     <ClCompile Include="soundManager.cpp">
       <Filter>GameFramework2D\Manager</Filter>
@@ -447,6 +399,24 @@
     </ClCompile>
     <ClCompile Include="AILink.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="item.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="itemManager.cpp">
+      <Filter>MainGame\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="display.cpp">
+      <Filter>MainGame\Display</Filter>
+    </ClCompile>
+    <ClCompile Include="bigSlime.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="smallSlime.cpp">
+      <Filter>MainGame\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="weed.cpp">
+      <Filter>MainGame\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
