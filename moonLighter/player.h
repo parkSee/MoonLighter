@@ -5,7 +5,11 @@
 #include "effect.h"
 #include "enemyController.h"
 
+<<<<<<< HEAD
 #define WILL_DAMAGED_MAX 3
+=======
+class inventory;	//csyADD
+>>>>>>> aa87cab2d426e1ae948803d7ead4c05633b1458c
 
 class player : public gameObject
 {
@@ -63,12 +67,16 @@ private:
 	RECT _rcProbe;
 
 	progressBar* _hpBar;
+
+	inventory* _inven; //csyADD
 	
 public:
 	HRESULT init(string _objName, tagFloat _pos);
 	void release();
 	void update();
 	void render();
+
+	inventory* getInven() { return _inven; } //csyADD [인벤 클래스 쓰기위해 get함수 선언]
 
 	void collision();
 	void dungeonMove();
@@ -93,6 +101,7 @@ public:
 	bool getIsRcSwordOn() { return _isRcSwordOn; } 
 	void enemyCheckCollision();
 	void setPlayerMove(bool playermove) { _playerMove = playermove; }
+	void renderUI();	//csyADD [이제부터 체력바,인벤토리 등 UI의 랜더를 이 함수를 통해 씬에 출력하자]
 
 	player() {}
 	~player() {}

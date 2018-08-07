@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
-
+#include "inventory.h"
 
 
 HRESULT player::init(string _objName, tagFloat _pos)
@@ -59,6 +59,14 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	EFFECTMANAGER->addEffect("숏소드", "will_shortSword1", 0.3f, 50);
 	EFFECTMANAGER->addEffect("발자취", "will_foot", 0.6f, 10);
 
+	_inven = new inventory;
+	_inven->init();
+	
+
+
+
+
+
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
@@ -79,6 +87,8 @@ void player::release(void)
 	gameObject::release();
 	_efcShortSword1->release();
 	SAFE_DELETE(_efcShortSword1);
+
+	_inven->release();
 }
 
 void player::update(void)
@@ -93,6 +103,8 @@ void player::update(void)
 		CAMERAMANAGER->shakeCamera(5.0f, 11.0f);
 	}
 	*/
+
+	_inven->update();
 
 	//this->collision();
 	this->willAction();
@@ -977,5 +989,10 @@ void player::enemyCheckCollision()
 	//char str[128];
 	//sprintf_s(str, "%d", a);
 	//TextOut(getMemDC(), WINSIZEX - 100, 100, str, strlen(str));
+}
+
+void player::renderUI()
+{
+	_inven->render(getMemDC());
 }
 

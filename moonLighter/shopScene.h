@@ -6,7 +6,7 @@
 #include "AIGirl.h"
 #include"AILink.h"
 #include "furnitureContainer.h"
-#include "inventory.h"
+#include "display.h"
 
 
 class shopScene : public gameNode
@@ -23,8 +23,8 @@ private:
 
 	inventory* _inven;
 	furnitureContainer* _furniture;
-	image* _counter;
-	image* _display;
+	//image* _counter;
+	//image* _display;
 	image* _shopDoor;
 
 	image* _buttonUi;
@@ -32,6 +32,8 @@ private:
 
 	image* _jButton;
 	image* _layer;
+
+	display* _display;
 
 	int _exitCount;
 	bool _isExit , _isOpen;

@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "startScene.h"
+#include "display.h"
 
 HRESULT startScene::init()
 {
@@ -34,6 +35,8 @@ HRESULT startScene::init()
 	_player->init("player", tagFloat(0, 0));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
 
+	_display = new display;
+	_display->init();
 
 	return S_OK;
 }
@@ -73,6 +76,7 @@ void startScene::update()
 		{
 			SOUNDMANAGER->stop("introBGM");
 			SAVEDATA->setVolume(_vol);
+			SAVEDATA->set_display(_display);
 			SCENEMANAGER->loadScene("shopScene");
 		}
 

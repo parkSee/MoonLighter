@@ -1,6 +1,7 @@
 #pragma once
 #include "singletonBase.h"
 #include <unordered_map>
+#include "itemManager.h"
 
 class gameObject;
 
@@ -17,6 +18,8 @@ private:
 
 	unordered_map<objectType, vector<gameObject*>> totalList;
 	typedef unordered_map<objectType, vector<gameObject*>>::iterator mIter;
+
+	itemManager* _im;
 
 public:
 
@@ -44,6 +47,7 @@ public:
 	//전체 모든 오브젝트를 벡터에 담아서 반환 해준다.
 	vector<gameObject*>* getObjectList(objectType _type);
 
+	itemManager* getItemManager() { return _im; } //csyADD [아이템매니저 받아오기]
 
 	objectManager() {}
 	~objectManager() {}

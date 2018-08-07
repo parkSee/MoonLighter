@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "shopScene.h"
 
+
 //csyADD [인벤 출력 테스트 용 추가]
 
 HRESULT shopScene::init()
@@ -28,10 +29,8 @@ HRESULT shopScene::init()
 	//_aiLink->init("aiGirl", tagFloat(650, 1303));
 	//OBJECTMANAGER->addObject(objectType::AI, _aiLink);
 
-	
+	_display = SAVEDATA->get_display();
 
-	_inven = new inventory;
-	_inven->init();
 	
 	CAMERAMANAGER->setMapSize(WINSIZEX, 1440);
 
@@ -68,7 +67,7 @@ HRESULT shopScene::init()
 
 void shopScene::release()
 {
-	SAFE_DELETE(_inven);
+	_display->release();
 }
 
 void shopScene::update()
@@ -96,7 +95,7 @@ void shopScene::update()
 			_index2 = 0;
 			_exitCount = _outCount;
 		}
-
+		SAVEDATA->set_display(_display);
 
 	}
 	else
@@ -111,7 +110,7 @@ void shopScene::update()
 
 	_enterRc = RectMakeCenter(650, 1230, 50, 50);
 
-	_inven->update();
+	
 
 
 	if ( 1<_exitCount&&_exitCount < 10)
@@ -143,6 +142,7 @@ void shopScene::update()
 	{
 		RdoorFrame();
 	}
+	_display->update();
 }
  
 void shopScene::render()
@@ -167,9 +167,10 @@ void shopScene::render()
 	
 		_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
 	
+	_display->render();
 	//RectangleCam(getMemDC(), _enterRc, cam);
 	
-	_inven->render();
+	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 
 void shopScene::uiFrame()
