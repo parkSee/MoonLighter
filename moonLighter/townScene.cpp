@@ -61,6 +61,8 @@ void townScene::update()
 			OBJECTMANAGER->reset();
 			SCENEMANAGER->loadScene("shopScene");
 			SOUNDMANAGER->stop("townBGM");
+			_player->pos.x = 650;
+			_player->pos.y = 1150;
 		}
 	
 	}
