@@ -76,8 +76,6 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("link_left_run", "Image/ai/link_left_run.bmp", 700, 78, 9, 1, true, MAGENTA);
 	_loading->loadFrameImage("link_right_run", "Image/ai/link_right_run.bmp", 700, 78, 9, 1, true, MAGENTA);
 
-
-
 	//door
 	_loading->loadImage("door_left", "Image/door_left.bmp", 640, 737, true, MAGENTA);
 	_loading->loadImage("door_right", "Image/door_right.bmp", 640, 737, true, MAGENTA);
@@ -94,6 +92,18 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("exit", "Image/나가기.bmp", 200, 45, true, MAGENTA);
 	_loading->loadImage("select", "Image/selectMain.bmp", 280, 50, true, MAGENTA);
 
+	//option
+	_loading->loadImage("optionBook", "Image/option/optionImg.bmp", 800, 513, true, MAGENTA);
+	_loading->loadImage("soundSelect", "Image/option/음악선택화살.bmp", 361, 33, true, MAGENTA);
+	_loading->loadImage("volumeSelect", "Image/option/볼륨선택화살.bmp", 362, 46, true, MAGENTA);
+	_loading->loadImage("on", "Image/option/on.bmp", 51, 31);
+	_loading->loadImage("off", "Image/option/off.bmp", 57, 41);
+	_loading->loadImage("soundChoice", "Image/option/음악선택.bmp", 156, 41,true,MAGENTA);
+	_loading->loadImage("volumeChoice", "Image/option/볼륨선택.bmp", 212, 39, true, MAGENTA);
+	_loading->loadImage("inactiveOn", "Image/option/inactiveOn.bmp", 51, 31);
+	_loading->loadImage("inactiveOff", "Image/option/inactiveOff.bmp", 57, 41);
+	_loading->loadImage("block", "Image/option/volblock.bmp", 23, 23);
+	
 	
 }
 
