@@ -4,6 +4,9 @@
 #include "progressBar.h"
 #include "effect.h"
 #include "enemyController.h"
+
+class inventory;	//csyADD
+
 class player : public gameObject
 {
 private:
@@ -53,12 +56,16 @@ private:
 	RECT _rcProbe;
 
 	progressBar* _hpBar;
+
+	inventory* _inven; //csyADD
 	
 public:
 	HRESULT init(string _objName, tagFloat _pos);
 	void release();
 	void update();
 	void render();
+
+	inventory* getInven() { return _inven; } //csyADD [인벤 클래스 쓰기위해 get함수 선언]
 
 	void collision();
 	void move();
@@ -80,6 +87,7 @@ public:
 	bool getIsRcSwordOn() { return _isRcSwordOn; } //lysADD (공격중인지 아닌지 bool값 반환)
 	void enemyCheckCollision();
 	void setPlayerMove(bool playermove) { _playerMove = playermove; }
+	void renderUI();	//csyADD [이제부터 체력바,인벤토리 등 UI의 랜더를 이 함수를 통해 씬에 출력하자]
 
 	player() {}
 	~player() {}

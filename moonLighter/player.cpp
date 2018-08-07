@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "player.h"
-
+#include "inventory.h"
 
 
 HRESULT player::init(string _objName, tagFloat _pos)
@@ -50,9 +50,9 @@ HRESULT player::init(string _objName, tagFloat _pos)
 
 	EFFECTMANAGER->addEffect("¼ô¼Òµå", "will_shortSword1", 0.3f, 50);
 
-
-
-
+	_inven = new inventory;
+	_inven->init();
+	
 
 
 
@@ -79,6 +79,8 @@ void player::release(void)
 	gameObject::release();
 	_efcShortSword1->release();
 	SAFE_DELETE(_efcShortSword1);
+
+	_inven->release();
 }
 
 void player::update(void)
@@ -93,6 +95,8 @@ void player::update(void)
 		CAMERAMANAGER->shakeCamera(5.0f, 11.0f);
 	}
 	*/
+
+	_inven->update();
 
 	//this->collision();
 	this->willAction();
@@ -895,5 +899,10 @@ void player::enemyCheckCollision()
 			}
 		}
 	}
+}
+
+void player::renderUI()
+{
+	_inven->render(getMemDC());
 }
 
