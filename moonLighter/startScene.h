@@ -1,13 +1,13 @@
 #pragma once
 #include "gameNode.h"
 #include "player.h"
-<<<<<<< HEAD
+
 #include "ui.h"
-=======
+
 
 class display;
 
->>>>>>> 108191f43cdc061f8b9c2433ab952969ea42abe1
+
 struct Door
 {
 	image* img;
@@ -33,11 +33,11 @@ private:
 	image* _selectImg;
 	tagInt _selectPos;
 
-<<<<<<< HEAD
+
 	ui* _ui;
-=======
+
 	display* _display;
->>>>>>> 108191f43cdc061f8b9c2433ab952969ea42abe1
+
 
 	int _count, _index;
 
