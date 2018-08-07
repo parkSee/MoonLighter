@@ -5,11 +5,11 @@
 #include "effect.h"
 #include "enemyController.h"
 
-<<<<<<< HEAD
+
 #define WILL_DAMAGED_MAX 3
-=======
+
 class inventory;	//csyADD
->>>>>>> aa87cab2d426e1ae948803d7ead4c05633b1458c
+
 
 class player : public gameObject
 {
