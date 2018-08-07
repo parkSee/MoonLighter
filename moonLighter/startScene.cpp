@@ -77,7 +77,7 @@ void startScene::update()
 			SOUNDMANAGER->stop("introBGM");
 			SAVEDATA->setVolume(_vol);
 			SAVEDATA->set_display(_display);
-			SCENEMANAGER->loadScene("shopScene");
+			SCENEMANAGER->loadScene("townScene");
 		}
 
 	}
