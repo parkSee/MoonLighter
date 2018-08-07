@@ -1,6 +1,9 @@
 #pragma once
 #include "gameNode.h"
 #include "player.h"
+
+class display;
+
 struct Door
 {
 	image* img;
@@ -25,6 +28,8 @@ private:
 
 	image* _selectImg;
 	tagInt _selectPos;
+
+	display* _display;
 
 	int _count, _index;
 
