@@ -3,7 +3,7 @@
 
 HRESULT townScene::init()
 {
-
+	_vol = SAVEDATA->getVolume();
 	//나중에 씬매니저 추가해서 옮겨 놓을겁니다. 
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	_player->pos.x = WINSIZEX / 2;
@@ -17,7 +17,7 @@ HRESULT townScene::init()
 	_enterShopRc = RectMakeCenter(1944, 652, 100, 50);
 	_enterDgInRc = RectMakeCenter(2950, 788, 50, 100);
 	
-	SOUNDMANAGER->play("townBGM");
+	SOUNDMANAGER->play("townBGM",_vol);
 	CAMERAMANAGER->setMapSize(3000, 2460);
 
 	_count = _index = 0;

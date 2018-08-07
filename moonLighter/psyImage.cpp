@@ -19,7 +19,7 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("buttonUi", "Image/shop_object/buttonUi.bmp", 1720, 100, 8, 1, true, MAGENTA);
 	_loading->loadFrameImage("button", "Image/shop_object/button.bmp", 3400, 83, 40, 1, true, MAGENTA);
 	_loading->loadImage("jButton", "Image/shop_object/jButton.bmp", 40, 40, true, MAGENTA);
-
+	_loading->loadImage("shop_door_layer", "Image/shop_object/shop_door_layer.bmp", 183, 118,true,MAGENTA);
 
 	//던전 로비
 	_loading->loadImage("dunIntro", "./Image/dungeon_object/dungeonLobby_base.bmp", 2460, 2100);

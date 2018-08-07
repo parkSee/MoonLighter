@@ -23,6 +23,7 @@ private:
 	Channel** _channel;		//채널 클래스
 
 	arrSound _mTotalSound;	//맵에 담아둘 사운드들
+	string _currentBGM;
 
 public:
 	HRESULT init(void);
@@ -45,6 +46,34 @@ public:
 	bool isPlaySound(string keyName);
 	//일시정지 중이냐?
 	bool isPauseSound(string keyName);
+
+	void setVolume(float vol)
+	{
+		int count = 0;
+		arrSoundIter iter = _mTotalSound.begin();
+		for (iter; iter != _mTotalSound.end(); ++iter, count++)
+		{
+			if (_currentBGM == iter->first)
+			{
+				////사운드 플레이
+				//_system->playSound(FMOD_CHANNEL_FREE, *iter->second, false, &_channel[count]);
+
+				//볼륨세팅
+				_channel[count]->setVolume(vol);
+			}
+		}
+	}
+
+	void playBGM(string keyName, float vol)
+	{
+		if (_currentBGM != "" && isPlaySound(_currentBGM))
+			stop(_currentBGM);
+
+		_currentBGM = keyName;
+
+		play(keyName, vol);
+
+	}
 
 	soundManager() : _system(NULL), _sound(NULL), _channel(NULL) {}
 	~soundManager() {}
