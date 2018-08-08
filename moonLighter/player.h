@@ -16,7 +16,6 @@ class player : public gameObject
 private:
 
 	int _index;
-	int _cntHp;
 	int _count;
 	int _cntFoot;
 	int _cntHp[9];

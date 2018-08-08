@@ -14,6 +14,11 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_cntHp[2] = 0;
 	_cntHp[3] = 0;
 	_cntHp[4] = 10;
+	_cntHp[5] = 0;
+	_cntHp[6] = 0;
+	_cntHp[7] = 0;
+	_cntHp[8] = 0;
+
 	_cntMoney[0] = 0;
 	_cntMoney[1] = 0;
 	_cntMoney[2] = 0;
