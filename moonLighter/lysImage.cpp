@@ -11,7 +11,8 @@ void loadingScene::lysImageLoading()
 	_loading->loadFrameImage("will_damaged3", "Image/player/will_damaged3.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will", "Image/player/will_shop.bmp", 1500, 1800, 10, 12, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_dungeon", "Image/player/will_dungeon.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_shortAttack", "Image/player/will_shortAttack.bmp", 975, 592, 8, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_shortAttack", "Image/player/will_shortAttack1.bmp", 975, 592, 8, 4, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_shortAttack_shadow", "Image/player/will_shortAttack_shadow.bmp", 975, 592, 8, 4, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_shortSword1", "Image/player/shortSword1.bmp", 480, 160, 3, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_pendant", "Image/player/pendant.bmp", 3400, 83, 40, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_goHome", "Image/player/goHome.bmp", 6572, 192, 31, 1, true, RGB(255, 0, 255));
