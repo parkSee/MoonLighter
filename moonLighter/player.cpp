@@ -34,6 +34,9 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isAttacking = false;
 	_isRcSwordOn = false;
 	_playerMove = true;
+	tempCount=0;
+	tempCurrentX= tempCurrentY=0;
+	tempBool=false;
 
 	a = false;
 
@@ -48,6 +51,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willDamaged[0] = IMAGEMANAGER->findImage("will_damaged");
 	willDamaged[1] = IMAGEMANAGER->findImage("will_damaged2");
 	willDamaged[2] = IMAGEMANAGER->findImage("will_damaged3");
+	_tempImg = IMAGEMANAGER->findImage("활쟁이");
+
 
 	_hpBar = new progressBar;
 	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
@@ -105,6 +110,31 @@ void player::update(void)
 	}
 	*/
 
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		tempBool = true;
+	}
+
+	if (tempBool)
+	{
+		tempCount++;
+		if (tempCount % 5 == 0)
+		{
+			tempCurrentX++;
+		}
+
+		if (tempCurrentX > _tempImg->getMaxFrameX())
+		{
+			tempCount = 0;
+			tempCurrentX =0;
+			tempBool = false;
+		}
+
+		
+	}
+
+
+
 	_inven->update();
 
 	//this->collision();
@@ -116,87 +146,95 @@ void player::update(void)
 void player::render(void)
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
+	if (!tempBool)
 
-	if (!_isAttacking)
 	{
-		//willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-	}
-	if (_isDead)
-	{
-		willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-		willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-	}
-	else if (!_isAttacking)	//공격모션이 아닐 경우에 출력
-	{
-		int _count = (int)(_cntIsHit * 0.1);
-		if (!_isHit)
+		if (!_isAttacking)
+		{
+			//willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+		}
+		if (_isDead)
 		{
 			willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 			willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 		}
-		else
+		else if (!_isAttacking)	//공격모션이 아닐 경우에 출력
 		{
-			if (_cntIsHit <= 4)
-			{
-				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-				willDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-			}
-			else if (_cntIsHit <= 8)
-			{
-				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-				willDamaged[2]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-			}
-			else if (8 < _cntIsHit && _count % 2 == 1)
-			{
-
-			}
-			else if (8 < _cntIsHit && _count % 2 == 0)
+			int _count = (int)(_cntIsHit * 0.1);
+			if (!_isHit)
 			{
 				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 				willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
+			else
+			{
+				if (_cntIsHit <= 4)
+				{
+					willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+				else if (_cntIsHit <= 8)
+				{
+					willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willDamaged[2]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+				else if (8 < _cntIsHit && _count % 2 == 1)
+				{
+
+				}
+				else if (8 < _cntIsHit && _count % 2 == 0)
+				{
+					willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+			}
+		}
+		else if (_isAttacking)    //공격 모션일 경우의 출력
+		{
+			willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+			willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+
+		}
+		if (_isGoingHome)
+		{
+			willGoHome->frameRender(getMemDC(), (rc.left - willGoHome->getFrameWidth() / 4 + 5) - cam.left, (rc.top - willGoHome->getFrameHeight() / 4 + 20) - cam.top);
+		}
+		//if (_isWalking)
+		//{
+		//	willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
+		//}
+		willPendant->frameRender(getMemDC(), 1190, 620);
+
+
+		if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
+		{
+			Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
+		}
+		if (KEYMANAGER->isToggleKey(VK_F10))	//lysADD(픽셀충돌체크 렉트 출력)
+		{
+			Rectangle(getMemDC(), _rcProbe.left - cam.left, _rcProbe.top - cam.top, _rcProbe.right - cam.left, _rcProbe.bottom - cam.top);
+		}
+		if (KEYMANAGER->isToggleKey(VK_F11))	//lysADD(아이템토글, 몬스터 충돌 렉트 출력)
+		{
+			Rectangle(getMemDC(), _rcBody.left - cam.left, _rcBody.top - cam.top, _rcBody.right - cam.left, _rcBody.bottom - cam.top);
+		}
+		if (KEYMANAGER->isToggleKey(VK_F12))	//lysADD(공격 모션 중 공격 범위 렉트 출력)
+		{
+			Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
+		}
+
+
+		_hpBar->render_jyp();
+		if (_isHit && _cntIsHit <= 2 && !_isDead)
+		{
+			willDamaged[0]->alphaRender(getMemDC(), 100);
 		}
 	}
-	else if(_isAttacking)    //공격 모션일 경우의 출력
+	else
 	{
-		willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-		willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-		
+		_tempImg->frameRender(getMemDC(), pos.x - cam.left - 45, pos.y - cam.top - 34, tempCurrentX, tempCurrentY);
 	}
-	if (_isGoingHome)
-	{
-		willGoHome->frameRender(getMemDC(), (rc.left - willGoHome->getFrameWidth() / 4 + 5) - cam.left, (rc.top - willGoHome->getFrameHeight() / 4 + 20) - cam.top);
-	}
-	//if (_isWalking)
-	//{
-	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
-	//}
-	willPendant->frameRender(getMemDC(), 1190, 620);
-	
-	
-	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
-	{
-		Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
-	}
-	if (KEYMANAGER->isToggleKey(VK_F10))	//lysADD(픽셀충돌체크 렉트 출력)
-	{
-		Rectangle(getMemDC(), _rcProbe.left - cam.left, _rcProbe.top - cam.top, _rcProbe.right - cam.left, _rcProbe.bottom - cam.top);
-	}
-	if (KEYMANAGER->isToggleKey(VK_F11))	//lysADD(아이템토글, 몬스터 충돌 렉트 출력)
-	{
-		Rectangle(getMemDC(), _rcBody.left - cam.left, _rcBody.top - cam.top, _rcBody.right - cam.left, _rcBody.bottom - cam.top);
-	}
-	if (KEYMANAGER->isToggleKey(VK_F12))	//lysADD(공격 모션 중 공격 범위 렉트 출력)
-	{
-		Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
-	}
-	
-	
-	_hpBar->render_jyp();
-	if (_isHit && _cntIsHit <= 2 && !_isDead)
-	{
-		willDamaged[0]->alphaRender(getMemDC(), 100);
-	}
+
 }
 
 

@@ -46,6 +46,8 @@ private:
 	bool _isHit;
 	bool _isDead;
 
+	
+
 	bool a;
 	bool _playerMove;
 
@@ -60,6 +62,11 @@ private:
 	image* willDamaged[WILL_DAMAGED_MAX];
 	image* willPendant;
 	image* willGoHome;
+	image* _tempImg;
+	int tempCount;
+	int tempCurrentX;
+	int tempCurrentY;
+	int tempBool;
 
 	image* _pixelImg;
 

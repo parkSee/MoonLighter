@@ -152,59 +152,90 @@ void dungeonScene::moveDungeon()
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
 		_player->setIsActive(false);
-		if (_em->getstage2() == false && _cameraDistance < 10)
+		if (_cameraDistance < 10)
 		{
-			_em->stage2Init();
 			_player->pos.x = 1916;
 			_player->pos.y = 1250;
 			_player->setIsActive(true);
+		}
+		if (_em->getstage2() == false && _cameraDistance < 10)
+		{
+			_em->stage2Init();
 		}
 		
 	}
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[1]))
 	{
+		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)1800);
-		_player->pos.x = 1916;
-		_player->pos.y = 1544;
+		_player->setIsActive(false);
+		if (_cameraDistance < 10)
+		{
+			_player->pos.x = 1916;
+			_player->pos.y = 1544;
+			_player->setIsActive(true);
+		}
+		
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[2]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)640, (int)1080);
 		_player->setIsActive(false);
-		if (_em->getstage3() == false && _cameraDistance < 10)
+		if (_cameraDistance < 10)
 		{
-			_em->stage3Init();
 			_player->pos.x = 1100;
 			_player->pos.y = 1077;
 			_player->setIsActive(true);
+		}
+		if (_em->getstage3() == false && _cameraDistance < 10)
+		{
+			_em->stage3Init();
 		}
 
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[3]))
 	{
+		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
-		_player->pos.x = 1400;
-		_player->pos.y = 1266;
+		_player->setIsActive(false);
+		
+		if (_cameraDistance < 10)
+		{
+			_player->pos.x = 1450;
+			_player->pos.y = 1080;
+			_player->setIsActive(true);
+		}
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[4]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
 		_player->setIsActive(false);
-		if (_em->getstage4() == false && _cameraDistance < 10)
+		if (_cameraDistance < 10)
 		{
-			_em->stage4Init();
 			_player->pos.x = 1920;
 			_player->pos.y = 460;
 			_player->setIsActive(true);
 		}
+		if (_em->getstage4() == false && _cameraDistance < 10)
+		{
+			_em->stage4Init();
+			
+		}
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[5]))
 	{
+		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
-		_player->pos.x = 1920;
-		_player->pos.y = 1080;
+		_player->setIsActive(false);
+		
+		if (_cameraDistance < 10)
+		{
+			_player->pos.x = 1920;
+			_player->pos.y = 880;
+			_player->setIsActive(true);
+		}
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[6]))
 	{
@@ -212,19 +243,30 @@ void dungeonScene::moveDungeon()
 		CAMERAMANAGER->connectTarget((int)3200, (int)360);
 		_player->setIsActive(false);
 		
-		if (_em->getstage5() == false && _cameraDistance < 10)
+		if (_cameraDistance < 10)
 		{
-			_em->stage5Init();
 			_player->pos.x = 2700;
 			_player->pos.y = 360;
 			_player->setIsActive(true);
 		}
+		if (_em->getstage5() == false && _cameraDistance < 10)
+		{
+			_em->stage5Init();
+			
+		}
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[7]))
 	{
+		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
-		_player->pos.x = 2400;
-		_player->pos.y = 360;
+		_player->setIsActive(false);
+		
+		if (_cameraDistance < 10)
+		{
+			_player->pos.x = 2400;
+			_player->pos.y = 360;
+			_player->setIsActive(true);
+		}
 	}
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[8]))
 	{
