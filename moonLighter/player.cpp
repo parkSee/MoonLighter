@@ -613,6 +613,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(6);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(6);
 			pos.y -= (_speed + _acceleration);
 			_probeX = pos.x;
 			_probeY = pos.y - (willDungeon->getFrameHeight() / 4);
@@ -637,6 +639,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(7);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(7);
 			pos.y += (_speed + _acceleration);
 			_probeX = pos.x;
 			_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
@@ -661,6 +665,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(4);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(4);
 			pos.x += (_speed + _acceleration);
 			_probeX = pos.x + 20;
 			_probeY = pos.y;
@@ -685,6 +691,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(5);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(5);
 			pos.x -= (_speed + _acceleration);
 			_probeX = pos.x - 20;
 			_probeY = pos.y;
@@ -916,7 +924,7 @@ void player::enemyCheckCollision()
 				}
 				else if (i == 3)
 				{
-					rcEnemy = ((boss*)_enemyObject[i][j])->getRect();
+					rcEnemy = ((boss*)_enemyObject[i][j])->getCollisionRC();
 				}
 				if (IntersectRect(&rcTemp, &_rcSword, &rcEnemy) && _isRcSwordOn == true)
 				{

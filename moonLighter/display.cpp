@@ -94,11 +94,13 @@ void display::addDisplayItem(item * _item)
 
 void display::dp_SetActiveFalse(int num)
 {
+	if (_vDisplayItem.size() > num)
 	_vDisplayItem[num]->_isActive = false;
 }
 
 void display::dp_SetActiveTrue(int num)
 {
+	if (_vDisplayItem.size() > num)
 	_vDisplayItem[num]->_isActive = true;
 }
 
