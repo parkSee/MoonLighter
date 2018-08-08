@@ -65,6 +65,6 @@ void objectContainer::render()
 	_witch->render();
 	if (_witch->getIstalk() == true)
 	{
-		_witch->talkingRender("살려주세요...");
+		_witch->talkingRender("살려주세요...허리가 부서질것 같습니다");
 	}
 }

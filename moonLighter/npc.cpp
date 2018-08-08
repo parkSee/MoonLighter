@@ -153,6 +153,21 @@ void npc::talkingRender(const char *a)
 	// 문자 폭은 문자크기에 따라 비례하게 표시. 0으로 두는 것이 좋음
 
 	/* 폰트 사용법
+	RECT rcTextArea = { 200,200,300,300 };
+	RECT 로 영역 범위 설정.
+
+	DrawText(hdc,szTemp, strlen(szTemp) ,&rcTextArea, DT_SINGLELINE  |  DT_VCENTER );
+	(핸들, 문자열 , 문자열의 길이  , 영역 크기    , 드로우 텍스트 _ 출력 스타일 )  ;
+	해당 영역안에 글자를 스타일에 따라 출력해준다.  or (  |  ) 연산으로 중복된 스타일을 쓸수있다.
+
+	자주쓰는 스타일
+
+	DT_LEFT			좌측 정렬
+	DT_CENTER		중앙 정렬
+	DT_WORDBREAK	영역 넘어갈시 단어 단위로 줄바꿈
+	DT_SINGLELINE	한줄 사용
+	DT_NOCLIP		영역 무시 출력
+	DT_VCENTER		수직 정중앙에 맞춰라(반드시 DT_SINGLELINE이랑 같이 써야한다)
 	*/
 	//strcpy(text , a);
 	RECT cam = CAMERAMANAGER->getRenderRc();
@@ -164,9 +179,9 @@ void npc::talkingRender(const char *a)
 	if (_txtCount == 0)
 	{
 		_txtIndex += 2;
-		if (_txtIndex > 20)
+		if (_txtIndex > 50)
 		{
-			_txtIndex = 20;
+			_txtIndex = 50;
 			//if (_istalk == true)
 			//{
 				if (KEYMANAGER->isOnceKeyDown('J'))
@@ -182,11 +197,13 @@ void npc::talkingRender(const char *a)
 	HFONT oldFont;
 	font = CreateFont(20, 0, 0, 0, 600, false, false, false, HANGEUL_CHARSET, 0, 0, 0, 0, TEXT("DX빨간우체통B"));
 	oldFont = (HFONT)SelectObject(getMemDC(), font);
-	char str[128];
+	char str[256];
 
 	strncpy_s(str, text, _txtIndex);
-
-	TextOut(getMemDC(), (_talkBoxUiPos.x + 200 - cam.left), (_talkBoxUiPos.y + 75 - cam.top), str, strlen(str));
+	RECT textrc = RectMake(_talkBoxUiPos.x + 200, _talkBoxUiPos.y + 75 - cam.top,300,600);
+	
+	DrawText(getMemDC(), str, strlen(str), &textrc, DT_WORDBREAK);
+	//TextOut(getMemDC(), (_talkBoxUiPos.x + 200 - cam.left), (_talkBoxUiPos.y + 75 - cam.top), str, strlen(str));
 	SelectObject(getMemDC(), oldFont);
 	DeleteObject(font);
 
