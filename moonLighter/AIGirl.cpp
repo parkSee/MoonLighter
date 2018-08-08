@@ -76,10 +76,10 @@ void AIGirl::render()
 
 	_state[_curState]->frameRender(getMemDC(), (pos.x - _state[_curState]->getFrameWidth() / 2) - cam.left, (pos.y - _state[_curState]->getFrameHeight() / 2) - cam.top);
 
-	for (int i = 0; i < _vDot.size(); ++i)
-	{
-		EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
-	}
+	//for (int i = 0; i < _vDot.size(); ++i)
+	//{
+	//	EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
+	//}
 
 	
 		_moveCount++;
