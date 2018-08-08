@@ -140,76 +140,86 @@ void player::update(void)
 void player::render(void)
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
-
-	if (_isDead)
+	if (_isAutomatic)
 	{
-		willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-		willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-	}
-	else if (!_isAttacking)	//공격모션이 아닐 경우에 출력
-	{
-		int _count = (int)(_cntIsHit * 0.1);
-		if (!_isHit)
+		if (_isDead)
 		{
 			willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 			willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 		}
-		else
+	}
+	else
+	{
+		if (!_isAttacking)	//공격모션이 아닐 경우에 출력
 		{
-			if (_cntIsHit <= 4)
-			{
-				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-				willDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-			}
-			else if (_cntIsHit <= 8)
-			{
-				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-				willDamaged[2]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-			}
-			else if (8 < _cntIsHit && _count % 2 == 1)
-			{
-
-			}
-			else if (8 < _cntIsHit && _count % 2 == 0)
+			int _count = (int)(_cntIsHit * 0.1);
+			if (!_isHit)
 			{
 				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 				willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
-		}
-	}
-	else if (_isAttacking)    //공격 모션일 경우의 출력
-	{
-		int _count = (int)(_cntIsHit * 0.1);
-		if (!_isHit)
-		{
-			willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-			willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-		}
-		else
-		{
-			if (_cntIsHit <= 4)
+			else
 			{
-				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-				willAttackDamaged[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-			}
-			else if (_cntIsHit <= 8)
-			{
-				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
-				willAttackDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
-			}
-			else if (8 < _cntIsHit && _count % 2 == 1)
-			{
+				if (_cntIsHit <= 4)
+				{
+					willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+				else if (_cntIsHit <= 8)
+				{
+					willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willDamaged[2]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+				else if (8 < _cntIsHit && _count % 2 == 1)
+				{
 
+				}
+				else if (8 < _cntIsHit && _count % 2 == 0)
+				{
+					willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
 			}
-			else if (8 < _cntIsHit && _count % 2 == 0)
+		}
+		else if (_isAttacking)    //공격 모션일 경우의 출력
+		{
+			int _count = (int)(_cntIsHit * 0.1);
+			if (!_isHit)
 			{
 				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 				willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
+			else
+			{
+				if (_cntIsHit <= 4)
+				{
+					willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willAttackDamaged[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+				else if (_cntIsHit <= 8)
+				{
+					willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willAttackDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+				else if (8 < _cntIsHit && _count % 2 == 1)
+				{
+
+				}
+				else if (8 < _cntIsHit && _count % 2 == 0)
+				{
+					willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+					willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+				}
+			}
 		}
 	}
+	
 	if (_isGoingHome)
 	{
+		if (_index < 15)
+		{
+			willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		}
 		willGoHome->frameRender(getMemDC(), (rc.left - willGoHome->getFrameWidth() / 4 + 5) - cam.left, (rc.top - willGoHome->getFrameHeight() / 4 + 20) - cam.top);
 	}
 	//if (_isWalking)
@@ -659,7 +669,7 @@ void player::dungeonMove()
 						_rcSword = RectMake(-50, -50, 2, 2);
 					}
 				}
-				if (_count % 7 == 0)
+				if (_count % 6 == 0)
 				{
 					++_index;
 					if (_index > willAttack->getMaxFrameX())
@@ -882,6 +892,7 @@ void player::willAction()
 		willDoSomething();
 	}
 }
+
 void player::willDoSomething()
 {
 	if (_isDead)
@@ -897,30 +908,22 @@ void player::willDoSomething()
 		if (_count % 5 == 0)
 		{
 			++_index;
-		if (_index >= willDungeon->getMaxFrameX() && _hpBar->getCount() <= 0)
-		{
-			OBJECTMANAGER->reset();
-			this->setIsActive(false);
-			SCENEMANAGER->loadScene("dungeonLobby");
-		}
-		else if (_index >= willDungeon->getMaxFrameX())
-		{
-			_index = willDungeon->getMaxFrameX();
-		}
-			
+			if (_index >= willDungeon->getMaxFrameX() && _hpBar->getCount() <= 0)
+			{
+				OBJECTMANAGER->reset();
+				this->setIsActive(false);
+				SCENEMANAGER->loadScene("dungeonLobby");
+			}
+			else if (_index >= willDungeon->getMaxFrameX())
+			{
+				_index = willDungeon->getMaxFrameX();
+			}
 		}
 	}
 	else if (_isGoingHome)
 	{
 		goHome();
 	}
-	else if (_index >= willDungeon->getMaxFrameX() && _hpBar->getCount() <= 0)
-	{
-		OBJECTMANAGER->reset();
-		this->setIsActive(false);
-		SCENEMANAGER->loadScene("dungeonLobby");
-	}
-
 }
 void player::othersFrameUpdate(int frameX, int frameY)
 {
@@ -951,6 +954,11 @@ void player::goHome()
 	}
 	willGoHome->setFrameX(_index);
 	willGoHome->setFrameY(0);
+	if (_index < 15)
+	{
+		willDungeon->setFrameX(_index);
+		willDungeon->setFrameY(11);
+	}
 	if (_count % 4 == 0)
 	{
 		++_index;
@@ -1037,7 +1045,7 @@ void player::setIsIdleLeft(bool isLeft)
 void player::setRevive()
 {
 	_currentHp = _maxHp;
-	_hpBar->setGaugeOfHeal(_currentHp, _maxHp, _maxHp, 0.9);
+	_hpBar->setGaugeOfHeal(_currentHp, _maxHp, _maxHp, 0.8);
 }
 void player::enemyCheckCollision()
 {
