@@ -66,10 +66,10 @@ void enemyController::golemInit()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-	golem* _golem = new golem;
-	_golem->init("golem", tagFloat(1500, 1800));
-	OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
-	_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		golem* _golem = new golem;
+		_golem->init("golem", tagFloat(1500, 1800));
+		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 }
 
 void enemyController::bigSlimeInit()

@@ -121,6 +121,9 @@ void golem::render()
 
 
 	RECT cam = CAMERAMANAGER->getRenderRc();
+
+	RectangleCam(getMemDC(), _collisionRc, cam);
+
 	if (_currentHp > 0)
 	{
 		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
@@ -790,9 +793,9 @@ void golem::render()
 		}
 	}
 
-	char str[100];
-	sprintf(str, "distance : %f  , _startAttack : %d , _isAttack : %d ", distance, _startAttack, _isAttack);
-	TextOut(getMemDC(), 100, 100, str, strlen(str));
+	
+	
+	
 
 
 
@@ -861,6 +864,7 @@ void golem::imgRectMake()
 	_rc2 = RectMakeCenter(pos.x, pos.y, _golem[0]->getFrameWidth(), _golem[0]->getFrameHeight());
 	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	_dmgFontRc[1] = RectMakeCenter(pos.x + 20, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_collisionRc = RectMakeCenter(pos.x , pos.y, 60, 100);
 
 }
 

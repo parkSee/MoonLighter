@@ -63,6 +63,7 @@ private:
 
 	bool _damaaged;
 	RECT _rc2; //체력깍이는 렉트
+	RECT _collisionRc;
 	bool _deadEffectBool ;
 	bool _deadBool ;
 	bool _dmg ;
@@ -83,6 +84,7 @@ public:
 	void move();
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void pixelCollision();
+	RECT getCollisionRC() { return _collisionRc; }
 	RECT getAttackRc() { return _attackRc; }
 	void dead();
 

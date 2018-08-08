@@ -98,6 +98,7 @@ public:
 	void dead();
 	RECT getAttackRc() { return _attackRc; }
 
+
 	
 
 	boss() {}

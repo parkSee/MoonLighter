@@ -147,6 +147,9 @@ void bossRoomScene::update()
 	
 	if (_currentHp <= 0)
 	{
+		_bossRect = _boss->getCollisionRC();
+		_bossRect.bottom = 10000;
+		_bossRect.top = 10000;
 		_blackBgAlpha++;
 		if (_blackBgAlpha == 255)
 		{
@@ -169,6 +172,7 @@ void bossRoomScene::update()
 		if (_bgStart)
 		{
 			_bgStart = false;
+			
 			_boss->setIsActive(false);
 			EFFECTMANAGER->play("»Ð»Ð", _boss->pos.x, _boss->pos.y);
 			SOUNDMANAGER->play("enemy_death", 1.f);

@@ -53,6 +53,7 @@ private:
 	bool _dmg ;
 	bool _isAttacked3;
 	RECT _rc2;
+	RECT _collisionRc;
 
 	float _distance;
 	float _tempAngleX;
@@ -74,6 +75,7 @@ public:
 	void damaged();
 	void pixelCollision();
 	RECT getRect() { return rc; }
+	RECT getCollisionRect() { return _collisionRc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void dead();
 	void Attack();

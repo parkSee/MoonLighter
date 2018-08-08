@@ -108,8 +108,7 @@ void boss::update()
 	_hp->update();
 	
 	
-	_collisionRc= RectMakeCenter(pos.x-50, pos.y+10, 150, 120);
-	_detectRect = RectMakeCenter(pos.x, pos.y, 2000, 2000);
+	
 
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	RECT tempRc;
@@ -142,7 +141,7 @@ void boss::render()
 	//	}
 	//}
 
-
+	RectangleCam(getMemDC(), _collisionRc, cam);
 	if (_start)
 	{
 		_delayTime2++;
@@ -533,10 +532,10 @@ void boss::render()
 	}
 	else
 	{
-		_attackRc = RectMakeCenter(pos.x, pos.y + 1000, 100, 100);
+		_attackRc = RectMakeCenter(pos.x, pos.y + 10000, 100, 100);
 	}
 
-	RectangleCam(getMemDC(), _attackRc, cam);
+	
 
 
 }
@@ -545,6 +544,8 @@ void boss::imgRectMake()
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 	 _dmgFontRc[0] = RectMakeCenter(pos.x - 10+ _dmgImgX, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	 _dmgFontRc[1] = RectMakeCenter(pos.x + 20+ _dmgImgX, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	 _collisionRc = RectMakeCenter(pos.x - 50, pos.y + 10, 80, 100);
+	 _detectRect = RectMakeCenter(pos.x, pos.y, 2000, 2000);
 }
 
 int boss::damagged()

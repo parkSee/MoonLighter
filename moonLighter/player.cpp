@@ -70,9 +70,9 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
-	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);										//lysADD(플레이어 몸뚱아리 렉트 초기화)
-	_rcSword = RectMakeCenter(pos.x, pos.y, 100, 100);										//플레이어 검 공격범위 렉트 초기화
-	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());		//플레이어 이미지 렉트 초기화
+	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);										
+	_rcSword = RectMakeCenter(pos.x, pos.y, 100, 100);										
+	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());		
 	
 	_probeX = pos.x;
 	_probeY = pos.y;
@@ -613,6 +613,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(6);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(6);
 			pos.y -= (_speed + _acceleration);
 			_probeX = pos.x;
 			_probeY = pos.y - (willDungeon->getFrameHeight() / 4);
@@ -637,6 +639,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(7);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(7);
 			pos.y += (_speed + _acceleration);
 			_probeX = pos.x;
 			_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
@@ -661,6 +665,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(4);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(4);
 			pos.x += (_speed + _acceleration);
 			_probeX = pos.x + 20;
 			_probeY = pos.y;
@@ -685,6 +691,8 @@ void player::dungeonMove()
 		{
 			willDungeon->setFrameX(_index);
 			willDungeon->setFrameY(5);
+			willDungeonShadow->setFrameX(_index);
+			willDungeonShadow->setFrameY(5);
 			pos.x -= (_speed + _acceleration);
 			_probeX = pos.x - 20;
 			_probeY = pos.y;
@@ -717,7 +725,7 @@ void player::dungeonMove()
 		}
 	}
 	rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-	_rcBody = RectMakeCenter(pos.x, pos.y, 60, 100);
+	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);
 	_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 	/////////////////////////////상태 업데이트//////////////////////////////////
 	if (_isInvincible)
@@ -904,19 +912,19 @@ void player::enemyCheckCollision()
 				RECT rcEnemy;
 				if (i == 0)
 				{
-					rcEnemy = ((smallSlime*)_enemyObject[i][j])->getRect();
+					rcEnemy = ((smallSlime*)_enemyObject[i][j])->getCollisionRect();
 				}
 				else if (i == 1)
 				{
-					rcEnemy = ((weed*)_enemyObject[i][j])->getRect();
+					rcEnemy = ((weed*)_enemyObject[i][j])->getCollisionRect();
 				}
 				else if (i == 2)
 				{
-					rcEnemy = ((golem*)_enemyObject[i][j])->getRect();
+					rcEnemy = ((golem*)_enemyObject[i][j])->getCollisionRC();
 				}
 				else if (i == 3)
 				{
-					rcEnemy = ((boss*)_enemyObject[i][j])->getRect();
+					rcEnemy = ((boss*)_enemyObject[i][j])->getCollisionRC();
 				}
 				if (IntersectRect(&rcTemp, &_rcSword, &rcEnemy) && _isRcSwordOn == true)
 				{
@@ -937,7 +945,7 @@ void player::enemyCheckCollision()
 						CAMERAMANAGER->shakeCamera(1.5f, 0.1);
 					}
 				}
-				if (i == 3)
+				if (i == 2)
 				{
 					RECT rcSword = ((golem*)_enemyObject[i][j])->getAttackRc();
 					if (IntersectRect(&rcTemp, &_rcBody, &rcSword))
@@ -954,7 +962,7 @@ void player::enemyCheckCollision()
 						}
 					}
 				}
-				if (i == 4)
+				if (i == 3)
 				{
 					RECT rcSword = ((boss*)_enemyObject[i][j])->getAttackRc();
 					if (IntersectRect(&rcTemp, &_rcBody, &rcSword))

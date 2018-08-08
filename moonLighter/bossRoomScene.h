@@ -10,6 +10,7 @@ class bossRoomScene : public gameNode
 private:
 
 	player * _player;
+	RECT _bossRect;
 	progressBar* _bossHp;
 	progressBar* _test;
 	boss* _boss;
