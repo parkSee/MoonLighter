@@ -30,6 +30,8 @@ public:
 	void dp_SetActiveTrue(int num);
 	void dp_setPos(int num);
 	void subtractDisplay(int num); //csyADD 아이템 뺴는 함수
+	RECT* getDisplaySlot() { return _displaySlot; }
+
 
 	display(){}
 	~display(){}
