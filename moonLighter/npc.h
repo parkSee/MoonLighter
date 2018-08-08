@@ -20,7 +20,15 @@ private:
 	int _count2, _index2;
 
 	image* _talkImg;
+	tagFloat _taklUiPos;
 	bool _isCollision;
+	image* _talkBox;
+	tagFloat _talkBoxUiPos;
+	bool _istalk;
+
+	char text[256];
+
+	int _txtCount, _txtIndex;
 
 public:
 
@@ -31,7 +39,11 @@ public:
 
 	void frame();
 	void talkingFrame();
-	void talkingRECT(RECT rc);
+	void talkingRECT(RECT rc, tagFloat talkUi, tagFloat talkBoxUi);
+	void talkingRender(const char* a );
+
+	bool getIstalk() { return _istalk; }
+	void setIsTalk(bool istalk) { _istalk = istalk; }
 
 	npc(){}
 	~npc(){}

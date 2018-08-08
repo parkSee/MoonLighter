@@ -56,11 +56,15 @@ void objectContainer::release()
 
 void objectContainer::update()
 {
-	_witch->talkingRECT(RectMake(356, 1983, 70, 70));
+	_witch->talkingRECT(RectMake(356, 1983, 70, 70),tagFloat(427,1880),tagFloat(410,1935));
 	_witch->update();
 }
 
 void objectContainer::render()
 {
 	_witch->render();
+	if (_witch->getIstalk() == true)
+	{
+		_witch->talkingRender("살려주세요...");
+	}
 }
