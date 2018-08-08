@@ -9,6 +9,7 @@ private:
 
 	tagFloat _target;	//타켓의 좌표
 	tagFloat _oldPos;
+	tagFloat _savePos;
 	tagFloat _shakePos;	//카메라 흔들림 좌표
 	bool _isShake;		//카메라 흔들림 불값
 	float _shakeTimer;	//카메라 흔들림 시간
@@ -46,8 +47,10 @@ public:
 		_renderRc = RectMakeCenter(_pos.x, _pos.y, width, height);
 	}
 
-
+	void savePosition();
 	void shakeCamera(float strenth, float time);
+	tagFloat getTarGet() { return  _target; }
+	
 
 
 	cameraManager(){}
