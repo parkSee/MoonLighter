@@ -18,7 +18,11 @@ private:
 	int _index;
 	int _count;
 	int _cntFoot;
+	int _cntHp[9];
+	int _cntMoney[4];
+	int _beforeHp;
 	int _cntPendant;
+	int _money[2];
 	int _cntIsHit;
 	int _cntIsInvincible;
 	int _probeY;
@@ -46,6 +50,8 @@ private:
 	bool _isHit;
 	bool _isDead;
 
+	
+
 	bool a;
 	bool _playerMove;
 
@@ -56,9 +62,18 @@ private:
 	image* willDungeonShadow;
 	image* willFoot;
 	image* willAttack;
+	image* willAttackShadow;
 	image* willDamaged[WILL_DAMAGED_MAX];
+	image* willAttackDamaged[WILL_DAMAGED_MAX-1];
 	image* willPendant;
 	image* willGoHome;
+	image* number;
+	image* _tempImg;
+	int tempCount;
+	int tempCurrentX;
+	int tempCurrentY;
+	int tempBool;
+
 
 	image* _pixelImg;
 
@@ -85,6 +100,8 @@ public:
 	void othersFrameUpdate(int frameX, int frameY);
 	void noUsePendant();
 	void goHome();
+	void numberUpdate();
+	void numberRender();
 	bool getInvincible() { return _isInvincible; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void setIsAutomatic(bool isAutomatic) { _isAutomatic = isAutomatic; }

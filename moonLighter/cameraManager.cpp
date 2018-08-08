@@ -177,6 +177,13 @@ RECT cameraManager::getRenderRc()
 	return _renderRc;
 }
 
+void cameraManager::savePosition()
+{
+	_savePos.x = _pos.x;
+	_savePos.y = _pos.y;
+
+}
+
 void cameraManager::shakeCamera(float strenth, float time)
 {
 	_shakeTimer = time;

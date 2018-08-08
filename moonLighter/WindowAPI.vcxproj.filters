@@ -54,9 +54,6 @@
     <Filter Include="MainGame\Scene">
       <UniqueIdentifier>{48c9a5f2-baa5-458a-998a-76388fbaa8d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="MainGame\Scene\loadingImages">
-      <UniqueIdentifier>{d04181d3-44c1-4cbc-9176-e5d0b3f1b9a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="MainGame\Player">
       <UniqueIdentifier>{8dedb022-032e-4e6d-955f-9603c8277adf}</UniqueIdentifier>
     </Filter>
@@ -89,6 +86,9 @@
     </Filter>
     <Filter Include="MainGame\Display">
       <UniqueIdentifier>{5000992e-818d-4c81-8939-75751a5621b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MainGame\Scene\loadingImages">
+      <UniqueIdentifier>{d04181d3-44c1-4cbc-9176-e5d0b3f1b9a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

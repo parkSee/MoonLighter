@@ -11,6 +11,7 @@ private:
 	image* _dmgFontTen;
 	image* _dmgFontOne;
 	RECT _dmgFontRc[2];
+	RECT _collisionRc;
 	progressBar* _hp;
 	int _currentHp;
 	int _count;
@@ -62,6 +63,7 @@ public:
 	void move();
 	void pixelCollision();
 	RECT getRect() { return rc; }
+	RECT getCollisionRect() { return _collisionRc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void dead();
 

@@ -29,6 +29,7 @@ HRESULT AILink::init(string _objName, tagFloat _pos)
 	_isExit = false;
 	_buy = false;
 	_pickItem = false;
+	_MoveStart = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -52,16 +53,18 @@ void AILink::release()
 
 void AILink::update()
 {
-	gameObject::update();
+	if (_MoveStart)
+	{
+		gameObject::update();
 
-	this->move();
+		this->move();
 
-	
-	
 
-	this->Frame();
-	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
 
+
+		this->Frame();
+		rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+	}
 }
 
 void AILink::render()
@@ -70,10 +73,10 @@ void AILink::render()
 
 	_state[_curState]->frameRender(getMemDC(), (pos.x - _state[_curState]->getFrameWidth() / 2) - cam.left, (pos.y - _state[_curState]->getFrameHeight() / 2) - cam.top);
 
-	for (int i = 0; i < _vDot.size(); ++i)
-	{
-		EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
-	}
+	//for (int i = 0; i < _vDot.size(); ++i)
+	//{
+	//	EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
+	//}
 
 
 	char str[500];
@@ -134,7 +137,7 @@ void AILink::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(0);
+				if (_pickItem == false) _dp->dp_SetActiveFalse(0);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
@@ -177,6 +180,7 @@ void AILink::move()
 	{
 		if (KEYMANAGER->isOnceKeyDown('9'))
 		{
+			_dp->subtractDisplay(0);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);
 			_vDot[1] = tagFloat(650, 1130);

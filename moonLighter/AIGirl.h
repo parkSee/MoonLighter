@@ -30,6 +30,8 @@ private:
 	
 	display* _dp;
 
+	bool _MoveStart;
+
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
@@ -37,6 +39,8 @@ public:
 	void update();
 	void render();
 
+	void set_startAIGirl(bool go) { _MoveStart = go; }
+	bool get_startAIGirl() { return _MoveStart; }
 
 	void Frame();
 	void move();

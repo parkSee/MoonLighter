@@ -9,7 +9,7 @@ private:
 	image * _smallSlime;
 	image* _attackedSmallSlime[2];
 	progressBar* _hp;
-
+	RECT _collisionRc;
 	image* _dmgFontTen;
 	image* _dmgFontOne;
 	RECT _dmgFontRc[2];
@@ -65,6 +65,7 @@ public:
 	void smallSlimeFrame();
 	void pixelCollision();
 	RECT getRect() { return rc; }
+	RECT getCollisionRect() { return _collisionRc; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void move();
 	void dead();

@@ -30,6 +30,8 @@ HRESULT AIKids::init(string _objName, tagFloat _pos)
 	_buy = false;
 	_pickItem = false;
 
+	_MoveStart = false;
+
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
 
@@ -53,12 +55,16 @@ void AIKids::release()
 
 void AIKids::update()
 {
-	gameObject::update();
 
-	this->move();
+	if (_MoveStart)
+	{
+		gameObject::update();
 
-	this->Frame();
-	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+		this->move();
+
+		this->Frame();
+		rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+	}
 }
 
 void AIKids::render()
@@ -67,10 +73,10 @@ void AIKids::render()
 
 	_state[_curState]->frameRender(getMemDC(), (pos.x - _state[_curState]->getFrameWidth() / 2) - cam.left, (pos.y - _state[_curState]->getFrameHeight() / 2) - cam.top);
 
-	for (int i = 0; i < _vDot.size(); ++i)
-	{
-		EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
-	}
+	//for (int i = 0; i < _vDot.size(); ++i)
+	//{
+	//	EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
+	//}
 
 
 	char str[500];
@@ -189,15 +195,7 @@ void AIKids::move()
 	if (_isExit)
 	{
 		
-		
-		if (pos.x == 676 && pos.y == 1000)
-		{
-			RECT cam = CAMERAMANAGER->getRenderRc();
-			_dp->dp_setPos(1, 606 , 894);
-			_dp->dp_SetActiveTrue(1);
-		}
-
-		if (KEYMANAGER->isOnceKeyDown('9'))
+		if (KEYMANAGER->isOnceKeyDown('8'))
 		{
 			_dp->subtractDisplay(1);
 			_curState = 0;

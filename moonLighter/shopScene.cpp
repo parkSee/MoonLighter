@@ -18,18 +18,21 @@ HRESULT shopScene::init()
 
 	_shopDoor = IMAGEMANAGER->findImage("shopDoor");
 
+	
+		
 	_aiKid = new AIKids;
 	_aiKid->init("aiKid", tagFloat(650, 1303));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
 	
-	//_aiGirl = new AIGirl;
-	//_aiGirl->init("aiGirl", tagFloat(650, 1303));
-	//OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
-
-	//_aiLink = new AILink;
-	//_aiLink->init("aiGirl", tagFloat(650, 1303));
-	//OBJECTMANAGER->addObject(objectType::AI, _aiLink);
-
+	_aiGirl = new AIGirl;
+	_aiGirl->init("aiGirl", tagFloat(650, 1303));
+	OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
+	
+	_aiLink = new AILink;
+	_aiLink->init("aiGirl", tagFloat(650, 1303));
+	OBJECTMANAGER->addObject(objectType::AI, _aiLink);
+	
+	
 	_display = SAVEDATA->get_display();
 
 	
@@ -44,7 +47,8 @@ HRESULT shopScene::init()
 	
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
 
-	
+	_uiOnDP = IMAGEMANAGER->findImage("ui_DP");
+	_OnDPCount = _OnDPIndex = 0;
 
 	_furniture = new furnitureContainer;
 	_furniture->init();
@@ -59,7 +63,7 @@ HRESULT shopScene::init()
 	_j = false;
 	_button = false;
 	_ui = false;
-
+	_AICount=0;
 
 	_count = _index  = _index2 = 0;
 
@@ -73,12 +77,46 @@ void shopScene::release()
 
 void shopScene::update()
 {
+	_AICount++;
+
+	if (_AICount == 50)
+	{
+		_aiKid->set_startAIKids(true);
+	}
+	if (_AICount == 450)
+	{
+		_aiGirl->set_startAIGirl(true);
+	}
+	if (_AICount == 900)
+	{
+		_aiLink->set_startAILink(true);
+	}
+	if (_aiKid->get_startAIKids() && _aiGirl->get_startAIGirl() && _aiLink->get_startAILink())
+	{
+		_AICount = 0;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD0))
+	{
+		_aiKid->set_startAIKids(false);
+		_aiGirl->set_startAIGirl(false);
+		_aiLink->set_startAILink(false);
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD1))
+	{
+		_aiKid->set_startAIKids(true);
+		_aiGirl->set_startAIGirl(true);
+		_aiLink->set_startAILink(true);
+	}
+
+
 	OBJECTMANAGER->update();
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	CAMERAMANAGER->update();
 	
 	RECT temp;
 
+	
 
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc))
 	{
@@ -111,8 +149,15 @@ void shopScene::update()
 
 	_enterRc = RectMakeCenter(650, 1230, 50, 50);
 
-	
-
+	RECT rcTemp;
+	if (IntersectRect(&rcTemp, &_aiKid->rc, &_enterRc) || IntersectRect(&rcTemp, &_aiGirl->rc, &_enterRc)|| IntersectRect(&rcTemp, &_aiLink->rc, &_enterRc))
+	{
+		this->doorFrame();
+	}
+	else
+	{
+		this->RdoorFrame();
+	}
 
 	if ( 1<_exitCount&&_exitCount < 10)
 	{
@@ -170,6 +215,14 @@ void shopScene::render()
 	
 	_display->render();
 	//RectangleCam(getMemDC(), _enterRc, cam);
+	for (int i = 0; i < 4; i++)
+	{
+		if (IntersectRect(&temp, &_display->getDisplaySlot()[i], &_player->getRcProbe()))
+		{
+			_uiOnDP->frameRender(getMemDC(), _display->getDisplaySlot()[i].right -cam.left, _display->getDisplaySlot()[i].top -50 - cam.top);
+			this->OnDP();
+		}
+	}
 	
 	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
@@ -247,5 +300,24 @@ void shopScene::RdoorFrame()
 
 		}
 	}
+}
+
+void shopScene::OnDP()
+{
+	_OnDPCount++;
+
+	_uiOnDP->setFrameX(_OnDPIndex);
+
+	if (_OnDPCount % 15 == 0)
+	{
+		++_OnDPIndex;
+		if (_OnDPIndex > _uiOnDP->getMaxFrameX())
+		{
+			_OnDPIndex = _uiOnDP->getMaxFrameX();
+		}
+
+	}
+
+
 }
 

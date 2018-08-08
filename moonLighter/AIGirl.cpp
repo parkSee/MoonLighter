@@ -29,6 +29,7 @@ HRESULT AIGirl::init(string _objName, tagFloat _pos)
 	_isExit = false;
 	_buy = false;
 	_pickItem = false;
+	_MoveStart = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -55,16 +56,18 @@ void AIGirl::release()
 
 void AIGirl::update()
 {
-	gameObject::update();
+	if (_MoveStart)
+	{
+		gameObject::update();
 
-	this->move();
-	
-	
+		this->move();
 
 
-	this->Frame();
-	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
 
+
+		this->Frame();
+		rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+	}
 }
 
 void AIGirl::render()
@@ -73,10 +76,10 @@ void AIGirl::render()
 
 	_state[_curState]->frameRender(getMemDC(), (pos.x - _state[_curState]->getFrameWidth() / 2) - cam.left, (pos.y - _state[_curState]->getFrameHeight() / 2) - cam.top);
 
-	for (int i = 0; i < _vDot.size(); ++i)
-	{
-		EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
-	}
+	//for (int i = 0; i < _vDot.size(); ++i)
+	//{
+	//	EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
+	//}
 
 	
 		_moveCount++;
@@ -163,7 +166,7 @@ void AIGirl::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(2);
+				if (_pickItem == false) _dp->dp_SetActiveFalse(2);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
@@ -205,8 +208,9 @@ void AIGirl::move()
 
 	if (_isExit)
 	{
-		if (KEYMANAGER->isOnceKeyDown('9'))
+		if (KEYMANAGER->isOnceKeyDown('7'))
 		{
+			_dp->subtractDisplay(2);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);
 			_vDot[1] = tagFloat(650, 1130);

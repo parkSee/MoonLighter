@@ -29,6 +29,7 @@ private:
 
 	display* _dp;
 	bool _pickItem;
+	bool _MoveStart;
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
@@ -36,6 +37,8 @@ public:
 	void update();
 	void render();
 
+	void set_startAILink(bool go) { _MoveStart = go; }
+	bool get_startAILink() { return _MoveStart; }
 
 	void Frame();
 	void move();

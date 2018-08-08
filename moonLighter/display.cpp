@@ -12,6 +12,8 @@ HRESULT display::init()
 	_displaySlot[1] = RectMake(290, 1026, 100, 76);
 	_displaySlot[0] = RectMake(390, 1026, 100, 76);
 
+	_salesTable = RectMake(606, 894, 300, 104);
+
 	return S_OK;
 }
 
@@ -104,9 +106,11 @@ void display::dp_SetActiveTrue(int num)
 	_vDisplayItem[num]->_isActive = true;
 }
 
-void display::dp_setPos(int num, float x, float y)
+void display::dp_setPos(int num)
 {
-	_displaySlot[num] = RectMake(x,y, 300, 104);
+	//_displaySlot[num] = _salesTable;
+	_vDisplayItem[num]->_pos.x = _salesTable.left;
+	_vDisplayItem[num]->_pos.y = _salesTable.top;
 }
 
 
