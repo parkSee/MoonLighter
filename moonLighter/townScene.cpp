@@ -39,6 +39,8 @@ void townScene::update()
 {
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 
+	_container->update();
+
 	//ToDo : 키중복 나지 않게 'C','B','V' 사용중입니다 한번씩만 봐주세요
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
@@ -87,7 +89,7 @@ void townScene::update()
 void townScene::render()
 {
 	RECT rc = CAMERAMANAGER->getRenderRc();
-
+	_container->render();
 
 	IMAGEMANAGER->findImage("map")->render(getMemDC(), 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
 

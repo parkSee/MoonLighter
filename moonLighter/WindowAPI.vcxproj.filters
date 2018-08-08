@@ -90,6 +90,9 @@
     <Filter Include="MainGame\Scene\loadingImages">
       <UniqueIdentifier>{d04181d3-44c1-4cbc-9176-e5d0b3f1b9a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainGame\Object\NPC">
+      <UniqueIdentifier>{73157d89-6108-4e85-aeb1-2916fd31cf47}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="commonMacroFunction.h">
@@ -255,7 +258,7 @@
       <Filter>MainGame\Object\townObject</Filter>
     </ClInclude>
     <ClInclude Include="npc.h">
-      <Filter>MainGame\Object\townObject</Filter>
+      <Filter>MainGame\Object\NPC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -428,7 +431,7 @@
       <Filter>MainGame\Object\townObject</Filter>
     </ClCompile>
     <ClCompile Include="npc.cpp">
-      <Filter>MainGame\Object\townObject</Filter>
+      <Filter>MainGame\Object\NPC</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
