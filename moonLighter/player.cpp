@@ -8,6 +8,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	gameObject::init(_objName, _pos);
 	_cntPendant = 0;
 	_cntIsHit = 0;
+	_cntShakeHeart = 0;
 	_cntFoot = 0;
 	_cntHp[0] = 0;
 	_cntHp[1] = 0;
@@ -46,6 +47,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isAutomatic = false;
 	_isUsingPendant = false;
 	_isEnemyHit = false;
+	_isShakingHeart = false;
 	_isHit = false;
 	_isDead = false;
 	_isAttacking = false;
@@ -67,9 +69,12 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willDamaged[2] = IMAGEMANAGER->findImage("will_damaged3");
 	willAttackDamaged[0] = IMAGEMANAGER->findImage("will_shortAttack_Damaged2");
 	willAttackDamaged[1] = IMAGEMANAGER->findImage("will_shortAttack_Damaged3");
+	willMoneyBag = IMAGEMANAGER->findImage("moneyBag");
+
+	shakeHeart = IMAGEMANAGER->findImage("shakeHeart");
 	number = IMAGEMANAGER->findImage("number");
 	_hpBar = new progressBar;
-	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
+	_hpBar->init("will_hpBar", 120, 20, 130, 228, 118, 38);
 	_hpBar->setRect(10, 0);
 
 	//공격 effect 초기화
@@ -544,6 +549,8 @@ void player::dungeonMove()
 				if (KEYMANAGER->isOnceKeyDown('S'))
 				{
 					_isHit = true;
+					_isShakingHeart = true;
+					_cntShakeHeart = 0;
 					_damage = 100;
 					_beforeHp = _currentHp;
 					_currentHp -= _damage;
@@ -553,12 +560,13 @@ void player::dungeonMove()
 				}
 				if (KEYMANAGER->isOnceKeyDown('D'))
 				{
-					_currentHp += 150;
+					_beforeHp = _currentHp;
+					_currentHp += 100;
 					if (_currentHp >= _maxHp)
 					{
 						_currentHp = _maxHp;
 					}
-					_hpBar->setGaugeOfHeal(_currentHp, _maxHp, 150, 1);
+					_hpBar->setGaugeOfHeal(_currentHp, _maxHp, 100, 1);
 					if (_money[1] >= 100)
 					{
 						_money[0] = _money[1];
@@ -576,6 +584,7 @@ void player::dungeonMove()
 						if (_cntPendant > willPendant->getMaxFrameX())
 						{
 							_index = 0;
+							setIsIdleUp(false);
 							_isAutomatic = true;
 							_isGoingHome = true;
 						}
@@ -822,6 +831,20 @@ void player::dungeonMove()
 			_isHit = false;
 		}
 	}
+	if (_isShakingHeart)
+	{
+		shakeHeart->setFrameX(_cntShakeHeart);
+		shakeHeart->setFrameY(0);
+		if (_count % 2 == 0)
+		{
+			++_cntShakeHeart;
+			if (_cntShakeHeart > shakeHeart->getMaxFrameX())
+			{
+				_cntShakeHeart = 0;
+				_isShakingHeart = false;
+			}
+		}
+	}
 	if (_isWalking)
 	{
 		if (_isUp)
@@ -874,17 +897,28 @@ void player::willDoSomething()
 		if (_count % 5 == 0)
 		{
 			++_index;
-			if (_index > willDungeon->getMaxFrameX())
-			{
-				OBJECTMANAGER->reset();
-				this->setIsActive(false);
-				SCENEMANAGER->loadScene("dungeonLobby");
-			}
+		if (_index >= willDungeon->getMaxFrameX() && _hpBar->getCount() <= 0)
+		{
+			OBJECTMANAGER->reset();
+			this->setIsActive(false);
+			SCENEMANAGER->loadScene("dungeonLobby");
+		}
+		else if (_index >= willDungeon->getMaxFrameX())
+		{
+			_index = willDungeon->getMaxFrameX();
+		}
+			
 		}
 	}
 	else if (_isGoingHome)
 	{
 		goHome();
+	}
+	else if (_index >= willDungeon->getMaxFrameX() && _hpBar->getCount() <= 0)
+	{
+		OBJECTMANAGER->reset();
+		this->setIsActive(false);
+		SCENEMANAGER->loadScene("dungeonLobby");
 	}
 
 }
@@ -966,27 +1000,24 @@ void player::numberRender()
 {
 	if (_beforeHp >= 1000)
 	{
-		number->frameRender(getMemDC(), 140, 60, _cntHp[0], 0);
+		number->frameRender(getMemDC(), 160, 55, _cntHp[0], 0);
 	}
-	number->frameRender(getMemDC(), 150, 60, _cntHp[1], 0);
-	number->frameRender(getMemDC(), 160, 60, _cntHp[2], 0);
-	number->frameRender(getMemDC(), 170, 60, _cntHp[3], 0);
-	number->frameRender(getMemDC(), 180, 60, _cntHp[4], 0);
-	number->frameRender(getMemDC(), 190, 60, _cntHp[5], 0);
-	number->frameRender(getMemDC(), 200, 60, _cntHp[6], 0);
-	number->frameRender(getMemDC(), 210, 60, _cntHp[7], 0);
-	number->frameRender(getMemDC(), 220, 60, _cntHp[8], 0);
-
+	for (int i = 1; i < 9; ++i)
+	{
+		number->frameRender(getMemDC(), 160+(i*10), 55, _cntHp[i], 0);
+	}
+	
 	if (_money[0] >= 1000)
 	{
-		number->frameRender(getMemDC(), 50, 120, _cntMoney[0], 0);
+		number->frameRender(getMemDC(), 25, 90, _cntMoney[0], 0);
 	}
-	number->frameRender(getMemDC(), 60, 120, _cntMoney[1], 0);
-	number->frameRender(getMemDC(), 70, 120, _cntMoney[2], 0);
-	number->frameRender(getMemDC(), 80, 120, _cntMoney[3], 0);
 
-	IMAGEMANAGER->findImage("coin")->render(getMemDC(), 95, 120);
+	for (int i = 1; i < 4; ++i)
+	{
+		number->frameRender(getMemDC(), 25 + (i * 10), 90, _cntMoney[i], 0);
+	}
 }
+
 void player::setIsIdleUp(bool isUp)
 {
 	if (isUp)
@@ -1006,7 +1037,7 @@ void player::setIsIdleLeft(bool isLeft)
 void player::setRevive()
 {
 	_currentHp = _maxHp;
-	_hpBar->setGaugeOfHeal(_currentHp, _maxHp, _maxHp, 0.07);
+	_hpBar->setGaugeOfHeal(_currentHp, _maxHp, _maxHp, 0.9);
 }
 void player::enemyCheckCollision()
 {
@@ -1053,6 +1084,8 @@ void player::enemyCheckCollision()
 					if (_isInvincible == false)
 					{
 						_isHit = true;
+						_isShakingHeart = true;
+						_cntShakeHeart = 0;
 						_damage = 86;
 						_beforeHp = _currentHp;
 						_currentHp -= _damage;
@@ -1070,6 +1103,8 @@ void player::enemyCheckCollision()
 						if (_isInvincible == false)
 						{
 							_isHit = true;
+							_isShakingHeart = true;
+							_cntShakeHeart = 0;
 							_damage = 100;
 							_beforeHp = _currentHp;
 							_currentHp -= _damage;
@@ -1088,6 +1123,8 @@ void player::enemyCheckCollision()
 						if (_isInvincible == false)
 						{
 							_isHit = true;
+							_isShakingHeart = true;
+							_cntShakeHeart = 0;
 							_damage = 100;
 							_beforeHp = _currentHp;
 							_currentHp -= _damage;
@@ -1102,6 +1139,7 @@ void player::enemyCheckCollision()
 		}
 		if (_currentHp <= 0)
 		{
+			_currentHp = 0;
 			_count = 0;
 			_index = 0;
 			_isDead = true;
@@ -1123,6 +1161,9 @@ void player::renderUI()
 	_inven->render(getMemDC());
 	_hpBar->render_jyp();
 	numberRender();
+	willMoneyBag->render(getMemDC(), 10, 10);
+	IMAGEMANAGER->findImage("coin")->render(getMemDC(), 75, 90);
+	shakeHeart->frameRender(getMemDC(), 65, 17);
 	willPendant->frameRender(getMemDC(), 1190, 620);
 }
 
