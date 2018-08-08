@@ -182,7 +182,7 @@ void enemyController::stage5Init()
 		OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 		_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	}
-	for (int i = 0; i < 6; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
 		smallSlime* _smallSlime = new smallSlime;
 		_smallSlime->init("smallSlime", tagFloat(3000 + 200 * i, 300));

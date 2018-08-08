@@ -17,6 +17,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_attCharge = 0;
 	_maxHp = 1000;
 	_currentHp = 1000;
+	_cntHp = _maxHp;
 	_isIdle = true;
 	_isUp = false;
 	_isDown = true;
@@ -64,7 +65,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 
 	_inven = new inventory;
 	_inven->init();
-	
+
 
 
 
@@ -73,13 +74,13 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
 
-	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);										
-	_rcSword = RectMakeCenter(pos.x, pos.y, 100, 100);										
-	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());		
-	
+	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);
+	_rcSword = RectMakeCenter(pos.x, pos.y, 100, 100);
+	rc = RectMakeCenter(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+
 	_probeX = pos.x;
 	_probeY = pos.y;
-	
+
 	//CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	return S_OK;
@@ -97,13 +98,13 @@ void player::release(void)
 void player::update(void)
 {
 	gameObject::update();
-	
+
 	//CAMERAMANAGER->connectTarget(pos.x, pos.y);
 
 	/*
 	if (KEYMANAGER->isStayKeyDown('T'))
 	{
-		CAMERAMANAGER->shakeCamera(5.0f, 11.0f);
+	CAMERAMANAGER->shakeCamera(5.0f, 11.0f);
 	}
 	*/
 
@@ -155,7 +156,7 @@ void player::render(void)
 			}
 		}
 	}
-	else if(_isAttacking)    //공격 모션일 경우의 출력
+	else if (_isAttacking)    //공격 모션일 경우의 출력
 	{
 		int _count = (int)(_cntIsHit * 0.1);
 		if (!_isHit)
@@ -185,8 +186,6 @@ void player::render(void)
 				willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
 		}
-		
-		
 	}
 	if (_isGoingHome)
 	{
@@ -196,9 +195,8 @@ void player::render(void)
 	//{
 	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
 	//}
-	willPendant->frameRender(getMemDC(), 1190, 620);
-	
-	
+
+
 	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
 	{
 		Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
@@ -215,9 +213,7 @@ void player::render(void)
 	{
 		Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
 	}
-	
-	
-	_hpBar->render_jyp();
+
 	if (_isHit && _cntIsHit <= 2 && !_isDead)
 	{
 		willDamaged[0]->alphaRender(getMemDC(), 100);
@@ -233,7 +229,7 @@ void player::collision()
 	//포인터! 같은 주소값을 가르키고 있습니다. 
 	vector<gameObject*> _mini = OBJECTMANAGER->findObjects(objectType::ENEMY, "enemy");
 
-	
+
 	for (int i = 0; i < _mini.size(); ++i)
 	{
 		if (IntersectRect(&temp, &_rcSword, &_mini[i]->rc))
@@ -243,22 +239,22 @@ void player::collision()
 			//만약 오브젝트가 살아있지않다면
 			if (miter->second[i]->isLive() == false)
 			{
-				miter->second[i]->release();
-				SAFE_DELETE(miter->second[i]);
-				miter->second.erase(miter->second.begin() + i);
-				--i;
-				continue;
+			miter->second[i]->release();
+			SAFE_DELETE(miter->second[i]);
+			miter->second.erase(miter->second.begin() + i);
+			--i;
+			continue;
 			}
-			
-			라는 코드가 있는데 충돌이 됬으면 mini는 죽었어! 라고 오브젝트 매니저쪽에 Set함수로 신호를 보냅니다 
-			그럼 오브젝트 매니저 쪽에서 벡터를 삭제 합니다. 
+
+			라는 코드가 있는데 충돌이 됬으면 mini는 죽었어! 라고 오브젝트 매니저쪽에 Set함수로 신호를 보냅니다
+			그럼 오브젝트 매니저 쪽에서 벡터를 삭제 합니다.
 			고로 우린 일일히 벡터를 지우고 어쩌고 안해도 죽었다고 isLive = false로 바꿔주는것만으로도 벡터를 삭제해줍니다.
 
 			참고로 우린 에너미에게 직접접근이 아닌 오브젝트 매니저로 간접접근을 하고 있기에 객체지향에 맞는 코딩을 하고 있는것입니다.
 
 			*/
 			_mini[i]->setIsLive(false);
-			
+
 		}
 	}
 
@@ -807,23 +803,23 @@ void player::dungeonMove()
 	{
 		if (_isUp)
 		{
-			footPos.x = RND->getFromIntTo(_rcBody.left+20, _rcBody.right-20);
+			footPos.x = RND->getFromIntTo(_rcBody.left + 20, _rcBody.right - 20);
 			footPos.y = rc.bottom;
 		}
 		else if (_isDown)
 		{
-			footPos.x = RND->getFromIntTo(_rcBody.left+20, _rcBody.right-20);
+			footPos.x = RND->getFromIntTo(_rcBody.left + 20, _rcBody.right - 20);
 			footPos.y = rc.top;
 		}
 		else if (_isLeft)
 		{
 			footPos.x = rc.right;
-			footPos.y = RND->getFromIntTo(pos.y+20, pos.y + 20);
+			footPos.y = RND->getFromIntTo(pos.y + 20, pos.y + 20);
 		}
 		else if (_isRight)
 		{
 			footPos.x = rc.left;
-			footPos.y = RND->getFromIntTo(pos.y+20, pos.y + 20);
+			footPos.y = RND->getFromIntTo(pos.y + 20, pos.y + 20);
 		}
 		_isWalking = false;
 	}
@@ -1041,5 +1037,7 @@ void player::enemyCheckCollision()
 void player::renderUI()
 {
 	_inven->render(getMemDC());
+	_hpBar->render_jyp();
+	willPendant->frameRender(getMemDC(), 1190, 620);
 }
 
