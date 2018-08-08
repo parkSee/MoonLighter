@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "loadingScene.h"
 
-// csyADD [인벤토리 이미지 추가]
+
 
 void loadingScene::csyImageLoading()
 {
@@ -15,6 +15,10 @@ void loadingScene::csyImageLoading()
 
 	_loading->loadImage("inventory", "./Image/inventory_ui/inventory.bmp", 1000, 512, true, MAGENTA);
 	_loading->loadImage("invenSlot", "./Image/inventory_ui/invenSlot.bmp", 68, 68, true, MAGENTA);
+
+	_loading->loadFrameImage("ui_DP", "./Image/shop_object/ui_onDP.bmp", 310, 50, 3, 1,true,MAGENTA);
+	_loading->loadFrameImage("cash_register", "./Image/shop_object/cash_register.bmp", 704, 64, 11, 1, true, MAGENTA);
+	_loading->loadFrameImage("visitor_face", "./Image/ai/visitor_face.bmp", 256, 32, 8, 1, true, MAGENTA);
 
 }
 

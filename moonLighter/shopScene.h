@@ -32,6 +32,8 @@ private:
 
 	image* _jButton;
 	image* _layer;
+	
+	image* _uiOnDP;
 
 	display* _display;
 
@@ -44,6 +46,8 @@ private:
 	int _count3, _index3;
 	
 	int _AICount;
+
+	int _OnDPCount, _OnDPIndex;
 
 	bool _j;
 	bool _button;
@@ -62,6 +66,7 @@ public:
 	void buttonActionFrame();
 	void doorFrame();
 	void RdoorFrame();
+	void OnDP();
 
 	shopScene(){}
 	~shopScene(){}

@@ -46,7 +46,8 @@ HRESULT shopScene::init()
 	
 	_enterRc = RectMakeCenter(650, 1290, 50, 50);
 
-	
+	_uiOnDP = IMAGEMANAGER->findImage("ui_DP");
+	_OnDPCount = _OnDPIndex = 0;
 
 	_furniture = new furnitureContainer;
 	_furniture->init();
@@ -81,11 +82,11 @@ void shopScene::update()
 	{
 		_aiKid->set_startAIKids(true);
 	}
-	if (_AICount == 250)
+	if (_AICount == 450)
 	{
 		_aiGirl->set_startAIGirl(true);
 	}
-	if (_AICount == 500)
+	if (_AICount == 900)
 	{
 		_aiLink->set_startAILink(true);
 	}
@@ -213,6 +214,14 @@ void shopScene::render()
 	
 	_display->render();
 	//RectangleCam(getMemDC(), _enterRc, cam);
+	for (int i = 0; i < 4; i++)
+	{
+		if (IntersectRect(&temp, &_display->getDisplaySlot()[i], &_player->getRcProbe()))
+		{
+			_uiOnDP->frameRender(getMemDC(), _display->getDisplaySlot()[i].right -cam.left, _display->getDisplaySlot()[i].top -50 - cam.top);
+			this->OnDP();
+		}
+	}
 	
 	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
@@ -290,5 +299,24 @@ void shopScene::RdoorFrame()
 
 		}
 	}
+}
+
+void shopScene::OnDP()
+{
+	_OnDPCount++;
+
+	_uiOnDP->setFrameX(_OnDPIndex);
+
+	if (_OnDPCount % 15 == 0)
+	{
+		++_OnDPIndex;
+		if (_OnDPIndex > _uiOnDP->getMaxFrameX())
+		{
+			_OnDPIndex = _uiOnDP->getMaxFrameX();
+		}
+
+	}
+
+
 }
 

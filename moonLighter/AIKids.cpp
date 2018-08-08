@@ -73,10 +73,10 @@ void AIKids::render()
 
 	_state[_curState]->frameRender(getMemDC(), (pos.x - _state[_curState]->getFrameWidth() / 2) - cam.left, (pos.y - _state[_curState]->getFrameHeight() / 2) - cam.top);
 
-	for (int i = 0; i < _vDot.size(); ++i)
-	{
-		EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
-	}
+	//for (int i = 0; i < _vDot.size(); ++i)
+	//{
+	//	EllipseMakeCenter(getMemDC(), _vDot[i].x - cam.left, _vDot[i].y - cam.top, 30, 30);
+	//}
 
 
 	char str[500];
@@ -195,7 +195,7 @@ void AIKids::move()
 	if (_isExit)
 	{
 		
-		if (KEYMANAGER->isOnceKeyDown('9'))
+		if (KEYMANAGER->isOnceKeyDown('8'))
 		{
 			_dp->subtractDisplay(1);
 			_curState = 0;
