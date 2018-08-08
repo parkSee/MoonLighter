@@ -17,18 +17,21 @@ HRESULT shopScene::init()
 
 	_shopDoor = IMAGEMANAGER->findImage("shopDoor");
 
+	
+		
 	_aiKid = new AIKids;
 	_aiKid->init("aiKid", tagFloat(650, 1303));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
 	
-	//_aiGirl = new AIGirl;
-	//_aiGirl->init("aiGirl", tagFloat(650, 1303));
-	//OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
-
-	//_aiLink = new AILink;
-	//_aiLink->init("aiGirl", tagFloat(650, 1303));
-	//OBJECTMANAGER->addObject(objectType::AI, _aiLink);
-
+	_aiGirl = new AIGirl;
+	_aiGirl->init("aiGirl", tagFloat(650, 1303));
+	OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
+	
+	_aiLink = new AILink;
+	_aiLink->init("aiGirl", tagFloat(650, 1303));
+	OBJECTMANAGER->addObject(objectType::AI, _aiLink);
+	
+	
 	_display = SAVEDATA->get_display();
 
 	
@@ -58,7 +61,7 @@ HRESULT shopScene::init()
 	_j = false;
 	_button = false;
 	_ui = false;
-
+	_AICount=0;
 
 	_count = _index  = _index2 = 0;
 
@@ -72,12 +75,46 @@ void shopScene::release()
 
 void shopScene::update()
 {
+	_AICount++;
+
+	if (_AICount == 50)
+	{
+		_aiKid->set_startAIKids(true);
+	}
+	if (_AICount == 250)
+	{
+		_aiGirl->set_startAIGirl(true);
+	}
+	if (_AICount == 500)
+	{
+		_aiLink->set_startAILink(true);
+	}
+	if (_aiKid->get_startAIKids() && _aiGirl->get_startAIGirl() && _aiLink->get_startAILink())
+	{
+		_AICount = 0;
+	}
+
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD0))
+	{
+		_aiKid->set_startAIKids(false);
+		_aiGirl->set_startAIGirl(false);
+		_aiLink->set_startAILink(false);
+	}
+	if (KEYMANAGER->isOnceKeyDown(VK_NUMPAD1))
+	{
+		_aiKid->set_startAIKids(true);
+		_aiGirl->set_startAIGirl(true);
+		_aiLink->set_startAILink(true);
+	}
+
+
 	OBJECTMANAGER->update();
 	CAMERAMANAGER->connectTarget(_player->pos.x, _player->pos.y);
 	CAMERAMANAGER->update();
 	
 	RECT temp;
 
+	
 
 	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc))
 	{
@@ -110,8 +147,15 @@ void shopScene::update()
 
 	_enterRc = RectMakeCenter(650, 1230, 50, 50);
 
-	
-
+	RECT rcTemp;
+	if (IntersectRect(&rcTemp, &_aiKid->rc, &_enterRc) || IntersectRect(&rcTemp, &_aiGirl->rc, &_enterRc)|| IntersectRect(&rcTemp, &_aiLink->rc, &_enterRc))
+	{
+		this->doorFrame();
+	}
+	else
+	{
+		this->RdoorFrame();
+	}
 
 	if ( 1<_exitCount&&_exitCount < 10)
 	{
