@@ -56,6 +56,7 @@ private:
 	image* willDungeonShadow;
 	image* willFoot;
 	image* willAttack;
+	image* willAttackShadow;
 	image* willDamaged[WILL_DAMAGED_MAX];
 	image* willPendant;
 	image* willGoHome;

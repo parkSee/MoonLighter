@@ -41,6 +41,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willDungeon = IMAGEMANAGER->findImage("will_dungeon");
 	willDungeonShadow = IMAGEMANAGER->findImage("will_dungeon_shadow");
 	willAttack = IMAGEMANAGER->findImage("will_shortAttack");
+	willAttackShadow = IMAGEMANAGER->findImage("will_shortAttack_shadow");
 	willPendant = IMAGEMANAGER->findImage("will_pendant");
 	willGoHome = IMAGEMANAGER->findImage("will_goHome");
 	willFoot = IMAGEMANAGER->findImage("will_foot");
@@ -116,9 +117,13 @@ void player::render(void)
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 
-	willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 100);
+	if (!_isAttacking)
+	{
+		//willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+	}
 	if (_isDead)
 	{
+		willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 		willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 	}
 	else if (!_isAttacking)	//공격모션이 아닐 경우에 출력
@@ -126,16 +131,19 @@ void player::render(void)
 		int _count = (int)(_cntIsHit * 0.1);
 		if (!_isHit)
 		{
+			willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 			willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 		}
 		else
 		{
 			if (_cntIsHit <= 4)
 			{
+				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 				willDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
 			else if (_cntIsHit <= 8)
 			{
+				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 				willDamaged[2]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
 			else if (8 < _cntIsHit && _count % 2 == 1)
@@ -144,22 +152,25 @@ void player::render(void)
 			}
 			else if (8 < _cntIsHit && _count % 2 == 0)
 			{
+				willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 				willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
 		}
 	}
 	else if(_isAttacking)    //공격 모션일 경우의 출력
 	{
+		willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 		willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		
 	}
 	if (_isGoingHome)
 	{
 		willGoHome->frameRender(getMemDC(), (rc.left - willGoHome->getFrameWidth() / 4 + 5) - cam.left, (rc.top - willGoHome->getFrameHeight() / 4 + 20) - cam.top);
 	}
-	if (_isWalking)
-	{
-		willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
-	}
+	//if (_isWalking)
+	//{
+	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
+	//}
 	willPendant->frameRender(getMemDC(), 1190, 620);
 	
 	
@@ -499,14 +510,7 @@ void player::dungeonMove()
 				}
 				if (KEYMANAGER->isOnceKeyDown('S'))
 				{
-					if (_isInvincible == false)
-					{
-						_isInvincible = true;
-						_isHit = true;
-						_damage = 150;
-						_currentHp -= _damage;
-						_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
-					}	
+					_currentHp = 0;
 				}
 				if (KEYMANAGER->isOnceKeyDown('D'))
 				{
@@ -546,9 +550,11 @@ void player::dungeonMove()
 				{
 					willAttack->setFrameX(_index);
 					willAttack->setFrameY(0);
+					willAttackShadow->setFrameX(_index);
+					willAttackShadow->setFrameY(0);
 					if (2 == _index)
 					{
-						_rcSword = RectMakeCenter(pos.x, pos.y - 20, 130, 100);
+						_rcSword = RectMakeCenter(pos.x, pos.y - 20, 100, 50);
 					}
 					else
 					{
@@ -559,9 +565,11 @@ void player::dungeonMove()
 				{
 					willAttack->setFrameX(_index);
 					willAttack->setFrameY(1);
+					willAttackShadow->setFrameX(_index);
+					willAttackShadow->setFrameY(1);
 					if (2 == _index)
 					{
-						_rcSword = RectMakeCenter(pos.x, pos.y + 40, 130, 100);
+						_rcSword = RectMakeCenter(pos.x, pos.y + 40, 100, 50);
 					}
 					else
 					{
@@ -572,9 +580,11 @@ void player::dungeonMove()
 				{
 					willAttack->setFrameX(_index);
 					willAttack->setFrameY(2);
+					willAttackShadow->setFrameX(_index);
+					willAttackShadow->setFrameY(2);
 					if (2 == _index)
 					{
-						_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 100, 130);
+						_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 80, 100);
 					}
 					else
 					{
@@ -585,9 +595,11 @@ void player::dungeonMove()
 				{
 					willAttack->setFrameX(_index);
 					willAttack->setFrameY(3);
+					willAttackShadow->setFrameX(_index);
+					willAttackShadow->setFrameY(3);
 					if (2 == _index)
 					{
-						_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 100, 130);
+						_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 80, 100);
 					}
 					else
 					{
@@ -813,6 +825,8 @@ void player::willDoSomething()
 		}
 		willDungeon->setFrameX(_index);
 		willDungeon->setFrameY(12);
+		willDungeonShadow->setFrameX(_index);
+		willDungeonShadow->setFrameY(12);
 		if (_count % 5 == 0)
 		{
 			++_index;
