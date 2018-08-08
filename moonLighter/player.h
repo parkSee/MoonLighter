@@ -16,6 +16,7 @@ class player : public gameObject
 private:
 
 	int _index;
+	int _cntHp;
 	int _count;
 	int _cntFoot;
 	int _cntHp[9];
@@ -50,6 +51,8 @@ private:
 	bool _isHit;
 	bool _isDead;
 
+	
+
 	bool a;
 	bool _playerMove;
 
@@ -66,6 +69,12 @@ private:
 	image* willPendant;
 	image* willGoHome;
 	image* number;
+	image* _tempImg;
+	int tempCount;
+	int tempCurrentX;
+	int tempCurrentY;
+	int tempBool;
+
 
 	image* _pixelImg;
 
