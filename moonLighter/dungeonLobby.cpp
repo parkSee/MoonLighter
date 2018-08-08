@@ -101,16 +101,13 @@ void dungeonLobby::render()
 		IMAGEMANAGER->findImage("dunIntroRed")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
 	}
 	OBJECTMANAGER->render(getMemDC());
-<<<<<<< HEAD
+
 
 
 	RectangleCam(getMemDC(), _returnRc,cam);
 
-
-
-=======
 	_player->renderUI();
->>>>>>> 1aecc973f8890644b11f3be96fb3f0a98bb14e54
+
 }
 
 void dungeonLobby::willEnterFrame()
