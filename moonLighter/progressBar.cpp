@@ -123,7 +123,7 @@ void progressBar::render_jyp()   	//내가 한거
 	{
 		_progressBar->render(getMemDC(), _x, _y, 0, 0, _progressBar->getWidth(), _hpHeight);
 
-		if (_count > _heal * 0.4 * _speed)
+		if (_count > _heal * 0.1 * _speed)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 76, _beforeHpWidth, _hpHeight);
 		}
@@ -131,7 +131,7 @@ void progressBar::render_jyp()   	//내가 한거
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 114, _beforeHpWidth, _hpHeight);
 		}
-		else if (_count > _heal * 0.1 * _speed)
+		else if (_count > _heal * 0.4 * _speed)
 		{
 			_progressBar->render(getMemDC(), _rcProgress.left, _y, 10, 152, _beforeHpWidth, _hpHeight);
 		}

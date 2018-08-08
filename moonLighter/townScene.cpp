@@ -120,7 +120,7 @@ void townScene::render()
 	{
 		_enterText->frameRender(getMemDC(), 2000 - rc.left, 575 - rc.top);
 	}
-
+	_player->renderUI();
 }
 
 void townScene::enterFrame()

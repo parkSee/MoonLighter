@@ -9,14 +9,26 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_cntPendant = 0;
 	_cntIsHit = 0;
 	_cntFoot = 0;
+	_cntHp[0] = 0;
+	_cntHp[1] = 0;
+	_cntHp[2] = 0;
+	_cntHp[3] = 0;
+	_cntHp[4] = 10;
+	_cntMoney[0] = 0;
+	_cntMoney[1] = 0;
+	_cntMoney[2] = 0;
+	_cntMoney[3] = 0;
 	_index = _count = 0;
 	_cntIsInvincible = 0;
 	_time = 0.0f;
 	_speed = 5.0f;
+	_money[0] = 77;
+	_money[1] = 77;
 	_acceleration = 2.5f;
 	_attCharge = 0;
 	_maxHp = 1000;
 	_currentHp = 1000;
+	_beforeHp = _maxHp;
 	_isIdle = true;
 	_isUp = false;
 	_isDown = true;
@@ -50,7 +62,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willDamaged[2] = IMAGEMANAGER->findImage("will_damaged3");
 	willAttackDamaged[0] = IMAGEMANAGER->findImage("will_shortAttack_Damaged2");
 	willAttackDamaged[1] = IMAGEMANAGER->findImage("will_shortAttack_Damaged3");
-
+	number = IMAGEMANAGER->findImage("number");
 	_hpBar = new progressBar;
 	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
 	_hpBar->setRect(10, 0);
@@ -109,10 +121,10 @@ void player::update(void)
 
 	_inven->update();
 
-	//this->collision();
 	this->willAction();
-	_hpBar->update_jyp();
 	this->enemyCheckCollision();
+	_hpBar->update_jyp();
+	numberUpdate();
 }
 
 void player::render(void)
@@ -185,8 +197,6 @@ void player::render(void)
 				willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
 			}
 		}
-		
-		
 	}
 	if (_isGoingHome)
 	{
@@ -196,8 +206,7 @@ void player::render(void)
 	//{
 	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
 	//}
-	willPendant->frameRender(getMemDC(), 1190, 620);
-	
+		
 	
 	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
 	{
@@ -216,8 +225,6 @@ void player::render(void)
 		Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
 	}
 	
-	
-	_hpBar->render_jyp();
 	if (_isHit && _cntIsHit <= 2 && !_isDead)
 	{
 		willDamaged[0]->alphaRender(getMemDC(), 100);
@@ -261,8 +268,6 @@ void player::collision()
 			
 		}
 	}
-
-
 }
 
 void player::dungeonMove()
@@ -535,7 +540,13 @@ void player::dungeonMove()
 				}
 				if (KEYMANAGER->isOnceKeyDown('S'))
 				{
-					_currentHp = 0;
+					_isHit = true;
+					_damage = 100;
+					_beforeHp = _currentHp;
+					_currentHp -= _damage;
+					_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
+					_money[0] = _money[1];
+					_money[1] += 100;
 				}
 				if (KEYMANAGER->isOnceKeyDown('D'))
 				{
@@ -544,7 +555,12 @@ void player::dungeonMove()
 					{
 						_currentHp = _maxHp;
 					}
-					_hpBar->setGaugeOfHeal(_currentHp, _maxHp, 150);
+					_hpBar->setGaugeOfHeal(_currentHp, _maxHp, 150, 1);
+					if (_money[1] >= 100)
+					{
+						_money[0] = _money[1];
+						_money[1] -= 100;
+					}
 				}
 				if (KEYMANAGER->isStayKeyDown('L'))
 				{
@@ -910,6 +926,64 @@ void player::goHome()
 		}
 	}
 }
+void player::numberUpdate()
+{
+	if (_beforeHp > _currentHp)
+	{
+		--_beforeHp;
+	}
+	else if(_beforeHp < _currentHp)
+	{
+		++_beforeHp;
+	}
+	_cntHp[0] = (int)(_beforeHp * 0.001);
+	_cntHp[1] = (int)((_beforeHp % 1000) / 100);
+	_cntHp[2] = (int)((_beforeHp % 100) / 10);
+	_cntHp[3] = _beforeHp % 10;
+
+	_cntHp[5] = (int)(_maxHp * 0.001);
+	_cntHp[6] = (int)((_maxHp % 1000) / 100);
+	_cntHp[7] = (int)((_maxHp % 100) / 10);
+	_cntHp[8] = _maxHp % 10;
+
+	if (_money[0] > _money[1])
+	{
+		--_money[0];
+	}
+	else if (_money[0] < _money[1])
+	{
+		++_money[0];
+	}
+	_cntMoney[0] = (int)(_money[0] * 0.001);
+	_cntMoney[1] = (int)((_money[0] % 1000) / 100);
+	_cntMoney[2] = (int)((_money[0] % 100) / 10);
+	_cntMoney[3] = _money[0] % 10;
+}
+void player::numberRender()
+{
+	if (_beforeHp >= 1000)
+	{
+		number->frameRender(getMemDC(), 140, 60, _cntHp[0], 0);
+	}
+	number->frameRender(getMemDC(), 150, 60, _cntHp[1], 0);
+	number->frameRender(getMemDC(), 160, 60, _cntHp[2], 0);
+	number->frameRender(getMemDC(), 170, 60, _cntHp[3], 0);
+	number->frameRender(getMemDC(), 180, 60, _cntHp[4], 0);
+	number->frameRender(getMemDC(), 190, 60, _cntHp[5], 0);
+	number->frameRender(getMemDC(), 200, 60, _cntHp[6], 0);
+	number->frameRender(getMemDC(), 210, 60, _cntHp[7], 0);
+	number->frameRender(getMemDC(), 220, 60, _cntHp[8], 0);
+
+	if (_money[0] >= 1000)
+	{
+		number->frameRender(getMemDC(), 50, 120, _cntMoney[0], 0);
+	}
+	number->frameRender(getMemDC(), 60, 120, _cntMoney[1], 0);
+	number->frameRender(getMemDC(), 70, 120, _cntMoney[2], 0);
+	number->frameRender(getMemDC(), 80, 120, _cntMoney[3], 0);
+
+	IMAGEMANAGER->findImage("coin")->render(getMemDC(), 95, 120);
+}
 void player::setIsIdleUp(bool isUp)
 {
 	if (isUp)
@@ -976,9 +1050,10 @@ void player::enemyCheckCollision()
 					if (_isInvincible == false)
 					{
 						_isHit = true;
-						_damage = 100;
+						_damage = 86;
+						_beforeHp = _currentHp;
 						_currentHp -= _damage;
-						_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
+						_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
 						_isInvincible = true;
 						SOUNDMANAGER->play("will_damaged", 0.6f);
 						CAMERAMANAGER->shakeCamera(1.5f, 0.1);
@@ -993,8 +1068,9 @@ void player::enemyCheckCollision()
 						{
 							_isHit = true;
 							_damage = 100;
+							_beforeHp = _currentHp;
 							_currentHp -= _damage;
-							_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
+							_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
 							_isInvincible = true;
 							SOUNDMANAGER->play("will_damaged", 0.6f);
 							CAMERAMANAGER->shakeCamera(5.5f, 0.1);
@@ -1010,8 +1086,9 @@ void player::enemyCheckCollision()
 						{
 							_isHit = true;
 							_damage = 100;
+							_beforeHp = _currentHp;
 							_currentHp -= _damage;
-							_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage);
+							_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
 							_isInvincible = true;
 							SOUNDMANAGER->play("will_damaged", 0.6f);
 							CAMERAMANAGER->shakeCamera(5.5f, 0.1);
@@ -1041,5 +1118,8 @@ void player::enemyCheckCollision()
 void player::renderUI()
 {
 	_inven->render(getMemDC());
+	_hpBar->render_jyp();
+	numberRender();
+	willPendant->frameRender(getMemDC(), 1190, 620);
 }
 

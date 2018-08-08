@@ -89,6 +89,7 @@ void dungeonLobby::render()
 		IMAGEMANAGER->findImage("dunIntroRed")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
 	}
 	OBJECTMANAGER->render(getMemDC());
+	_player->renderUI();
 }
 
 void dungeonLobby::willEnterFrame()

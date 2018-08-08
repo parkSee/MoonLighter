@@ -18,7 +18,11 @@ private:
 	int _index;
 	int _count;
 	int _cntFoot;
+	int _cntHp[9];
+	int _cntMoney[4];
+	int _beforeHp;
 	int _cntPendant;
+	int _money[2];
 	int _cntIsHit;
 	int _cntIsInvincible;
 	int _probeY;
@@ -61,6 +65,7 @@ private:
 	image* willAttackDamaged[WILL_DAMAGED_MAX-1];
 	image* willPendant;
 	image* willGoHome;
+	image* number;
 
 	image* _pixelImg;
 
@@ -87,6 +92,8 @@ public:
 	void othersFrameUpdate(int frameX, int frameY);
 	void noUsePendant();
 	void goHome();
+	void numberUpdate();
+	void numberRender();
 	bool getInvincible() { return _isInvincible; }
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void setIsAutomatic(bool isAutomatic) { _isAutomatic = isAutomatic; }
