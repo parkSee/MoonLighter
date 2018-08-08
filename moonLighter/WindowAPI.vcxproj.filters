@@ -251,6 +251,12 @@
     <ClInclude Include="AIGirl.h">
       <Filter>MainGame\AI</Filter>
     </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>MainGame\Object\townObject</Filter>
+    </ClInclude>
+    <ClInclude Include="npc.h">
+      <Filter>MainGame\Object\townObject</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -417,6 +423,12 @@
     </ClCompile>
     <ClCompile Include="AIGirl.cpp">
       <Filter>MainGame\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="tree.cpp">
+      <Filter>MainGame\Object\townObject</Filter>
+    </ClCompile>
+    <ClCompile Include="npc.cpp">
+      <Filter>MainGame\Object\townObject</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

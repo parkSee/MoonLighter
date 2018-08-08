@@ -155,7 +155,10 @@ void loading::render(void)
 	
 	if (_currentGauge < _vLoadItem.size())
 	{
-		sprintf_s(str, "%s.bmp", _vLoadItem[_currentGauge]->getImageResource().keyName.c_str());
+		if (_vLoadItem[_currentGauge]->getLoadingKind() == LOAD_KIND_SOUND)
+			sprintf_s(str, "%s.mp3", _vLoadItem[_currentGauge]->getSoundResource().keyName.c_str());
+		else
+			sprintf_s(str, "%s.bmp", _vLoadItem[_currentGauge]->getImageResource().keyName.c_str());
 		TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY - 170, str, strlen(str));
 		SetTextColor(getMemDC(), RGB(255, 0, 0));
 		SetBkMode(getMemDC(), TRANSPARENT);

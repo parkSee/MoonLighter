@@ -180,6 +180,7 @@
     <ClInclude Include="loadingScene.h" />
     <ClInclude Include="lobbyContainer.h" />
     <ClInclude Include="mainGame.h" />
+    <ClInclude Include="npc.h" />
     <ClInclude Include="objectContainer.h" />
     <ClInclude Include="objectManager.h" />
     <ClInclude Include="pixelManager.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="stone.h" />
     <ClInclude Include="timeManager.h" />
     <ClInclude Include="townScene.h" />
+    <ClInclude Include="tree.h" />
     <ClInclude Include="txtData.h" />
     <ClInclude Include="ui.h" />
     <ClInclude Include="util.h" />
@@ -237,6 +239,7 @@
     <ClCompile Include="lobbyContainer.cpp" />
     <ClCompile Include="lysImage.cpp" />
     <ClCompile Include="mainGame.cpp" />
+    <ClCompile Include="npc.cpp" />
     <ClCompile Include="objectContainer.cpp" />
     <ClCompile Include="objectManager.cpp" />
     <ClCompile Include="pixelManager.cpp" />
@@ -258,6 +261,7 @@
     <ClCompile Include="stone.cpp" />
     <ClCompile Include="timeManager.cpp" />
     <ClCompile Include="townScene.cpp" />
+    <ClCompile Include="tree.cpp" />
     <ClCompile Include="txtData.cpp" />
     <ClCompile Include="ui.cpp" />
     <ClCompile Include="util.cpp" />

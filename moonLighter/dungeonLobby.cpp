@@ -26,6 +26,9 @@ HRESULT dungeonLobby::init()
 
 	_enterRc = RectMakeCenter(720, 953, 50, 50);
 	_doorSensorRc = RectMakeCenter(720, 1000, 100, 150);
+	_returnRc = RectMakeCenter(1255, 2091, 100, 50);
+
+
 
 	_count = _index = _index2 = 0;
 	_isDoorOpen = false;
@@ -58,6 +61,15 @@ void dungeonLobby::update()
 		SCENEMANAGER->loadScene("dungeonScene");
 		SOUNDMANAGER->stop("townBGM");
 	}
+	RECT temp;
+	if (IntersectRect(&temp, &_player->getRcBody(), &_returnRc))
+	{
+		OBJECTMANAGER->reset();
+		SCENEMANAGER->loadScene("townScene");
+		SOUNDMANAGER->stop("townBGM");
+		_player->pos.x = 2850;
+		_player->pos.y = 788;
+	}
 }
 
 void dungeonLobby::render()
@@ -89,6 +101,12 @@ void dungeonLobby::render()
 		IMAGEMANAGER->findImage("dunIntroRed")->render(getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
 	}
 	OBJECTMANAGER->render(getMemDC());
+
+
+	RectangleCam(getMemDC(), _returnRc,cam);
+
+
+
 }
 
 void dungeonLobby::willEnterFrame()

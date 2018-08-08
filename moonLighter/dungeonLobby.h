@@ -14,10 +14,13 @@ private:
 	lobbyContainer* _lobbyObj;
 	RECT temp;
 	RECT _enterRc;
+	RECT _returnRc;
 	RECT _doorSensorRc;
 	bool _isDoorOpen;
 	bool _isClose_Player;
 	bool _isDungeonIn;
+
+	
 public:
 
 	HRESULT init();

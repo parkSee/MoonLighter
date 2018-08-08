@@ -11,7 +11,9 @@ HRESULT objectContainer::init()
 	for (int i = 0; i < 10; ++i)
 	{
 		_house[i] = new house;
+		_tree[i] = new tree;
 	}
+	//집오브젝트
 		_house[0]->init("house", tagFloat(332, 628), IMAGEMANAGER->findImage("build_Retaile"));
 		_house[1]->init("house", tagFloat(1201, 425), IMAGEMANAGER->findImage("build_Top1"));
 		_house[2]->init("house", tagFloat(1812, 442), IMAGEMANAGER->findImage("build_Shop"));
@@ -22,11 +24,26 @@ HRESULT objectContainer::init()
 		_house[7]->init("house", tagFloat(2620, 1031), IMAGEMANAGER->findImage("build_Forge"));
 		_house[8]->init("house", tagFloat(2429, 2052), IMAGEMANAGER->findImage("build_Well"));
 		_house[9]->init("house", tagFloat(1676, 1124), IMAGEMANAGER->findImage("build_Board"));
+		
+	//나무 오브젝트
+		_tree[0]->init("tree", tagFloat(2196, 425), IMAGEMANAGER->findImage("tree"));
+		_tree[1]->init("tree", tagFloat(1926, 746), IMAGEMANAGER->findImage("tree"));
+		_tree[2]->init("tree", tagFloat(1922, 1280), IMAGEMANAGER->findImage("tree"));
+		_tree[3]->init("tree", tagFloat(2131, 1581), IMAGEMANAGER->findImage("tree"));
+		_tree[4]->init("tree", tagFloat(1108, 756), IMAGEMANAGER->findImage("tree"));
+		_tree[5]->init("tree", tagFloat(851, 980), IMAGEMANAGER->findImage("tree"));
+		_tree[6]->init("tree", tagFloat(1072, 1292), IMAGEMANAGER->findImage("tree"));
+		_tree[7]->init("tree", tagFloat(126, 762), IMAGEMANAGER->findImage("tree"));
+		_tree[8]->init("tree", tagFloat(120, 1284), IMAGEMANAGER->findImage("tree"));
+		_tree[9]->init("tree", tagFloat(132, 2202), IMAGEMANAGER->findImage("tree"));
+	
 	
 	for (int i = 0; i < 10; ++i)
 	{
 		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _house[i]);
+		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _tree[i]);
 	}
+	
 		
 	return S_OK;
 }

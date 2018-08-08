@@ -5,8 +5,8 @@
 void loadingScene::psyImageLoading()
 {
 	//Å¸¿î¸Ê
-	_loading->loadImage("map", "./Image/map.bmp", 3000, 2460);
-	_loading->loadImage("redZone", "./Image/town_object/town_pixel.bmp", 3000, 2460);
+	_loading->loadImage("map", "./Image/map2.bmp", 3000, 2460);
+	_loading->loadImage("redZone", "./Image/town_object/town_pixel2.bmp", 3000, 2460);
 
 	//¼¥
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);
@@ -56,6 +56,11 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("entryStructure", "Image/dungeon_object/dungeonLobby_entryStructure.bmp", 531, 234, true, MAGENTA);
 	_loading->loadImage("top3LongBoard", "Image/dungeon_object/dungeonLobby_top3LongBoard.bmp", 462, 117, true, MAGENTA);
 	_loading->loadImage("bottomLeftTent", "Image/dungeon_object/dungeonLobby_bottomLeftTent.bmp", 248, 235, true, MAGENTA);
+
+	_loading->loadFrameImage("tree", "Image/town_object/tree.bmp", 828, 222, 4, 1, true, MAGENTA);
+
+	//NPC
+	_loading->loadFrameImage("npc_witch", "./Image/town_object/npc.bmp", 525, 105, 5, 1, true, MAGENTA);
 
 
 	//AI

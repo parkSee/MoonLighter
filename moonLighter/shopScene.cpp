@@ -13,6 +13,7 @@ HRESULT shopScene::init()
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	_player->pos.x = WINSIZEX / 2;
 	_player->pos.y = 1000;
+	
 	_player->setPixelImage(IMAGEMANAGER->findImage("shopPixel"));
 
 	_shopDoor = IMAGEMANAGER->findImage("shopDoor");

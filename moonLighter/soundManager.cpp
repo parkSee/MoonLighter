@@ -104,6 +104,9 @@ void soundManager::play(string keyName, float volume)
 	}
 }
 
+
+
+
 void soundManager::stop(string keyName)
 {
 	int count = 0;

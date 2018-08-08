@@ -1,6 +1,7 @@
 #pragma once
 #include "gameNode.h"
 #include "house.h"
+#include "tree.h"
 
 
 class objectContainer : public gameNode
@@ -8,6 +9,7 @@ class objectContainer : public gameNode
 private:
 
 	house * _house[10];
+	tree* _tree[10];
 
 public:
 
