@@ -1,5 +1,8 @@
 #pragma once
 #include "gameNode.h"
+
+class player;
+
 class npc : public gameNode
 {
 
@@ -11,8 +14,13 @@ private:
 
 	RECT _talkRc;
 
-
+	int _timer;
+	bool _isFrame;
 	int _count, _index;
+	int _count2, _index2;
+
+	image* _talkImg;
+	bool _isCollision;
 
 public:
 
@@ -22,7 +30,8 @@ public:
 	void render();
 
 	void frame();
-
+	void talkingFrame();
+	void talkingRECT(RECT rc);
 
 	npc(){}
 	~npc(){}

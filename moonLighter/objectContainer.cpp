@@ -44,7 +44,7 @@ HRESULT objectContainer::init()
 		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _tree[i]);
 	}
 	_witch = new npc;
-	_witch->init(tagFloat(393,1907),IMAGEMANAGER->findImage("npc_witch"));
+	_witch->init(tagFloat(337,1867),IMAGEMANAGER->findImage("npc_witch"));
 		
 	return S_OK;
 }
@@ -56,7 +56,8 @@ void objectContainer::release()
 
 void objectContainer::update()
 {
-	
+	_witch->talkingRECT(RectMake(356, 1983, 70, 70));
+	_witch->update();
 }
 
 void objectContainer::render()

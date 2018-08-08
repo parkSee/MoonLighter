@@ -61,7 +61,7 @@ void loadingScene::psyImageLoading()
 
 	//NPC
 	_loading->loadFrameImage("npc_witch", "./Image/town_object/npc.bmp", 525, 105, 5, 1, true, MAGENTA);
-
+	_loading->loadFrameImage("talking", "./Image/¸»ÇÏ±â.bmp", 363, 50, 3, 1, true, MAGENTA);
 
 	//AI
 	_loading->loadImage("AiKids", "Image/ai/AiKids.bmp", 600, 400, true, MAGENTA);

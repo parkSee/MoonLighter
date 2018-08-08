@@ -89,7 +89,7 @@ void townScene::update()
 void townScene::render()
 {
 	RECT rc = CAMERAMANAGER->getRenderRc();
-	_container->render();
+	
 
 	IMAGEMANAGER->findImage("map")->render(getMemDC(), 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
 
@@ -122,6 +122,7 @@ void townScene::render()
 	{
 		_enterText->frameRender(getMemDC(), 2000 - rc.left, 575 - rc.top);
 	}
+	_container->render();
 	_player->renderUI();
 }
 
