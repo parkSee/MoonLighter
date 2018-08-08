@@ -51,8 +51,13 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willDamaged[0] = IMAGEMANAGER->findImage("will_damaged");
 	willDamaged[1] = IMAGEMANAGER->findImage("will_damaged2");
 	willDamaged[2] = IMAGEMANAGER->findImage("will_damaged3");
+<<<<<<< HEAD
 	_tempImg = IMAGEMANAGER->findImage("활쟁이");
 
+=======
+	willAttackDamaged[0] = IMAGEMANAGER->findImage("will_shortAttack_Damaged2");
+	willAttackDamaged[1] = IMAGEMANAGER->findImage("will_shortAttack_Damaged3");
+>>>>>>> 3b15a10c35735ea96547dc46de5a106000225eac
 
 	_hpBar = new progressBar;
 	_hpBar->init("will_hpBar", 100, 30, 130, 228, 118, 38);
@@ -148,12 +153,24 @@ void player::render(void)
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	if (!tempBool)
 
+<<<<<<< HEAD
 	{
 		if (!_isAttacking)
 		{
 			//willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 		}
 		if (_isDead)
+=======
+	if (_isDead)
+	{
+		willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+		willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+	}
+	else if (!_isAttacking)	//공격모션이 아닐 경우에 출력
+	{
+		int _count = (int)(_cntIsHit * 0.1);
+		if (!_isHit)
+>>>>>>> 3b15a10c35735ea96547dc46de5a106000225eac
 		{
 			willDungeonShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
 			willDungeon->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
@@ -230,7 +247,74 @@ void player::render(void)
 			willDamaged[0]->alphaRender(getMemDC(), 100);
 		}
 	}
+<<<<<<< HEAD
 	else
+=======
+	else if(_isAttacking)    //공격 모션일 경우의 출력
+	{
+		int _count = (int)(_cntIsHit * 0.1);
+		if (!_isHit)
+		{
+			willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+			willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		}
+		else
+		{
+			if (_cntIsHit <= 4)
+			{
+				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+				willAttackDamaged[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+			}
+			else if (_cntIsHit <= 8)
+			{
+				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+				willAttackDamaged[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+			}
+			else if (8 < _cntIsHit && _count % 2 == 1)
+			{
+
+			}
+			else if (8 < _cntIsHit && _count % 2 == 0)
+			{
+				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 80);
+				willAttack->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+			}
+		}
+		
+		
+	}
+	if (_isGoingHome)
+	{
+		willGoHome->frameRender(getMemDC(), (rc.left - willGoHome->getFrameWidth() / 4 + 5) - cam.left, (rc.top - willGoHome->getFrameHeight() / 4 + 20) - cam.top);
+	}
+	//if (_isWalking)
+	//{
+	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - cam.left, footPos.y - cam.top, 100);
+	//}
+	willPendant->frameRender(getMemDC(), 1190, 620);
+	
+	
+	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
+	{
+		Rectangle(getMemDC(), rc.left - cam.left, rc.top - cam.top, rc.right - cam.left, rc.bottom - cam.top);
+	}
+	if (KEYMANAGER->isToggleKey(VK_F10))	//lysADD(픽셀충돌체크 렉트 출력)
+	{
+		Rectangle(getMemDC(), _rcProbe.left - cam.left, _rcProbe.top - cam.top, _rcProbe.right - cam.left, _rcProbe.bottom - cam.top);
+	}
+	if (KEYMANAGER->isToggleKey(VK_F11))	//lysADD(아이템토글, 몬스터 충돌 렉트 출력)
+	{
+		Rectangle(getMemDC(), _rcBody.left - cam.left, _rcBody.top - cam.top, _rcBody.right - cam.left, _rcBody.bottom - cam.top);
+	}
+	if (KEYMANAGER->isToggleKey(VK_F12))	//lysADD(공격 모션 중 공격 범위 렉트 출력)
+	{
+		Rectangle(getMemDC(), _rcSword.left - cam.left, _rcSword.top - cam.top, _rcSword.right - cam.left, _rcSword.bottom - cam.top);
+	}
+	
+	
+	_hpBar->render_jyp();
+	if (_isHit && _cntIsHit <= 2 && !_isDead)
+>>>>>>> 3b15a10c35735ea96547dc46de5a106000225eac
 	{
 		_tempImg->frameRender(getMemDC(), pos.x - cam.left - 45, pos.y - cam.top - 34, tempCurrentX, tempCurrentY);
 	}
@@ -295,7 +379,7 @@ void player::dungeonMove()
 						{
 							_cntFoot = 0;
 							_isWalking = true;
-							EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
+							//EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
 						}
 					}
 					if (_isIdle)
@@ -345,7 +429,7 @@ void player::dungeonMove()
 						{
 							_cntFoot = 0;
 							_isWalking = true;
-							EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
+							//EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
 						}
 					}
 					if (_isIdle)
@@ -395,7 +479,7 @@ void player::dungeonMove()
 						{
 							_cntFoot = 0;
 							_isWalking = true;
-							EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
+							//EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
 						}
 					}
 					if (_isIdle)
@@ -445,7 +529,7 @@ void player::dungeonMove()
 						{
 							_cntFoot = 0;
 							_isWalking = true;
-							EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
+							//EFFECTMANAGER->play("발자취", footPos.x, footPos.y);
 						}
 					}
 					if (_isIdle)

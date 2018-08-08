@@ -60,6 +60,7 @@ private:
 	image* willAttack;
 	image* willAttackShadow;
 	image* willDamaged[WILL_DAMAGED_MAX];
+	image* willAttackDamaged[WILL_DAMAGED_MAX-1];
 	image* willPendant;
 	image* willGoHome;
 	image* _tempImg;
