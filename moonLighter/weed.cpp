@@ -19,6 +19,7 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 	_attackedWeed[1] = IMAGEMANAGER->findImage("잡초하양");
 	_weedFrameX = _weedFrameY = _count = _attackedCount=_dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
+	_collisionRc = RectMakeCenter(pos.x, pos.y, 70, 60);
 	_rc2 = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 	_dmgFontRc[0] = RectMakeCenter(pos.x-30, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	_dmgFontRc[1] = RectMakeCenter(pos.x, pos.y, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
@@ -201,6 +202,7 @@ void weed::imgRectMake()
 	_rc2 = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 	_dmgFontRc[0] = RectMakeCenter(pos.x - 10, pos.y +_dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	_dmgFontRc[1] = RectMakeCenter(pos.x+20, pos.y +_dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
+	_collisionRc = RectMakeCenter(pos.x, pos.y, 60, 50);
 }
 
 void weed::damagged()
