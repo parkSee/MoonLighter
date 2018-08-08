@@ -191,9 +191,8 @@ void AIKids::move()
 		
 		
 		if (pos.x == 676 && pos.y == 1000)
-		{
-			RECT cam = CAMERAMANAGER->getRenderRc();
-			_dp->dp_setPos(1, 606 , 894);
+		{			
+			_dp->dp_setPos(1);
 			_dp->dp_SetActiveTrue(1);
 		}
 

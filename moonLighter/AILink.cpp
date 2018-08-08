@@ -134,7 +134,7 @@ void AILink::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(0);
+				if (_pickItem == false) _dp->dp_SetActiveFalse(0);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
@@ -177,6 +177,7 @@ void AILink::move()
 	{
 		if (KEYMANAGER->isOnceKeyDown('9'))
 		{
+			_dp->subtractDisplay(0)
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);
 			_vDot[1] = tagFloat(650, 1130);
