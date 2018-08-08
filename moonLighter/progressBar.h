@@ -19,13 +19,13 @@ private:
 	float _hpDifferential;      //쳐맞기 전 체력과 쳐맞은 후 체력 차이		내가 추가한거
 
 	int _heal;
-	int _damage;				
-	int _count;					
+	int _damage;
+	int _count;
 	float _speed;
-	bool _isHit;				
+	bool _isHit;
 	bool _isHealed;
 	image* _progressBar;		//체력바 이미지(내가 한거)
-								
+
 	image* _progressBarFront;	//체력바 앞 이미지
 	image* _progressBarBack;	//체력바 뒤 이미지
 
@@ -62,6 +62,8 @@ public:
 	void setIsHealed(bool isHealed = true) { _isHealed = isHealed; }
 	void setHpWidth(int hpWidth) { _hpWidth = hpWidth; }
 
+	//겟카운트
+	int getCount() { return _count; }
 	progressBar() {}
 	~progressBar() {}
 };

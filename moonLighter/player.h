@@ -22,6 +22,7 @@ private:
 	int _cntMoney[4];
 	int _beforeHp;
 	int _cntPendant;
+	int _cntShakeHeart;
 	int _money[2];
 	int _cntIsHit;
 	int _cntIsInvincible;
@@ -45,6 +46,7 @@ private:
 	bool _isAttacking;
 	bool _isUsingPendant;
 	bool _isGoingHome;
+	bool _isShakingHeart;
 	bool _isRcSwordOn;
 	bool _isEnemyHit;
 	bool _isHit;
@@ -67,6 +69,8 @@ private:
 	image* willAttackDamaged[WILL_DAMAGED_MAX-1];
 	image* willPendant;
 	image* willGoHome;
+	image* willMoneyBag;
+	image* shakeHeart;
 	image* number;
 	image* _tempImg;
 	int tempCount;
