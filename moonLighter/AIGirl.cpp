@@ -29,6 +29,7 @@ HRESULT AIGirl::init(string _objName, tagFloat _pos)
 	_isExit = false;
 	_buy = false;
 	_pickItem = false;
+	_MoveStart = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -55,16 +56,18 @@ void AIGirl::release()
 
 void AIGirl::update()
 {
-	gameObject::update();
+	if (_MoveStart)
+	{
+		gameObject::update();
 
-	this->move();
-	
-	
+		this->move();
 
 
-	this->Frame();
-	rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
 
+
+		this->Frame();
+		rc = RectMakeCenter(pos.x, pos.y, _state[_curState]->getFrameWidth(), _state[_curState]->getFrameHeight());
+	}
 }
 
 void AIGirl::render()
@@ -205,7 +208,7 @@ void AIGirl::move()
 
 	if (_isExit)
 	{
-		if (KEYMANAGER->isOnceKeyDown('9'))
+		if (KEYMANAGER->isOnceKeyDown('7'))
 		{
 			_dp->subtractDisplay(2);
 			_curState = 0;

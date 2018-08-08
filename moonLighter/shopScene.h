@@ -43,6 +43,8 @@ private:
 	int _outCount;
 	int _count3, _index3;
 	
+	int _AICount;
+
 	bool _j;
 	bool _button;
 	bool _ui;
