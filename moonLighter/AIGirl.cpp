@@ -163,7 +163,7 @@ void AIGirl::move()
 
 			if (_buyCount >= 100)
 			{
-				if (_pickItem == false) _dp->subtractDisplay(2);
+				if (_pickItem == false) _dp->dp_SetActiveFalse(2);
 				_pickItem = true;
 				_buyCount = 0;
 				if (_isExit == false)
@@ -207,6 +207,7 @@ void AIGirl::move()
 	{
 		if (KEYMANAGER->isOnceKeyDown('9'))
 		{
+			_dp->subtractDisplay(2);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);
 			_vDot[1] = tagFloat(650, 1130);
