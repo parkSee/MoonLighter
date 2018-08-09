@@ -32,7 +32,7 @@ private:
 
 public:
 
-	HRESULT init(tagFloat pos, image* img );
+	HRESULT init(tagFloat pos, image* img, image* talkBoxImg);
 	void release();
 	void update();
 	void render();

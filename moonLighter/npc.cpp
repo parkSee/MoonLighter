@@ -2,10 +2,10 @@
 #include "npc.h"
 #include "player.h"
 
-HRESULT npc::init(tagFloat pos, image* img)
+HRESULT npc::init(tagFloat pos, image* img , image* talkBoxImg)
 {
 	_talkImg = IMAGEMANAGER->findImage("talking");
-	_talkBox = IMAGEMANAGER->findImage("talkBox");
+	_talkBox = talkBoxImg;
 	_pos = pos;
 	_img = img;
 	_rc = RectMakeCenter(_pos.x, _pos.y, _img->getFrameWidth(), _img->getFrameHeight());
@@ -49,7 +49,6 @@ void npc::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	_img->frameRender(getMemDC(), _pos.x - cam.left, _pos.y - cam.top);
-	
 	
 	RectangleCam(getMemDC(), _talkRc,cam);
 	
@@ -109,6 +108,7 @@ void npc::talkingFrame()
 
 }
 
+								//말걸기			대화창
 void npc::talkingRECT(RECT rc, tagFloat talkUi, tagFloat talkBoxUi)
 {
 	//_talkRc = RectMakeCenter(356, 1983)
@@ -200,7 +200,7 @@ void npc::talkingRender(const char *a)
 	char str[256];
 
 	strncpy_s(str, text, _txtIndex);
-	RECT textrc = RectMake(_talkBoxUiPos.x + 200, _talkBoxUiPos.y + 75 - cam.top,300,600);
+	RECT textrc = RectMake(_talkBoxUiPos.x + 200 - cam.left, _talkBoxUiPos.y + 75 - cam.top,300,600);
 	
 	DrawText(getMemDC(), str, strlen(str), &textrc, DT_WORDBREAK);
 	//TextOut(getMemDC(), (_talkBoxUiPos.x + 200 - cam.left), (_talkBoxUiPos.y + 75 - cam.top), str, strlen(str));
