@@ -5,6 +5,10 @@
 
 void loadingScene::lysImageLoading()
 {
+	_loading->loadImage("윌_화살위", "Image/player/화살위.bmp", 15, 76, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살아래", "Image/player/화살아래.bmp", 15, 76, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살왼쪽", "Image/player/화살왼쪽.bmp", 78, 15, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살오른쪽", "Image/player/화살오른쪽.bmp", 80, 15, 130, 228, true, RGB(255, 0, 255));
 	_loading->loadImage("will_hpBar", "Image/player/hpBar.bmp", 150, 50, 130, 228, true, RGB(255, 0, 255));
 	_loading->loadImage("will_damaged", "Image/player/will_damaged.bmp", 1280, 720);
 	_loading->loadImage("coin", "Image/player/coin.bmp", 16, 16, true, RGB(255,0,255));
@@ -26,20 +30,20 @@ void loadingScene::lysImageLoading()
 	_loading->loadFrameImage("shakeHeart", "Image/player/shakeHeart.bmp", 1860, 42, 31, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_back", "Image/player/will_bow_back.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_front", "Image/player/will_bow_front.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_left", "Image/player/will_bow_left.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_right", "Image/player/will_bow_right.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left", "Image/player/will_bow_left.bmp", 1045, 79, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right", "Image/player/will_bow_right.bmp", 935, 80, 10, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_back_shadow", "Image/player/will_bow_back_shadow.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_front_shadow", "Image/player/will_bow_front_shadow.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_left_shadow", "Image/player/will_bow_left_shadow.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_right_shadow", "Image/player/will_bow_right_shadow.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left_shadow", "Image/player/will_bow_left_shadow.bmp", 1045, 79, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right_shadow", "Image/player/will_bow_right_shadow.bmp", 935, 80, 10, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_back_damaged2", "Image/player/will_bow_back_damaged2.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_front_damaged2", "Image/player/will_bow_front_damaged2.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_left_damaged2", "Image/player/will_bow_left_damaged2.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_right_damaged2", "Image/player/will_bow_right_damaged2.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left_damaged2", "Image/player/will_bow_left_damaged2.bmp", 1045, 79, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right_damaged2", "Image/player/will_bow_right_damaged2.bmp", 935, 80, 10, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_back_damaged3", "Image/player/will_bow_back_damaged3.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("will_bow_front_damaged3", "Image/player/will_bow_front_damaged3.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_left_damaged3", "Image/player/will_bow_left_damaged3.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
-	_loading->loadFrameImage("will_bow_right_damaged3", "Image/player/will_bow_right_damaged3.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left_damaged3", "Image/player/will_bow_left_damaged3.bmp", 1045, 79, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right_damaged3", "Image/player/will_bow_right_damaged3.bmp", 935, 80, 10, 1, true, RGB(255, 0, 255));
 }
 
 void loadingScene::lysSoundLoading()

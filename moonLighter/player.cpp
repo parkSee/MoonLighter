@@ -81,6 +81,10 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willAttackDamaged[1] = IMAGEMANAGER->findImage("will_shortAttack_Damaged3");
 	willMoneyBag = IMAGEMANAGER->findImage("moneyBag");
 
+	willArrow[UP] = IMAGEMANAGER->findImage("윌_화살위");
+	willArrow[DOWN] = IMAGEMANAGER->findImage("윌_화살아래");
+	willArrow[LEFT] = IMAGEMANAGER->findImage("윌_화살왼쪽");
+	willArrow[RIGHT] = IMAGEMANAGER->findImage("윌_화살오른쪽");
 	willBowAttack[UP] = IMAGEMANAGER->findImage("will_bow_back");
 	willBowAttack[DOWN] = IMAGEMANAGER->findImage("will_bow_front");
 	willBowAttack[LEFT] = IMAGEMANAGER->findImage("will_bow_left");
@@ -125,6 +129,15 @@ HRESULT player::init(string _objName, tagFloat _pos)
 
 	//will->init("Image/will_shop2.bmp", 1800, 2160, 10, 12, true, RGB(255, 0, 255));
 	//_rc = RectMake(pos.x, pos.y, will->getFrameWidth(), will->getFrameHeight());
+
+	for (int i = 0; i < 10; ++i)
+	{
+		_arrow[i].pos.x = 0;
+		_arrow[i].pos.y = 0;
+		_arrow[i].isActive = false;
+		_arrow[i].speed = 5;
+		_arrow[i].rcArrow = RectMakeCenter(0, 0, 2, 2);
+	}
 
 	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);
 	_rcSword = RectMakeCenter(pos.x, pos.y, 100, 100);
@@ -565,7 +578,7 @@ void player::dungeonMove()
 						SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
 					}
 				}
-				if (KEYMANAGER->isOnceKeyDown('W') && _bow)		// 활 공격
+				if (KEYMANAGER->isOnceKeyDown('A') && _bow)		// 활 공격
 				{
 					if (_isAttacking == false && _isRolling == false)
 					{
@@ -666,76 +679,7 @@ void player::dungeonMove()
 			}
 			else if (_isAttacking == true && _knife)    /////////////////////////칼 공격 상태 프레임 업데이트/////////////////////
 			{
-				if (_isUp)
-				{
-					willAttack->setFrameX(_index);
-					willAttack->setFrameY(0);
-					willAttackShadow->setFrameX(_index);
-					willAttackShadow->setFrameY(0);
-					if (2 == _index)
-					{
-						_rcSword = RectMakeCenter(pos.x, pos.y - 20, 100, 50);
-					}
-					else
-					{
-						_rcSword = RectMake(-50, -50, 2, 2);
-					}
-				}
-				else if (_isDown)
-				{
-					willAttack->setFrameX(_index);
-					willAttack->setFrameY(1);
-					willAttackShadow->setFrameX(_index);
-					willAttackShadow->setFrameY(1);
-					if (2 == _index)
-					{
-						_rcSword = RectMakeCenter(pos.x, pos.y + 40, 100, 50);
-					}
-					else
-					{
-						_rcSword = RectMake(-50, -50, 2, 2);
-					}
-				}
-				else if (_isRight)
-				{
-					willAttack->setFrameX(_index);
-					willAttack->setFrameY(2);
-					willAttackShadow->setFrameX(_index);
-					willAttackShadow->setFrameY(2);
-					if (2 == _index)
-					{
-						_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 80, 100);
-					}
-					else
-					{
-						_rcSword = RectMake(-50, -50, 2, 2);
-					}
-				}
-				else if (_isLeft)
-				{
-					willAttack->setFrameX(_index);
-					willAttack->setFrameY(3);
-					willAttackShadow->setFrameX(_index);
-					willAttackShadow->setFrameY(3);
-					if (2 == _index)
-					{
-						_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 80, 100);
-					}
-					else
-					{
-						_rcSword = RectMake(-50, -50, 2, 2);
-					}
-				}
-				if (_count % 6 == 0)
-				{
-					++_index;
-					if (_index > willAttack->getMaxFrameX())
-					{
-						_index = 0;
-						_isAttacking = false;
-						_isIdle = true;
-					}
-				}
+				swordFrameUpdate();
 			}
 			else if (_isAttacking == true && _bow)             /////////////////////////활 공격 상태 프레임 업데이트/////////////////////
 			{
@@ -940,6 +884,7 @@ void player::dungeonMove()
 		}
 		_isWalking = false;
 	}
+	//arrowUpdate();
 }
 void player::willAction()
 {
@@ -998,6 +943,96 @@ void player::othersFrameUpdate(int frameX, int frameY)
 	willDungeonShadow->setFrameY(frameY);
 }
 
+void player::swordFrameUpdate()
+{
+	switch (_dir)
+	{
+		case UP:
+			willAttack->setFrameX(_index);
+			willAttack->setFrameY(0);
+			willAttackShadow->setFrameX(_index);
+			willAttackShadow->setFrameY(0);
+			willAttackDamaged[0]->setFrameX(_index);
+			willAttackDamaged[0]->setFrameY(0);
+			willAttackDamaged[1]->setFrameX(_index);
+			willAttackDamaged[1]->setFrameY(0);
+			if (2 == _index)
+			{
+				_rcSword = RectMakeCenter(pos.x, pos.y - 20, 100, 50);
+			}
+			else
+			{
+				_rcSword = RectMake(-50, -50, 2, 2);
+			}
+			break;
+		case DOWN:
+			willAttack->setFrameX(_index);
+			willAttack->setFrameY(1);
+			willAttackShadow->setFrameX(_index);
+			willAttackShadow->setFrameY(1);
+			willAttackDamaged[0]->setFrameX(_index);
+			willAttackDamaged[0]->setFrameY(1);
+			willAttackDamaged[1]->setFrameX(_index);
+			willAttackDamaged[1]->setFrameY(1);
+			if (2 == _index)
+			{
+				_rcSword = RectMakeCenter(pos.x, pos.y + 40, 100, 50);
+			}
+			else
+			{
+				_rcSword = RectMake(-50, -50, 2, 2);
+			}
+			break;
+		case RIGHT:
+		
+			willAttack->setFrameX(_index);
+			willAttack->setFrameY(2);
+			willAttackShadow->setFrameX(_index);
+			willAttackShadow->setFrameY(2);
+			willAttackDamaged[0]->setFrameX(_index);
+			willAttackDamaged[0]->setFrameY(2);
+			willAttackDamaged[1]->setFrameX(_index);
+			willAttackDamaged[1]->setFrameY(2);
+			if (2 == _index)
+			{
+				_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 80, 100);
+			}
+			else
+			{
+				_rcSword = RectMake(-50, -50, 2, 2);
+			}
+			break;
+		case LEFT:
+			willAttack->setFrameX(_index);
+			willAttack->setFrameY(3);
+			willAttackShadow->setFrameX(_index);
+			willAttackShadow->setFrameY(3);
+			willAttackDamaged[0]->setFrameX(_index);
+			willAttackDamaged[0]->setFrameY(3);
+			willAttackDamaged[1]->setFrameX(_index);
+			willAttackDamaged[1]->setFrameY(3);
+			if (2 == _index)
+			{
+				_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 80, 100);
+			}
+			else
+			{
+				_rcSword = RectMake(-50, -50, 2, 2);
+			}
+			break;
+	}
+	if (_count % 6 == 0)
+	{
+		++_index;
+		if (_index > willAttack->getMaxFrameX())
+		{
+			_index = 0;
+			_isAttacking = false;
+			_isIdle = true;
+		}
+	}	
+}
+
 void player::bowFrameUpdate()
 {
 	willBowAttack[_dir]->setFrameX(_index);
@@ -1008,7 +1043,7 @@ void player::bowFrameUpdate()
 	willBowAttackDamaged[0][_dir]->setFrameY(1);
 	willBowAttackDamaged[1][_dir]->setFrameX(_index);
 	willBowAttackDamaged[1][_dir]->setFrameY(1);
-	if (_count % 7 == 0)
+	if (_count % 4 == 0)
 	{
 		++_index;
 		switch (_dir)
@@ -1053,6 +1088,27 @@ void player::bowFrameUpdate()
 	}
 }
 
+void player::arrowUpdate()
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		if (_arrow[i].isActive)
+		{
+			switch (_arrow[i].dir)
+			{
+				case UP:
+					break;
+				case DOWN:
+					break;
+				case LEFT:
+					break;
+				case RIGHT:
+					break;
+			}
+		}
+	}
+}
+
 void player::attackRender()
 {
 	int _count = (int)(_cntIsHit * 0.1);
@@ -1088,22 +1144,46 @@ void player::attackRender()
 	}
 	else if (_bow)
 	{
+		int addX;
+		int addY;
+
+		switch (_dir)
+		{
+			case UP:
+				addX = 26;
+				addY = 8;
+				break;
+			case DOWN:
+				addX = 30;
+				addY = 28;
+				break;
+			case LEFT:
+				addX = 3;
+				addY = 25;
+				break;
+			case RIGHT:
+				addX = 9;
+				addY = 25;
+				break;
+
+		}
+
 		if (!_isHit)
 		{
-			willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-			willBowAttack[_dir]->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+			willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+			willBowAttack[_dir]->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 		}
 		else
 		{
 			if (_cntIsHit <= 4)
 			{
-				willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-				willBowAttackDamaged[0][_dir]->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+				willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+				willBowAttackDamaged[0][_dir]->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 			}
 			else if (_cntIsHit <= 8)
 			{
-				willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-				willBowAttackDamaged[1][_dir]->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+				willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+				willBowAttackDamaged[1][_dir]->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 			}
 			else if (8 < _cntIsHit && _count % 2 == 1)
 			{
@@ -1111,8 +1191,8 @@ void player::attackRender()
 			}
 			else if (8 < _cntIsHit && _count % 2 == 0)
 			{
-				willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-				willBowAttack[_dir]->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+				willBowAttackShadow[_dir]->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+				willBowAttack[_dir]->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 			}
 		}
 	}
@@ -1233,6 +1313,10 @@ void player::setRevive()
 int player::getAttack()
 {
 	return _attack;
+}
+RECT player::getRcArrow()
+{
+	return RECT();
 }
 void player::enemyCheckCollision()
 {

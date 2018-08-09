@@ -5,7 +5,7 @@
 #include "effect.h"
 #include "enemyController.h"
 
-enum playerDirection 
+enum direction 
 {
 	UP,
 	DOWN,
@@ -13,10 +13,18 @@ enum playerDirection
 	RIGHT
 };
 
+typedef struct tagArrow
+{
+	tagFloat pos;
+	int speed;
+	bool isActive;
+	RECT rcArrow;
+	direction dir;
+} Arrow;
+
 #define WILL_DAMAGED_MAX 3
 
 class inventory;	//csyADD
-
 
 class player : public gameObject
 {
@@ -78,6 +86,7 @@ private:
 	image* willPendant;
 	image* willGoHome;
 	image* willMoneyBag;
+	image* willArrow[4];
 	image* willBowAttack[4];
 	image* willBowAttackShadow[4];
 	image* willBowAttackDamaged[WILL_DAMAGED_MAX - 1][4];
@@ -85,11 +94,6 @@ private:
 	image* shakeHeart;
 	image* number;
 	image* weaponUi;
-	
-	//int _bowCount[4];
-	//int _bowCurrentX[4];
-	//int _bowCurrentY[4];
-	//int _bowBool[4];
 
 	int _UiCount;
 	int _UiCurrentX;
@@ -98,12 +102,12 @@ private:
 
 	bool _knife;
 	bool _bow;
-
+	Arrow _arrow[10];
 
 	image* _pixelImg;
 
 	RECT _rcBody;	
-	RECT _rcSword;	
+	RECT _rcSword;
 	RECT _rcProbe;
 	RECT _cam;
 
@@ -124,7 +128,9 @@ public:
 	void willAction();
 	void willDoSomething();
 	void othersFrameUpdate(int frameX, int frameY);
+	void swordFrameUpdate();
 	void bowFrameUpdate();
+	void arrowUpdate();
 	void attackRender();
 	void noUsePendant();
 	void goHome();
@@ -144,6 +150,7 @@ public:
 	RECT getRcBody() { return _rcBody; }	
 	RECT getRcProbe() { return _rcProbe; }	
 	RECT getRcSword() { return _rcSword;}	
+	RECT getRcArrow();
 	bool getIsRcSwordOn() { return _isRcSwordOn; } 
 	void enemyCheckCollision();
 	void setPlayerMove(bool playermove) { _playerMove = playermove; }
