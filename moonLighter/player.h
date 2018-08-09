@@ -45,7 +45,7 @@ private:
 	int _probeX;
 	int _attCharge;
 	int _damage;
-	playerDirection _dir;
+	direction _dir;
 	tagFloat footPos;
 	float _time;
 	float _speed;
