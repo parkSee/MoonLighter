@@ -48,7 +48,8 @@ public:
 
 	void set_startAIKids(bool go) { _MoveStart = go; }
 	bool get_startAIKids() { return _MoveStart; }
-	
+	bool get_SellToAIKids() { return _isExit; }
+
 	void Frame();
 	void move();
 

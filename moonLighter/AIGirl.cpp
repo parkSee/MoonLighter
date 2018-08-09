@@ -136,7 +136,7 @@ void AIGirl::move()
 			//}
 			if (500 <= _moveCount && _moveCount < 600)
 			{
-				_curState = 3;
+				_curState = 2;
 			}
 			
 		}

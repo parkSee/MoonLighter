@@ -41,6 +41,7 @@ public:
 
 	void set_startAIGirl(bool go) { _MoveStart = go; }
 	bool get_startAIGirl() { return _MoveStart; }
+	bool get_SellToAIGirl() { return _isExit; }
 
 	void Frame();
 	void move();

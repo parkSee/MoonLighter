@@ -39,6 +39,7 @@ public:
 
 	void set_startAILink(bool go) { _MoveStart = go; }
 	bool get_startAILink() { return _MoveStart; }
+	bool get_SellToAILink() { return _isExit; }
 
 	void Frame();
 	void move();

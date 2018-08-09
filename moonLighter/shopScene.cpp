@@ -49,6 +49,8 @@ HRESULT shopScene::init()
 
 	_uiOnDP = IMAGEMANAGER->findImage("ui_DP");
 	_OnDPCount = _OnDPIndex = 0;
+	_register = IMAGEMANAGER->findImage("cash_register");
+	_RGCount = _RGIndex = 0;
 
 	_furniture = new furnitureContainer;
 	_furniture->init();
@@ -213,6 +215,8 @@ void shopScene::render()
 	
 		_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
 	
+		_register->frameRender(getMemDC(), 720 - cam.left, 900 - cam.top);
+
 	_display->render();
 	//RectangleCam(getMemDC(), _enterRc, cam);
 	for (int i = 0; i < 4; i++)
@@ -224,6 +228,28 @@ void shopScene::render()
 		}
 	}
 	
+	if (_aiGirl->get_SellToAIGirl())
+	{
+		if (KEYMANAGER->isOnceKeyDown('9'))
+		{
+			this->RegisterMotion();
+		}
+	}
+	if (_aiLink->get_SellToAILink())
+	{
+		if (KEYMANAGER->isOnceKeyDown('8'))
+		{
+			this->RegisterMotion();
+		}
+	}
+	if (_aiKid->get_SellToAIKids())
+	{
+		if (KEYMANAGER->isOnceKeyDown('7'))
+		{
+			this->RegisterMotion();
+		}
+	}
+
 	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 
@@ -319,5 +345,21 @@ void shopScene::OnDP()
 	}
 
 
+}
+
+void shopScene::RegisterMotion()
+{
+	_RGCount++;
+
+	_register->setFrameX(_RGIndex);
+
+	if (_RGCount % 5 == 0)
+	{
+		++_RGIndex;
+		if (_RGIndex > _register->getMaxFrameX())
+		{
+			_RGIndex = _register->getMaxFrameX();
+		}
+	}
 }
 
