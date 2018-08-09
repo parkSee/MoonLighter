@@ -21,15 +21,15 @@ HRESULT shopScene::init()
 	
 		
 	_aiKid = new AIKids;
-	_aiKid->init("aiKid", tagFloat(650, 1303));
+	_aiKid->init("aiKid", tagFloat(650, 1503));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
 	
 	_aiGirl = new AIGirl;
-	_aiGirl->init("aiGirl", tagFloat(650, 1303));
+	_aiGirl->init("aiGirl", tagFloat(650, 1503));
 	OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
 	
 	_aiLink = new AILink;
-	_aiLink->init("aiGirl", tagFloat(650, 1303));
+	_aiLink->init("aiGirl", tagFloat(650, 1503));
 	OBJECTMANAGER->addObject(objectType::AI, _aiLink);
 	
 	
@@ -208,14 +208,16 @@ void shopScene::render()
 	OBJECTMANAGER->render(getMemDC());
 	IMAGEMANAGER->findImage("shopLayer")->render(getMemDC(), 570 - cam.left, 603 - cam.top);
 	_layer->render(getMemDC(), 558 - cam.left, 1234 - cam.top);
-	
+	IMAGEMANAGER->findImage("shopDownLayer")->render(getMemDC(), 558 - cam.left, 1352 -cam.top);
 	
 		if(_ui && !_button)_buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
 		if(_button)_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
 	
-		_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
+	_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
 	
-		_register->frameRender(getMemDC(), 720 - cam.left, 900 - cam.top);
+	_register->frameRender(getMemDC(), 720 - cam.left, 900 - cam.top);
+				
+
 
 	_display->render();
 	//RectangleCam(getMemDC(), _enterRc, cam);
@@ -226,30 +228,8 @@ void shopScene::render()
 			_uiOnDP->frameRender(getMemDC(), _display->getDisplaySlot()[i].right -cam.left, _display->getDisplaySlot()[i].top -50 - cam.top);
 			this->OnDP();
 		}
-	}
+	}	
 	
-	if (_aiGirl->get_SellToAIGirl())
-	{
-		if (KEYMANAGER->isOnceKeyDown('9'))
-		{
-			this->RegisterMotion();
-		}
-	}
-	if (_aiLink->get_SellToAILink())
-	{
-		if (KEYMANAGER->isOnceKeyDown('8'))
-		{
-			this->RegisterMotion();
-		}
-	}
-	if (_aiKid->get_SellToAIKids())
-	{
-		if (KEYMANAGER->isOnceKeyDown('7'))
-		{
-			this->RegisterMotion();
-		}
-	}
-
 	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 

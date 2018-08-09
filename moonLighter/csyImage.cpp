@@ -20,6 +20,7 @@ void loadingScene::csyImageLoading()
 	_loading->loadFrameImage("cash_register", "./Image/shop_object/cash_register.bmp", 704, 64, 11, 1, true, MAGENTA);
 	_loading->loadFrameImage("visitor_face", "./Image/ai/visitor_face.bmp", 256, 32, 8, 1, true, MAGENTA);
 
+	_loading->loadImage("shopDownLayer", "./Image/shop_object/shopDownLayer.bmp", 184, 88, true, MAGENTA);
 }
 
 void loadingScene::csySoundLoading()

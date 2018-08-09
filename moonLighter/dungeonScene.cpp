@@ -36,8 +36,8 @@ HRESULT dungeonScene::init()
 	CAMERAMANAGER->connectTarget(1920, 1800);
 
 
-	_enterRc[0] = RectMakeCenter(1916, 1455, 50, 50);
-	_enterRc[1] = RectMakeCenter(1912, 1391, 50, 50);
+	_enterRc[0] = RectMakeCenter(1916, 1480, 50, 50);
+	_enterRc[1] = RectMakeCenter(1920, 1370, 50, 50);
 	_enterRc[2] = RectMakeCenter(1341, 1080, 50, 50);
 	_enterRc[3] = RectMakeCenter(1203, 1075, 50, 50);
 	_enterRc[4] = RectMakeCenter(1935, 773, 50, 50);
@@ -109,20 +109,20 @@ void dungeonScene::render()
 	
 
 
-	for (int i = 0; i < 9; ++i)
-	{
-		RectangleCam(getMemDC(), _enterRc[i], cam);
-	}
+	//for (int i = 0; i < 9; ++i)
+	//{
+	//	RectangleCam(getMemDC(), _enterRc[i], cam);
+	//}
 
 
-	char str[128];
-	sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
-	TextOut(getMemDC(), 200, 200, str, strlen(str));
-
-	char str2[128];
-	sprintf(str2, "%f", _cameraDistance);
-	TextOut(getMemDC(), 100, 500, str2, strlen(str2));
-	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
+	//char str[128];
+	//sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
+	//TextOut(getMemDC(), 200, 200, str, strlen(str));
+	//
+	//char str2[128];
+	//sprintf(str2, "%f", _cameraDistance);
+	//TextOut(getMemDC(), 100, 500, str2, strlen(str2));
+	//_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 
 void dungeonScene::moveDungeon()

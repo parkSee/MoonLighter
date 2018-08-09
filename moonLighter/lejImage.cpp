@@ -69,7 +69,12 @@ void loadingScene::lejImageLoading()
 	_loading->loadFrameImage("´ë¹ÌÁöÆùÆ®", "./image/enemy/´ë¹ÌÁöÆùÆ®.bmp", 300, 40, 10, 1);
 	_loading->loadFrameImage("shopDoor", "./image/shop_object/shopDoor.bmp", 900, 139, 6, 1);
 
-	_loading->loadFrameImage("È°ÀïÀÌ", "./image/player/È°ÀïÀÌ.bmp", 950, 72, 10, 1);
+	_loading->loadFrameImage("È°ÀïÀÌ¿ÞÂÊ", "./image/player/È°ÀïÀÌ¿ÞÂÊ.bmp", 950, 72, 10, 1);
+	_loading->loadFrameImage("È°ÀïÀÌ¿À¸¥ÂÊ", "./image/player/È°ÀïÀÌ¿À¸¥ÂÊ.bmp", 850, 73, 10, 1);
+	_loading->loadFrameImage("È°ÀïÀÌÀ§", "./image/player/È°ÀïÀÌÀ§.bmp", 657, 100, 9, 1);
+	_loading->loadFrameImage("È°ÀïÀÌ¾Æ·¡", "./image/player/È°ÀïÀÌ¾Æ·¡.bmp", 603, 87, 9, 1);
+
+	_loading->loadFrameImage("weaponUi", "./image/player/weaponUi.bmp", 800, 231, 4, 1);
 	//_loading->loadFrameImage("»Ð", "./image/enemy/»Ð.bmp", 1150, 110, 10, 1);
 	//IMAGEMANAGER->addFrameImage("»Ð", "./image/enemy/»Ð.bmp", 1150, 110, 10, 1);
 

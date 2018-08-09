@@ -70,13 +70,23 @@ private:
 	image* willPendant;
 	image* willGoHome;
 	image* willMoneyBag;
+	image* willBow[4];
 	image* shakeHeart;
 	image* number;
-	image* _tempImg;
-	int tempCount;
-	int tempCurrentX;
-	int tempCurrentY;
-	int tempBool;
+	image* weaponUi;
+	
+	int _bowCount[4];
+	int _bowCurrentX[4];
+	int _bowCurrentY[4];
+	int _bowBool[4];
+
+	int _UiCount;
+	int _UiCurrentX;
+	int _UiCurrentY;
+	int _UiBool;
+
+	bool _knife;
+	bool _bow;
 
 
 	image* _pixelImg;
