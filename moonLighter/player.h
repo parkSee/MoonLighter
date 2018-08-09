@@ -5,6 +5,13 @@
 #include "effect.h"
 #include "enemyController.h"
 
+enum playerDirection 
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
 
 #define WILL_DAMAGED_MAX 3
 
@@ -30,6 +37,7 @@ private:
 	int _probeX;
 	int _attCharge;
 	int _damage;
+	playerDirection _dir;
 	tagFloat footPos;
 	float _time;
 	float _speed;
@@ -70,15 +78,18 @@ private:
 	image* willPendant;
 	image* willGoHome;
 	image* willMoneyBag;
-	image* willBow[4];
+	image* willBowAttack[4];
+	image* willBowAttackShadow[4];
+	image* willBowAttackDamaged[WILL_DAMAGED_MAX - 1][4];
+
 	image* shakeHeart;
 	image* number;
 	image* weaponUi;
 	
-	int _bowCount[4];
-	int _bowCurrentX[4];
-	int _bowCurrentY[4];
-	int _bowBool[4];
+	//int _bowCount[4];
+	//int _bowCurrentX[4];
+	//int _bowCurrentY[4];
+	//int _bowBool[4];
 
 	int _UiCount;
 	int _UiCurrentX;
@@ -94,6 +105,7 @@ private:
 	RECT _rcBody;	
 	RECT _rcSword;	
 	RECT _rcProbe;
+	RECT _cam;
 
 	progressBar* _hpBar;
 
@@ -112,6 +124,8 @@ public:
 	void willAction();
 	void willDoSomething();
 	void othersFrameUpdate(int frameX, int frameY);
+	void bowFrameUpdate();
+	void attackRender();
 	void noUsePendant();
 	void goHome();
 	void numberUpdate();
@@ -125,6 +139,7 @@ public:
 	void setRevive();
 	void setIsDead(bool isDead) { _isDead = isDead; }
 	bool getIsDead() { return _isDead; }
+	int getAttack();
 	float getSpeed() { return _speed; }		
 	RECT getRcBody() { return _rcBody; }	
 	RECT getRcProbe() { return _rcProbe; }	

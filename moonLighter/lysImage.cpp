@@ -24,6 +24,22 @@ void loadingScene::lysImageLoading()
 	_loading->loadFrameImage("will_dungeon_shadow", "Image/player/will_dungeon_shadow.bmp", 1200, 1560, 10, 13, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("number", "Image/player/number.bmp", 77, 12, 11, 1, true, RGB(255, 0, 255));
 	_loading->loadFrameImage("shakeHeart", "Image/player/shakeHeart.bmp", 1860, 42, 31, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_back", "Image/player/will_bow_back.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_front", "Image/player/will_bow_front.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left", "Image/player/will_bow_left.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right", "Image/player/will_bow_right.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_back_shadow", "Image/player/will_bow_back_shadow.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_front_shadow", "Image/player/will_bow_front_shadow.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left_shadow", "Image/player/will_bow_left_shadow.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right_shadow", "Image/player/will_bow_right_shadow.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_back_damaged2", "Image/player/will_bow_back_damaged2.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_front_damaged2", "Image/player/will_bow_front_damaged2.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left_damaged2", "Image/player/will_bow_left_damaged2.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right_damaged2", "Image/player/will_bow_right_damaged2.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_back_damaged3", "Image/player/will_bow_back_damaged3.bmp", 657, 100, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_front_damaged3", "Image/player/will_bow_front_damaged3.bmp", 603, 87, 9, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_left_damaged3", "Image/player/will_bow_left_damaged3.bmp", 950, 72, 10, 1, true, RGB(255, 0, 255));
+	_loading->loadFrameImage("will_bow_right_damaged3", "Image/player/will_bow_right_damaged3.bmp", 850, 73, 10, 1, true, RGB(255, 0, 255));
 }
 
 void loadingScene::lysSoundLoading()

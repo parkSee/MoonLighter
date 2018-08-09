@@ -122,7 +122,7 @@ void dungeonScene::render()
 	//char str2[128];
 	//sprintf(str2, "%f", _cameraDistance);
 	//TextOut(getMemDC(), 100, 500, str2, strlen(str2));
-	//_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
+	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 
 void dungeonScene::moveDungeon()
