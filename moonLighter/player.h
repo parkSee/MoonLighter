@@ -18,7 +18,7 @@ typedef struct tagArrow
 	tagFloat pos;
 	int speed;
 	bool isActive;
-	RECT rcArrow;
+	RECT rc;
 	direction dir;
 } Arrow;
 
@@ -132,6 +132,7 @@ public:
 	void bowFrameUpdate();
 	void arrowUpdate();
 	void attackRender();
+	void arrowRender();
 	void noUsePendant();
 	void goHome();
 	void numberUpdate();
