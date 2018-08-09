@@ -50,7 +50,7 @@ void npc::render()
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	_img->frameRender(getMemDC(), _pos.x - cam.left, _pos.y - cam.top);
 	
-	RectangleCam(getMemDC(), _talkRc,cam);
+	//RectangleCam(getMemDC(), _talkRc,cam);
 	
 	if (_isCollision)
 	{

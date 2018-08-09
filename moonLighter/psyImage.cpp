@@ -36,7 +36,7 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("bossRoomRedZoon", "./Image/dungeon_object/bossRoomRedZoon.bmp", 3152, 2131);
 
 	//오브젝트
-	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 679, true, RGB(255, 0, 255));
+	_loading->loadImage("build_Retaile", "./Image/town_object/build_Retaile.bmp", 644, 444, true, RGB(255, 0, 255));
 	_loading->loadImage("build_Top1", "./Image/town_object/build_Top1.bmp", 459, 383, true, RGB(255, 0, 255));
 	_loading->loadImage("build_Shop", "./Image/town_object/build_Shop.bmp", 648, 508, true, RGB(255, 0, 255));
 	_loading->loadImage("build_Enchant", "./Image/town_object/build_Enchant.bmp", 597, 766, true, MAGENTA);
@@ -46,6 +46,8 @@ void loadingScene::psyImageLoading()
 	_loading->loadImage("build_Forge", "./Image/town_object/build_Forge.bmp", 640, 483, true, MAGENTA);
 	_loading->loadImage("build_Well", "./Image/town_object/build_Well.bmp", 132, 160, true, MAGENTA);
 	_loading->loadImage("build_Board", "./Image/town_object/build_Board.bmp", 204, 134, true, MAGENTA);
+	_loading->loadImage("build_fountain", "Image/town_object/build_fountain.bmp", 108, 123, true, MAGENTA);
+
 
 	_loading->loadImage("bottomLeftRock", "Image/dungeon_object/dungeonLobby_bottomLeftRock.bmp", 45, 62, true, MAGENTA);
 	_loading->loadImage("bottomRight2Rock", "Image/dungeon_object/dungeonLobby_bottomRight2Rock.bmp", 105, 194, true, MAGENTA);
@@ -63,8 +65,15 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("npc_witch", "./Image/town_object/npc.bmp", 525, 105, 5, 1, true, MAGENTA);
 	_loading->loadFrameImage("talking", "./Image/말하기.bmp", 363, 50, 3, 1, true, MAGENTA);
 	_loading->loadImage("talkBox", "./Image/시영test.bmp", 531, 180, true, MAGENTA);
+
 	_loading->loadFrameImage("npc_요성", "./Image/town_object/forge.bmp", 380, 105, 5, 1, true, MAGENTA);
 	_loading->loadImage("요성_talkBox", "./Image/이요성.bmp", 531, 180, true, MAGENTA);
+
+	_loading->loadFrameImage("npc_응주", "./Image/town_object/응주npc.bmp", 3195, 180, 9, 1, true, MAGENTA);
+	_loading->loadImage("응주_talkBox", "./Image/이응주.bmp", 531, 180, true, MAGENTA);
+
+	_loading->loadFrameImage("npc_수윤", "./Image/town_object/수윤.bmp", 900, 50,18,1, true, MAGENTA);
+	_loading->loadImage("수윤_talkBox", "./Image/채수윤.bmp", 531, 180, true, MAGENTA);
 
 	//AI
 	_loading->loadImage("AiKids", "Image/ai/AiKids.bmp", 600, 400, true, MAGENTA);
