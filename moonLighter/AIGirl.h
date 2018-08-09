@@ -31,6 +31,9 @@ private:
 	display* _dp;
 
 	bool _MoveStart;
+	bool _soldOut;
+
+	int _AICOUNT, _AIINDEX;
 
 public:
 
@@ -41,7 +44,11 @@ public:
 
 	void set_startAIGirl(bool go) { _MoveStart = go; }
 	bool get_startAIGirl() { return _MoveStart; }
+	
 	bool get_SellToAIGirl() { return _isExit; }
+
+	void set_SoldOutAIGirl(bool so) { _soldOut = so; }
+	bool get_SoldOutAIGirl() { return _soldOut; }
 
 	void Frame();
 	void move();

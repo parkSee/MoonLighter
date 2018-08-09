@@ -30,6 +30,9 @@ HRESULT AIGirl::init(string _objName, tagFloat _pos)
 	_buy = false;
 	_pickItem = false;
 	_MoveStart = false;
+	_soldOut = false;
+	_AICOUNT = _AIINDEX = 0;
+
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -87,6 +90,29 @@ void AIGirl::render()
 	char str2[500];
 	sprintf(str2, "%d", _moveCount);
 	TextOut(getMemDC(), 100, 100, str2, strlen(str2));
+
+	
+	//if (_buy && !_soldOut)
+	//{
+	//	IMAGEMANAGER->findImage("visitor_face")->frameRender(getMemDC(), OBJECTMANAGER->findObject(objectType::HOUSE_OBJECT,"display")->rc.right - cam.left, OBJECTMANAGER->findObject(objectType::HOUSE_OBJECT, "display")->rc.top-cam.top);
+	//	
+	//	_AICOUNT++;
+	//	
+	//	if (_AICOUNT % 5 == 0)
+	//	{
+	//		_AIINDEX++;
+	//		if (_AIINDEX > IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX())
+	//		{
+	//			_AIINDEX = IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX();
+	//		}
+	//		
+	//	}
+	//	IMAGEMANAGER->findImage("visitor_face")->setFrameX(_AIINDEX);
+	//}
+	//else
+	//{
+	//
+	//}
 
 }
 
@@ -210,6 +236,7 @@ void AIGirl::move()
 	{
 		if (KEYMANAGER->isOnceKeyDown('7'))
 		{
+			_soldOut = true;
 			_dp->subtractDisplay(2);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);
