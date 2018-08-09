@@ -6,7 +6,7 @@ void loadingScene::psyImageLoading()
 {
 	//Å¸¿î¸Ê
 	_loading->loadImage("map", "./Image/map2.bmp", 3000, 2460);
-	_loading->loadImage("redZone", "./Image/town_object/town_pixel2.bmp", 3000, 2460);
+	_loading->loadImage("redZone", "./Image/town_object/town_pixel3.bmp", 3000, 2460);
 
 	//¼¥
 	_loading->loadImage("shopMap", "./Image/shop_object/shop.bmp", 1122, 1440, true, MAGENTA);

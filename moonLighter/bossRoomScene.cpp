@@ -181,7 +181,6 @@ void bossRoomScene::update()
 	
 
 	
-	
 
 }
 
@@ -198,6 +197,7 @@ void bossRoomScene::render()
 	_blackBg->alphaRender(getMemDC(), _blackBgAlpha);
 	//_test->renderHeight();
 	
+	_player->renderUI();
 }
 
 void bossRoomScene::cloneBoss()

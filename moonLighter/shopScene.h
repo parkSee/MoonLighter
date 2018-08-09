@@ -34,6 +34,7 @@ private:
 	image* _layer;
 	
 	image* _uiOnDP;
+	image* _register;
 
 	display* _display;
 
@@ -48,6 +49,8 @@ private:
 	int _AICount;
 
 	int _OnDPCount, _OnDPIndex;
+
+	int _RGCount, _RGIndex;
 
 	bool _j;
 	bool _button;
@@ -67,6 +70,7 @@ public:
 	void doorFrame();
 	void RdoorFrame();
 	void OnDP();
+	void RegisterMotion();
 
 	shopScene(){}
 	~shopScene(){}
