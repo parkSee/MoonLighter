@@ -122,7 +122,7 @@ void golem::render()
 
 	RECT cam = CAMERAMANAGER->getRenderRc();
 
-	RectangleCam(getMemDC(), _collisionRc, cam);
+	//RectangleCam(getMemDC(), _collisionRc, cam);
 
 	if (_currentHp > 0)
 	{
@@ -855,7 +855,7 @@ void golem::render()
 		_attackRc = RectMakeCenter(pos.x, pos.y + 2000, 50, 50);
 	}
 	
-	RectangleCam(getMemDC(), _attackRc, cam);
+	//RectangleCam(getMemDC(), _attackRc, cam);
 }
 
 void golem::imgRectMake()

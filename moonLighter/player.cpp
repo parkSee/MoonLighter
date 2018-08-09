@@ -53,6 +53,24 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_isAttacking = false;
 	_isRcSwordOn = false;
 	_playerMove = true;
+	_bow = true;
+	_knife = false;
+
+
+	 _UiCount=0;
+	 _UiCurrentX=0;
+	 _UiCurrentY=0;
+	 _UiBool=false;
+
+
+	for (int i = 0; i < 4; i++)
+	{
+		_bowBool[i] = false;
+		_bowCount[i] = 0;
+		_bowCurrentX[i] = 0;
+		_bowCurrentY[i] = 0;
+	}
+
 
 	a = false;
 
@@ -70,6 +88,13 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	willAttackDamaged[0] = IMAGEMANAGER->findImage("will_shortAttack_Damaged2");
 	willAttackDamaged[1] = IMAGEMANAGER->findImage("will_shortAttack_Damaged3");
 	willMoneyBag = IMAGEMANAGER->findImage("moneyBag");
+	willBow[0] = IMAGEMANAGER->findImage("È°ÀïÀÌ¾Æ·¡");
+	willBow[1] = IMAGEMANAGER->findImage("È°ÀïÀÌÀ§");
+	willBow[2] = IMAGEMANAGER->findImage("È°ÀïÀÌ¿ÞÂÊ");
+	willBow[3] = IMAGEMANAGER->findImage("È°ÀïÀÌ¿À¸¥ÂÊ");
+	weaponUi = IMAGEMANAGER->findImage("weaponUi");
+
+	
 
 	shakeHeart = IMAGEMANAGER->findImage("shakeHeart");
 	number = IMAGEMANAGER->findImage("number");
@@ -135,6 +160,118 @@ void player::update(void)
 	this->enemyCheckCollision();
 	_hpBar->update_jyp();
 	numberUpdate();
+
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_bowBool[0] = true;
+	}
+	if (_bowBool[0])
+	{
+		_bowCount[0]++;
+		if (_bowCount[0] % 5 == 0)
+		{
+			_bowCurrentX[0]++;
+		}
+		if (_bowCurrentX[0] > willBow[0]->getMaxFrameX())
+		{
+			_bowCurrentX[0] = 0;
+			_bowBool[0] = false;
+			_bowCount[0] = 0;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_bowBool[1] = true;
+	}
+	if (_bowBool[1])
+	{
+		_bowCount[1]++;
+		if (_bowCount[1] % 5 == 0)
+		{
+			_bowCurrentX[1]++;
+		}
+		if (_bowCurrentX[1] > willBow[1]->getMaxFrameX())
+		{
+			_bowCurrentX[1] = 0;
+			_bowBool[1] = false;
+			_bowCount[1] = 0;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_bowBool[2] = true;
+	}
+	if (_bowBool[2])
+	{
+		_bowCount[2]++;
+		if (_bowCount[2] % 5 == 0)
+		{
+			_bowCurrentX[2]++;
+		}
+		if (_bowCurrentX[2] > willBow[2]->getMaxFrameX())
+		{
+			_bowCurrentX[2] = 0;
+			_bowBool[2] = false;
+			_bowCount[2] = 0;
+		}
+	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_bowBool[3] = true;
+	}
+	if (_bowBool[3])
+	{
+		_bowCount[3]++;
+		if (_bowCount[3] % 5 == 0)
+		{
+			_bowCurrentX[3]++;
+		}
+		if (_bowCurrentX[3] > willBow[3]->getMaxFrameX())
+		{
+			_bowCurrentX[3] = 0;
+			_bowBool[3] = false;
+			_bowCount[3] = 0;
+		}
+	}
+
+	if (KEYMANAGER->isOnceKeyDown('5'))
+	{
+		_UiBool = true;
+	}
+	if (_UiBool)
+	{
+		_UiCount++;
+
+
+		if (_UiCount % 5 == 0 && _knife)
+		{
+			_UiCurrentX++;
+			if (_UiCurrentX > weaponUi->getMaxFrameX())
+			{
+				_UiBool = false;
+				_UiCurrentX = 4;
+				_UiCount = 0;
+				_knife = false;
+				_bow = true;
+			}
+		}
+
+		if (_UiCount % 5 == 0 && _bow)
+		{
+			_UiCurrentX--;
+			if (_UiCurrentX < 0 )
+			{
+				_UiBool = false;
+				_UiCurrentX = 0;
+				_UiCount = 0;
+				_bow = false;
+				_knife = true;
+			}
+		}
+		
+	}
+
+
 }
 
 void player::render(void)
@@ -247,6 +384,12 @@ void player::render(void)
 	{
 		willDamaged[0]->alphaRender(getMemDC(), 100);
 	}
+	if (_bowBool[0])willBow[0]->frameRender(getMemDC(), pos.x-cam.left, pos.y-cam.top, _bowCurrentX[0], _bowCurrentY[0]);
+	if (_bowBool[1])willBow[1]->frameRender(getMemDC(), pos.x-cam.left, pos.y-cam.top, _bowCurrentX[1], _bowCurrentY[1]);
+	if (_bowBool[2])willBow[2]->frameRender(getMemDC(), pos.x-cam.left, pos.y-cam.top, _bowCurrentX[2], _bowCurrentY[2]);
+	if (_bowBool[3])willBow[3]->frameRender(getMemDC(), pos.x-cam.left, pos.y-cam.top, _bowCurrentX[3], _bowCurrentY[3]);
+	weaponUi->frameRender(getMemDC(), 1050, 0, _UiCurrentX, _UiCurrentY);
+
 }
 
 
