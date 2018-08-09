@@ -9,11 +9,13 @@ class objectContainer : public gameNode
 {
 private:
 
-	house * _house[10];
-	tree* _tree[10];
+	house * _house[11];
+	tree* _tree[11];
 
 	npc* _witch;
 	npc* _forge;
+	npc* _merchant;
+	npc* _bird;
 public:
 
 	HRESULT init();
