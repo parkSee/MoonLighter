@@ -75,8 +75,8 @@ void bossRoomScene::update()
 	// csyADD [보스륨 cpp - c누르면 타운씬 넘어간다]
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
-		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("townScene");
+		OBJECTMANAGER->reset();
 		SOUNDMANAGER->stop("bossBGM");
 	}
 
@@ -94,6 +94,7 @@ void bossRoomScene::update()
 		_damaged = true;
 		_dmgCountBool = true;
 		_currentHp -= 20;
+		SOUNDMANAGER->play("slime_hit", 0.5f);
 	}
 
 	
@@ -108,6 +109,7 @@ void bossRoomScene::update()
 			_dmgCountBool = true;
 			_currentHp -= 10;
 			_deadCount++;
+			SOUNDMANAGER->play("slime_hit", 0.5f);
 	
 			if (_deadCount == 2)
 			{
@@ -157,6 +159,8 @@ void bossRoomScene::update()
 			_blackBgAlpha = 0;
 			_currentHp = 300;
 			SCENEMANAGER->loadScene("townScene");
+			OBJECTMANAGER->reset();
+			SOUNDMANAGER->stop("bossBGM");
 			
 		}
 		for (int i = 0; i < _cloneBoss.size(); i++)

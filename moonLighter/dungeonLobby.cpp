@@ -107,7 +107,6 @@ void dungeonLobby::render()
 	RectangleCam(getMemDC(), _returnRc,cam);
 
 	_player->renderUI();
-
 }
 
 void dungeonLobby::willEnterFrame()

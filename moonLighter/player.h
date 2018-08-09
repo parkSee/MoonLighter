@@ -5,11 +5,26 @@
 #include "effect.h"
 #include "enemyController.h"
 
+enum direction 
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
+};
+
+typedef struct tagArrow
+{
+	tagFloat pos;
+	int speed;
+	bool isActive;
+	RECT rcArrow;
+	direction dir;
+} Arrow;
 
 #define WILL_DAMAGED_MAX 3
 
 class inventory;	//csyADD
-
 
 class player : public gameObject
 {
@@ -30,6 +45,7 @@ private:
 	int _probeX;
 	int _attCharge;
 	int _damage;
+	playerDirection _dir;
 	tagFloat footPos;
 	float _time;
 	float _speed;
@@ -70,15 +86,14 @@ private:
 	image* willPendant;
 	image* willGoHome;
 	image* willMoneyBag;
-	image* willBow[4];
+	image* willArrow[4];
+	image* willBowAttack[4];
+	image* willBowAttackShadow[4];
+	image* willBowAttackDamaged[WILL_DAMAGED_MAX - 1][4];
+
 	image* shakeHeart;
 	image* number;
 	image* weaponUi;
-	
-	int _bowCount[4];
-	int _bowCurrentX[4];
-	int _bowCurrentY[4];
-	int _bowBool[4];
 
 	int _UiCount;
 	int _UiCurrentX;
@@ -87,13 +102,14 @@ private:
 
 	bool _knife;
 	bool _bow;
-
+	Arrow _arrow[10];
 
 	image* _pixelImg;
 
 	RECT _rcBody;	
-	RECT _rcSword;	
+	RECT _rcSword;
 	RECT _rcProbe;
+	RECT _cam;
 
 	progressBar* _hpBar;
 
@@ -112,6 +128,10 @@ public:
 	void willAction();
 	void willDoSomething();
 	void othersFrameUpdate(int frameX, int frameY);
+	void swordFrameUpdate();
+	void bowFrameUpdate();
+	void arrowUpdate();
+	void attackRender();
 	void noUsePendant();
 	void goHome();
 	void numberUpdate();
@@ -125,10 +145,12 @@ public:
 	void setRevive();
 	void setIsDead(bool isDead) { _isDead = isDead; }
 	bool getIsDead() { return _isDead; }
+	int getAttack();
 	float getSpeed() { return _speed; }		
 	RECT getRcBody() { return _rcBody; }	
 	RECT getRcProbe() { return _rcProbe; }	
 	RECT getRcSword() { return _rcSword;}	
+	RECT getRcArrow();
 	bool getIsRcSwordOn() { return _isRcSwordOn; } 
 	void enemyCheckCollision();
 	void setPlayerMove(bool playermove) { _playerMove = playermove; }

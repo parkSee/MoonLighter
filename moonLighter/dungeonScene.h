@@ -15,7 +15,14 @@ private:
 	itemManager * _im;
 	enemyController * _em;
 	
+	
 	RECT _enterRc[9];
+	image* _door[9];
+	int _doorCurrentX[9];
+	int _doorCurrentY[9];
+	int _doorCount[9];
+	bool _doorBool[9];
+
 	float _cameraDistance;
 	bool _cameraMove;
 	int _cameraMoveCount;

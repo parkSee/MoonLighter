@@ -46,6 +46,20 @@ HRESULT dungeonScene::init()
 	_enterRc[7] = RectMakeCenter(2618, 346, 50, 50);
 	_enterRc[8] = RectMakeCenter(3760, 360, 50, 50);
 
+	for (int i = 0; i < 9; i++)
+	{
+		_doorCurrentX[i] = 0;
+		_doorCurrentY[i] = 0;
+		_doorCount[i] = 0;
+		_doorBool[i] = false;
+		
+	}
+	_door[0] = IMAGEMANAGER->findImage("door");
+	_door[1] = IMAGEMANAGER->findImage("door아래");
+	_door[2] = IMAGEMANAGER->findImage("door왼쪽");
+	_door[3] = IMAGEMANAGER->findImage("door오른쪽");
+	_door[4] = IMAGEMANAGER->findImage("door");
+	_door[5] = IMAGEMANAGER->findImage("door아래");
 
 	_cameraMove = false;
 	_cameraMoveCount = 0;
@@ -75,6 +89,27 @@ void dungeonScene::update()
 		SOUNDMANAGER->stop("dungeonBGM");
 	}
 
+	if (KEYMANAGER->isOnceKeyDown('1'))
+	{
+		_doorBool[0] = true;
+		
+	}
+
+	
+	if (_doorBool[0])
+	{
+		_doorCount[0]++;
+		if (_doorCount[0] % 7 == 0)
+		{
+			_doorCurrentX[0]++;
+		}
+		if (_doorCurrentX[0] > _door[0]->getMaxFrameX())
+		{
+			_doorCurrentX[0] = _door[0]->getMaxFrameX();
+			_doorCount[0] = 0;
+			_doorBool[0] = false;
+		}
+	}
 	
 	this->moveDungeon();
 	
@@ -87,6 +122,23 @@ void dungeonScene::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
 	IMAGEMANAGER->render("dungeonMap", getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
+	_door[0]->frameRender(getMemDC(), 1840-cam.left, 1440-cam.top,_doorCurrentX[0],_doorCurrentY[0]);
+	_door[1]->frameRender(getMemDC(), 1840 - cam.left, 1345 - cam.top, _doorCurrentX[1], _doorCurrentY[1]);
+	_door[2]->frameRender(getMemDC(), 1281 - cam.left, 1000 - cam.top, _doorCurrentX[2], _doorCurrentY[2]);
+	_door[3]->frameRender(getMemDC(), 1190 - cam.left, 1000 - cam.top, _doorCurrentX[3], _doorCurrentY[3]);
+	_door[4]->frameRender(getMemDC(), 1840 - cam.left, 720 - cam.top, _doorCurrentX[4], _doorCurrentY[4]);
+	_door[5]->frameRender(getMemDC(), 1840 - cam.left, 631 - cam.top, _doorCurrentX[5], _doorCurrentY[5]);
+
+	_enterRc[0] = RectMakeCenter(1916, 1480, 50, 50);
+	_enterRc[1] = RectMakeCenter(1920, 1370, 50, 50);
+	_enterRc[2] = RectMakeCenter(1341, 1080, 50, 50);
+	_enterRc[3] = RectMakeCenter(1203, 1075, 50, 50);
+	_enterRc[4] = RectMakeCenter(1935, 773, 50, 50);
+	_enterRc[5] = RectMakeCenter(1951, 631, 50, 50);
+	_enterRc[6] = RectMakeCenter(2482, 346, 50, 50);
+	_enterRc[7] = RectMakeCenter(2618, 346, 50, 50);
+	_enterRc[8] = RectMakeCenter(3760, 360, 50, 50);
+
 
 	OBJECTMANAGER->render(getMemDC());
 
@@ -115,14 +167,14 @@ void dungeonScene::render()
 	//}
 
 
-	//char str[128];
-	//sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
-	//TextOut(getMemDC(), 200, 200, str, strlen(str));
+	char str[128];
+	sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
+	TextOut(getMemDC(), 200, 200, str, strlen(str));
 	//
 	//char str2[128];
 	//sprintf(str2, "%f", _cameraDistance);
 	//TextOut(getMemDC(), 100, 500, str2, strlen(str2));
-	//_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
+	_player->renderUI(); //csyADD [요성님 이제 이렇게 플레이어 관련 UI 랜더하세요]
 }
 
 void dungeonScene::moveDungeon()
