@@ -63,6 +63,8 @@ void loadingScene::psyImageLoading()
 	_loading->loadFrameImage("npc_witch", "./Image/town_object/npc.bmp", 525, 105, 5, 1, true, MAGENTA);
 	_loading->loadFrameImage("talking", "./Image/말하기.bmp", 363, 50, 3, 1, true, MAGENTA);
 	_loading->loadImage("talkBox", "./Image/시영test.bmp", 531, 180, true, MAGENTA);
+	_loading->loadFrameImage("npc_요성", "./Image/town_object/forge.bmp", 380, 105, 5, 1, true, MAGENTA);
+	_loading->loadImage("요성_talkBox", "./Image/이요성.bmp", 531, 180, true, MAGENTA);
 
 	//AI
 	_loading->loadImage("AiKids", "Image/ai/AiKids.bmp", 600, 400, true, MAGENTA);

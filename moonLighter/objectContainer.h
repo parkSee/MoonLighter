@@ -13,7 +13,7 @@ private:
 	tree* _tree[10];
 
 	npc* _witch;
-
+	npc* _forge;
 public:
 
 	HRESULT init();

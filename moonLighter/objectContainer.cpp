@@ -43,8 +43,12 @@ HRESULT objectContainer::init()
 		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _house[i]);
 		OBJECTMANAGER->addObject(objectType::HOUSE_OBJECT, _tree[i]);
 	}
+	
 	_witch = new npc;
-	_witch->init(tagFloat(337,1867),IMAGEMANAGER->findImage("npc_witch"));
+	_witch->init(tagFloat(337,1867),IMAGEMANAGER->findImage("npc_witch"),IMAGEMANAGER->findImage("talkBox"));
+
+	_forge = new npc;
+	_forge->init(tagFloat(2411, 985), IMAGEMANAGER->findImage("npc_요성"),IMAGEMANAGER->findImage("요성_talkBox"));
 		
 	return S_OK;
 }
@@ -58,6 +62,10 @@ void objectContainer::update()
 {
 	_witch->talkingRECT(RectMake(356, 1983, 70, 70),tagFloat(427,1880),tagFloat(410,1935));
 	_witch->update();
+
+	_forge->talkingRECT(RectMake(2397, 1105, 70, 70), tagFloat(2509, 991), tagFloat(2411, 1000));
+	_forge->update();
+
 }
 
 void objectContainer::render()
@@ -66,5 +74,11 @@ void objectContainer::render()
 	if (_witch->getIstalk() == true)
 	{
 		_witch->talkingRender("살려주세요...허리가 부서질것 같습니다");
+	}
+
+	_forge->render();
+	if (_forge->getIstalk() == true)
+	{
+		_forge->talkingRender("요성 - 부재중 - ");
 	}
 }
