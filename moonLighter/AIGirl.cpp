@@ -92,27 +92,27 @@ void AIGirl::render()
 	TextOut(getMemDC(), 100, 100, str2, strlen(str2));
 
 	
-	//if (_buy && !_soldOut)
-	//{
-	//	IMAGEMANAGER->findImage("visitor_face")->frameRender(getMemDC(), OBJECTMANAGER->findObject(objectType::HOUSE_OBJECT,"display")->rc.right - cam.left, OBJECTMANAGER->findObject(objectType::HOUSE_OBJECT, "display")->rc.top-cam.top);
-	//	
-	//	_AICOUNT++;
-	//	
-	//	if (_AICOUNT % 5 == 0)
-	//	{
-	//		_AIINDEX++;
-	//		if (_AIINDEX > IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX())
-	//		{
-	//			_AIINDEX = IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX();
-	//		}
-	//		
-	//	}
-	//	IMAGEMANAGER->findImage("visitor_face")->setFrameX(_AIINDEX);
-	//}
-	//else
-	//{
-	//
-	//}
+	if (_buy && !_soldOut)
+	{
+		IMAGEMANAGER->findImage("visitor_face")->frameRender(getMemDC(), rc.right - cam.left, rc.top-cam.top);
+		
+		_AICOUNT++;
+		
+		if (_AICOUNT % 5 == 0)
+		{
+			_AIINDEX++;
+			if (_AIINDEX > IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX())
+			{
+				_AIINDEX = IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX();
+			}
+			
+		}
+		IMAGEMANAGER->findImage("visitor_face")->setFrameX(_AIINDEX);
+	}
+	else
+	{
+	
+	}
 
 }
 
@@ -246,6 +246,7 @@ void AIGirl::move()
 			_vDot[4] = tagFloat(650, 1450);
 			_vDot[5] = tagFloat(650, 1550);
 			_currentIndex = 0;
+			_buy = false;
 		}
 	}
 

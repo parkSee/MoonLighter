@@ -50,7 +50,9 @@ HRESULT shopScene::init()
 	_uiOnDP = IMAGEMANAGER->findImage("ui_DP");
 	_OnDPCount = _OnDPIndex = 0;
 	_register = IMAGEMANAGER->findImage("cash_register");
+		
 	_RGCount = _RGIndex = 0;
+	
 
 	_furniture = new furnitureContainer;
 	_furniture->init();
@@ -357,7 +359,6 @@ void shopScene::RegisterMotion()
 {
 	
 	_RGCount++;
-	_register->setFrameX(_RGIndex);
 
 	if (_RGCount % 2 == 0)
 	{
@@ -365,8 +366,11 @@ void shopScene::RegisterMotion()
 		if (_RGIndex > _register->getMaxFrameX())
 		{
 			_RGIndex = _register->getMaxFrameX();
+			_RGCount = 0;
 		}
 
 	}
+	_register->setFrameX(_RGIndex);
 }
+
 
