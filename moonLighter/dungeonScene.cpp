@@ -60,6 +60,9 @@ HRESULT dungeonScene::init()
 	_door[3] = IMAGEMANAGER->findImage("door오른쪽");
 	_door[4] = IMAGEMANAGER->findImage("door");
 	_door[5] = IMAGEMANAGER->findImage("door아래");
+	_door[6] = IMAGEMANAGER->findImage("door오른쪽");
+	_door[7] = IMAGEMANAGER->findImage("door왼쪽");
+	_door[8] = IMAGEMANAGER->findImage("보스입구");
 
 	_cameraMove = false;
 	_cameraMoveCount = 0;
@@ -128,6 +131,9 @@ void dungeonScene::render()
 	_door[3]->frameRender(getMemDC(), 1190 - cam.left, 1000 - cam.top, _doorCurrentX[3], _doorCurrentY[3]);
 	_door[4]->frameRender(getMemDC(), 1840 - cam.left, 720 - cam.top, _doorCurrentX[4], _doorCurrentY[4]);
 	_door[5]->frameRender(getMemDC(), 1840 - cam.left, 625 - cam.top, _doorCurrentX[5], _doorCurrentY[5]);
+	_door[6]->frameRender(getMemDC(), 2455 - cam.left, 280 - cam.top, _doorCurrentX[6], _doorCurrentY[6]);
+	_door[7]->frameRender(getMemDC(), 2570 - cam.left, 280 - cam.top, _doorCurrentX[7], _doorCurrentY[7]);
+	_door[8]->frameRender(getMemDC(), 3680 - cam.left, 250 - cam.top, _doorCurrentX[8], _doorCurrentY[8]);
 
 	_enterRc[0] = RectMakeCenter(1916, 1480, 50, 50);
 	_enterRc[1] = RectMakeCenter(1920, 1370, 50, 50);
