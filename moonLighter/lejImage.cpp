@@ -79,6 +79,7 @@ void loadingScene::lejImageLoading()
 	_loading->loadFrameImage("door¾Æ·¡", "./image/Dungeon/door¾Æ·¡.bmp", 780, 96, 5, 1);
 	_loading->loadFrameImage("door¿ÞÂÊ", "./image/Dungeon/door¿ÞÂÊ.bmp", 480, 156, 5, 1);
 	_loading->loadFrameImage("door¿À¸¥ÂÊ", "./image/Dungeon/door¿À¸¥ÂÊ.bmp", 480, 156, 5, 1);
+	_loading->loadFrameImage("º¸½ºÀÔ±¸", "./image/Dungeon/º¸½ºÀÔ±¸.bmp", 936, 230, 6, 1);
 	//_loading->loadFrameImage("»Ð", "./image/enemy/»Ð.bmp", 1150, 110, 10, 1);
 	//IMAGEMANAGER->addFrameImage("»Ð", "./image/enemy/»Ð.bmp", 1150, 110, 10, 1);
 
