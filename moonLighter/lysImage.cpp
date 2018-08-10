@@ -5,10 +5,10 @@
 
 void loadingScene::lysImageLoading()
 {
-	_loading->loadImage("윌_화살위", "Image/player/화살위.bmp", 10, 51, true, RGB(255, 0, 255));
-	_loading->loadImage("윌_화살아래", "Image/player/화살아래.bmp", 10, 51, true, RGB(255, 0, 255));
-	_loading->loadImage("윌_화살왼쪽", "Image/player/화살왼쪽.bmp", 51, 10, true, RGB(255, 0, 255));
-	_loading->loadImage("윌_화살오른쪽", "Image/player/화살오른쪽.bmp", 51, 10, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살위", "Image/player/화살위.bmp", 10, 52, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살아래", "Image/player/화살아래.bmp", 10, 52, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살왼쪽", "Image/player/화살왼쪽.bmp", 52, 10, true, RGB(255, 0, 255));
+	_loading->loadImage("윌_화살오른쪽", "Image/player/화살오른쪽.bmp", 52, 10, true, RGB(255, 0, 255));
 	_loading->loadImage("will_hpBar", "Image/player/hpBar.bmp", 150, 50, 130, 228, true, RGB(255, 0, 255));
 	_loading->loadImage("will_damaged", "Image/player/will_damaged.bmp", 1280, 720);
 	_loading->loadImage("coin", "Image/player/coin.bmp", 16, 16, true, RGB(255,0,255));
@@ -53,6 +53,7 @@ void loadingScene::lysSoundLoading()
 	_loading->loadSound("will_healed", "./gameSound/will_healed.wav", false, false);
 	_loading->loadSound("will_shortSwordAttack", "./gameSound/will_shortSwordAttack.wav", false, false);
 	_loading->loadSound("will_bowAttack", "./gameSound/will_bowAttack.wav", false, false);
+	_loading->loadSound("will_bowWall", "./gameSound/will_bowWall.wav", false, false);
 	_loading->loadSound("will_roll", "./gameSound/will_roll.wav", false, false);
 	_loading->loadSound("will_step_town_gravel", "./gameSound/will_step_town_gravel.wav", false, false);
 	_loading->loadSound("will_death", "./gameSound/will_death.wav", false, false);

@@ -18,14 +18,19 @@ typedef struct tagArrow
 	tagFloat pos;
 	int speed;
 	bool isActive;
+	bool isHit;
 	RECT rc;
+	RECT rcProbe;
+	int probeX;
+	int probeY;
 	direction dir;
 } Arrow;
 
 #define WILL_DAMAGED_MAX 3
 #define ARROW_MAX 5
-#define ARROW_WIDTH 16
-#define ARROW_HEIGHT 51
+#define ARROW_ADJUST 4
+#define ARROW_WIDTH 18
+#define ARROW_HEIGHT 25
 
 class inventory;	//csyADD
 
@@ -36,8 +41,6 @@ private:
 	int _index;
 	int _count;
 	int _cntFoot;
-	int _cntHp[9];
-	int _cntMoney[4];
 	int _beforeHp;
 	int _cntPendant;
 	int _cntShakeHeart;
@@ -48,7 +51,8 @@ private:
 	int _probeX;
 	int _attCharge;
 	int _damage;
-	char str[16];
+	char strHp[3];
+	char strMoney[16];
 	direction _dir;
 	tagFloat footPos;
 	float _time;
@@ -131,6 +135,7 @@ public:
 	void dungeonMove();
 	void willAction();
 	void willDoSomething();
+	void willWallCollision();
 	void othersFrameUpdate(int frameX, int frameY);
 	void swordFrameUpdate();
 	void bowFrameUpdate();

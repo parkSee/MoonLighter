@@ -10,20 +10,6 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_cntIsHit = 0;
 	_cntShakeHeart = 0;
 	_cntFoot = 0;
-	_cntHp[0] = 0;
-	_cntHp[1] = 0;
-	_cntHp[2] = 0;
-	_cntHp[3] = 0;
-	_cntHp[4] = 10;
-	_cntHp[5] = 0;
-	_cntHp[6] = 0;
-	_cntHp[7] = 0;
-	_cntHp[8] = 0;
-
-	_cntMoney[0] = 0;
-	_cntMoney[1] = 0;
-	_cntMoney[2] = 0;
-	_cntMoney[3] = 0;
 	_index = _count = 0;
 	_cntIsInvincible = 0;
 	_time = 0.0f;
@@ -33,8 +19,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	_acceleration = 2.5f;
 	_attack = 30;
 	_attCharge = 0;
-	_maxHp = 1000;
-	_currentHp = 1000;
+	_maxHp = 700;
+	_currentHp = 700;
 	_beforeHp = _maxHp;
 	_isIdle = true;
 	_isUp = false;
@@ -118,7 +104,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 
 	EFFECTMANAGER->addEffect("¼ô¼ÒµåÀÌÆåÆ®", "will_shortSword1", 0.3f, 20);
 	EFFECTMANAGER->addEffect("¹ßÀÚÃë", "will_foot", 0.6f, 10);
-	EFFECTMANAGER->addEffect("º¸¿ìÀÌÆåÆ®", "will_bow_hit", 0.05f, 20);
+	EFFECTMANAGER->addEffect("º¸¿ìÀÌÆåÆ®", "will_bow_hit", 0.3f, 20);
 
 	_inven = new inventory;
 	_inven->init();
@@ -135,7 +121,10 @@ HRESULT player::init(string _objName, tagFloat _pos)
 	{
 		_arrow[i].pos.x = 0;
 		_arrow[i].pos.y = 0;
+		_arrow[i].probeX = 0;
+		_arrow[i].probeY = 0;
 		_arrow[i].isActive = false;
+		_arrow[i].isHit = false;
 		_arrow[i].speed = 15;
 		_arrow[i].rc = RectMakeCenter(-5, -5, 2, 2);
 	}
@@ -155,8 +144,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 void player::release(void)
 {
 	gameObject::release();
-	_efcShortSword1->release();
-	SAFE_DELETE(_efcShortSword1);
+	//_efcShortSword1->release();
+	//SAFE_DELETE(_efcShortSword1);
 
 	_inven->release();
 }
@@ -349,7 +338,7 @@ void player::dungeonMove()
 					pos.x += _speed;
 					_probeX = pos.x + 20;
 					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.right - _rcProbe.left;
 					for (int i = _probeX; i < _probeX + 15; ++i)
@@ -400,7 +389,7 @@ void player::dungeonMove()
 					pos.x -= _speed;
 					_probeX = pos.x - 20;
 					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.right - _rcProbe.left;
 					for (int i = _probeX; i > _probeX - 15; --i)
@@ -451,7 +440,7 @@ void player::dungeonMove()
 					pos.y -= _speed;
 					_probeX = pos.x;
 					_probeY = pos.y;
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.top - rc.top;
 					for (int i = _probeY; i > _probeY - 15; --i)
@@ -502,7 +491,7 @@ void player::dungeonMove()
 					pos.y += _speed;
 					_probeX = pos.x;
 					_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
-					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() / 2, willDungeon->getFrameHeight());
+					rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
 					_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 					int disTemp = _rcProbe.bottom - rc.bottom;
 					for (int i = _probeY; i < _probeY + 15; ++i)
@@ -580,18 +569,18 @@ void player::dungeonMove()
 				{
 					if (_isAttacking == false && _isRolling == false)
 					{
-						_isEnemyHit = false;
-						_isRcSwordOn = true;
+						//_isEnemyHit = false;
+						//_isRcSwordOn = true;
 						_isAttacking = true;
 						_index = 0;
 						SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
 					}
 				}
-				if (KEYMANAGER->isOnceKeyDown('W') && _bow)		// È° °ø°Ý
+				if (_bow && KEYMANAGER->isOnceKeyDown('W'))		// È° °ø°Ý
 				{
 					if (_isAttacking == false && _isRolling == false)
 					{
-						_isEnemyHit = false;
+						//_isEnemyHit = false;
 						//_isRcBowOn = true;
 						_isAttacking = true;
 						_index = 0;
@@ -600,11 +589,10 @@ void player::dungeonMove()
 				}
 				if (KEYMANAGER->isOnceKeyDown('S'))
 				{
-					SOUNDMANAGER->play("will_healed");
 					_isHit = true;
 					_isShakingHeart = true;
 					_cntShakeHeart = 0;
-					_damage = 100;
+					_damage = 134;
 					_beforeHp = _currentHp;
 					_currentHp -= _damage;
 					_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
@@ -613,8 +601,9 @@ void player::dungeonMove()
 				}
 				if (KEYMANAGER->isOnceKeyDown('D'))
 				{
+					SOUNDMANAGER->play("will_healed");
 					_beforeHp = _currentHp;
-					_currentHp += 100;
+					_currentHp += 234;
 					if (_currentHp >= _maxHp)
 					{
 						_currentHp = _maxHp;
@@ -815,9 +804,6 @@ void player::dungeonMove()
 			}
 		}
 	}
-	rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
-	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);
-	_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
 	/////////////////////////////»óÅÂ ¾÷µ¥ÀÌÆ®//////////////////////////////////
 	if (_isInvincible)
 	{
@@ -903,6 +889,7 @@ void player::willAction()
 	if (_isAutomatic == false)
 	{
 		dungeonMove();
+		willWallCollision();
 	}
 	else
 	{
@@ -947,6 +934,96 @@ void player::willDoSomething()
 		goHome();
 	}
 }
+void player::willWallCollision()
+{
+	
+	if (_dir == UP)
+	{
+		_probeX = pos.x;
+		_probeY = pos.y;
+		rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
+		_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+		int disTemp = _rcProbe.top - rc.top;
+		for (int i = _probeY; i > _probeY - 15; --i)
+		{
+			COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if (r == 255 && g == 0 && b == 0)
+			{
+				pos.y = i + willDungeon->getFrameHeight() * 0.5 - disTemp;
+				break;
+			}
+		}
+	}
+	
+	if (_dir == DOWN)
+	{
+		_probeX = pos.x;
+		_probeY = pos.y + (willDungeon->getFrameHeight() / 4);
+		rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth() , willDungeon->getFrameHeight());
+		_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+		int disTemp = _rcProbe.bottom - rc.bottom;
+		for (int i = _probeY; i < _probeY + 15; ++i)
+		{
+			COLORREF color = GetPixel(_pixelImg->getMemDC(), _probeX, i);
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if (r == 255 && g == 0 && b == 0)
+			{
+				pos.y = i - willDungeon->getFrameHeight() * 0.5 - disTemp;
+				break;
+			}
+		}
+	}
+	else if (_dir == LEFT)
+	{
+		_probeX = pos.x - 20;
+		_probeY = pos.y;
+		rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
+		_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+		int disTemp = _rcProbe.right - _rcProbe.left;
+		for (int i = _probeX; i > _probeX - 15; --i)
+		{
+			COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if (r == 255 && g == 0 && b == 0)
+			{
+				pos.x = i + disTemp;
+				break;
+			}
+		}
+	}
+	else if(_dir == RIGHT)
+	{
+		_probeX = pos.x + 20;
+		_probeY = pos.y;
+		rc = RectMakeCenter(pos.x, pos.y, willDungeon->getFrameWidth(), willDungeon->getFrameHeight());
+		_rcProbe = RectMakeCenter(_probeX, _probeY, 30, 30);
+		int disTemp = _rcProbe.right - _rcProbe.left;
+		for (int i = _probeX; i < _probeX + 15; ++i)
+		{
+			COLORREF color = GetPixel(_pixelImg->getMemDC(), i, _probeY);
+			int r = GetRValue(color);
+			int g = GetGValue(color);
+			int b = GetBValue(color);
+
+			if (r == 255 && g == 0 && b == 0)
+			{
+				pos.x = i - disTemp;
+				break;
+			}
+		}
+	}
+	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);
+}
 void player::othersFrameUpdate(int frameX, int frameY)
 {
 	willDungeon->setFrameX(frameX);
@@ -972,13 +1049,10 @@ void player::swordFrameUpdate()
 			willAttackDamaged[0]->setFrameY(0);
 			willAttackDamaged[1]->setFrameX(_index);
 			willAttackDamaged[1]->setFrameY(0);
-			if (2 == _index)
+			if (2 == _index && !_isEnemyHit)
 			{
+				_isRcSwordOn = true;
 				_rcSword = RectMakeCenter(pos.x, pos.y - 20, 100, 50);
-			}
-			else
-			{
-				_rcSword = RectMake(-50, -50, 2, 2);
 			}
 			break;
 		case DOWN:
@@ -990,13 +1064,10 @@ void player::swordFrameUpdate()
 			willAttackDamaged[0]->setFrameY(1);
 			willAttackDamaged[1]->setFrameX(_index);
 			willAttackDamaged[1]->setFrameY(1);
-			if (2 == _index)
+			if (2 == _index && !_isEnemyHit)
 			{
+				_isRcSwordOn = true;
 				_rcSword = RectMakeCenter(pos.x, pos.y + 40, 100, 50);
-			}
-			else
-			{
-				_rcSword = RectMake(-50, -50, 2, 2);
 			}
 			break;
 		case RIGHT:
@@ -1009,13 +1080,10 @@ void player::swordFrameUpdate()
 			willAttackDamaged[0]->setFrameY(2);
 			willAttackDamaged[1]->setFrameX(_index);
 			willAttackDamaged[1]->setFrameY(2);
-			if (2 == _index)
+			if (2 == _index && !_isEnemyHit)
 			{
+				_isRcSwordOn = true;
 				_rcSword = RectMakeCenter(pos.x + 25, pos.y + 25, 80, 100);
-			}
-			else
-			{
-				_rcSword = RectMake(-50, -50, 2, 2);
 			}
 			break;
 		case LEFT:
@@ -1027,17 +1095,14 @@ void player::swordFrameUpdate()
 			willAttackDamaged[0]->setFrameY(3);
 			willAttackDamaged[1]->setFrameX(_index);
 			willAttackDamaged[1]->setFrameY(3);
-			if (2 == _index)
+			if (2 == _index && !_isEnemyHit)
 			{
+				_isRcSwordOn = true;
 				_rcSword = RectMakeCenter(pos.x - 25, pos.y + 25, 80, 100);
-			}
-			else
-			{
-				_rcSword = RectMake(-50, -50, 2, 2);
 			}
 			break;
 	}
-	if (_count % 7 == 0)
+	if (_count % 5 == 0)
 	{
 		++_index;
 		if (_index > willAttack->getMaxFrameX())
@@ -1129,25 +1194,33 @@ void player::arrowCreate()
 				_arrow[i].dir = UP;
 				_arrow[i].pos.x = pos.x;
 				_arrow[i].pos.y = _rcBody.top - willArrow[UP]->getFrameHeight();
-				_arrow[i].rc = RectMake(_arrow[i].pos.x - (ARROW_WIDTH - willArrow[_dir]->getFrameWidth())*0.5, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+				_arrow[i].rc = RectMake(_arrow[i].pos.x - ARROW_ADJUST, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+				_arrow[i].probeX = (_arrow[i].rc.left + _arrow[i].rc.right) * 0.5;
+				_arrow[i].probeY = _arrow[i].rc.top;
 				break;
 			case DOWN:
 				_arrow[i].dir = DOWN;
 				_arrow[i].pos.x = pos.x;
 				_arrow[i].pos.y = pos.y;
-				_arrow[i].rc = RectMake(_arrow[i].pos.x - (ARROW_WIDTH - willArrow[_dir]->getFrameWidth())*0.5, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+				_arrow[i].rc = RectMake(_arrow[i].pos.x - ARROW_ADJUST, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+				_arrow[i].probeX = (_arrow[i].rc.left + _arrow[i].rc.right) * 0.5;
+				_arrow[i].probeY = _arrow[i].rc.bottom;
 				break;
 			case LEFT:
 				_arrow[i].dir = LEFT;
 				_arrow[i].pos.x = _rcBody.left;
 				_arrow[i].pos.y = pos.y;
-				_arrow[i].rc = RectMake(_arrow[i].pos.x, _arrow[i].pos.y - (ARROW_WIDTH - willArrow[_dir]->getFrameHeight())*0.5, ARROW_HEIGHT, ARROW_WIDTH);
+				_arrow[i].rc = RectMake(_arrow[i].pos.x, _arrow[i].pos.y - ARROW_ADJUST, ARROW_HEIGHT, ARROW_WIDTH);
+				_arrow[i].probeX = _arrow[i].rc.left;
+				_arrow[i].probeY = (_arrow[i].rc.top + _arrow[i].rc.bottom) * 0.5;
 				break;
 			case RIGHT:
 				_arrow[i].dir = RIGHT;
 				_arrow[i].pos.x = pos.x;
 				_arrow[i].pos.y = pos.y;
-				_arrow[i].rc = RectMake(_arrow[i].pos.x, _arrow[i].pos.y - (ARROW_WIDTH - willArrow[_dir]->getFrameHeight())*0.5, ARROW_HEIGHT, ARROW_WIDTH);
+				_arrow[i].rc = RectMake(_arrow[i].pos.x, _arrow[i].pos.y - ARROW_ADJUST, ARROW_HEIGHT, ARROW_WIDTH);
+				_arrow[i].probeX = _arrow[i].rc.right;
+				_arrow[i].probeY = (_arrow[i].rc.top + _arrow[i].rc.bottom) * 0.5;
 				break;
 			}
 			break;
@@ -1165,7 +1238,24 @@ void player::arrowUpdate()
 			{
 				case UP:
 					_arrow[i].pos.y -= _arrow[i].speed;
-					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+					_arrow[i].rc = RectMake(_arrow[i].pos.x - ARROW_ADJUST, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+					_arrow[i].probeX = (_arrow[i].rc.left + _arrow[i].rc.right) * 0.5;
+					_arrow[i].probeY = _arrow[i].rc.top;
+					for (int k = _arrow[i].probeY - 5; k < _arrow[i].probeY + 5; ++k)
+					{
+						COLORREF color = GetPixel(_pixelImg->getMemDC(), _arrow[i].probeX, k);
+						int r = GetRValue(color);
+						int g = GetGValue(color);
+						int b = GetBValue(color);
+
+						if (r == 255 && g == 0 && b == 0)
+						{
+							_arrow[i].isActive = false;
+							_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+							SOUNDMANAGER->play("will_bowWall");
+							break;
+						}
+					}
 					if (_arrow[i].rc.bottom < 0)
 					{
 						_arrow[i].isActive = false;
@@ -1174,7 +1264,24 @@ void player::arrowUpdate()
 					break;
 				case DOWN:
 					_arrow[i].pos.y += _arrow[i].speed;
-					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, ARROW_WIDTH, ARROW_HEIGHT);
+					_arrow[i].rc = RectMake(_arrow[i].pos.x - ARROW_ADJUST, _arrow[i].pos.y + willArrow[DOWN]->getHeight() * 0.5, ARROW_WIDTH, ARROW_HEIGHT);
+					_arrow[i].probeX = (_arrow[i].rc.left + _arrow[i].rc.right) * 0.5;
+					_arrow[i].probeY = _arrow[i].rc.bottom;
+					for (int k = _arrow[i].probeY + 5; k > _arrow[i].probeY - 5; --k)
+					{
+						COLORREF color = GetPixel(_pixelImg->getMemDC(), _arrow[i].probeX, k);
+						int r = GetRValue(color);
+						int g = GetGValue(color);
+						int b = GetBValue(color);
+
+						if (r == 255 && g == 0 && b == 0)
+						{
+							_arrow[i].isActive = false;
+							_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+							SOUNDMANAGER->play("will_bowWall");
+							break;
+						}
+					}
 					if (_arrow[i].rc.top > WINSIZEY + _cam.top )
 					{
 						_arrow[i].isActive = false;
@@ -1183,7 +1290,24 @@ void player::arrowUpdate()
 					break;
 				case LEFT:
 					_arrow[i].pos.x -= _arrow[i].speed;
-					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, ARROW_HEIGHT, ARROW_WIDTH);
+					_arrow[i].rc = RectMake(_arrow[i].pos.x, _arrow[i].pos.y - ARROW_ADJUST, ARROW_HEIGHT, ARROW_WIDTH);
+					_arrow[i].probeX = _arrow[i].rc.left;
+					_arrow[i].probeY = (_arrow[i].rc.top + _arrow[i].rc.bottom) * 0.5;
+					for (int k = _arrow[i].probeX - 5; k < _arrow[i].probeX + 5; ++k)
+					{
+						COLORREF color = GetPixel(_pixelImg->getMemDC(), k, _arrow[i].probeY);
+						int r = GetRValue(color);
+						int g = GetGValue(color);
+						int b = GetBValue(color);
+
+						if (r == 255 && g == 0 && b == 0)
+						{
+							_arrow[i].isActive = false;
+							_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+							SOUNDMANAGER->play("will_bowWall");
+							break;
+						}
+					}
 					if (_arrow[i].rc.right < 0)
 					{
 						_arrow[i].isActive = false;
@@ -1192,7 +1316,24 @@ void player::arrowUpdate()
 					break;
 				case RIGHT:
 					_arrow[i].pos.x += _arrow[i].speed;
-					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, ARROW_HEIGHT, ARROW_WIDTH);
+					_arrow[i].rc = RectMake(_arrow[i].pos.x + willArrow[RIGHT]->getWidth() * 0.5, _arrow[i].pos.y - ARROW_ADJUST, ARROW_HEIGHT, ARROW_WIDTH);
+					_arrow[i].probeX = _arrow[i].rc.right;
+					_arrow[i].probeY = (_arrow[i].rc.top + _arrow[i].rc.bottom) * 0.5;
+					for (int k = _arrow[i].probeX + 5; k > _arrow[i].probeX - 5; --k)
+					{
+						COLORREF color = GetPixel(_pixelImg->getMemDC(), k, _arrow[i].probeY);
+						int r = GetRValue(color);
+						int g = GetGValue(color);
+						int b = GetBValue(color);
+
+						if (r == 255 && g == 0 && b == 0)
+						{
+							_arrow[i].isActive = false;
+							_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+							SOUNDMANAGER->play("will_bowWall");
+							break;
+						}
+					}
 					if (_arrow[i].rc.left > WINSIZEX + _cam.left)
 					{
 						_arrow[i].isActive = false;
@@ -1331,11 +1472,11 @@ void player::arrowRender()
 				break;
 			case DOWN:
 				willArrow[DOWN]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
-				break;
-			case LEFT:
+				break;								
+			case LEFT:								
 				willArrow[LEFT]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
-				break;
-			case RIGHT:
+				break;								
+			case RIGHT:								
 				willArrow[RIGHT]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
 				break;
 			}
@@ -1380,6 +1521,7 @@ void player::goHome()
 }
 void player::numberUpdate()
 {
+	
 	if (_beforeHp > _currentHp)
 	{
 		--_beforeHp;
@@ -1388,16 +1530,7 @@ void player::numberUpdate()
 	{
 		++_beforeHp;
 	}
-	_cntHp[0] = (int)(_beforeHp * 0.001);
-	_cntHp[1] = (int)((_beforeHp % 1000) / 100);
-	_cntHp[2] = (int)((_beforeHp % 100) / 10);
-	_cntHp[3] = _beforeHp % 10;
-
-	_cntHp[5] = (int)(_maxHp * 0.001);
-	_cntHp[6] = (int)((_maxHp % 1000) / 100);
-	_cntHp[7] = (int)((_maxHp % 100) / 10);
-	_cntHp[8] = _maxHp % 10;
-
+	
 	if (_money[0] > _money[1])
 	{
 		--_money[0];
@@ -1406,46 +1539,49 @@ void player::numberUpdate()
 	{
 		++_money[0];
 	}
-	_cntMoney[0] = (int)(_money[0] * 0.001);
-	_cntMoney[1] = (int)((_money[0] % 1000) / 100);
-	_cntMoney[2] = (int)((_money[0] % 100) / 10);
-	_cntMoney[3] = _money[0] % 10;
 }
 void player::numberRender()
 {
 	string _string;
 
-	sprintf(str, "%d", _money[0]);
-
-	for (int i = 0; i < 4; i++)
+	sprintf(strMoney, "%d", _money[0]);
+	for (int i = 0; i < 16; i++)
 	{
-		if (str[i] == '\0') break;
+		if (strMoney[i] == '\0') break;
 
-		_string = str[i];
+		_string = strMoney[i];
 
 		number->frameRender(getMemDC(), 25 + i * 10, 90, atoi(_string.c_str()), 0);
 	}
 
-
-	/*if (_beforeHp >= 1000)
+	sprintf(strHp, "%d", _beforeHp);
+	for (int i = 0; i < 3; ++i)
 	{
-		number->frameRender(getMemDC(), 160, 55, _cntHp[0], 0);
+		_string = strHp[i];
+		if (strHp[1] == '\0')
+		{
+			if (i == 1 || i == 2) continue;
+			number->frameRender(getMemDC(), 190 + (i * 10), 55, atoi(_string.c_str()), 0);
+		}
+		else if (strHp[2] != '\0')
+		{
+			//if (i == 2) continue;
+			number->frameRender(getMemDC(), 170 + (i * 10), 55, atoi(_string.c_str()), 0);
+		}
+		else if (strHp[2] == '\0')
+		{
+			if (i == 2) continue;
+			number->frameRender(getMemDC(), 180 + (i * 10), 55, atoi(_string.c_str()), 0);
+		}
 	}
-	for (int i = 1; i < 9; ++i)
+	number->frameRender(getMemDC(), 200, 55, 10, 0);
+	sprintf(strHp, "%d", _maxHp);
+	for (int i = 0; i < 3; ++i)
 	{
-		number->frameRender(getMemDC(), 160+(i*10), 55, _cntHp[i], 0);
+		if (strHp[i] == '\0') break;
+		_string = strHp[i];
+		number->frameRender(getMemDC(), 210 + (i * 10), 55, atoi(_string.c_str()), 0);
 	}
-	
-	if (_money[0] >= 1000)
-	{
-		number->frameRender(getMemDC(), 25, 90, _cntMoney[0], 0);
-	}
-
-	for (int i = 1; i < 4; ++i)
-	{
-		number->frameRender(getMemDC(), 25 + (i * 10), 90, _cntMoney[i], 0);
-<<<<<<< HEAD
-	}*/
 
 
 	int _curItem[2], _curInven;
@@ -1453,7 +1589,6 @@ void player::numberRender()
 	_curItem[0] = (int)(_curInven / 10);
 	_curItem[1] = (int)(_curInven % 10);
 
-		
 	number->frameRender(getMemDC(), WINSIZEX - 90, WINSIZEY / 2 - 150, _curItem[0], 1);	
 	number->frameRender(getMemDC(), WINSIZEX - 80, WINSIZEY / 2 - 150, _curItem[1], 1);
 	number->frameRender(getMemDC(), WINSIZEX - 70, WINSIZEY / 2 - 150, 10, 1);
@@ -1496,6 +1631,13 @@ void player::enemyCheckCollision()
 {
 	if (_isDead != true)
 	{
+		if (_isEnemyHit && _knife && _isAttacking && _isRcSwordOn)//if (_isEnemyHit && _index == 2 && _isAttacking)
+		{
+			_isEnemyHit = false;
+			_isRcSwordOn = false;
+			_rcSword = RectMake(-50, -50, 2, 2);
+		}
+
 		RECT rcTemp;
 		RECT _camera = CAMERAMANAGER->getRenderRc();
 		vector<gameObject*> _enemyObject[5];
@@ -1528,8 +1670,8 @@ void player::enemyCheckCollision()
 				}
 				if (IntersectRect(&rcTemp, &_rcSword, &rcEnemy) && _isRcSwordOn == true)
 				{
-					CAMERAMANAGER->shakeCamera(1.5f, 0.1);
-					EFFECTMANAGER->play("¼ô¼ÒµåÀÌÆåÆ®", _enemyObject[i][j]->pos.x, _enemyObject[i][j]->pos.y);
+					//CAMERAMANAGER->shakeCamera(1.0f, 0.1);
+					EFFECTMANAGER->play("¼ô¼ÒµåÀÌÆåÆ®", _enemyObject[i][j]->pos.x + (RND->getInt(15) % 2 == 0 ? RND->getFromIntTo(20, 30) : -(RND->getFromIntTo(20, 30))), _enemyObject[i][j]->pos.y + (RND->getInt(15) % 2 == 0 ? RND->getFromIntTo(20, 30) : -(RND->getFromIntTo(20, 30))));
 					_isEnemyHit = true;
 				}
 				for (int k = 0; k < ARROW_MAX; ++k)
@@ -1537,26 +1679,8 @@ void player::enemyCheckCollision()
 					if (!_arrow[k].isActive)continue;
 					if (IntersectRect(&rcTemp, &_arrow[k].rc, &rcEnemy))
 					{
-						CAMERAMANAGER->shakeCamera(2.0f, 0.1);
-						EFFECTMANAGER->play("º¸¿ìÀÌÆåÆ®", _enemyObject[i][j]->pos.x, _enemyObject[i][j]->pos.y);
-						_isEnemyHit = true;
-						_arrow[k].isActive = false;
-					}
-				}
-				if (IntersectRect(&rcTemp, &_rcBody, &rcEnemy))
-				{
-					if (_isInvincible == false)
-					{
-						_isHit = true;
-						_isShakingHeart = true;
-						_cntShakeHeart = 0;
-						_damage = 86;
-						_beforeHp = _currentHp;
-						_currentHp -= _damage;
-						_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
-						_isInvincible = true;
-						SOUNDMANAGER->play("will_damaged", 0.6f);
-						CAMERAMANAGER->shakeCamera(1.5f, 0.1);
+						EFFECTMANAGER->play("º¸¿ìÀÌÆåÆ®", _enemyObject[i][j]->pos.x + (RND->getInt(15) % 2 == 0 ? RND->getFromIntTo(20,30) : -(RND->getFromIntTo(20, 30))), _enemyObject[i][j]->pos.y + (RND->getInt(15) % 2 == 0 ? RND->getFromIntTo(20, 30) : -(RND->getFromIntTo(20, 30))) );
+						_arrow[k].isHit = true;
 					}
 				}
 				if (i == 2)
@@ -1575,10 +1699,25 @@ void player::enemyCheckCollision()
 							_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
 							_isInvincible = true;
 							SOUNDMANAGER->play("will_damaged", 0.6f);
-							CAMERAMANAGER->shakeCamera(5.5f, 0.1);
 						}
 					}
 				}
+				if (IntersectRect(&rcTemp, &_rcBody, &rcEnemy))
+				{
+					if (_isInvincible == false)
+					{
+						_isHit = true;
+						_isShakingHeart = true;
+						_cntShakeHeart = 0;
+						_damage = 86;
+						_beforeHp = _currentHp;
+						_currentHp -= _damage;
+						_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
+						_isInvincible = true;
+						SOUNDMANAGER->play("will_damaged", 0.6f);
+					}
+				}
+				
 				if (i == 3)
 				{
 					RECT rcSword = ((boss*)_enemyObject[i][j])->getAttackRc();
@@ -1595,7 +1734,6 @@ void player::enemyCheckCollision()
 							_hpBar->setGaugeOfDamage(_currentHp, _maxHp, _damage, 1);
 							_isInvincible = true;
 							SOUNDMANAGER->play("will_damaged", 0.6f);
-							CAMERAMANAGER->shakeCamera(5.5f, 0.1);
 						}
 					}
 				}
@@ -1610,10 +1748,16 @@ void player::enemyCheckCollision()
 			_isHit = false;
 			_isAutomatic = true;
 		}
-		if (_isEnemyHit && _index == 2 && _isAttacking)
+		for (int i = 0; i < ARROW_MAX; ++i)
 		{
-			_isRcSwordOn = false;
+			if (_arrow[i].isHit)
+			{
+				_arrow[i].isHit = false;
+				_arrow[i].isActive = false;
+			}
 		}
+			
+		//}
 	}
 	//char str[128];
 	//sprintf_s(str, "%d", a);
