@@ -58,7 +58,7 @@ void dungeonLobby::update()
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("dungeonScene");
+		SCENEMANAGER->loadScene("loadingDungeon");
 		SOUNDMANAGER->stop("townBGM");
 	}
 	RECT temp;
@@ -167,7 +167,7 @@ void dungeonLobby::willEnterFrame()
 				if (_index > IMAGEMANAGER->findImage("dunIntroGoInDungeon")->getMaxFrameX())
 				{
 					OBJECTMANAGER->reset();
-					SCENEMANAGER->loadScene("dungeonScene");
+					SCENEMANAGER->loadScene("loadingDungeon");
 					SOUNDMANAGER->stop("townBGM");
 				}
 			}

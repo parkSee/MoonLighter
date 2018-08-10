@@ -91,7 +91,7 @@ void dungeonScene::update()
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("bossRoomScene");
+		SCENEMANAGER->loadScene("loadingBoss");
 		SOUNDMANAGER->stop("dungeonBGM");
 	}
 
@@ -190,29 +190,7 @@ void dungeonScene::render()
 
 
 	_im->render(getMemDC());
-	//RectangleCam(getMemDC(), upRc, cam);
-	//RectangleCam(getMemDC(), RectMakeCenter(640, 740, 50, 50), cam);
-	//RectangleCam(getMemDC(), RectMakeCenter(640, 690, 50, 50), cam);
-	/*
-	HPEN pen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
-	HPEN oldPen = (HPEN)SelectObject(getMemDC(), pen);
-
-	SelectObject(getMemDC(), GetStockObject(NULL_BRUSH));
-
-	Rectangle(getMemDC(), CAMERAMANAGER->getRenderRc());
-
-
-	SelectObject(getMemDC(), oldPen);
-	DeleteObject(pen);
-	*/
 	
-
-
-	//for (int i = 0; i < 9; ++i)
-	//{
-	//	RectangleCam(getMemDC(), _enterRc[i], cam);
-	//}
-
 
 	char str[128];
 	sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
@@ -371,7 +349,7 @@ void dungeonScene::moveDungeon()
 	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[8]))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("bossRoomScene");
+		SCENEMANAGER->loadScene("loadingBoss");
 		SOUNDMANAGER->stop("dungeonBGM");
 	}
 

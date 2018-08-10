@@ -17,6 +17,14 @@ HRESULT mainGame::init(void)
 	SCENEMANAGER->addScene("dungeonScene", new dungeonScene);
 	SCENEMANAGER->addScene("dungeonLobby", new dungeonLobby);
 	SCENEMANAGER->addScene("bossRoomScene", new bossRoomScene);
+	//로딩 타운
+	SCENEMANAGER->addScene("loadingTown", new loadingTown);
+	//로딩 던전로비
+	SCENEMANAGER->addScene("loadingDungeonLobby", new loadingDungeonLobby);
+	//로딩 던전
+	SCENEMANAGER->addScene("loadingDungeon", new loadingDungeon);
+	//로딩 보스 
+	SCENEMANAGER->addScene("loadingBoss", new loadingBossRoom);
 
 	/*현재씬 설정*/
 	SCENEMANAGER->loadScene("loadingScene");

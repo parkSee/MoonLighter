@@ -260,6 +260,18 @@
     <ClInclude Include="npc.h">
       <Filter>MainGame\Object\NPC</Filter>
     </ClInclude>
+    <ClInclude Include="loadingDungeon.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingTown.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingDungeonLobby.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="loadingBossRoom.h">
+      <Filter>MainGame\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -432,6 +444,18 @@
     </ClCompile>
     <ClCompile Include="npc.cpp">
       <Filter>MainGame\Object\NPC</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingDungeon.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingTown.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingDungeonLobby.cpp">
+      <Filter>MainGame\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="loadingBossRoom.cpp">
+      <Filter>MainGame\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -46,7 +46,7 @@ void townScene::update()
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("dungeonScene");
+		SCENEMANAGER->loadScene("loadingDungeonLobby");
 	}
 	if (KEYMANAGER->isOnceKeyDown('B'))
 	{
@@ -72,7 +72,7 @@ void townScene::update()
 	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterDgInRc))
 	{
 		OBJECTMANAGER->reset();
-		SCENEMANAGER->loadScene("dungeonLobby");
+		SCENEMANAGER->loadScene("loadingDungeonLobby");
 	}
 	else
 	{
@@ -99,19 +99,7 @@ void townScene::render()
 		IMAGEMANAGER->findImage("redZone")->render(getMemDC(), 0, 0, rc.left, rc.top, WINSIZEX, WINSIZEY);
 	}
 
-	//_background->render(getMemDC(), 0, 0, renderRC.left, renderRC.top, WINSIZEX, WINSIZEY);
-
-	/*HPEN pen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
-	HPEN oldPen = (HPEN)SelectObject(getMemDC(), pen);
-
-	SelectObject(getMemDC(), GetStockObject(NULL_BRUSH));
-
-	Rectangle(getMemDC(), CAMERAMANAGER->getRenderRc());
-
-
-	SelectObject(getMemDC(), oldPen);
-	DeleteObject(pen); 
-	*/
+	
 	RECT temp;
 
 

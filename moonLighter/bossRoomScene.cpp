@@ -76,9 +76,9 @@ void bossRoomScene::update()
 	// csyADD [보스륨 cpp - c누르면 타운씬 넘어간다]
 	if (KEYMANAGER->isOnceKeyDown('C'))
 	{
-		SCENEMANAGER->loadScene("townScene");
 		OBJECTMANAGER->reset();
 		SOUNDMANAGER->stop("bossBGM");
+		SCENEMANAGER->loadScene("loadingTown");
 	}
 
 	
@@ -158,8 +158,8 @@ void bossRoomScene::update()
 			//_bgStart = true;
 			_blackBgAlpha = 0;
 			_currentHp = 300;
-			SCENEMANAGER->loadScene("townScene");
 			OBJECTMANAGER->reset();
+			SCENEMANAGER->loadScene("loadingTown");
 			SOUNDMANAGER->stop("bossBGM");
 			
 			

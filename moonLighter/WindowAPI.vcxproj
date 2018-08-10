@@ -177,7 +177,11 @@
     <ClInclude Include="itemManager.h" />
     <ClInclude Include="keyManager.h" />
     <ClInclude Include="loading.h" />
+    <ClInclude Include="loadingBossRoom.h" />
+    <ClInclude Include="loadingDungeon.h" />
+    <ClInclude Include="loadingDungeonLobby.h" />
     <ClInclude Include="loadingScene.h" />
+    <ClInclude Include="loadingTown.h" />
     <ClInclude Include="lobbyContainer.h" />
     <ClInclude Include="mainGame.h" />
     <ClInclude Include="npc.h" />
@@ -235,7 +239,11 @@
     <ClCompile Include="keyManager.cpp" />
     <ClCompile Include="lejImage.cpp" />
     <ClCompile Include="loading.cpp" />
+    <ClCompile Include="loadingBossRoom.cpp" />
+    <ClCompile Include="loadingDungeon.cpp" />
+    <ClCompile Include="loadingDungeonLobby.cpp" />
     <ClCompile Include="loadingScene.cpp" />
+    <ClCompile Include="loadingTown.cpp" />
     <ClCompile Include="lobbyContainer.cpp" />
     <ClCompile Include="lysImage.cpp" />
     <ClCompile Include="mainGame.cpp" />

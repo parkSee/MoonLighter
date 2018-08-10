@@ -5,6 +5,8 @@ HRESULT ui::init()
 {
 
 	_vol = 1.0f;
+	_effectVol = 1.0f;
+
 	SOUNDMANAGER->playBGM("introBGM", _vol);
 
 	_bookImg = IMAGEMANAGER->findImage("optionBook");
@@ -70,7 +72,8 @@ void ui::update()
 		case uiState::SOUNDON:
 		{
 			_currSound = _soundImg[0];
-			SOUNDMANAGER->setVolume(1.0);
+			SOUNDMANAGER->setVolume(_vol);
+			
 			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
 				_state = uiState::SOUNDOFF;
@@ -123,10 +126,13 @@ void ui::update()
 
 			if (KEYMANAGER->isOnceKeyDown(VK_LEFT))
 			{
-				_vol -= 0.1f;
+				if (_vol >= 0.0f)
+					_vol -= 0.1f;
+					
+
 				SOUNDMANAGER->setVolume(_vol);
 
-				for (int i = 9; i > 0; --i)
+				for (int i = 9; i >= 0; --i)
 				{
 					if (_volRect[i].isActive == true)
 					{
@@ -138,7 +144,10 @@ void ui::update()
 			}
 			if (KEYMANAGER->isOnceKeyDown(VK_RIGHT))
 			{
-				_vol += 0.1f;
+				if (_vol < 1.0f)
+					_vol += 0.1f;
+			
+				
 				SOUNDMANAGER->setVolume(_vol);
 
 				for (int i = 0; i < 9; ++i)
@@ -150,6 +159,12 @@ void ui::update()
 
 					}
 				}
+			}
+			if (KEYMANAGER->isOnceKeyDown('Z'))
+			{
+				_currSelect = _selectImg[0];
+				_selecPos = tagInt(365, 365);
+				_state = uiState::SOUNDON;
 			}
 
 
@@ -167,6 +182,14 @@ void ui::update()
 			break;
 		}
 	}
+
+
+	if (KEYMANAGER->isOnceKeyDown('0'))
+	{
+		_effectVol = 0.5f;
+		SOUNDMANAGER->setVolume(_effectVol);
+	}
+
 }
 
 void ui::render()
@@ -197,12 +220,16 @@ void ui::render()
 
 
 
-	char str[128];
-	sprintf_s(str, "x : %d, y : %d", _ptMouse.x, _ptMouse.y);
-	TextOut(getMemDC(), 300, 300, str, strlen(str));
 	//char str[128];
-	//sprintf_s(str, "vol : %f", _vol);
-	//TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
+	//sprintf_s(str, "x : %d, y : %d", _ptMouse.x, _ptMouse.y);
+	//TextOut(getMemDC(), 300, 300, str, strlen(str));
+	char str[128];
+	sprintf_s(str, "effect : %f", _effectVol);
+	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
+
+	char str2[128];
+	sprintf_s(str2, "vol : %f", _vol);
+	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 - 100, str2, strlen(str2));
 
 
 }

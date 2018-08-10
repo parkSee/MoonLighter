@@ -21,6 +21,9 @@ HRESULT startScene::init()
 	_selectImg = IMAGEMANAGER->findImage("select");
 	_selectPos = tagInt(WINSIZEX / 2 - _selectImg->getWidth() / 2, WINSIZEY - 200);
 
+	_ui = new ui;
+	_ui->init();
+	
 	_isOpen = false;
 	_alpha = 0;
 
@@ -31,10 +34,6 @@ HRESULT startScene::init()
 	_player = new player;
 	_player->init("player", tagFloat(0, 0));
 	OBJECTMANAGER->addObject(objectType::PLAYER, _player);
-
-
-	_ui = new ui;
-	_ui->init();
 
 	_display = new display;
 	_display->init();
@@ -69,6 +68,7 @@ void startScene::update()
 			{
 				SOUNDMANAGER->stop("introBGM");
 				SAVEDATA->setVolume(_ui->getVolume());
+				SAVEDATA->setEffectVolume(_ui->getEffectVol());
 				SAVEDATA->set_display(_display);
 				SCENEMANAGER->loadScene("townScene");
 			}

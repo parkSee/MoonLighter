@@ -8,6 +8,11 @@
 #include "dungeonLobby.h"
 #include "bossRoomScene.h"
 #include "player.h"
+#include "loadingDungeon.h"
+#include "loadingDungeonLobby.h"
+#include "loadingTown.h"
+#include "loadingBossRoom.h"
+
 
 
 class mainGame : public gameNode

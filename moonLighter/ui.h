@@ -44,6 +44,7 @@ private:
 	bool _isOn;
 
 	float _vol;
+	float _effectVol;
 
 public:
 
@@ -57,6 +58,9 @@ public:
 
 	float getVolume() { return _vol; }
 	void setVolume(float vol) { _vol = vol; }
+
+	float getEffectVol() { return _effectVol; }
+	void setEffectVol(float _eff) { _effectVol = _eff; }
 
 	ui(){}
 	~ui(){}
