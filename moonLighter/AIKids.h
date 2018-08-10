@@ -41,6 +41,8 @@ private:
 	bool _MoveStart;
 	bool _soldOut;
 
+	int _AICOUNT, _AIINDEX;
+
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);

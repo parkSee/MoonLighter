@@ -50,7 +50,9 @@ HRESULT shopScene::init()
 	_uiOnDP = IMAGEMANAGER->findImage("ui_DP");
 	_OnDPCount = _OnDPIndex = 0;
 	_register = IMAGEMANAGER->findImage("cash_register");
+		
 	_RGCount = _RGIndex = 0;
+	
 
 	_furniture = new furnitureContainer;
 	_furniture->init();
@@ -210,8 +212,12 @@ void shopScene::render()
 	_layer->render(getMemDC(), 558 - cam.left, 1234 - cam.top);
 	IMAGEMANAGER->findImage("shopDownLayer")->render(getMemDC(), 558 - cam.left, 1352 -cam.top);
 	
-		if(_ui && !_button)_buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
-		if(_button)_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
+	if (_ui && !_button) { _buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top); }
+		if (_button)
+		{
+			_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top); 
+			_jButton->render(getMemDC(), 751 + 22 - cam.left, 1160 + 20 - cam.top);
+		}
 	
 	_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
 	
@@ -353,7 +359,6 @@ void shopScene::RegisterMotion()
 {
 	
 	_RGCount++;
-	_register->setFrameX(_RGIndex);
 
 	if (_RGCount % 2 == 0)
 	{
@@ -361,8 +366,11 @@ void shopScene::RegisterMotion()
 		if (_RGIndex > _register->getMaxFrameX())
 		{
 			_RGIndex = _register->getMaxFrameX();
+			_RGCount = 0;
 		}
 
 	}
+	_register->setFrameX(_RGIndex);
 }
+
 

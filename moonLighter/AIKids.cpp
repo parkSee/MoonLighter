@@ -32,6 +32,7 @@ HRESULT AIKids::init(string _objName, tagFloat _pos)
 
 	_MoveStart = false;
 	_soldOut = false;
+	_AICOUNT = _AIINDEX = 0;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -88,6 +89,28 @@ void AIKids::render()
 	char str2[500];
 	sprintf(str2, "%d", _moveCount);
 	TextOut(getMemDC(), 100, 100, str2, strlen(str2));
+
+	if (_buy && !_soldOut)
+	{
+		IMAGEMANAGER->findImage("visitor_face")->frameRender(getMemDC(),rc.right - cam.left, rc.top - cam.top);
+
+		_AICOUNT++;
+
+		if (_AICOUNT % 5 == 0)
+		{
+			_AIINDEX++;
+			if (_AIINDEX > IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX())
+			{
+				_AIINDEX = IMAGEMANAGER->findImage("visitor_face")->getMaxFrameX();
+			}
+
+		}
+		IMAGEMANAGER->findImage("visitor_face")->setFrameX(_AIINDEX);
+	}
+	else
+	{
+
+	}
 
 }
 
@@ -212,6 +235,7 @@ void AIKids::move()
 			_vDot[4] = tagFloat(650, 1450);
 			_vDot[5] = tagFloat(650, 1550);
 			_currentIndex = 0;
+			_buy = false;
 		}
 	}
 
