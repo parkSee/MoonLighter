@@ -135,7 +135,7 @@ HRESULT player::init(string _objName, tagFloat _pos)
 		_arrow[i].pos.x = 0;
 		_arrow[i].pos.y = 0;
 		_arrow[i].isActive = false;
-		_arrow[i].speed = 3;
+		_arrow[i].speed = 15;
 		_arrow[i].rc = RectMakeCenter(-5, -5, 2, 2);
 	}
 
@@ -246,9 +246,9 @@ void player::render(void)
 	//{
 	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - _cam.left, footPos.y - _cam.top, 100);
 	//}
-	if (KEYMANAGER->isToggleKey(VK_F8)) 
+	if (KEYMANAGER->isToggleKey(VK_F8))  //lysADD(카메라 렉트 출력)
 	{
-		for (int i = 0; i < 0; ++i)
+		for (int i = 0; i < 10; ++i)
 		{
 			Rectangle(getMemDC(), _arrow[i].rc.left - _cam.left, _arrow[i].rc.top - _cam.top, _arrow[i].rc.right - _cam.left, _arrow[i].rc.bottom - _cam.top);
 		}
@@ -1152,7 +1152,7 @@ void player::arrowUpdate()
 				case DOWN:
 					_arrow[i].pos.y += _arrow[i].speed;
 					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 10, 51);
-					if (_arrow[i].rc.top > 3000)
+					if (_arrow[i].rc.top > WINSIZEY+CAMERAMANAGER->getRenderRc().top )
 					{
 						_arrow[i].isActive = false;
 						_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
@@ -1170,7 +1170,7 @@ void player::arrowUpdate()
 				case RIGHT:
 					_arrow[i].pos.x += _arrow[i].speed;
 					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 51, 10);
-					if (_arrow[i].rc.left > 3000)
+					if (_arrow[i].rc.left > WINSIZEX + CAMERAMANAGER->getRenderRc().left)
 					{
 						_arrow[i].isActive = false;
 						_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
