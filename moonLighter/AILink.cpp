@@ -30,6 +30,7 @@ HRESULT AILink::init(string _objName, tagFloat _pos)
 	_buy = false;
 	_pickItem = false;
 	_MoveStart = false;
+	_soldOut = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -180,6 +181,7 @@ void AILink::move()
 	{
 		if (KEYMANAGER->isOnceKeyDown('9'))
 		{
+			_soldOut = true;
 			_dp->subtractDisplay(0);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);

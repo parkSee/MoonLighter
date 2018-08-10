@@ -21,15 +21,15 @@ HRESULT shopScene::init()
 	
 		
 	_aiKid = new AIKids;
-	_aiKid->init("aiKid", tagFloat(650, 1503));
+	_aiKid->init("aiKid", tagFloat(650, 1403));
 	OBJECTMANAGER->addObject(objectType::AI, _aiKid);
 	
 	_aiGirl = new AIGirl;
-	_aiGirl->init("aiGirl", tagFloat(650, 1503));
+	_aiGirl->init("aiGirl", tagFloat(650, 1403));
 	OBJECTMANAGER->addObject(objectType::AI, _aiGirl);
 	
 	_aiLink = new AILink;
-	_aiLink->init("aiGirl", tagFloat(650, 1503));
+	_aiLink->init("aiGirl", tagFloat(650, 1403));
 	OBJECTMANAGER->addObject(objectType::AI, _aiLink);
 	
 	
@@ -217,6 +217,28 @@ void shopScene::render()
 	
 	_register->frameRender(getMemDC(), 720 - cam.left, 900 - cam.top);
 				
+	if (_aiGirl->get_SellToAIGirl() == true)
+	{	
+		if (_aiGirl->get_SoldOutAIGirl() == true)
+		{
+			this->RegisterMotion();			
+		}
+	}									  
+	if (_aiKid->get_SellToAIKids() == true)
+	{									  
+		if (_aiKid->get_SoldOutAIkids() == true)
+		{			
+			this->RegisterMotion();			
+		}
+	}									  
+	if (_aiLink->get_SellToAILink() == true)
+	{
+		if (_aiLink->get_SoldOutAILink() == true)
+		{			
+			this->RegisterMotion();			
+		}
+	}
+
 
 
 	_display->render();
@@ -329,17 +351,18 @@ void shopScene::OnDP()
 
 void shopScene::RegisterMotion()
 {
+	
 	_RGCount++;
-
 	_register->setFrameX(_RGIndex);
 
-	if (_RGCount % 5 == 0)
+	if (_RGCount % 2 == 0)
 	{
 		++_RGIndex;
 		if (_RGIndex > _register->getMaxFrameX())
 		{
 			_RGIndex = _register->getMaxFrameX();
 		}
+
 	}
 }
 

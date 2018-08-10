@@ -135,8 +135,8 @@ HRESULT player::init(string _objName, tagFloat _pos)
 		_arrow[i].pos.x = 0;
 		_arrow[i].pos.y = 0;
 		_arrow[i].isActive = false;
-		_arrow[i].speed = 5;
-		_arrow[i].rcArrow = RectMakeCenter(0, 0, 2, 2);
+		_arrow[i].speed = 3;
+		_arrow[i].rc = RectMakeCenter(-5, -5, 2, 2);
 	}
 
 	_rcBody = RectMakeCenter(pos.x, pos.y, 50, 70);
@@ -230,6 +230,8 @@ void player::render(void)
 		{
 			attackRender();
 		}
+		arrowRender();
+		
 	}
 	
 	if (_isGoingHome)
@@ -244,7 +246,13 @@ void player::render(void)
 	//{
 	//	willFoot->frameAlphaRender(getMemDC(), footPos.x - _cam.left, footPos.y - _cam.top, 100);
 	//}
-
+	if (KEYMANAGER->isToggleKey(VK_F8)) 
+	{
+		for (int i = 0; i < 0; ++i)
+		{
+			Rectangle(getMemDC(), _arrow[i].rc.left - _cam.left, _arrow[i].rc.top - _cam.top, _arrow[i].rc.right - _cam.left, _arrow[i].rc.bottom - _cam.top);
+		}
+	}
 	if (KEYMANAGER->isToggleKey(VK_F9))  //lysADD(카메라 렉트 출력)
 	{
 		Rectangle(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, rc.right - _cam.left, rc.bottom - _cam.top);
@@ -578,7 +586,7 @@ void player::dungeonMove()
 						SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
 					}
 				}
-				if (KEYMANAGER->isOnceKeyDown('A') && _bow)		// 활 공격
+				if (KEYMANAGER->isOnceKeyDown('W') && _bow)		// 활 공격
 				{
 					if (_isAttacking == false && _isRolling == false)
 					{
@@ -586,7 +594,42 @@ void player::dungeonMove()
 						//_isRcBowOn = true;
 						_isAttacking = true;
 						_index = 0;
-						SOUNDMANAGER->play("will_shortSwordAttack", 0.7f);
+						SOUNDMANAGER->play("will_bowAttack", 0.7f);
+						for (int i = 0; i < 10; ++i)
+						{
+							if (_arrow[i].isActive == false)
+							{
+								_arrow[i].isActive = true;
+								switch (_dir)
+								{
+									case UP:
+										_arrow[i].dir = UP;
+										_arrow[i].pos.x = pos.x;
+										_arrow[i].pos.y = pos.y;
+										_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 10, 51);
+										break;
+									case DOWN:
+										_arrow[i].dir = DOWN;
+										_arrow[i].pos.x = pos.x;
+										_arrow[i].pos.y = pos.y;
+										_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 10, 51);
+										break;
+									case LEFT:
+										_arrow[i].dir = LEFT;
+										_arrow[i].pos.x = pos.x;
+										_arrow[i].pos.y = pos.y;
+										_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 51, 10);
+										break;
+									case RIGHT:
+										_arrow[i].dir = RIGHT;
+										_arrow[i].pos.x = pos.x;
+										_arrow[i].pos.y = pos.y;
+										_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 51, 10);
+										break;
+								}
+								break;
+							}
+						}		
 					}
 				}
 				if (KEYMANAGER->isOnceKeyDown('S'))
@@ -677,14 +720,15 @@ void player::dungeonMove()
 				}
 				_rcSword = RectMake(-50, -50, 2, 2);    /////////////////////////공격 모션 아닐 때 공격렉트 화면 밖으로
 			}
-			else if (_isAttacking == true && _knife)    /////////////////////////칼 공격 상태 프레임 업데이트/////////////////////
-			{
-				swordFrameUpdate();
-			}
 			else if (_isAttacking == true && _bow)             /////////////////////////활 공격 상태 프레임 업데이트/////////////////////
 			{
 				bowFrameUpdate();
 			}
+			else if (_isAttacking == true && _knife)    /////////////////////////칼 공격 상태 프레임 업데이트/////////////////////
+			{
+				swordFrameUpdate();
+			}
+			
 		}
 	}
 	else
@@ -884,7 +928,7 @@ void player::dungeonMove()
 		}
 		_isWalking = false;
 	}
-	//arrowUpdate();
+	arrowUpdate();
 }
 void player::willAction()
 {
@@ -1021,7 +1065,7 @@ void player::swordFrameUpdate()
 			}
 			break;
 	}
-	if (_count % 6 == 0)
+	if (_count % 7 == 0)
 	{
 		++_index;
 		if (_index > willAttack->getMaxFrameX())
@@ -1097,12 +1141,40 @@ void player::arrowUpdate()
 			switch (_arrow[i].dir)
 			{
 				case UP:
+					_arrow[i].pos.y -= _arrow[i].speed;
+					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 10, 51);
+					if (_arrow[i].rc.bottom < 0)
+					{
+						_arrow[i].isActive = false;
+						_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+					}
 					break;
 				case DOWN:
+					_arrow[i].pos.y += _arrow[i].speed;
+					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 10, 51);
+					if (_arrow[i].rc.top > 3000)
+					{
+						_arrow[i].isActive = false;
+						_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+					}
 					break;
 				case LEFT:
+					_arrow[i].pos.x -= _arrow[i].speed;
+					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 51, 10);
+					if (_arrow[i].rc.right < 0)
+					{
+						_arrow[i].isActive = false;
+						_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+					}
 					break;
 				case RIGHT:
+					_arrow[i].pos.x += _arrow[i].speed;
+					_arrow[i].rc = RectMakeCenter(_arrow[i].pos.x, _arrow[i].pos.y, 51, 10);
+					if (_arrow[i].rc.left > 3000)
+					{
+						_arrow[i].isActive = false;
+						_arrow[i].rc = RectMakeCenter(-50, -50, 2, 2);
+					}
 					break;
 			}
 		}
@@ -1114,22 +1186,44 @@ void player::attackRender()
 	int _count = (int)(_cntIsHit * 0.1);
 	if (_knife)
 	{
+		int addX;
+		int addY;
+
+		switch (_dir)
+		{
+		case UP:
+			addX = -5;
+			addY = -15;
+			break;
+		case DOWN:
+			addX = -5;
+			addY = -5;
+			break;
+		case LEFT:
+			addX = -10;
+			addY = -15;
+			break;
+		case RIGHT:
+			addX = 5;
+			addY = -18;
+			break;
+		}
 		if (!_isHit)
 		{
-			willAttackShadow->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-			willAttack->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+			willAttackShadow->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+			willAttack->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top - _cam.top);
 		}
 		else
 		{
 			if (_cntIsHit <= 4)
 			{
-				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-				willAttackDamaged[0]->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+				willAttackShadow->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+				willAttackDamaged[0]->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 			}
 			else if (_cntIsHit <= 8)
 			{
-				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-				willAttackDamaged[1]->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+				willAttackShadow->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+				willAttackDamaged[1]->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 			}
 			else if (8 < _cntIsHit && _count % 2 == 1)
 			{
@@ -1137,8 +1231,8 @@ void player::attackRender()
 			}
 			else if (8 < _cntIsHit && _count % 2 == 0)
 			{
-				willAttackShadow->frameAlphaRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top, 80);
-				willAttack->frameRender(getMemDC(), rc.left - _cam.left, rc.top - _cam.top);
+				willAttackShadow->frameAlphaRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top, 80);
+				willAttack->frameRender(getMemDC(), rc.left + addX - _cam.left, rc.top + addY - _cam.top);
 			}
 		}
 	}
@@ -1165,7 +1259,6 @@ void player::attackRender()
 				addX = 9;
 				addY = 25;
 				break;
-
 		}
 
 		if (!_isHit)
@@ -1196,7 +1289,31 @@ void player::attackRender()
 			}
 		}
 	}
+}
 
+void player::arrowRender()
+{
+	for (int i = 0; i < 10; ++i)
+	{
+		if (_arrow[i].isActive)
+		{
+			switch (_arrow[i].dir)
+			{
+			case UP:
+				willArrow[UP]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
+				break;
+			case DOWN:
+				willArrow[DOWN]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
+				break;
+			case LEFT:
+				willArrow[LEFT]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
+				break;
+			case RIGHT:
+				willArrow[RIGHT]->render(getMemDC(), _arrow[i].pos.x - _cam.left, _arrow[i].pos.y - _cam.top);
+				break;
+			}
+		}
+	}
 }
 
 void player::noUsePendant()

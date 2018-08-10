@@ -31,6 +31,7 @@ HRESULT AIKids::init(string _objName, tagFloat _pos)
 	_pickItem = false;
 
 	_MoveStart = false;
+	_soldOut = false;
 
 	//===================================  추적 경로 
 	_vDot.assign(6, tagFloat());
@@ -123,21 +124,25 @@ void AIKids::move()
 			}
 			if (200 < _moveCount && _moveCount < 300)
 			{
-				_curState = 1;
+				_curState = 2;
 			}
 			if (300 < _moveCount && _moveCount < 450)
 			{
 				_curState = 1;
 			}
-			if (450 < _moveCount && _moveCount < 600)
+			if (450 < _moveCount && _moveCount < 500)
 			{
 				_curState = 3;
 			}
-			if (600 < _moveCount && _moveCount < 650)
+			if (500 < _moveCount && _moveCount < 650)
+			{
+				_curState = 3;
+			}
+			if (650 < _moveCount && _moveCount < 750)
 			{
 				_curState = 0;
 			}
-			if (650 < _moveCount && _moveCount < 700)
+			if (750 < _moveCount && _moveCount < 900)
 			{
 				_curState = 1;
 			}
@@ -197,6 +202,7 @@ void AIKids::move()
 		
 		if (KEYMANAGER->isOnceKeyDown('8'))
 		{
+			_soldOut = true;
 			_dp->subtractDisplay(1);
 			_curState = 0;
 			_vDot[0] = tagFloat(650, 1045);

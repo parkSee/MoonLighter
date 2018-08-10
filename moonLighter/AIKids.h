@@ -39,6 +39,8 @@ private:
 	bool _pickItem;
 
 	bool _MoveStart;
+	bool _soldOut;
+
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
@@ -48,7 +50,11 @@ public:
 
 	void set_startAIKids(bool go) { _MoveStart = go; }
 	bool get_startAIKids() { return _MoveStart; }
+	
 	bool get_SellToAIKids() { return _isExit; }
+
+	void set_SoldOutAIkids(bool so) { _soldOut = so; }
+	bool get_SoldOutAIkids() { return _soldOut; }
 
 	void Frame();
 	void move();

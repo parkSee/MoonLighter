@@ -30,6 +30,8 @@ private:
 	display* _dp;
 	bool _pickItem;
 	bool _MoveStart;
+	bool _soldOut;
+
 public:
 
 	HRESULT init(string _objName, tagFloat _pos);
@@ -39,7 +41,11 @@ public:
 
 	void set_startAILink(bool go) { _MoveStart = go; }
 	bool get_startAILink() { return _MoveStart; }
+	
 	bool get_SellToAILink() { return _isExit; }
+
+	void set_SoldOutAILink(bool so) {_soldOut = so;}
+	bool get_SoldOutAILink() { return _soldOut; }
 
 	void Frame();
 	void move();
