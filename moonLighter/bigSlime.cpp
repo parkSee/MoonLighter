@@ -7,8 +7,11 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 
 	gameObject::init(_objName, _pos);
 	_bigSlime = IMAGEMANAGER->findImage("큰슬라임");
+	_bigSlimeShadow = IMAGEMANAGER->findImage("큰슬라임그림자");
 	_attackedBigSlime[0] = IMAGEMANAGER->findImage("큰슬라임빨강");
 	_attackedBigSlime[1] = IMAGEMANAGER->findImage("큰슬라임하양");
+	_attackedBigSlimeShadow[0] = IMAGEMANAGER->findImage("큰슬라임빨강그림자");
+	_attackedBigSlimeShadow[1] = IMAGEMANAGER->findImage("큰슬라임하양그림자");
 	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
 	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
@@ -44,6 +47,7 @@ HRESULT bigSlime::init(string _objName, tagFloat _pos)
 	 _isAttacked3 = false;
 	 _jellyAttack = false;
 	 _playerMove = true;
+	 _deadCount = false;
 
 
 	return S_OK;
@@ -89,7 +93,11 @@ void bigSlime::render()
 	_hp->render();
 	if (_currentHp > 0)
 	{
-		if (_noneAttacked)_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
+		if (_noneAttacked)
+		{
+			_bigSlime->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
+			_bigSlimeShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX,_currentY, 80);
+		}
 
 		if (_isAttacked2)
 		{
@@ -103,6 +111,7 @@ void bigSlime::render()
 			}
 			_attackedBigSlime[1]->setFrameX(_currentX);
 			_attackedBigSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
+			_attackedBigSlimeShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY, 80);
 		}
 		if (_isAttacked)
 		{
@@ -116,11 +125,16 @@ void bigSlime::render()
 
 			_attackedBigSlime[0]->setFrameX(_currentX);
 			_attackedBigSlime[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _alpha);
+			_attackedBigSlimeShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY, 80);
 		}
 	}
 	else
 	{
-		if (_noneAttacked)_bigSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+		if (_noneAttacked)
+		{
+			_bigSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top);
+			_bigSlimeShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY, 80);
+		}
 
 		if (_isAttacked3)
 		{
@@ -136,6 +150,7 @@ void bigSlime::render()
 
 			}
 			_attackedBigSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+			_attackedBigSlimeShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY, 80);
 
 		}
 
@@ -153,6 +168,7 @@ void bigSlime::render()
 			}
 
 			_attackedBigSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_attackedBigSlimeShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY, 80);
 		}
 		if (_isAttacked)
 		{
@@ -166,6 +182,7 @@ void bigSlime::render()
 
 
 			_attackedBigSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_attackedBigSlimeShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY, 80);
 		}
 	}
 
@@ -397,6 +414,7 @@ void bigSlime::dead()
 	if (_deadBool && _deadEffectBool == false)
 	{
 		_deadEffectBool = true;
+		_deadCount = true;
 		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
 		SOUNDMANAGER->play("enemy_death", 1.f);
 		OBJECTMANAGER->getItemManager()->appear(itemType::REDCRISTAL, tagFloat(pos.x, pos.y));
@@ -465,5 +483,13 @@ void bigSlime::Attack()
 
 
 
+
+}
+
+bool bigSlime::deadCount()
+{
+
+
+	return _deadCount;
 
 }

@@ -19,9 +19,24 @@ HRESULT boss::init(string _objName, tagFloat _pos)
 	_attackedBoss[6] = IMAGEMANAGER->findImage("보스뒤왼쪽빨강");
 	_attackedBoss[7] = IMAGEMANAGER->findImage("보스뒤왼쪽하양");
 	_boss[4] = IMAGEMANAGER->findImage("보스생성");
+
+	_bossShadow[0] = IMAGEMANAGER->findImage("보스정면왼쪽그림자");
+	_attackedBossShadow[0] = IMAGEMANAGER->findImage("보스정면왼쪽빨강그림자");
+	_attackedBossShadow[1] = IMAGEMANAGER->findImage("보스정면왼쪽하양그림자");
+	_bossShadow[1] = IMAGEMANAGER->findImage("보스정면오른쪽그림자");
+	_attackedBossShadow[2] = IMAGEMANAGER->findImage("보스정면오른쪽빨강그림자");
+	_attackedBossShadow[3] = IMAGEMANAGER->findImage("보스정면오른쪽하양그림자");
+	_bossShadow[2] = IMAGEMANAGER->findImage("보스뒤오른쪽그림자");
+	_attackedBossShadow[4] = IMAGEMANAGER->findImage("보스뒤오른쪽빨강그림자");
+	_attackedBossShadow[5] = IMAGEMANAGER->findImage("보스뒤오른쪽하양그림자");
+	_bossShadow[3] = IMAGEMANAGER->findImage("보스뒤왼쪽그림자");
+	_attackedBossShadow[6] = IMAGEMANAGER->findImage("보스뒤왼쪽빨강그림자");
+	_attackedBossShadow[7] = IMAGEMANAGER->findImage("보스뒤왼쪽하양그림자");
+	_bossShadow[4] = IMAGEMANAGER->findImage("보스생성그림자");
+
 	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
 	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
-	
+	EFFECTMANAGER->addEffect("뿅뿅", "뿅", 0.2f, 20);
 
 	EFFECTMANAGER->addEffect("보스공격이펙트다운오른쪽2", "보스공격이펙트다운오른쪽", 0.2f, 20);
 	EFFECTMANAGER->addEffect("보스공격이펙트다운왼쪽2", "보스공격이펙트다운왼쪽", 0.2f, 1);
@@ -127,6 +142,7 @@ void boss::render()
 {
 
 	RECT cam = CAMERAMANAGER->getRenderRc();
+	//RectangleCam(getMemDC(), _attackRc, cam);
 	//RectangleCam(getMemDC(), _collisionRc, cam);
 	//RectangleCam(getMemDC(), rc, cam);
 
@@ -141,7 +157,7 @@ void boss::render()
 	//	}
 	//}
 
-	RectangleCam(getMemDC(), _collisionRc, cam);
+	//RectangleCam(getMemDC(), _collisionRc, cam);
 	if (_start)
 	{
 		_delayTime2++;
@@ -168,7 +184,8 @@ void boss::render()
 					_delayTime = 0;
 				}
 			}
-			_boss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top, _currentX[4], _currentY[4]);
+			_boss[4]->frameRender(getMemDC(), rc.left - cam.left , rc.top - cam.top, _currentX[4], _currentY[4]);
+			_bossShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[4], _currentY[4],80);
 		}
 	}
 
@@ -182,7 +199,11 @@ void boss::render()
 		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
 			_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
-			if (_noneAttacked)_boss[1]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//오른쪽
+			if (_noneAttacked)
+			{
+				_boss[1]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//오른쪽
+				_bossShadow[1]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1],80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -196,6 +217,7 @@ void boss::render()
 				}
 
 				_attackedBoss[3]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedBossShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1],80);
 			}
 			if (_isAttacked)
 			{
@@ -209,12 +231,18 @@ void boss::render()
 
 
 				_attackedBoss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedBossShadow[2]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
 		{
 			_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
-			if (_noneAttacked)_boss[2]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+			if (_noneAttacked)
+			{
+				_boss[2]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+				_bossShadow[2]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2],80);//오른쪽
+			}
+
 
 			if (_isAttacked2)
 			{
@@ -228,6 +256,7 @@ void boss::render()
 				}
 
 				_attackedBoss[5]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+				_attackedBossShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -241,12 +270,17 @@ void boss::render()
 
 
 				_attackedBoss[4]->frameRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+				_attackedBossShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
 			_rightUp = false; _leftUp = false; _rightDown = false; _leftDown = true;
-			if (_noneAttacked)_boss[0]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);//왼쪽
+			if (_noneAttacked)
+			{
+				_boss[0]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);//왼쪽
+				_bossShadow[0]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -260,6 +294,7 @@ void boss::render()
 				}
 
 				_attackedBoss[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);
+				_attackedBossShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -273,12 +308,17 @@ void boss::render()
 
 
 				_attackedBoss[0]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0]);
+				_attackedBossShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
 		{
 			_rightUp = false; _leftUp = true; _rightDown = false; _leftDown = false;
-			if (_noneAttacked)_boss[3]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//왼쪽
+			if (_noneAttacked)
+			{
+				_boss[3]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//왼쪽
+				_bossShadow[3]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[3], _currentY[3], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -292,6 +332,7 @@ void boss::render()
 				}
 
 				_attackedBoss[7]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+				_attackedBossShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -305,13 +346,18 @@ void boss::render()
 
 
 				_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+				_attackedBossShadow[6]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
 		{
 			_rightUp = false; _leftUp = false; _rightDown = true; _leftDown = false;
 
-			if (_noneAttacked)_boss[1]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);//아래
+			if (_noneAttacked)
+			{
+				_boss[1]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);//아래
+				_bossShadow[1]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -325,6 +371,7 @@ void boss::render()
 				}
 
 				_attackedBoss[3]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);
+				_attackedBossShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -338,6 +385,7 @@ void boss::render()
 
 
 				_attackedBoss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top - cam.top + 5, _currentX[1], _currentY[1]);
+				_attackedBossShadow[2]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 
 			}
 
@@ -348,7 +396,11 @@ void boss::render()
 		{
 			_rightUp = false; _leftUp = false; _rightDown = false; _leftDown = true;
 
-			if (_noneAttacked)_boss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);//아래
+			if (_noneAttacked)
+			{
+				_boss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);//아래
+				_bossShadow[0]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[0], _currentY[0], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -362,6 +414,7 @@ void boss::render()
 				}
 
 				_attackedBoss[1]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
+				_attackedBossShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -375,12 +428,17 @@ void boss::render()
 
 
 				_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
+				_attackedBossShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
 			_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
-			if (_noneAttacked)_boss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//위
+			if (_noneAttacked)
+			{
+				_boss[2]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);//위
+				_bossShadow[2]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[2], _currentY[2], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -394,6 +452,7 @@ void boss::render()
 				}
 
 				_attackedBoss[5]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+				_attackedBossShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -407,12 +466,17 @@ void boss::render()
 
 
 				_attackedBoss[4]->frameRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[2], _currentY[2]);
+				_attackedBossShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
 			_rightUp = true; _leftUp = false; _rightDown = false; _leftDown = false;
-			if (_noneAttacked)_boss[3]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//위
+			if (_noneAttacked)
+			{
+				_boss[3]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);//위
+				_bossShadow[3]->frameAlphaRender(getMemDC(), rc.left - 30 - cam.left, rc.top + 5 - cam.top, _currentX[3], _currentY[3], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -426,6 +490,7 @@ void boss::render()
 				}
 
 				_attackedBoss[7]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+				_attackedBossShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -439,6 +504,7 @@ void boss::render()
 
 
 				_attackedBoss[6]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top + 5 - cam.top, _currentX[3], _currentY[3]);
+				_attackedBossShadow[6]->frameAlphaRender(getMemDC(), rc.left - cam.left - 30, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		//	//char str[128];
@@ -467,24 +533,24 @@ void boss::render()
 	if (_currentX[0] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - 80, pos.y + 50);
+		EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - 130, pos.y + 120);
 	}
 	//_attackedBoss[0]->frameRender(getMemDC(), rc.left - cam.left - 50, rc.top - cam.top + 5, _currentX[0], _currentY[0]);
 	if (_currentX[1] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트다운오른쪽2", pos.x, pos.y + 50);
+		EFFECTMANAGER->play("보스공격이펙트다운오른쪽2", pos.x+50, pos.y + 120);
 	}
 	if (_currentX[2] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트업오른쪽2", pos.x + 30, pos.y + 10);
+		EFFECTMANAGER->play("보스공격이펙트업오른쪽2", pos.x + 130, pos.y + 10);
 
 	}
 	if (_currentX[3] == 10)
 	{
 		//EFFECTMANAGER->play("보스공격이펙트다운왼쪽2", pos.x - cam.left, pos.y - cam.top);
-		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 120, pos.y + 15);
+		EFFECTMANAGER->play("보스공격이펙트업왼쪽2", pos.x - 220, pos.y + 15);
 	}
 
 	if (0 < _dmgImgCount && _dmgImgCount < 30)
@@ -512,28 +578,29 @@ void boss::render()
 	{
 		if (9 < _currentX[0] && _currentX[0] < 30)
 		{
-			_attackRc = RectMakeCenter(pos.x-100, pos.y +20 , 100, 100);
+			_attackRc = RectMakeCenter(pos.x-200, pos.y +170 , 500, 100);
 		}
 
 		if (9 < _currentX[1] && _currentX[0] < 30)
 		{
-			_attackRc = RectMakeCenter(pos.x +20, pos.y+20, 100, 100);
+			_attackRc = RectMakeCenter(pos.x +120, pos.y+170, 500, 100);
 		}
 
 		if (9 < _currentX[2] && _currentX[0] < 30)
 		{
-			_attackRc = RectMakeCenter(pos.x + 20, pos.y-50, 100, 100);
+			_attackRc = RectMakeCenter(pos.x + 120, pos.y-50, 500, 100);
 		}
 
 		if (9 < _currentX[3] && _currentX[0] < 30)
 		{
-			_attackRc = RectMakeCenter(pos.x-100, pos.y - 50, 100, 100);
+			_attackRc = RectMakeCenter(pos.x-200, pos.y - 50, 500, 100);
 		}
 	}
 	else
 	{
 		_attackRc = RectMakeCenter(pos.x, pos.y + 10000, 100, 100);
 	}
+	
 
 	
 
@@ -544,7 +611,7 @@ void boss::imgRectMake()
 	 rc = RectMakeCenter(pos.x, pos.y, _boss[0]->getFrameWidth(), _boss[0]->getFrameHeight());
 	 _dmgFontRc[0] = RectMakeCenter(pos.x - 10+ _dmgImgX, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
 	 _dmgFontRc[1] = RectMakeCenter(pos.x + 20+ _dmgImgX, pos.y + _dmgImgY, _dmgFontTen->getFrameWidth(), _dmgFontTen->getFrameHeight());
-	 _collisionRc = RectMakeCenter(pos.x - 50, pos.y + 10, 80, 100);
+	 _collisionRc = RectMakeCenter(pos.x -30, pos.y + 100, 200, 200);
 	 _detectRect = RectMakeCenter(pos.x, pos.y, 2000, 2000);
 }
 
@@ -639,9 +706,9 @@ void boss::bossAttack()
 {
 	gameObject* _player = OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 
-	distance = getDistance(pos.x-40 , pos.y+10, _player->pos.x, _player->pos.y);
+	distance = getDistance(pos.x -30, pos.y+50, _player->pos.x, _player->pos.y);
 
-	if (distance < 150)
+	if (distance < 200)
 	{
 		_startAttack = true;
 	}

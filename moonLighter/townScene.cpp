@@ -11,6 +11,7 @@ HRESULT townScene::init()
 	_player->setPixelImage(IMAGEMANAGER->findImage("redZone"));
 
 	_enterText = IMAGEMANAGER->findImage("dunIntroShowEnterText");
+	
 	_container = new objectContainer;
 	_container->init();
 

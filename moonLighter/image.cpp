@@ -577,6 +577,58 @@ void image::frameAlphaRender(HDC hdc, int destX, int destY, BYTE alpha)
 	}
 }
 
+
+void image::frameAlphaRender(HDC hdc, int destX, int destY, int currentFrameX, int currentFrameY, BYTE alpha)
+{
+	if (!_blendImage) this->initForAlphaBlend();
+
+	_imageInfo->currentFrameX = currentFrameX;
+	_imageInfo->currentFrameY = currentFrameY;
+	if (currentFrameX > _imageInfo->maxFrameX)
+		_imageInfo->currentFrameX = _imageInfo->maxFrameX;
+	if (currentFrameY > _imageInfo->maxFrameY)
+		_imageInfo->currentFrameY = _imageInfo->maxFrameY;
+
+	// 알파값 초기화
+	_blendFunc.SourceConstantAlpha = alpha;
+
+	if (_isTrans) //배경색 없앤 후 알파블렌딩 할 때
+	{
+		//1. 출력해야 될 화면DC에 그려져 있는 내용을 블렌드이미지에 그린다
+		BitBlt(_blendImage->hMemDC, 0, 0, _imageInfo->width, _imageInfo->height,
+			hdc, destX, destY, SRCCOPY);
+
+		//2. 메모리DC 이미지의 배경을 없앤후 다시 블렌드이미지에 그린다
+		//GdiTransparentBlt : 비트맵의 특정색상을 제외하고 고속복사 해주는 함수
+		GdiTransparentBlt(
+			_blendImage->hMemDC,                    //복사할 장소의 DC
+			0,                        //복사될 좌표 시작점 X
+			0,                        //복사될 좌표 시작점 Y
+			_imageInfo->frameWidth,                                    //복사될 이미지 가로크기
+			_imageInfo->frameHeight,                                //복사될 이미지 세로크기
+			_imageInfo->hMemDC,                                        //복사될 대상 DC
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,        //X축 복사 시작 지점
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,    //Y축 복사 시작 지점
+			_imageInfo->frameWidth,                                    //복사 영역 가로크기
+			_imageInfo->frameHeight,                                //복사 영역 세로크기
+			_transColor);            //복사할때 제외할 색상 (마젠타)
+
+									 //3. 블렌드이미지를 화면에 그린다
+									 // 알파블렌드
+		AlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_blendImage->hMemDC, 0, 0, _imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+	else //원본 이미지 그대로 알파블렌딩 할 때
+	{
+		// 알파블렌드
+		AlphaBlend(hdc, destX, destY, _imageInfo->frameWidth, _imageInfo->frameHeight,
+			_imageInfo->hMemDC,
+			_imageInfo->currentFrameX * _imageInfo->frameWidth,
+			_imageInfo->currentFrameY * _imageInfo->frameHeight,
+			_imageInfo->frameWidth, _imageInfo->frameHeight, _blendFunc);
+	}
+}
+
 void image::frameRender(HDC hdc, int destX, int destY)
 {
 	if (_isTrans) //배경색 없앨꺼냐?

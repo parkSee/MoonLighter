@@ -58,6 +58,8 @@ void bossRoomScene::release()
 void bossRoomScene::update()
 {
 	
+	OBJECTMANAGER->update();
+	
 	if (((boss*)OBJECTMANAGER->findObject(objectType::ENEMY, "boss"))->getStart() == true)
 	{
 		CAMERAMANAGER->connectTarget(((boss*)OBJECTMANAGER->findObject(objectType::ENEMY, "boss"))->pos.x, ((boss*)OBJECTMANAGER->findObject(objectType::ENEMY, "boss"))->pos.y);
@@ -70,7 +72,6 @@ void bossRoomScene::update()
 		CAMERAMANAGER->update();
 	}
 
-	OBJECTMANAGER->update();
 
 	// csyADD [º¸½º·ý cpp - c´©¸£¸é Å¸¿î¾À ³Ñ¾î°£´Ù]
 	if (KEYMANAGER->isOnceKeyDown('C'))
@@ -97,8 +98,6 @@ void bossRoomScene::update()
 		SOUNDMANAGER->play("slime_hit", 0.5f);
 	}
 
-	
-		
 	
 	vector<gameObject*> _cloneBoss = OBJECTMANAGER->findObjects(objectType::ENEMY, "cloneBoss");
 	for (int i = 0; i < _cloneBoss.size(); i++)
@@ -153,6 +152,7 @@ void bossRoomScene::update()
 		_bossRect.bottom = 10000;
 		_bossRect.top = 10000;
 		_blackBgAlpha++;
+		
 		if (_blackBgAlpha == 255)
 		{
 			//_bgStart = true;
@@ -162,12 +162,11 @@ void bossRoomScene::update()
 			OBJECTMANAGER->reset();
 			SOUNDMANAGER->stop("bossBGM");
 			
+			
 		}
 		for (int i = 0; i < _cloneBoss.size(); i++)
 		{
-
-
-			EFFECTMANAGER->play("»Ð»Ð", _cloneBoss[i]->pos.x, _cloneBoss[i]->pos.y);
+			EFFECTMANAGER->play("»Ð»Ð", _cloneBoss[i]->pos.x, _cloneBoss[i]->pos.y+150);
 			SOUNDMANAGER->play("enemy_death", 1.f);
 			_cloneBoss[i]->setIsLive(false);
 			_bgStart = true;
@@ -183,9 +182,6 @@ void bossRoomScene::update()
 		}
 	}
 	
-
-	
-
 }
 
 void bossRoomScene::render()
@@ -226,7 +222,7 @@ void bossRoomScene::removeClone(int index)
 		if (_deadBool[i] == true && _deadEffectBool == false)
 		{
 			
-			EFFECTMANAGER->play("»Ð»Ð", _cloneBoss[index]->pos.x, _cloneBoss[index]->pos.y);
+			EFFECTMANAGER->play("»Ð»Ð", _cloneBoss[index]->pos.x, _cloneBoss[index]->pos.y+150);
 			SOUNDMANAGER->play("enemy_death", 1.f);
 			_cloneBoss[index]->setIsLive(false);
 			

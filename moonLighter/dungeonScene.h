@@ -22,6 +22,7 @@ private:
 	int _doorCurrentY[9];
 	int _doorCount[9];
 	bool _doorBool[9];
+	int _deadCount;
 
 	float _cameraDistance;
 	bool _cameraMove;

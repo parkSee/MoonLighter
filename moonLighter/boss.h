@@ -6,7 +6,9 @@ class boss :public gameObject
 {
 private:
 	image * _boss[5];
+	image* _bossShadow[5];
 	image* _attackedBoss[9];
+	image* _attackedBossShadow[9];
 	progressBar* _hp;
 	int _currentHp;
 

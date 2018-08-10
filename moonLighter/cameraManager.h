@@ -18,6 +18,8 @@ private:
 	float _angle;
 	RECT _renderRc;		//카메라 렉트
 
+	bool _isShaking;
+
 public:
 
 	tagFloat _pos;		//카메라 좌표
@@ -29,6 +31,7 @@ public:
 	void cameraMove();	//카메라 움직임
 
 	void cameraSlideMove(float speed);
+	
 
 	//카메라 타겟 설정, 딜레이 타임이 있다면 예약타겟에넣어둔다
 	void connectTarget(float x, float y, float delayTime = 0.0f);
@@ -40,6 +43,11 @@ public:
 
 	//렌더 렉트 접근자
 	RECT getRenderRc();
+
+	RECT getRenderSourRc();
+	float getSX() { return _shakePos.x; }
+	float getSY() { return _shakePos.y; }
+
 	void setNullTarget(int x, int y, int width, int height)
 	{
 		_pos.x = x;

@@ -16,6 +16,7 @@ HRESULT cameraManager::init()
 	_shakeTimer = 0;
 	
 	_isShake = false;
+	_isShaking = false;
 	_shakePos = tagFloat(0, 0);
 	_shakeTimer = 0;
 	_shakeStrenth = 0;
@@ -139,8 +140,10 @@ void cameraManager::cameraSlideMove(float speed)
 		_pos.y = _mapSize.y - WINSIZEY / 2;
 		_target.y = _pos.y;
 	}
+
 	if (_isShake)
 	{
+		
 		static int dir = 1;
 
 		_shakeTimer -= TIMEMANAGER->getElapedTime();
@@ -156,6 +159,7 @@ void cameraManager::cameraSlideMove(float speed)
 			_shakePos = tagFloat(0, 0);
 			_shakeTimer = 0;
 		}
+		
 	}
 
 	_renderRc = RectMakeCenter(_pos.x, _pos.y, WINSIZEX, WINSIZEY);
@@ -177,6 +181,13 @@ RECT cameraManager::getRenderRc()
 	return _renderRc;
 }
 
+RECT cameraManager::getRenderSourRc()
+{
+	_renderRc = RectMakeCenter(_pos.x, _pos.y, WINSIZEX, WINSIZEY);
+
+	return _renderRc;
+}
+
 void cameraManager::savePosition()
 {
 	_savePos.x = _pos.x;
@@ -189,5 +200,6 @@ void cameraManager::shakeCamera(float strenth, float time)
 	_shakeTimer = time;
 	_isShake = true;
 	_shakeStrenth = strenth;
+	
 
 }
