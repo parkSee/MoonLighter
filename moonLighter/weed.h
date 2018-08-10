@@ -7,7 +7,9 @@ class weed : public gameObject
 {
 private:
 	image * _weed;
+	image* _weedShadow;
 	image* _attackedWeed[2];
+	image* _attackedWeedShadow[2];
 	image* _dmgFontTen;
 	image* _dmgFontOne;
 	RECT _dmgFontRc[2];

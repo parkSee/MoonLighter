@@ -8,7 +8,9 @@ class golem : public gameObject
 private:
 	//lejADD [°ñ·½ Å¬·¡½º »ý¼º]
 	image * _golem[4];
+	image * _golemShadow[4];
 	image* _attackedGolem[8];
+	image* _attackedGolemShadow[8];
 	progressBar* _hp;
 	int _currentHp;
 	RECT _attackRc;

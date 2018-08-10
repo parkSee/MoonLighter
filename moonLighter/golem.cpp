@@ -18,7 +18,20 @@ HRESULT golem::init(string _objName, tagFloat _pos)
 	_attackedGolem[6] = IMAGEMANAGER->findImage("뒤쪽맞는빨강");
 	_attackedGolem[7] = IMAGEMANAGER->findImage("뒤쪽맞는하양");
 
-	EFFECTMANAGER->addEffect("뿅뿅", "뿅", 0.2f, 20);
+	_golemShadow[0] = IMAGEMANAGER->findImage("골렘정면그림자");
+	_attackedGolemShadow[0] = IMAGEMANAGER->findImage("정면맞는빨강그림자");
+	_attackedGolemShadow[1] = IMAGEMANAGER->findImage("정면맞는하양그림자");
+	_golemShadow[1] = IMAGEMANAGER->findImage("골렘왼쪽그림자");
+	_attackedGolemShadow[2] = IMAGEMANAGER->findImage("왼쪽맞는빨강그림자");
+	_attackedGolemShadow[3] = IMAGEMANAGER->findImage("왼쪽맞는하양그림자");
+	_golemShadow[2] = IMAGEMANAGER->findImage("골렘오른쪽그림자");
+	_attackedGolemShadow[4] = IMAGEMANAGER->findImage("오른쪽맞는빨강그림자");
+	_attackedGolemShadow[5] = IMAGEMANAGER->findImage("오른쪽맞는하양그림자");
+	_golemShadow[3] = IMAGEMANAGER->findImage("골렘뒤쪽그림자");
+	_attackedGolemShadow[6] = IMAGEMANAGER->findImage("뒤쪽맞는빨강그림자");
+	_attackedGolemShadow[7] = IMAGEMANAGER->findImage("뒤쪽맞는하양그림자");
+
+	
 
 	_hp = new progressBar;
 	_hp->init("빨간체력바", "체력껍데기", pos.x, pos.y, 73, 8);
@@ -129,7 +142,11 @@ void golem::render()
 		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = true; _left = false; _down = false; _up = false;
-			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+			if (_noneAttacked)
+			{
+				_golem[2]->frameRender(getMemDC(), (rc.left + 6) - cam.left,( rc.top - 9) - cam.top, _currentX[2], _currentY[2]);//오른쪽
+				_golemShadow[2]->frameAlphaRender(getMemDC(), (rc.left + 6) - cam.left,(rc.top - 9) - cam.top, _currentX[2], _currentY[2],80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -143,6 +160,7 @@ void golem::render()
 				}
 
 				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 			if (_isAttacked)
 			{
@@ -156,12 +174,17 @@ void golem::render()
 
 
 				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 		}
 		if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = true; _left = false; _down = false; _up = false;
-			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+			if (_noneAttacked)
+			{
+				_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+				_golemShadow[2]->frameAlphaRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -175,6 +198,7 @@ void golem::render()
 				}
 
 				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 			if (_isAttacked)
 			{
@@ -188,12 +212,17 @@ void golem::render()
 
 
 				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 		}
 		if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = false; _left = true; _down = false; _up = false;
-			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+			if (_noneAttacked)
+			{
+				_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+				_golemShadow[1]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -207,6 +236,7 @@ void golem::render()
 				}
 
 				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -220,12 +250,17 @@ void golem::render()
 
 
 				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[2]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = false; _left = true; _down = false; _up = false;
-			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+			if (_noneAttacked)
+			{
+				_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+				_golemShadow[1]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -239,6 +274,7 @@ void golem::render()
 				}
 
 				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -252,13 +288,18 @@ void golem::render()
 
 
 				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[2]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
 		{
 			_right = false; _left = false; _down = true; _up = false;
 
-			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+			if (_noneAttacked)
+			{
+				_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+				_golemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -272,6 +313,7 @@ void golem::render()
 				}
 
 				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 			}
 			if (_isAttacked)
 			{
@@ -285,6 +327,7 @@ void golem::render()
 
 
 				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 
 			}
 
@@ -295,7 +338,11 @@ void golem::render()
 		{
 			_right = false; _left = false; _down = true; _up = false;
 
-			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+			if (_noneAttacked)
+			{
+				_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+				_golemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -309,6 +356,7 @@ void golem::render()
 				}
 
 				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 			}
 			if (_isAttacked)
 			{
@@ -322,12 +370,17 @@ void golem::render()
 
 
 				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 			}
 		}
 		if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
 			_right = false; _left = false; _down = false; _up = true;
-			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+			if (_noneAttacked)
+			{
+				_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+				_golemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -341,6 +394,7 @@ void golem::render()
 				}
 
 				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 			if (_isAttacked)
 			{
@@ -354,12 +408,17 @@ void golem::render()
 
 
 				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[6]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 		}
 		if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
 			_right = false; _left = false; _down = false; _up = true;
-			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+			if (_noneAttacked)
+			{
+				_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+				_golemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);//오른쪽
+			}
 
 			if (_isAttacked2)
 			{
@@ -373,6 +432,7 @@ void golem::render()
 				}
 
 				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 			if (_isAttacked)
 			{
@@ -386,6 +446,7 @@ void golem::render()
 
 
 				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[6]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 		}
 	}
@@ -394,7 +455,11 @@ void golem::render()
 		if (tempX > 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = true; _left = false; _down = false; _up = false;
-			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+			if (_noneAttacked)
+			{
+				_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+				_golemShadow[2]->frameAlphaRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -410,6 +475,7 @@ void golem::render()
 
 				}
 				_attackedGolem[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, 230);
+				_attackedGolemShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 
 			}
 
@@ -425,6 +491,7 @@ void golem::render()
 				}
 
 				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 			if (_isAttacked)
 			{
@@ -438,12 +505,17 @@ void golem::render()
 
 
 				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 		}
 		if (tempX > 0 && tempY< 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = true; _left = false; _down = false; _up = false;
-			if (_noneAttacked)_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+			if (_noneAttacked)
+			{
+				_golem[2]->frameRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);//오른쪽
+				_golemShadow[2]->frameAlphaRender(getMemDC(), rc.left + 6 - cam.left, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -459,6 +531,7 @@ void golem::render()
 
 				}
 				_attackedGolem[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, 230);
+				_attackedGolemShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 
 			}
 
@@ -474,6 +547,7 @@ void golem::render()
 				}
 
 				_attackedGolem[5]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[5]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 			if (_isAttacked)
 			{
@@ -487,12 +561,17 @@ void golem::render()
 
 
 				_attackedGolem[4]->frameRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2]);
+				_attackedGolemShadow[4]->frameAlphaRender(getMemDC(), rc.left - cam.left + 6, rc.top - 9 - cam.top, _currentX[2], _currentY[2], 80);
 			}
 		}
 		if (tempX < 0 && tempY > 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = false; _left = true; _down = false; _up = false;
-			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+			if (_noneAttacked)
+			{
+				_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+				_golemShadow[1]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -508,6 +587,7 @@ void golem::render()
 
 				}
 				_attackedGolem[3]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, 230);
+				_attackedGolemShadow[3]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 
 			}
 
@@ -523,6 +603,7 @@ void golem::render()
 				}
 
 				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -536,12 +617,17 @@ void golem::render()
 
 
 				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[2]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX < 0 && tempY < 0 && tempX*tempX > tempY*tempY)
 		{
 			_right = false; _left = true; _down = false; _up = false;
-			if (_noneAttacked)_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+			if (_noneAttacked)
+			{
+				_golem[1]->frameRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);//왼쪽
+				_golemShadow[1]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -557,6 +643,7 @@ void golem::render()
 
 				}
 				_attackedGolem[3]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, 230);
+				_attackedGolemShadow[3]->frameAlphaRender(getMemDC(), rc.left - 51 - cam.left, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 
 			}
 
@@ -573,6 +660,7 @@ void golem::render()
 				}
 
 				_attackedGolem[3]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 			if (_isAttacked)
 			{
@@ -586,13 +674,18 @@ void golem::render()
 
 
 				_attackedGolem[2]->frameRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1]);
+				_attackedGolemShadow[2]->frameAlphaRender(getMemDC(), rc.left - cam.left - 51, rc.top + 5 - cam.top, _currentX[1], _currentY[1], 80);
 			}
 		}
 		if (tempX > 0 && tempY > 0 && tempY*tempY > tempX*tempX)
 		{
 			_right = false; _left = false; _down = true; _up = false;
 
-			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+			if (_noneAttacked)
+			{
+				_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+				_golemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -608,6 +701,7 @@ void golem::render()
 
 				}
 				_attackedGolem[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+				_attackedGolemShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 
 			}
 
@@ -624,6 +718,7 @@ void golem::render()
 				}
 
 				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 			}
 			if (_isAttacked)
 			{
@@ -637,6 +732,7 @@ void golem::render()
 
 
 				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 
 			}
 
@@ -647,7 +743,11 @@ void golem::render()
 		{
 			_right = false; _left = false; _down = true; _up = false;
 
-			if (_noneAttacked)_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+			if (_noneAttacked)
+			{
+				_golem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);//아래
+				_golemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -663,6 +763,7 @@ void golem::render()
 
 				}
 				_attackedGolem[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+				_attackedGolemShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 
 			}
 
@@ -678,6 +779,7 @@ void golem::render()
 				}
 
 				_attackedGolem[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 			}
 			if (_isAttacked)
 			{
@@ -691,12 +793,17 @@ void golem::render()
 
 
 				_attackedGolem[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0]);
+				_attackedGolemShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX[0], _currentY[0], 80);
 			}
 		}
 		if (tempX > 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
 			_right = false; _left = false; _down = false; _up = true;
-			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+			if (_noneAttacked)
+			{
+				_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+				_golemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -712,6 +819,7 @@ void golem::render()
 
 				}
 				_attackedGolem[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, 230);
+				_attackedGolemShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 
 			}
 
@@ -727,6 +835,7 @@ void golem::render()
 				}
 
 				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 			if (_isAttacked)
 			{
@@ -740,12 +849,17 @@ void golem::render()
 
 
 				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[6]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 		}
 		if (tempX < 0 && tempY <0 && tempY*tempY > tempX*tempX)
 		{
 			_right = false; _left = false; _down = false; _up = true;
-			if (_noneAttacked)_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+			if (_noneAttacked)
+			{
+				_golem[3]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);//위
+				_golemShadow[3]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);//오른쪽
+			}
 
 			if (_isAttacked3)
 			{
@@ -761,6 +875,7 @@ void golem::render()
 
 				}
 				_attackedGolem[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, 230);
+				_attackedGolemShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 
 			}
 
@@ -776,6 +891,7 @@ void golem::render()
 				}
 
 				_attackedGolem[7]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[7]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 			if (_isAttacked)
 			{
@@ -789,6 +905,7 @@ void golem::render()
 
 
 				_attackedGolem[6]->frameRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3]);
+				_attackedGolemShadow[6]->frameAlphaRender(getMemDC(), rc.left - cam.left + 1, rc.top - 9 - cam.top, _currentX[3], _currentY[3], 80);
 			}
 		}
 	}

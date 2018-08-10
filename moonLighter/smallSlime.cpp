@@ -7,8 +7,11 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 
 	gameObject::init(_objName, _pos);
 	_smallSlime = IMAGEMANAGER->findImage("작은슬라임");
+	_smallSlimeShadow = IMAGEMANAGER->findImage("작은슬라임그림자");
 	_attackedSmallSlime[0] = IMAGEMANAGER->findImage("작은슬라임빨강");
+	_attackedSmallSlimeShadow[0] = IMAGEMANAGER->findImage("작은슬라임빨강그림자");
 	_attackedSmallSlime[1] = IMAGEMANAGER->findImage("작은슬라임하양");
+	_attackedSmallSlimeShadow[1] = IMAGEMANAGER->findImage("작은슬라임하양그림자");
 	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
 	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
@@ -23,9 +26,10 @@ HRESULT smallSlime::init(string _objName, tagFloat _pos)
 
 	 _dmgImgY =-70;
 	 _dmgImgCount=0;
+	 _alpha = 0;
 	 _dmgImgCountBool=false;
 
-
+	 EFFECTMANAGER->addEffect("뿅뿅", "뿅", 0.2f, 20);
 
 	_noneAttacked = true;//공격안받았을때
 	_isAttacked = false; // 공격받았다는 신호
@@ -85,7 +89,11 @@ void smallSlime::render()
 
 	if (_currentHp > 0)
 	{
-		if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		if (_noneAttacked)
+		{
+			_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_smallSlimeShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY,80);
+		}
 
 		if (_isAttacked2)
 		{
@@ -99,6 +107,7 @@ void smallSlime::render()
 			}
 
 			_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_attackedSmallSlimeShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY,80);
 		}
 		if (_isAttacked)
 		{
@@ -112,11 +121,17 @@ void smallSlime::render()
 
 
 			_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_attackedSmallSlimeShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY,80);
 		}
 	}
 	else
 	{
-		if (_noneAttacked)_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+		if (_noneAttacked)
+		{
+			_smallSlime->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_smallSlimeShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY,80);
+
+		}
 
 		if (_isAttacked3)
 		{
@@ -132,6 +147,7 @@ void smallSlime::render()
 
 			}
 			_attackedSmallSlime[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+			_attackedSmallSlimeShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top,_currentX,_currentY, 80);
 
 		}
 
@@ -149,6 +165,7 @@ void smallSlime::render()
 			}
 
 			_attackedSmallSlime[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_attackedSmallSlimeShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY,80);
 		}
 		if (_isAttacked)
 		{
@@ -162,6 +179,7 @@ void smallSlime::render()
 
 
 			_attackedSmallSlime[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY);
+			_attackedSmallSlimeShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _currentX, _currentY,80);
 		}
 	}
 
@@ -372,9 +390,9 @@ void smallSlime::dead()
 
 	if (_deadBool && _deadEffectBool == false)
 	{
-		_deadEffectBool = true;
 		EFFECTMANAGER->play("뿅뿅", pos.x + 7, pos.y + 20);
 		SOUNDMANAGER->play("enemy_death", 1.f);
+		_deadEffectBool = true;
 		OBJECTMANAGER->getItemManager()->appear(itemType::LIQUIDITEM, tagFloat(pos.x, pos.y));
 	}
 	setIsLive(false);

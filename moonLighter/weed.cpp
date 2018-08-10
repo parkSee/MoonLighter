@@ -7,6 +7,7 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 
 	gameObject::init(_objName, _pos);
 	_weed = IMAGEMANAGER->findImage("잡초");
+	_weedShadow= IMAGEMANAGER->findImage("잡초그림자");
 	_dmgFontTen = IMAGEMANAGER->findImage("대미지폰트");
 	_dmgFontOne = IMAGEMANAGER->findImage("대미지폰트");
 	_hp = new progressBar;
@@ -17,6 +18,8 @@ HRESULT weed::init(string _objName, tagFloat _pos)
 	_dmgImgY = -70;
 	_attackedWeed[0] = IMAGEMANAGER->findImage("잡초빨강");
 	_attackedWeed[1] = IMAGEMANAGER->findImage("잡초하양");
+	_attackedWeedShadow[0] = IMAGEMANAGER->findImage("잡초빨강그림자");
+	_attackedWeedShadow[1] = IMAGEMANAGER->findImage("잡초하양그림자");
 	_weedFrameX = _weedFrameY = _count = _attackedCount=_dmgCount = 0;
 	rc = RectMakeCenter(pos.x, pos.y, _weed->getFrameWidth(), _weed->getFrameHeight());
 	_collisionRc = RectMakeCenter(pos.x, pos.y, 70, 60);
@@ -83,7 +86,12 @@ void weed::render()
 	//RectangleCam(getMemDC(), rc, cam);
 	if (_currentHp > 0)
 	{
-		if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+		if (_noneAttacked)
+		{
+			_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+			_weedShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY,80);
+		}
+
 
 		if (_isAttacked2)
 		{
@@ -98,6 +106,7 @@ void weed::render()
 			}
 
 			_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+			_attackedWeedShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY,80);
 		}
 		if (_isAttacked)
 		{
@@ -111,11 +120,17 @@ void weed::render()
 
 
 			_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+			_attackedWeedShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY, 80);
 		}
 	}
 	else
 	{
-		if (_noneAttacked)_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+		if (_noneAttacked)
+		{
+			_weed->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+			_weedShadow->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY,80);
+		}
+
 
 		if (_isAttacked3)
 		{
@@ -131,6 +146,7 @@ void weed::render()
 
 			}
 			_attackedWeed[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, 230);
+			_attackedWeedShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY, 80);
 
 		}
 
@@ -148,6 +164,7 @@ void weed::render()
 			}
 
 			_attackedWeed[1]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+			_attackedWeedShadow[1]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY, 80);
 		}
 		if (_isAttacked)
 		{
@@ -161,6 +178,7 @@ void weed::render()
 
 
 			_attackedWeed[0]->frameRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY);
+			_attackedWeedShadow[0]->frameAlphaRender(getMemDC(), rc.left - cam.left, rc.top - cam.top, _weedFrameX, _weedFrameY, 80);
 		}
 	}
 	if (0 < _dmgImgCount && _dmgImgCount < 30)

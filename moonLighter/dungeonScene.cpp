@@ -9,6 +9,8 @@ HRESULT dungeonScene::init()
 	SOUNDMANAGER->play("dungeonBGM", _vol);
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	_player->setIsActive(true);
+
+	
 	_player->pos.x = 1920;
 	_player->pos.y = 1800;
 
@@ -62,11 +64,12 @@ HRESULT dungeonScene::init()
 	_door[5] = IMAGEMANAGER->findImage("door아래");
 	_door[6] = IMAGEMANAGER->findImage("door오른쪽");
 	_door[7] = IMAGEMANAGER->findImage("door왼쪽");
-	_door[8] = IMAGEMANAGER->findImage("보스입구");
+	_door[8] = IMAGEMANAGER->findImage("door오른쪽");
 
 	_cameraMove = false;
 	_cameraMoveCount = 0;
 	_cameraDistance = 0;
+	_deadCount = 0;
 
 	return S_OK;
 }
@@ -98,19 +101,21 @@ void dungeonScene::update()
 		
 	}
 
-	
-	if (_doorBool[0])
+	for (int i = 0; i < 9; i++)
 	{
-		_doorCount[0]++;
-		if (_doorCount[0] % 7 == 0)
+		if (_doorBool[i])
 		{
-			_doorCurrentX[0]++;
-		}
-		if (_doorCurrentX[0] > _door[0]->getMaxFrameX())
-		{
-			_doorCurrentX[0] = _door[0]->getMaxFrameX();
-			_doorCount[0] = 0;
-			_doorBool[0] = false;
+			_doorCount[i]++;
+			if (_doorCount[i] % 7 == 0)
+			{
+				_doorCurrentX[i]++;
+			}
+			if (_doorCurrentX[i] > _door[i]->getMaxFrameX())
+			{
+				_doorCurrentX[i] = _door[i]->getMaxFrameX();
+				_doorCount[i] = 0;
+				_doorBool[i] = false;
+			}
 		}
 	}
 	
@@ -119,22 +124,59 @@ void dungeonScene::update()
 	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
 
 	_im->update();
+	_em->update();
+
+
+	if (_em->getDeadCount() == 0)
+	{
+		if (_em->getstage1() == true)
+		{
+			_doorBool[0] = true;
+		}
+		if (_em->getstage2() == true)
+		{
+			_doorBool[1] = true;
+			_doorBool[2] = true;
+			_doorBool[4] = true;
+		}
+		if (_em->getstage3() == true)
+		{
+			_doorBool[3] = true;
+		}
+		if (_em->getstage4() == true)
+		{
+			_doorBool[5] = true;
+			_doorBool[6] = true;
+		}
+		if (_em->getstage5() == true)
+		{
+			_doorBool[7] = true;
+			_doorBool[8] = true;
+		}
+	}
 }
 
 void dungeonScene::render()
 {
 	RECT cam = CAMERAMANAGER->getRenderRc();
-	IMAGEMANAGER->render("dungeonMap", getMemDC(), 0, 0, cam.left, cam.top, WINSIZEX, WINSIZEY);
+	
+	IMAGEMANAGER->render("dungeonMap", getMemDC(), CAMERAMANAGER->getSX(), CAMERAMANAGER->getSY(), CAMERAMANAGER->getRenderSourRc().left, CAMERAMANAGER->getRenderSourRc().top, WINSIZEX, WINSIZEY);
+	
 	_door[0]->frameRender(getMemDC(), 1840-cam.left, 1440-cam.top,_doorCurrentX[0],_doorCurrentY[0]);
+
 	_door[1]->frameRender(getMemDC(), 1840 - cam.left, 1345 - cam.top, _doorCurrentX[1], _doorCurrentY[1]);
 	_door[2]->frameRender(getMemDC(), 1281 - cam.left, 1000 - cam.top, _doorCurrentX[2], _doorCurrentY[2]);
-	_door[3]->frameRender(getMemDC(), 1190 - cam.left, 1000 - cam.top, _doorCurrentX[3], _doorCurrentY[3]);
+	_door[3]->frameRender(getMemDC(), 1175 - cam.left, 1005 - cam.top, _doorCurrentX[3], _doorCurrentY[3]);
+
+	
 	_door[4]->frameRender(getMemDC(), 1840 - cam.left, 720 - cam.top, _doorCurrentX[4], _doorCurrentY[4]);
-	_door[5]->frameRender(getMemDC(), 1840 - cam.left, 625 - cam.top, _doorCurrentX[5], _doorCurrentY[5]);
+	_door[5]->frameRender(getMemDC(), 1830 - cam.left, 625 - cam.top, _doorCurrentX[5], _doorCurrentY[5]);
 	_door[6]->frameRender(getMemDC(), 2455 - cam.left, 280 - cam.top, _doorCurrentX[6], _doorCurrentY[6]);
 	_door[7]->frameRender(getMemDC(), 2570 - cam.left, 280 - cam.top, _doorCurrentX[7], _doorCurrentY[7]);
-	_door[8]->frameRender(getMemDC(), 3680 - cam.left, 250 - cam.top, _doorCurrentX[8], _doorCurrentY[8]);
+	_door[8]->frameRender(getMemDC(), 3735 - cam.left, 280 - cam.top, _doorCurrentX[8], _doorCurrentY[8]);
 
+	OBJECTMANAGER->render(getMemDC());
+	
 	_enterRc[0] = RectMakeCenter(1916, 1480, 50, 50);
 	_enterRc[1] = RectMakeCenter(1920, 1370, 50, 50);
 	_enterRc[2] = RectMakeCenter(1341, 1080, 50, 50);
@@ -146,7 +188,6 @@ void dungeonScene::render()
 	_enterRc[8] = RectMakeCenter(3760, 360, 50, 50);
 
 
-	OBJECTMANAGER->render(getMemDC());
 
 	_im->render(getMemDC());
 	//RectangleCam(getMemDC(), upRc, cam);
@@ -185,6 +226,7 @@ void dungeonScene::render()
 
 void dungeonScene::moveDungeon()
 {
+	
 	if (_em->getstage2())
 	{
 		_cameraMove = false;
@@ -235,7 +277,7 @@ void dungeonScene::moveDungeon()
 		}
 		
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[2]))
+	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[2]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)640, (int)1080);
@@ -252,7 +294,7 @@ void dungeonScene::moveDungeon()
 		}
 
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[3]))
+	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[3]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
@@ -265,7 +307,7 @@ void dungeonScene::moveDungeon()
 			_player->setIsActive(true);
 		}
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[4]))
+	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[4]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
@@ -282,7 +324,7 @@ void dungeonScene::moveDungeon()
 			
 		}
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[5]))
+	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[5]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)1080);
@@ -295,7 +337,7 @@ void dungeonScene::moveDungeon()
 			_player->setIsActive(true);
 		}
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[6]))
+	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[6]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)3200, (int)360);
@@ -313,7 +355,7 @@ void dungeonScene::moveDungeon()
 			
 		}
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[7]))
+	if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[7]))
 	{
 		_cameraMove = true;
 		CAMERAMANAGER->connectTarget((int)1920, (int)360);
@@ -326,7 +368,7 @@ void dungeonScene::moveDungeon()
 			_player->setIsActive(true);
 		}
 	}
-	else if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[8]))
+	 if (IntersectRect(&temp, &_player->getRcBody(), &_enterRc[8]))
 	{
 		OBJECTMANAGER->reset();
 		SCENEMANAGER->loadScene("bossRoomScene");

@@ -17,6 +17,7 @@ HRESULT enemyController::init()
 	_stage4=false;
 	_stage5=false;
 	
+	_deadCount = 0;
 
 	return S_OK;
 }
@@ -29,58 +30,10 @@ void enemyController::release()
 
 void enemyController::update()
 {
-
-
-
-}
-
-void enemyController::render()
-{
-
-
-}
-
-
-void enemyController::golemInit()
-{
-	
-
-	
-	
-	
-		
-}
-
-void enemyController::bigSlimeInit()
-{
-	
-
-	
-	
+	_deadCount = OBJECTMANAGER->getObjectList(objectType::ENEMY)->size();
 	
 }
 
-void enemyController::smallSlimeInit()
-{
-	
-
-	
-	
-	
-
-
-
-}
-
-void enemyController::weedInit()
-{
-	
-
-	
-
-	
-	
-}
 
 void enemyController::stage1Init()
 {
@@ -100,6 +53,8 @@ void enemyController::stage1Init()
 	_golem->init("golem", tagFloat(1500, 1800));
 	OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 	_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+	
+	for(int i=0;i<3;i++)_vEnemyNumber.push_back(1);
 }
 
 void enemyController::stage2Init()
@@ -112,6 +67,7 @@ void enemyController::stage2Init()
 		_smallSlime->init("smallSlime", tagFloat(1400 + 200 * i, 1000));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
 		_smallSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 	
 }
@@ -127,6 +83,7 @@ void enemyController::stage3Init()
 		_golem->init("golem", tagFloat(600 + 300 * i, 1000));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 
 	}
 	
@@ -145,6 +102,7 @@ void enemyController::stage4Init()
 		_weed->init("weed", tagFloat(1400 + 200 * i, 300));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 		_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 	for (int i = 0; i < 1; ++i)
 	{
@@ -152,6 +110,7 @@ void enemyController::stage4Init()
 		_golem->init("golem", tagFloat(1700 + 300 * i, 400));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 	for (int i = 0; i < 2; ++i)
 	{
@@ -159,6 +118,7 @@ void enemyController::stage4Init()
 		_smallSlime->init("smallSlime", tagFloat(1800 + 200 * i, 300));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
 		_smallSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 	
 
@@ -174,6 +134,7 @@ void enemyController::stage5Init()
 		_bigSlime->init("bigSlime", tagFloat(3600 + 500 * i, 200));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _bigSlime);
 		_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 	for (int i = 0; i < 2; ++i)
 	{
@@ -181,6 +142,7 @@ void enemyController::stage5Init()
 		_weed->init("weed", tagFloat(3000 + 400 * i, 300));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
 		_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 	for (int i = 0; i < 4; ++i)
 	{
@@ -188,6 +150,7 @@ void enemyController::stage5Init()
 		_smallSlime->init("smallSlime", tagFloat(3000 + 200 * i, 300));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
 		_smallSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 
 	for (int i = 0; i < 3; ++i)
@@ -196,6 +159,7 @@ void enemyController::stage5Init()
 		_golem->init("golem", tagFloat(3000 + 300 * i, 400));
 		OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
 		_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+		_vEnemyNumber.push_back(1);
 	}
 
 

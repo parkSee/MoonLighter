@@ -7,7 +7,9 @@ class smallSlime : public gameObject
 {
 private:
 	image * _smallSlime;
+	image* _smallSlimeShadow;
 	image* _attackedSmallSlime[2];
+	image* _attackedSmallSlimeShadow[2];
 	progressBar* _hp;
 	RECT _collisionRc;
 	image* _dmgFontTen;
@@ -21,6 +23,7 @@ private:
 	int _count;
 	int _currentX;
 	int _currentY;
+	int _alpha;
 
 	float angle;
 	float speed;

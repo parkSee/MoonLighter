@@ -17,6 +17,10 @@ private:
 	bool _stage4;
 	bool _stage5;
 
+	int _deadCount;
+
+	vector<int> _vEnemyNumber;
+	vector<int>::iterator _viEnemyNumber;
 
 
 public:
@@ -24,12 +28,7 @@ public:
 	HRESULT init();
 	void release();
 	void update();
-	void render();
 
-	void golemInit();
-	void bigSlimeInit();
-	void smallSlimeInit();
-	void weedInit();
 
 	bool getstage1() { return _stage1; }
 	bool getstage2() { return _stage2; }
@@ -43,7 +42,7 @@ public:
 	void setStage4(bool stage) { _stage4 = stage; }
 	void setStage5(bool stage) { _stage5 = stage; }
 
-
+	int getDeadCount() { return _deadCount; }
 	void stage1Init();
 	void stage2Init();
 	void stage3Init();

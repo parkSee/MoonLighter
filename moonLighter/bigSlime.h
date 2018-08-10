@@ -7,7 +7,9 @@ class bigSlime : public gameObject
 {
 private:
 	image * _bigSlime;
+	image* _bigSlimeShadow;
 	image* _attackedBigSlime[2];
+	image* _attackedBigSlimeShadow[2];
 	progressBar* _hp;
 
 	image* _dmgFontTen;
@@ -60,6 +62,7 @@ private:
 	float _tempAngleY;
 
 	bool _playerMove;
+	bool _deadCount;
 
 public:
 
@@ -79,6 +82,7 @@ public:
 	void setPixelImage(image* pixelImg) { _pixelImg = pixelImg; }
 	void dead();
 	void Attack();
+	bool deadCount();
 	
 
 	bigSlime() {}

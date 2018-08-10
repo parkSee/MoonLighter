@@ -100,6 +100,7 @@ public:
 	void alphaRender(HDC hdc, int destX, int destY, BYTE alpha);
 	void alphaRender(HDC hdc, int destX, int destY, int sourX, int sourY, int sourWidth, int sourHeight, BYTE alpha);
 	void frameAlphaRender(HDC hdc, int dextX, int dextY, BYTE alpha);
+	void frameAlphaRender(HDC hdc, int dextX, int dextY,int currentX,int currentY, BYTE alpha);
 //=============================================================
 //	## 프레임렌더 ##
 //=============================================================
@@ -123,6 +124,7 @@ public:
 //=============================================================
 	void aniRender(HDC hdc, int destX, int destY, animation* ani);
 	void aniAlphaRender(HDC hdc, int destX, int destY, animation* ani, BYTE alpha);
+	
 
 //=============================================================
 //	## inline ## (인라인 함수들 - 겟터, 셋터)
