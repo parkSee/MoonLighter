@@ -23,6 +23,9 @@ typedef struct tagArrow
 } Arrow;
 
 #define WILL_DAMAGED_MAX 3
+#define ARROW_MAX 5
+#define ARROW_WIDTH 16
+#define ARROW_HEIGHT 51
 
 class inventory;	//csyADD
 
@@ -45,6 +48,7 @@ private:
 	int _probeX;
 	int _attCharge;
 	int _damage;
+	char str[16];
 	direction _dir;
 	tagFloat footPos;
 	float _time;
@@ -130,6 +134,7 @@ public:
 	void othersFrameUpdate(int frameX, int frameY);
 	void swordFrameUpdate();
 	void bowFrameUpdate();
+	void arrowCreate();
 	void arrowUpdate();
 	void attackRender();
 	void arrowRender();
