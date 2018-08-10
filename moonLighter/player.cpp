@@ -1404,6 +1404,19 @@ void player::numberRender()
 	{
 		number->frameRender(getMemDC(), 25 + (i * 10), 90, _cntMoney[i], 0);
 	}
+
+	int _curItem[2], _curInven;
+	_curInven = (int)(_inven->get_vInvenItem().size());
+	_curItem[0] = (int)(_curInven / 10);
+	_curItem[1] = (int)(_curInven % 10);
+
+		
+	number->frameRender(getMemDC(), WINSIZEX - 90, WINSIZEY / 2 - 150, _curItem[0], 1);	
+	number->frameRender(getMemDC(), WINSIZEX - 80, WINSIZEY / 2 - 150, _curItem[1], 1);
+	number->frameRender(getMemDC(), WINSIZEX - 70, WINSIZEY / 2 - 150, 10, 1);
+	number->frameRender(getMemDC(), WINSIZEX - 60, WINSIZEY / 2 - 150, 2, 1);
+	number->frameRender(getMemDC(), WINSIZEX - 50, WINSIZEY / 2 - 150, 0, 1);
+
 }
 
 void player::setIsIdleUp(bool isUp)
