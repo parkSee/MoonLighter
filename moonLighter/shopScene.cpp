@@ -210,8 +210,12 @@ void shopScene::render()
 	_layer->render(getMemDC(), 558 - cam.left, 1234 - cam.top);
 	IMAGEMANAGER->findImage("shopDownLayer")->render(getMemDC(), 558 - cam.left, 1352 -cam.top);
 	
-		if(_ui && !_button)_buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
-		if(_button)_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top);
+	if (_ui && !_button) { _buttonUi->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top); }
+		if (_button)
+		{
+			_buttonAction->frameRender(getMemDC(), 751 - cam.left, 1160 - cam.top); 
+			_jButton->render(getMemDC(), 751 + 22 - cam.left, 1160 + 20 - cam.top);
+		}
 	
 	_shopDoor->frameRender(getMemDC(), 600 - cam.left, 1170 - cam.top);
 	
