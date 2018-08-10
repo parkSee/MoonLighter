@@ -127,7 +127,7 @@ void dungeonScene::render()
 	_door[2]->frameRender(getMemDC(), 1281 - cam.left, 1000 - cam.top, _doorCurrentX[2], _doorCurrentY[2]);
 	_door[3]->frameRender(getMemDC(), 1190 - cam.left, 1000 - cam.top, _doorCurrentX[3], _doorCurrentY[3]);
 	_door[4]->frameRender(getMemDC(), 1840 - cam.left, 720 - cam.top, _doorCurrentX[4], _doorCurrentY[4]);
-	_door[5]->frameRender(getMemDC(), 1840 - cam.left, 631 - cam.top, _doorCurrentX[5], _doorCurrentY[5]);
+	_door[5]->frameRender(getMemDC(), 1840 - cam.left, 625 - cam.top, _doorCurrentX[5], _doorCurrentY[5]);
 
 	_enterRc[0] = RectMakeCenter(1916, 1480, 50, 50);
 	_enterRc[1] = RectMakeCenter(1920, 1370, 50, 50);
