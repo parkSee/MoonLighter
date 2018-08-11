@@ -223,13 +223,13 @@ void ui::render()
 	//char str[128];
 	//sprintf_s(str, "x : %d, y : %d", _ptMouse.x, _ptMouse.y);
 	//TextOut(getMemDC(), 300, 300, str, strlen(str));
-	char str[128];
-	sprintf_s(str, "effect : %f", _effectVol);
-	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
+	//char str[128];
+	//sprintf_s(str, "effect : %f", _effectVol);
+	//TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2, str, strlen(str));
 
-	char str2[128];
-	sprintf_s(str2, "vol : %f", _vol);
-	TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 - 100, str2, strlen(str2));
+	//char str2[128];
+	//sprintf_s(str2, "vol : %f", _vol);
+	//TextOut(getMemDC(), WINSIZEX / 2, WINSIZEY / 2 - 100, str2, strlen(str2));
 
 
 }
