@@ -7,6 +7,7 @@ HRESULT dungeonScene::init()
 	//lejADD ´øÀü ¸Ê Ãß°¡
 	_vol = SAVEDATA->getVolume();
 	SOUNDMANAGER->play("dungeonBGM", _vol);
+	
 	_player = (player*)OBJECTMANAGER->findObject(objectType::PLAYER, "player");
 	_player->setIsActive(true);
 
@@ -15,7 +16,12 @@ HRESULT dungeonScene::init()
 	_player->pos.y = 1800;
 
 	_player->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+	for (int i = 0; i < 5; i++)
+	{
+		_doorSound[i] = false;
+		_tempDoorSound[i] = false;
 
+	}
 
 	_em = new enemyController;
 	_em->init();
@@ -98,7 +104,7 @@ void dungeonScene::update()
 	if (KEYMANAGER->isOnceKeyDown('1'))
 	{
 		_doorBool[0] = true;
-		
+		SOUNDMANAGER->play("door", 1.f);
 	}
 
 	for (int i = 0; i < 9; i++)
@@ -118,42 +124,85 @@ void dungeonScene::update()
 			}
 		}
 	}
-	
+
 	this->moveDungeon();
-	
+
 	CAMERAMANAGER->cameraSlideMove(_player->getSpeed());
 
 	_im->update();
 	_em->update();
-
+	
 
 	if (_em->getDeadCount() == 0)
 	{
 		if (_em->getstage1() == true)
 		{
 			_doorBool[0] = true;
+			_doorSound[0] = true;
+
 		}
 		if (_em->getstage2() == true)
 		{
 			_doorBool[1] = true;
 			_doorBool[2] = true;
 			_doorBool[4] = true;
+			_doorSound[1] = true;
+
 		}
 		if (_em->getstage3() == true)
 		{
 			_doorBool[3] = true;
+			_doorSound[2] = true;
+
 		}
 		if (_em->getstage4() == true)
 		{
 			_doorBool[5] = true;
 			_doorBool[6] = true;
+			_doorSound[3] = true;
+
 		}
 		if (_em->getstage5() == true)
 		{
 			_doorBool[7] = true;
 			_doorBool[8] = true;
+			_doorSound[4] = true;
+
 		}
 	}
+
+	for (int i = 0; i < 5; i++)
+	{
+		if (_doorSound[i] && !_tempDoorSound[i])
+		{
+			SOUNDMANAGER->play("door", 1.f);
+			_tempDoorSound[i] = true;
+			
+
+
+		}
+
+
+	}
+	if (KEYMANAGER->isOnceKeyDown('2'))
+	{
+		_em->golemInit();
+	}
+	if (KEYMANAGER->isOnceKeyDown('3'))
+	{
+		_em->bigSlimeInit();
+	}
+	if (KEYMANAGER->isOnceKeyDown('4'))
+	{
+		_em->weedInit();
+	}
+	if (KEYMANAGER->isOnceKeyDown('6'))
+	{
+		_em->smallSlimeInit();
+	}
+
+
+
 }
 
 void dungeonScene::render()
@@ -192,9 +241,9 @@ void dungeonScene::render()
 	_im->render(getMemDC());
 	
 
-	char str[128];
-	sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
-	TextOut(getMemDC(), 200, 200, str, strlen(str));
+	//char str[128];
+	//sprintf_s(str, "%f, %f", _player->pos.x, _player->pos.y);
+	//TextOut(getMemDC(), 200, 200, str, strlen(str));
 	//
 	//char str2[128];
 	//sprintf(str2, "%f", _cameraDistance);

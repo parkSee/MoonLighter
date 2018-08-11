@@ -23,6 +23,8 @@ private:
 	int _doorCount[9];
 	bool _doorBool[9];
 	int _deadCount;
+	bool _doorSound[5];
+	bool _tempDoorSound[5];
 
 	float _cameraDistance;
 	bool _cameraMove;

@@ -88,7 +88,7 @@ void objectManager::render(HDC getMemDC)
 		for (int i = 0; i < miter->second.size(); ++i)
 		{
 			//objectManager안에 있는 gameObject들과 gameObject가 가지고 있는 y축의 값을 멀티맵에 오름차순으로 삽입
-			zOderList.insert(make_pair(miter->second[i]->rc.bottom, miter->second[i]));
+			zOderList.insert(make_pair(miter->second[i]->pos.y, miter->second[i]));
 		}
 	}
 	
@@ -184,6 +184,6 @@ vector<gameObject*> objectManager::findObjects(objectType _type, string _name)
 }
 
 vector<gameObject*>* objectManager::getObjectList(objectType _type)
-{
+{ 
 	return &totalList[_type];
 }

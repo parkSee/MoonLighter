@@ -34,25 +34,48 @@ void enemyController::update()
 	
 }
 
+void enemyController::golemInit()
+{
+	golem* _golem = new golem;
+	_golem->init("golem", tagFloat(1800, 1800));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
+	_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+}
+
+void enemyController::bigSlimeInit()
+{
+	bigSlime* _bigSlime = new bigSlime;
+	_bigSlime->init("bigSlime", tagFloat(tagFloat(1800, 1800)));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _bigSlime);
+	_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+}
+
+void enemyController::smallSlimeInit()
+{
+	smallSlime* _smallSlime = new smallSlime;
+	_smallSlime->init("smallSlime", tagFloat(1800 , 1800));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _smallSlime);
+	_smallSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+}
+
+void enemyController::weedInit()
+{
+	weed* _weed = new weed;
+	_weed->init("weed", tagFloat(1800, 1800));
+	OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
+	_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+}
+
 
 void enemyController::stage1Init()
 {
 	_stage1 = true;
 
-	bigSlime* _bigSlime = new bigSlime;
-	_bigSlime->init("bigSlime", tagFloat(tagFloat(2100, 1800)));
-	OBJECTMANAGER->addObject(objectType::ENEMY, _bigSlime);
-	_bigSlime->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
 	
-	weed* _weed = new weed;
-	_weed->init("weed", tagFloat(1800, 1800));
-	OBJECTMANAGER->addObject(objectType::ENEMY, _weed);
-	_weed->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+	
+	
 
-	golem* _golem = new golem;
-	_golem->init("golem", tagFloat(1500, 1800));
-	OBJECTMANAGER->addObject(objectType::ENEMY, _golem);
-	_golem->setPixelImage(IMAGEMANAGER->findImage("dungeonRedZone"));
+	
 	
 	for(int i=0;i<3;i++)_vEnemyNumber.push_back(1);
 }

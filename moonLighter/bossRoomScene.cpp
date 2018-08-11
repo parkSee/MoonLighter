@@ -191,9 +191,9 @@ void bossRoomScene::render()
 
 	OBJECTMANAGER->render(getMemDC());
 	_bossHp->render();
-	char str[128];
-	sprintf(str, "_dmgCount:%d , _currentHp: %d , _damaged = %d ,_deadCount: %d", _dmgCount,_currentHp,_damaged,_deadCount);
-	TextOut(getMemDC(), 100, WINSIZEY / 2, str, strlen(str));
+	//char str[128];
+	//sprintf(str, "_dmgCount:%d , _currentHp: %d , _damaged = %d ,_deadCount: %d", _dmgCount,_currentHp,_damaged,_deadCount);
+	//TextOut(getMemDC(), 100, WINSIZEY / 2, str, strlen(str));
 	_blackBg->alphaRender(getMemDC(), _blackBgAlpha);
 	//_test->renderHeight();
 	

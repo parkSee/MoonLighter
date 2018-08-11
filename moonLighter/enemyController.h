@@ -30,6 +30,12 @@ public:
 	void update();
 
 
+	void golemInit();
+	void bigSlimeInit();
+	void smallSlimeInit();
+	void weedInit();
+
+
 	bool getstage1() { return _stage1; }
 	bool getstage2() { return _stage2; }
 	bool getstage3() { return _stage3; }
