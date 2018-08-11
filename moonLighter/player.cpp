@@ -921,7 +921,7 @@ void player::willDoSomething()
 			{
 				OBJECTMANAGER->reset();
 				this->setIsActive(false);
-				SCENEMANAGER->loadScene("dungeonLobby");
+				SCENEMANAGER->loadScene("loadingDungeonLobby");
 			}
 			else if (_index >= willDungeon->getMaxFrameX())
 			{
@@ -1515,7 +1515,7 @@ void player::goHome()
 			_isGoingHome = false;
 			_isAutomatic = false;
 			OBJECTMANAGER->reset();
-			SCENEMANAGER->loadScene("townScene");
+			SCENEMANAGER->loadScene("loadingTown");
 		}
 	}
 }
@@ -1630,6 +1630,7 @@ RECT player::getRcArrow()
 void player::enemyCheckCollision()
 {
 	if (_isDead != true)
+
 	{
 		if (_isEnemyHit && _knife && _isAttacking && _isRcSwordOn)//if (_isEnemyHit && _index == 2 && _isAttacking)
 		{

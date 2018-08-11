@@ -66,6 +66,7 @@ void loadingDungeon::loadingSound()
 	_loading->loadSound("golem_hit", "./gameSound/golem_hit.wav", false, false);
 	_loading->loadSound("slime_hit", "./gameSound/slime_hit.wav", false, false);
 	_loading->loadSound("weed_hit", "./gameSound/weed_hit.wav", false, false);
+	_loading->loadSound("door", "./gameSound/door.wav", false, false);
 }
 
 void loadingDungeon::psyDungeonLoading()
